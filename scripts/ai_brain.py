@@ -831,6 +831,117 @@ Ensure the dashboard provides clear visibility into system operations."""
         capabilities["research_functions"] = list(set(capabilities["research_functions"]))
         
         return capabilities
+    
+    async def generate_enhanced_response(self, prompt: str, model: str = None) -> Dict[str, Any]:
+        """Generate enhanced response using primary AI provider.
+        
+        This is the main AI reasoning method used throughout the dynamic system.
+        Uses the best available AI provider to generate comprehensive responses.
+        
+        Args:
+            prompt: The prompt to send to the AI
+            model: Optional model preference ('claude', 'gpt', 'gemini')
+            
+        Returns:
+            Dictionary containing the AI response with content and metadata
+        """
+        import asyncio
+        
+        try:
+            # Determine which provider to use
+            if model == 'claude' or (model is None and self.anthropic_client):
+                # Use Anthropic Claude (primary)
+                return await self._generate_anthropic_response(prompt)
+            elif model == 'gpt' or (model is None and self.openai_client):
+                # Use OpenAI GPT (secondary)
+                return await self._generate_openai_response(prompt)
+            elif model == 'gemini' or (model is None and self.gemini_client):
+                # Use Google Gemini (research)
+                return await self._generate_gemini_response(prompt)
+            else:
+                # Fallback: return mock response if no providers available
+                return {
+                    'content': 'Mock AI response - no providers available',
+                    'provider': 'mock',
+                    'reasoning': 'No AI providers configured',
+                    'confidence': 0.1
+                }
+                
+        except Exception as e:
+            # Error fallback
+            return {
+                'content': f'Error generating response: {str(e)}',
+                'provider': 'error',
+                'error': str(e),
+                'confidence': 0.0
+            }
+    
+    async def _generate_anthropic_response(self, prompt: str) -> Dict[str, Any]:
+        """Generate response using Anthropic Claude."""
+        try:
+            message = self.anthropic_client.messages.create(
+                model="claude-3-sonnet-20240229",
+                max_tokens=4000,
+                temperature=0.7,
+                messages=[{"role": "user", "content": prompt}]
+            )
+            
+            return {
+                'content': message.content[0].text,
+                'provider': 'anthropic',
+                'model': 'claude-3-sonnet',
+                'confidence': 0.9
+            }
+        except Exception as e:
+            return {
+                'content': f'Anthropic API error: {str(e)}',
+                'provider': 'anthropic',
+                'error': str(e),
+                'confidence': 0.0
+            }
+    
+    async def _generate_openai_response(self, prompt: str) -> Dict[str, Any]:
+        """Generate response using OpenAI GPT."""
+        try:
+            response = self.openai_client.chat.completions.create(
+                model="gpt-4",
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=4000,
+                temperature=0.7
+            )
+            
+            return {
+                'content': response.choices[0].message.content,
+                'provider': 'openai',
+                'model': 'gpt-4',
+                'confidence': 0.8
+            }
+        except Exception as e:
+            return {
+                'content': f'OpenAI API error: {str(e)}',
+                'provider': 'openai',
+                'error': str(e),
+                'confidence': 0.0
+            }
+    
+    async def _generate_gemini_response(self, prompt: str) -> Dict[str, Any]:
+        """Generate response using Google Gemini."""
+        try:
+            response = self.gemini_client.generate_content(prompt)
+            
+            return {
+                'content': response.text if response.text else 'No response generated',
+                'provider': 'gemini',
+                'model': 'gemini-pro',
+                'confidence': 0.7
+            }
+        except Exception as e:
+            return {
+                'content': f'Gemini API error: {str(e)}',
+                'provider': 'gemini',
+                'error': str(e),
+                'confidence': 0.0
+            }
 
 
 # Simple alias for compatibility

@@ -410,8 +410,10 @@ class ContextGatherer:
                 if strategic_analysis:
                     enhanced_context["ai_analysis"]["strategic_recommendations"] = strategic_analysis
             
-            # Add AI provider status
-            if hasattr(self.ai_brain, 'get_research_ai_status'):
+            # Add AI provider status and capabilities
+            if hasattr(self.ai_brain, 'get_research_capabilities'):
+                enhanced_context["ai_analysis"]["research_capabilities"] = self.ai_brain.get_research_capabilities()
+            elif hasattr(self.ai_brain, 'get_research_ai_status'):
                 enhanced_context["ai_analysis"]["research_ai_status"] = self.ai_brain.get_research_ai_status()
             
             print(f"Enhanced context with {len(enhanced_context.get('ai_analysis', {}))} AI insights")
