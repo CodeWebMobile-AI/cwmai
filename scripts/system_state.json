@@ -1,0 +1,49 @@
+{
+  "charter": {
+    "constraints": [
+      "maintain_quality",
+      "ensure_security"
+    ],
+    "primary_goal": "innovation",
+    "secondary_goal": "community_engagement"
+  },
+  "external_context": {
+    "last_updated": "2025-06-08T19:18:40.132372+00:00",
+    "market_trends": [],
+    "security_alerts": [],
+    "technology_updates": []
+  },
+  "last_updated": "2025-06-08T19:18:41.084339+00:00",
+  "projects": {
+    "sample-project": {
+      "action_history": [
+        {
+          "action": "initial_setup",
+          "details": "Project initialized with default configuration",
+          "outcome": "success_merged",
+          "timestamp": "2025-06-08T19:18:40.132368+00:00"
+        }
+      ],
+      "health_score": 85,
+      "last_checked": "2025-06-08T19:18:40.132356+00:00",
+      "metrics": {
+        "forks": 0,
+        "issues_open": 0,
+        "pull_requests_open": 0,
+        "stars": 0
+      }
+    }
+  },
+  "system_performance": {
+    "failed_actions": 0,
+    "learning_metrics": {
+      "decision_accuracy": 0.0,
+      "goal_achievement": 0.0,
+      "resource_efficiency": 0.0
+    },
+    "successful_actions": 0,
+    "total_cycles": 0
+  },
+  "task_queue": [],
+  "version": "1.0.0"
+}
