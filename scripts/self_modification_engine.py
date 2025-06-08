@@ -87,8 +87,17 @@ class SelfModificationEngine:
     
     def __init__(self, repo_path: str = "."):
         """Initialize self-modification engine."""
-        self.repo_path = repo_path
-        self.repo = git.Repo(repo_path)
+        self.repo_path = os.path.abspath(repo_path)
+        
+        # Find the Git repository root
+        current_path = self.repo_path
+        while current_path != os.path.dirname(current_path):  # Not at root
+            if os.path.exists(os.path.join(current_path, '.git')):
+                self.repo_path = current_path
+                break
+            current_path = os.path.dirname(current_path)
+        
+        self.repo = git.Repo(self.repo_path)
         self.modification_history = []
         self.performance_metrics = {}
         self.rollback_points = []
