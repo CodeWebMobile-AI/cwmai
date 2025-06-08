@@ -74,7 +74,7 @@ class GodModeConfig:
 class GodModeController:
     """Master controller for all AI systems."""
     
-    def __init__(self, config: Optional[GodModeConfig] = None):
+    def __init__(self, config: Optional[GodModeConfig] = None, ai_brain=None):
         """Initialize god mode controller."""
         self.config = config or GodModeConfig()
         self.config.adjust_for_intensity()
@@ -89,6 +89,15 @@ class GodModeController:
         self.state_manager = StateManager()
         self.state = self.state_manager.load_state()
         self.task_manager = TaskManager()
+        
+        # Initialize AI Brain if not provided
+        if ai_brain is None:
+            from context_gatherer import ContextGatherer
+            context_gatherer = ContextGatherer()
+            context = context_gatherer.gather_context(self.state.get('charter', {}))
+            self.ai_brain = IntelligentAIBrain(self.state, context)
+        else:
+            self.ai_brain = ai_brain
         
         # God-like systems
         self.swarm = RealSwarmIntelligence(ai_brain=self.ai_brain, num_agents=7)

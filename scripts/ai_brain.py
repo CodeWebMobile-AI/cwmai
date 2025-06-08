@@ -43,18 +43,18 @@ class IntelligentAIBrain:
         }
     }
     
-    def __init__(self, state: Dict[str, Any], context: Dict[str, Any]):
+    def __init__(self, state: Dict[str, Any] = None, context: Dict[str, Any] = None):
         """Initialize the AI Brain.
         
         Args:
-            state: Current system state
+            state: Current system state (optional)
             context: External context information
         """
-        self.state = state
-        self.context = context
-        self.charter = state.get("charter", {})
-        self.projects = state.get("projects", {})
-        self.system_performance = state.get("system_performance", {})
+        self.state = state or {}
+        self.context = context or {}
+        self.charter = self.state.get("charter", {})
+        self.projects = self.state.get("projects", {})
+        self.system_performance = self.state.get("system_performance", {})
         
         # Initialize AI clients - Anthropic is now primary
         self.anthropic_client = None
@@ -706,3 +706,7 @@ Ensure the dashboard provides clear visibility into system operations."""
             "anthropic_primary": self.anthropic_client is not None,
             "openai_secondary": self.openai_client is not None
         }
+
+
+# Simple alias for compatibility
+AIBrain = IntelligentAIBrain
