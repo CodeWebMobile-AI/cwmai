@@ -334,9 +334,6 @@ class AIBrainFactory:
             True if brain passes health checks, False otherwise
         """
         try:
-            # Test basic functionality
-            capabilities = brain.get_research_capabilities()
-            
             # Verify essential attributes exist
             if not hasattr(brain, 'state') or not hasattr(brain, 'context'):
                 return False
@@ -349,10 +346,27 @@ class AIBrainFactory:
             if not isinstance(brain.context, dict):
                 return False
             
-            # Test a simple method call
-            if hasattr(brain, 'analyze_strategic_context'):
-                # Don't actually call it, just verify it exists
+            # Test that AI clients are accessible (if available)
+            if hasattr(brain, 'anthropic_client') and hasattr(brain, 'openai_client'):
+                # Basic structure check passed
                 pass
+            
+            # Test research capabilities method
+            if hasattr(brain, 'get_research_capabilities'):
+                try:
+                    capabilities = brain.get_research_capabilities()
+                    if not isinstance(capabilities, dict):
+                        return False
+                    # Verify required keys exist
+                    required_keys = ['available_providers', 'research_functions', 'analysis_types', 'research_ready']
+                    if not all(key in capabilities for key in required_keys):
+                        return False
+                except Exception:
+                    return False
+            
+            # Test basic attribute access
+            _ = brain.charter  # Should not raise exception
+            _ = brain.projects  # Should not raise exception
             
             return True
             

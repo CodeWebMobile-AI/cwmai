@@ -57,15 +57,15 @@ class GodModeConfig:
     
     def adjust_for_intensity(self):
         """Adjust configuration based on intensity level."""
-        if self.intensity == GodModeIntensity.CONSERVATIVE:
+        if self.intensity == IntensityLevel.CONSERVATIVE:
             self.max_parallel_operations = 2
             self.safety_threshold = 0.9
             self.learning_rate = 0.05
-        elif self.intensity == GodModeIntensity.AGGRESSIVE:
+        elif self.intensity == IntensityLevel.AGGRESSIVE:
             self.max_parallel_operations = 10
             self.safety_threshold = 0.7
             self.learning_rate = 0.2
-        elif self.intensity == GodModeIntensity.EXPERIMENTAL:
+        elif self.intensity == IntensityLevel.EXPERIMENTAL:
             self.max_parallel_operations = 20
             self.safety_threshold = 0.6
             self.learning_rate = 0.3

@@ -706,6 +706,131 @@ Ensure the dashboard provides clear visibility into system operations."""
             "anthropic_primary": self.anthropic_client is not None,
             "openai_secondary": self.openai_client is not None
         }
+    
+    def get_research_capabilities(self) -> Dict[str, Any]:
+        """Get comprehensive information about research AI capabilities.
+        
+        Returns:
+            Dictionary containing detailed information about research AI capabilities,
+            availability, and specialized functions
+        """
+        capabilities = {
+            "available_providers": {},
+            "research_functions": [],
+            "analysis_types": [],
+            "total_providers": 0,
+            "primary_provider": None,
+            "research_ready": False
+        }
+        
+        # Check Anthropic (Primary AI)
+        if self.anthropic_client is not None:
+            capabilities["available_providers"]["anthropic"] = {
+                "status": "available",
+                "role": "primary_ai",
+                "capabilities": ["strategic_analysis", "code_generation", "task_planning", "decision_making"],
+                "api_key_present": True
+            }
+            capabilities["primary_provider"] = "anthropic"
+            capabilities["total_providers"] += 1
+        else:
+            capabilities["available_providers"]["anthropic"] = {
+                "status": "unavailable",
+                "role": "primary_ai",
+                "reason": "API key not configured"
+            }
+        
+        # Check OpenAI (Secondary AI)
+        if self.openai_client is not None:
+            capabilities["available_providers"]["openai"] = {
+                "status": "available",
+                "role": "secondary_ai",
+                "capabilities": ["content_generation", "analysis", "coding_assistance"],
+                "api_key_present": True
+            }
+            capabilities["total_providers"] += 1
+        else:
+            capabilities["available_providers"]["openai"] = {
+                "status": "unavailable",
+                "role": "secondary_ai",
+                "reason": "API key not configured"
+            }
+        
+        # Check Gemini (Research AI)
+        if self.gemini_client is not None:
+            capabilities["available_providers"]["gemini"] = {
+                "status": "available",
+                "role": "research_ai",
+                "capabilities": ["market_research", "trend_analysis", "content_analysis", "knowledge_synthesis"],
+                "api_key_present": True
+            }
+            capabilities["research_functions"].extend([
+                "market_trend_analysis",
+                "technology_research",
+                "competitive_intelligence"
+            ])
+            capabilities["total_providers"] += 1
+        else:
+            capabilities["available_providers"]["gemini"] = {
+                "status": "unavailable",
+                "role": "research_ai",
+                "reason": "API key not configured"
+            }
+        
+        # Check DeepSeek (Research AI)
+        if self.deepseek_api_key is not None:
+            capabilities["available_providers"]["deepseek"] = {
+                "status": "available",
+                "role": "research_ai",
+                "capabilities": ["deep_analysis", "technical_research", "code_optimization", "pattern_recognition"],
+                "api_key_present": True
+            }
+            capabilities["research_functions"].extend([
+                "deep_technical_analysis",
+                "optimization_research",
+                "algorithmic_insights"
+            ])
+            capabilities["total_providers"] += 1
+        else:
+            capabilities["available_providers"]["deepseek"] = {
+                "status": "unavailable",
+                "role": "research_ai",
+                "reason": "API key not configured"
+            }
+        
+        # Define supported analysis types
+        capabilities["analysis_types"] = [
+            "general",
+            "security",
+            "trends",
+            "technical",
+            "market",
+            "strategic",
+            "performance",
+            "competitive"
+        ]
+        
+        # Determine if system is research ready
+        research_providers = [
+            capabilities["available_providers"]["gemini"]["status"] == "available",
+            capabilities["available_providers"]["deepseek"]["status"] == "available"
+        ]
+        primary_available = capabilities["available_providers"]["anthropic"]["status"] == "available"
+        
+        capabilities["research_ready"] = primary_available and any(research_providers)
+        
+        # Add research function availability
+        if capabilities["research_ready"]:
+            capabilities["research_functions"].extend([
+                "analyze_with_research_ai",
+                "enhance_context_analysis",
+                "multi_provider_synthesis"
+            ])
+        
+        # Remove duplicates from research functions
+        capabilities["research_functions"] = list(set(capabilities["research_functions"]))
+        
+        return capabilities
 
 
 # Simple alias for compatibility
