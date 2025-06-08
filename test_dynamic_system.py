@@ -12,7 +12,7 @@ from datetime import datetime
 # Add scripts directory to path
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'scripts'))
 
-from scripts.ai_brain import AIBrain
+from scripts.ai_brain_factory import AIBrainFactory
 from scripts.dynamic_god_mode_controller import DynamicGodModeController
 from scripts.god_mode_controller import GodModeConfig, IntensityLevel
 
@@ -23,10 +23,10 @@ async def test_dynamic_system():
     print("TESTING DYNAMIC AI SYSTEM - NO HARDCODED VALUES")
     print("=" * 80)
     
-    # Initialize AI brain
-    print("\n1. Initializing AI Brain...")
-    ai_brain = AIBrain()
-    print("✓ AI Brain initialized")
+    # Initialize AI brain using factory
+    print("\n1. Initializing AI Brain for testing...")
+    ai_brain = AIBrainFactory.create_for_testing()
+    print("✓ AI Brain initialized with test configuration")
     
     # Configure god mode
     print("\n2. Configuring Dynamic God Mode...")
@@ -174,8 +174,10 @@ if __name__ == "__main__":
     missing_keys = [k for k, v in api_keys.items() if not v]
     
     if missing_keys:
-        print("WARNING: Missing API keys:", missing_keys)
-        print("Some functionality may be limited.\n")
+        print("INFO: Missing API keys:", missing_keys)
+        print("Using test configuration with mock data.\n")
+    else:
+        print("✓ All API keys available for full testing.\n")
     
     # Run test
     asyncio.run(test_dynamic_system())

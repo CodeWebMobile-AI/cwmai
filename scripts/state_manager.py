@@ -219,3 +219,104 @@ class StateManager:
         if "version" not in state:
             state["version"] = "1.0.0"
     
+    def load_workflow_state(self) -> Dict[str, Any]:
+        """Load minimal state optimized for GitHub Actions workflow.
+        
+        Returns lightweight state with only essential data for CI performance.
+        
+        Returns:
+            Minimal state dictionary for workflow execution
+        """
+        try:
+            # Load full state first
+            full_state = self.load_state()
+            
+            # Extract only essential data for workflow
+            workflow_state = {
+                'charter': full_state.get('charter', {
+                    'purpose': 'autonomous_ai_development',
+                    'version': 'workflow_v1',
+                    'created_at': datetime.now(timezone.utc).isoformat()
+                }),
+                'projects': self._get_essential_projects(full_state.get('projects', {})),
+                'system_performance': self._get_essential_performance(full_state.get('system_performance', {})),
+                'last_updated': datetime.now(timezone.utc).isoformat(),
+                'environment': 'github_actions'
+            }
+            
+            print("Loaded workflow-optimized state")
+            return workflow_state
+            
+        except Exception as e:
+            print(f"Failed to load workflow state: {e}, using minimal defaults")
+            return self._get_minimal_workflow_state()
+    
+    def load_production_state(self) -> Dict[str, Any]:
+        """Load complete state for production environment.
+        
+        Loads all available state data including history, metrics, and configurations.
+        
+        Returns:
+            Complete state dictionary for production use
+        """
+        try:
+            # Load full state with all historical data
+            state = self.load_state()
+            
+            # Add production-specific metadata
+            state.update({
+                'environment': 'production',
+                'full_history_loaded': True,
+                'last_production_load': datetime.now(timezone.utc).isoformat()
+            })
+            
+            print("Loaded complete production state")
+            return state
+            
+        except Exception as e:
+            print(f"Failed to load production state: {e}")
+            raise
+    
+    def _get_essential_projects(self, projects: Dict[str, Any]) -> Dict[str, Any]:
+        """Extract essential project data for workflow."""
+        essential_projects = {}
+        
+        for project_id, project_data in projects.items():
+            if isinstance(project_data, dict):
+                # Keep only essential project fields
+                essential_projects[project_id] = {
+                    'name': project_data.get('name', project_id),
+                    'status': project_data.get('status', 'unknown'),
+                    'health_score': project_data.get('health_score', 0.5),
+                    'type': project_data.get('type', 'unknown'),
+                    'last_updated': project_data.get('last_updated')
+                }
+        
+        return essential_projects
+    
+    def _get_essential_performance(self, performance: Dict[str, Any]) -> Dict[str, Any]:
+        """Extract essential performance metrics for workflow."""
+        return {
+            'success_rate': performance.get('success_rate', 0.0),
+            'total_tasks_completed': performance.get('total_tasks_completed', 0),
+            'avg_completion_time': performance.get('avg_completion_time', 0),
+            'last_updated': performance.get('last_updated')
+        }
+    
+    def _get_minimal_workflow_state(self) -> Dict[str, Any]:
+        """Get minimal default state for workflow fallback."""
+        return {
+            'charter': {
+                'purpose': 'autonomous_ai_development_fallback',
+                'version': 'minimal_v1',
+                'created_at': datetime.now(timezone.utc).isoformat()
+            },
+            'projects': {},
+            'system_performance': {
+                'success_rate': 0.0,
+                'total_tasks_completed': 0
+            },
+            'environment': 'github_actions_fallback',
+            'minimal_mode': True
+        }
+    

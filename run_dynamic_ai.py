@@ -14,7 +14,7 @@ from datetime import datetime
 # Add scripts directory to path
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'scripts'))
 
-from scripts.ai_brain import AIBrain
+from scripts.ai_brain_factory import AIBrainFactory
 from scripts.dynamic_god_mode_controller import DynamicGodModeController
 from scripts.god_mode_controller import GodModeConfig, IntensityLevel
 
@@ -57,10 +57,10 @@ async def main():
         
     print("✓ Environment configured\n")
     
-    # Initialize AI Brain
-    print("Initializing AI Brain...")
-    ai_brain = AIBrain()
-    print("✓ AI Brain ready\n")
+    # Initialize AI Brain using factory
+    print("Initializing AI Brain for production...")
+    ai_brain = AIBrainFactory.create_for_production()
+    print("✓ AI Brain ready with full capabilities\n")
     
     # Configure system
     print("Select intensity level:")

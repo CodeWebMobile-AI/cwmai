@@ -421,6 +421,74 @@ class ContextGatherer:
             enhanced_context = context.copy()
         
         return enhanced_context
+    
+    def gather_workflow_context(self) -> Dict[str, Any]:
+        """Gather minimal context optimized for GitHub Actions workflow.
+        
+        Collects only essential context data for fast CI execution.
+        
+        Returns:
+            Minimal context dictionary for workflow
+        """
+        workflow_context = {
+            'environment': 'github_actions',
+            'capabilities': [
+                'GitHub API integration',
+                'AI Model access',
+                'Task generation',
+                'Repository management'
+            ],
+            'market_trends': [],  # Skip expensive API calls in CI
+            'security_alerts': [],
+            'technology_updates': [],
+            'github_trending': [],
+            'programming_news': [],
+            'last_updated': datetime.now(timezone.utc).isoformat(),
+            'optimized_for': 'ci_performance',
+            'limited_scope': True
+        }
+        
+        # Add GitHub Actions specific information
+        if os.getenv('GITHUB_ACTIONS'):
+            workflow_context.update({
+                'github_workspace': os.getenv('GITHUB_WORKSPACE'),
+                'github_event_name': os.getenv('GITHUB_EVENT_NAME'),
+                'github_sha': os.getenv('GITHUB_SHA'),
+                'runner_os': os.getenv('RUNNER_OS'),
+                'runner_arch': os.getenv('RUNNER_ARCH')
+            })
+        
+        print("Gathered workflow-optimized context")
+        return workflow_context
+    
+    def gather_production_context(self, charter: Dict[str, Any] = None) -> Dict[str, Any]:
+        """Gather complete context for production environment.
+        
+        Performs full context gathering with all data sources.
+        
+        Args:
+            charter: System charter for context filtering
+            
+        Returns:
+            Complete context dictionary for production
+        """
+        try:
+            # Get full context with all data sources
+            full_context = self.gather_context(charter or {})
+            
+            # Add production-specific metadata
+            full_context.update({
+                'environment': 'production',
+                'full_data_gathering': True,
+                'production_load_time': datetime.now(timezone.utc).isoformat()
+            })
+            
+            print("Gathered complete production context")
+            return full_context
+            
+        except Exception as e:
+            print(f"Failed to gather production context: {e}")
+            raise
 
 
 def main():

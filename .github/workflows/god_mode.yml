@@ -63,7 +63,7 @@ jobs:
           cat > run_god_mode.py << 'EOF'
           import asyncio
           import json
-          from ai_brain import AIBrain
+          from ai_brain_factory import AIBrainFactory
           from dynamic_god_mode_controller import DynamicGodModeController  
           from god_mode_controller import GodModeConfig, IntensityLevel
           
@@ -74,10 +74,10 @@ jobs:
               
               print(f'Starting Dynamic God Mode Controller (Intensity: {intensity.value})')
               
-              # Initialize AI Brain
-              print('Initializing AI Brain...')
-              ai_brain = AIBrain()
-              print('✓ AI Brain ready')
+              # Initialize AI Brain using factory
+              print('Initializing AI Brain for workflow...')
+              ai_brain = AIBrainFactory.create_for_workflow()
+              print('✓ AI Brain ready with workflow optimization')
               
               # Create configuration
               config = GodModeConfig(
@@ -303,15 +303,15 @@ jobs:
         run: |
           cd scripts
           cat > test_god_mode.py << 'EOF'
-          from ai_brain import AIBrain
+          from ai_brain_factory import AIBrainFactory
           from dynamic_god_mode_controller import DynamicGodModeController  
           from god_mode_controller import GodModeConfig, IntensityLevel
           
           # Quick test to ensure everything loads
           print('Testing Dynamic God Mode Controller...')
           
-          # Initialize AI Brain
-          ai_brain = AIBrain()
+          # Initialize AI Brain using factory
+          ai_brain = AIBrainFactory.create_for_testing()
           
           # Create config
           config = GodModeConfig(intensity=IntensityLevel.CONSERVATIVE)

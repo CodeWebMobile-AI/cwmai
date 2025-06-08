@@ -39,8 +39,13 @@ class DynamicGodModeController(GodModeController):
         
         Args:
             config: God mode configuration
-            ai_brain: AI brain instance
+            ai_brain: AI brain instance (will use factory if None)
         """
+        # Create AI brain using factory if not provided
+        if ai_brain is None:
+            from ai_brain_factory import AIBrainFactory
+            ai_brain = AIBrainFactory.create_for_production()
+        
         # Initialize parent
         super().__init__(config, ai_brain)
         
