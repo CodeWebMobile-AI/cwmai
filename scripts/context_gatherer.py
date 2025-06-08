@@ -16,15 +16,17 @@ import urllib.parse
 
 
 class ContextGatherer:
-    """Gathers external context and market intelligence."""
+    """Gathers external context and market intelligence with AI-enhanced analysis."""
     
-    def __init__(self, output_path: str = "context.json"):
+    def __init__(self, output_path: str = "context.json", ai_brain=None):
         """Initialize the ContextGatherer.
         
         Args:
             output_path: Path to save gathered context
+            ai_brain: AI brain instance for enhanced analysis (optional)
         """
         self.output_path = output_path
+        self.ai_brain = ai_brain
         self.session = requests.Session()
         self.session.headers.update({
             'User-Agent': 'Mozilla/5.0 (compatible; AI-Bot/1.0; +https://github.com/CodeWebMobile-AI/cwmai)'
@@ -69,6 +71,10 @@ class ContextGatherer:
         except Exception as e:
             print(f"Error gathering context: {e}")
             context["error"] = str(e)
+        
+        # Enhance context with AI analysis if available
+        if self.ai_brain:
+            context = self._enhance_context_with_ai(context)
         
         # Save context to file
         self._save_context(context)
@@ -326,6 +332,72 @@ class ContextGatherer:
             print(f"Context saved to {self.output_path}")
         except Exception as e:
             print(f"Error saving context: {e}")
+    
+    def _enhance_context_with_ai(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        """Enhance gathered context with AI analysis.
+        
+        Args:
+            context: Raw context data
+            
+        Returns:
+            Enhanced context with AI insights
+        """
+        try:
+            enhanced_context = context.copy()
+            enhanced_context["ai_analysis"] = {}
+            
+            # Analyze market trends
+            if context.get("market_trends"):
+                trends_text = " ".join([item.get("description", "") for item in context["market_trends"][:5]])
+                if trends_text:
+                    analysis = self.ai_brain.analyze_with_research_ai(trends_text, "market trends")
+                    if analysis:
+                        enhanced_context["ai_analysis"]["market_trends_insights"] = analysis
+            
+            # Analyze security alerts
+            if context.get("security_alerts"):
+                security_text = " ".join([item.get("description", "") for item in context["security_alerts"][:3]])
+                if security_text:
+                    analysis = self.ai_brain.analyze_with_research_ai(security_text, "security")
+                    if analysis:
+                        enhanced_context["ai_analysis"]["security_insights"] = analysis
+            
+            # Analyze technology updates
+            if context.get("technology_updates"):
+                tech_text = " ".join([item.get("description", "") for item in context["technology_updates"][:3]])
+                if tech_text:
+                    analysis = self.ai_brain.analyze_with_research_ai(tech_text, "technical")
+                    if analysis:
+                        enhanced_context["ai_analysis"]["technology_insights"] = analysis
+            
+            # Overall strategic analysis
+            all_content = []
+            for key in ["market_trends", "security_alerts", "technology_updates", "github_trending"]:
+                if context.get(key):
+                    for item in context[key][:2]:
+                        if item.get("description"):
+                            all_content.append(item["description"][:200])
+            
+            if all_content:
+                combined_content = " | ".join(all_content)
+                strategic_analysis = self.ai_brain.analyze_with_research_ai(
+                    combined_content, 
+                    "strategic software development"
+                )
+                if strategic_analysis:
+                    enhanced_context["ai_analysis"]["strategic_recommendations"] = strategic_analysis
+            
+            # Add AI provider status
+            if hasattr(self.ai_brain, 'get_research_ai_status'):
+                enhanced_context["ai_analysis"]["research_ai_status"] = self.ai_brain.get_research_ai_status()
+            
+            print(f"Enhanced context with {len(enhanced_context.get('ai_analysis', {}))} AI insights")
+            
+        except Exception as e:
+            print(f"Error enhancing context with AI: {e}")
+            enhanced_context = context.copy()
+        
+        return enhanced_context
 
 
 def main():

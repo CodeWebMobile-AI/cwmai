@@ -12,6 +12,8 @@ from datetime import datetime, timezone
 from typing import Dict, List, Any, Tuple, Optional
 import openai
 import anthropic
+import google.generativeai as genai
+import requests
 
 
 class IntelligentAIBrain:
@@ -65,15 +67,27 @@ class IntelligentAIBrain:
         self.projects = state.get("projects", {})
         self.system_performance = state.get("system_performance", {})
         
-        # Initialize AI clients
-        self.openai_client = None
+        # Initialize AI clients - Anthropic is now primary
         self.anthropic_client = None
+        self.openai_client = None
+        self.gemini_client = None
+        self.deepseek_api_key = None
         
+        # Primary AI provider - Anthropic
+        if os.getenv('ANTHROPIC_API_KEY'):
+            self.anthropic_client = anthropic.Anthropic(api_key=os.getenv('ANTHROPIC_API_KEY'))
+        
+        # Secondary AI provider - OpenAI
         if os.getenv('OPENAI_API_KEY'):
             self.openai_client = openai.OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
         
-        if os.getenv('ANTHROPIC_API_KEY'):
-            self.anthropic_client = anthropic.Anthropic(api_key=os.getenv('ANTHROPIC_API_KEY'))
+        # Research AI providers - Gemini and DeepSeek
+        if os.getenv('GEMINI_API_KEY'):
+            genai.configure(api_key=os.getenv('GEMINI_API_KEY'))
+            self.gemini_client = genai.GenerativeModel('gemini-pro')
+        
+        if os.getenv('DEEPSEEK_API_KEY'):
+            self.deepseek_api_key = os.getenv('DEEPSEEK_API_KEY')
     
     def decide_next_action(self) -> str:
         """Intelligently decide the next action based on multiple factors.
@@ -619,3 +633,104 @@ Current Budget: ${self.api_budget.get('monthly_usage_usd', 0):.2f} / ${self.api_
         # Keep only last 20 actions per project
         if len(self.projects[project_key]["action_history"]) > 20:
             self.projects[project_key]["action_history"] = self.projects[project_key]["action_history"][-20:]
+    
+    def analyze_with_research_ai(self, content: str, analysis_type: str = "general") -> str:
+        """Use research AI providers (Gemini/DeepSeek) to analyze content.
+        
+        Args:
+            content: Content to analyze
+            analysis_type: Type of analysis (general, security, trends, technical)
+            
+        Returns:
+            Analysis result or empty string if failed
+        """
+        try:
+            # Try Gemini first for research tasks
+            if self.gemini_client:
+                prompt = f"Analyze this {analysis_type} content and provide insights: {content[:1000]}"
+                try:
+                    response = self.gemini_client.generate_content(prompt)
+                    return response.text if response.text else ""
+                except Exception as e:
+                    print(f"Gemini analysis failed: {e}")
+            
+            # Fallback to DeepSeek API
+            if self.deepseek_api_key:
+                return self._call_deepseek_api(content, analysis_type)
+                
+        except Exception as e:
+            print(f"Research AI analysis failed: {e}")
+        
+        return ""
+    
+    def _call_deepseek_api(self, content: str, analysis_type: str) -> str:
+        """Call DeepSeek API for content analysis.
+        
+        Args:
+            content: Content to analyze
+            analysis_type: Type of analysis
+            
+        Returns:
+            Analysis result or empty string if failed
+        """
+        try:
+            url = "https://api.deepseek.com/v1/chat/completions"
+            headers = {
+                "Authorization": f"Bearer {self.deepseek_api_key}",
+                "Content-Type": "application/json"
+            }
+            
+            data = {
+                "model": "deepseek-chat",
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": f"Analyze this {analysis_type} content and provide insights: {content[:1000]}"
+                    }
+                ],
+                "max_tokens": 500,
+                "temperature": 0.7
+            }
+            
+            response = requests.post(url, headers=headers, json=data, timeout=30)
+            
+            if response.status_code == 200:
+                result = response.json()
+                if result.get("choices") and len(result["choices"]) > 0:
+                    return result["choices"][0]["message"]["content"]
+            else:
+                print(f"DeepSeek API error: {response.status_code}")
+                
+        except Exception as e:
+            print(f"DeepSeek API call failed: {e}")
+        
+        return ""
+    
+    def get_primary_ai_client(self):
+        """Get the primary AI client (Anthropic).
+        
+        Returns:
+            Primary AI client or None
+        """
+        return self.anthropic_client
+    
+    def get_secondary_ai_client(self):
+        """Get the secondary AI client (OpenAI).
+        
+        Returns:
+            Secondary AI client or None  
+        """
+        return self.openai_client
+    
+    def get_research_ai_status(self) -> Dict[str, bool]:
+        """Get status of research AI providers.
+        
+        Returns:
+            Dictionary indicating which research AIs are available
+        """
+        return {
+            "gemini_available": self.gemini_client is not None,
+            "deepseek_available": self.deepseek_api_key is not None,
+            "anthropic_primary": self.anthropic_client is not None,
+            "openai_secondary": self.openai_client is not None
+        }
