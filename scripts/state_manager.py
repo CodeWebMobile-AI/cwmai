@@ -77,7 +77,7 @@ class StateManager:
         """
         self.local_path = local_path
         self.repo_path = repo_path
-        self.github_token = os.getenv('GITHUB_TOKEN')
+        self.github_token = os.getenv('CLAUDE_PAT')
         self.repo_name = os.getenv('GITHUB_REPOSITORY', 'CodeWebMobile-AI/cwmai')
         
     def load_state(self) -> Dict[str, Any]:

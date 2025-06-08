@@ -48,8 +48,8 @@ def validate_environment() -> bool:
     Returns:
         True if environment is properly configured
     """
-    required_vars = ['GITHUB_TOKEN']
-    optional_vars = ['OPENAI_API_KEY', 'ANTHROPIC_API_KEY']
+    required_vars = ['CLAUDE_PAT']
+    optional_vars = ['ANTHROPIC_API_KEY', 'OPENAI_API_KEY', 'GEMINI_API_KEY', 'DEEPSEEK_API_KEY']
     
     missing_required = []
     missing_optional = []
@@ -255,16 +255,29 @@ def main():
         create_cycle_summary(state, report_data)
         return
     
-    # Load external context
-    print("Loading external context...")
-    context = load_context()
+    # Initialize AI Brain first
+    print("Initializing AI Brain...")
+    # Create temporary context for initial setup
+    temp_context = load_context()
+    ai_brain = IntelligentAIBrain(state, temp_context)
+    
+    # Log AI provider status
+    ai_status = ai_brain.get_research_ai_status()
+    print(f"AI Providers: Anthropic(primary)={ai_status['anthropic_primary']}, "
+          f"OpenAI(secondary)={ai_status['openai_secondary']}, "
+          f"Gemini={ai_status['gemini_available']}, "
+          f"DeepSeek={ai_status['deepseek_available']}")
+    
+    # Load external context with AI enhancement
+    print("Loading and enhancing external context...")
+    context_gatherer = ContextGatherer(ai_brain=ai_brain)
+    enhanced_context = context_gatherer.gather_context(state.get("charter", {}))
+    
+    # Update AI brain with enhanced context
+    ai_brain.context = enhanced_context
     
     # Handle forced actions
     forced_action = handle_forced_action()
-    
-    # Initialize AI Brain
-    print("Initializing AI Brain...")
-    ai_brain = IntelligentAIBrain(state, context)
     
     # Override decision if action is forced
     if forced_action != 'auto':
