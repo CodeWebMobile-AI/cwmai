@@ -45,7 +45,6 @@ class ReportGenerator:
             self._generate_executive_summary(state, cycle_report),
             self._generate_current_cycle_summary(cycle_report),
             self._generate_system_performance(state),
-            self._generate_budget_analysis(state),
             self._generate_portfolio_health(state),
             self._generate_learning_metrics(state),
             self._generate_recent_activity(state),
@@ -111,10 +110,6 @@ class ReportGenerator:
         if projects:
             avg_health = sum(p.get("health_score", 50) for p in projects.values()) / len(projects)
         
-        budget = state.get("api_budget", {})
-        budget_used = budget.get("monthly_usage_usd", 0)
-        budget_limit = budget.get("monthly_limit_usd", 100)
-        budget_percentage = (budget_used / budget_limit) * 100 if budget_limit > 0 else 0
         
         return f"""## Executive Summary
 
@@ -122,7 +117,6 @@ The Autonomous AI Software Development System has completed **{total_cycles}** o
 
 ### Key Metrics
 - **Portfolio Health:** {avg_health:.1f}/100 across {len(projects)} projects
-- **Budget Utilization:** ${budget_used:.2f} of ${budget_limit:.2f} ({budget_percentage:.1f}% used)
 - **Success Rate:** {successful_actions}/{successful_actions + failed_actions} actions successful
 - **System Status:** {"🟢 Operational" if success_rate >= 70 else "🟡 Monitoring" if success_rate >= 50 else "🔴 Attention Required"}"""
     
@@ -148,7 +142,6 @@ The Autonomous AI Software Development System has completed **{total_cycles}** o
             "success_completed": "✅",
             "success_merged": "✅",
             "success_forced": "✅",
-            "success_budget_conservation": "💰",
             "failure_error": "❌",
             "failure_forced": "❌"
         }
@@ -162,7 +155,7 @@ The Autonomous AI Software Development System has completed **{total_cycles}** o
 - **Action Taken:** `{action}`
 - **Outcome:** {outcome_display}
 - **Portfolio Health:** {cycle_report.get('portfolio_health', 'N/A')}
-- **Budget Impact:** ${cycle_report.get('budget_used', 0):.2f}"""
+"""
     
     def _generate_system_performance(self, state: Dict[str, Any]) -> str:
         """Generate system performance analysis.
@@ -223,70 +216,7 @@ The Autonomous AI Software Development System has completed **{total_cycles}** o
         else:
             return "🔴 Below Target"
     
-    def _generate_budget_analysis(self, state: Dict[str, Any]) -> str:
-        """Generate budget analysis section.
-        
-        Args:
-            state: System state
-            
-        Returns:
-            Budget analysis markdown
-        """
-        budget = state.get("api_budget", {})
-        monthly_limit = budget.get("monthly_limit_usd", 100)
-        monthly_usage = budget.get("monthly_usage_usd", 0)
-        remaining = monthly_limit - monthly_usage
-        usage_percentage = (monthly_usage / monthly_limit) * 100 if monthly_limit > 0 else 0
-        
-        # Determine budget status
-        if usage_percentage < 50:
-            status = "🟢 Healthy"
-        elif usage_percentage < 80:
-            status = "🟡 Monitoring"
-        else:
-            status = "🔴 Critical"
-        
-        # Calculate daily burn rate (simplified)
-        performance = state.get("system_performance", {})
-        total_cycles = performance.get("total_cycles", 1)
-        daily_burn = (monthly_usage / max(total_cycles, 1)) * 6  # Assuming 4-hour cycles
-        
-        return f"""## Budget Analysis
-
-### Current Status: {status}
-
-- **Monthly Limit:** ${monthly_limit:.2f}
-- **Used This Month:** ${monthly_usage:.2f} ({usage_percentage:.1f}%)
-- **Remaining Budget:** ${remaining:.2f}
-- **Estimated Daily Burn:** ${daily_burn:.2f}
-
-### Budget Breakdown
-```
-Used:     ${"█" * int(usage_percentage / 5)}{" " * (20 - int(usage_percentage / 5))} {usage_percentage:.1f}%
-Remaining: ${"█" * int((100 - usage_percentage) / 5)}{" " * (20 - int((100 - usage_percentage) / 5))} {100 - usage_percentage:.1f}%
-```
-
-### Recommendations
-{self._get_budget_recommendations(usage_percentage, remaining)}"""
     
-    def _get_budget_recommendations(self, usage_percentage: float, remaining: float) -> str:
-        """Generate budget recommendations.
-        
-        Args:
-            usage_percentage: Current usage percentage
-            remaining: Remaining budget amount
-            
-        Returns:
-            Budget recommendations text
-        """
-        if usage_percentage < 30:
-            return "- Budget utilization is low - consider more aggressive project development"
-        elif usage_percentage < 60:
-            return "- Budget utilization is healthy - maintain current activity levels"
-        elif usage_percentage < 85:
-            return "- Budget utilization is high - monitor spending and prioritize essential actions"
-        else:
-            return "- Budget utilization is critical - activate conservation mode and focus on free actions"
     
     def _generate_portfolio_health(self, state: Dict[str, Any]) -> str:
         """Generate portfolio health analysis.
@@ -408,10 +338,6 @@ Analyzing last {len(recent_decisions)} decisions:
         
         insights = []
         
-        # Analyze budget-related decisions
-        budget_decisions = [d for d in decisions if "budget" in d.get("context_summary", {}).get("budget_remaining", 0)]
-        if budget_decisions:
-            insights.append("- System is actively considering budget constraints in decision-making")
         
         # Analyze action diversity
         unique_actions = len(set(d.get("chosen_action") for d in decisions))
@@ -500,14 +426,6 @@ No recent activity recorded."""
         """
         recommendations = []
         
-        # Budget recommendations
-        budget = state.get("api_budget", {})
-        usage_pct = (budget.get("monthly_usage_usd", 0) / budget.get("monthly_limit_usd", 100)) * 100
-        
-        if usage_pct > 90:
-            recommendations.append("🔴 **Critical:** Implement immediate budget conservation measures")
-        elif usage_pct > 75:
-            recommendations.append("🟡 **Warning:** Monitor budget usage closely, consider reducing expensive operations")
         
         # Portfolio health recommendations
         projects = state.get("projects", {})
@@ -547,7 +465,6 @@ No recent activity recorded."""
 ### Next Actions
 - Continue monitoring system performance
 - Review and adjust charter goals if needed
-- Ensure adequate budget allocation for planned activities
 - Consider expanding portfolio if resources allow"""
     
     def _generate_footer(self) -> str:

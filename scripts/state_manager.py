@@ -20,12 +20,7 @@ class StateManager:
         "charter": {
             "primary_goal": "innovation",
             "secondary_goal": "community_engagement", 
-            "constraints": ["stay_within_budget", "maintain_quality"]
-        },
-        "api_budget": {
-            "monthly_limit_usd": 100,
-            "monthly_usage_usd": 0,
-            "last_reset": datetime.now(timezone.utc).isoformat()
+            "constraints": ["maintain_quality", "ensure_security"]
         },
         "projects": {
             "sample-project": {
@@ -205,7 +200,7 @@ class StateManager:
             state: State dictionary to validate and migrate
         """
         # Ensure all required top-level keys exist
-        required_keys = ["charter", "api_budget", "projects", "system_performance", "task_queue"]
+        required_keys = ["charter", "projects", "system_performance", "task_queue"]
         for key in required_keys:
             if key not in state:
                 state[key] = self.DEFAULT_STATE[key].copy()
@@ -216,12 +211,6 @@ class StateManager:
             if key not in state["charter"]:
                 state["charter"][key] = self.DEFAULT_STATE["charter"][key]
         
-        # Ensure api_budget has required fields
-        budget_keys = ["monthly_limit_usd", "monthly_usage_usd"]
-        for key in budget_keys:
-            if key not in state["api_budget"]:
-                state["api_budget"][key] = self.DEFAULT_STATE["api_budget"][key]
-        
         # Ensure system_performance has required structure
         if "learning_metrics" not in state["system_performance"]:
             state["system_performance"]["learning_metrics"] = self.DEFAULT_STATE["system_performance"]["learning_metrics"].copy()
@@ -230,32 +219,3 @@ class StateManager:
         if "version" not in state:
             state["version"] = "1.0.0"
     
-    def update_budget_usage(self, cost_usd: float) -> None:
-        """Update API budget usage.
-        
-        Args:
-            cost_usd: Cost to add to monthly usage
-        """
-        state = self.load_state()
-        state["api_budget"]["monthly_usage_usd"] += cost_usd
-        self.save_state_locally(state)
-    
-    def get_budget_remaining(self) -> float:
-        """Get remaining budget in USD.
-        
-        Returns:
-            Remaining budget amount
-        """
-        state = self.load_state()
-        return state["api_budget"]["monthly_limit_usd"] - state["api_budget"]["monthly_usage_usd"]
-    
-    def is_budget_available(self, required_amount: float = 10.0) -> bool:
-        """Check if sufficient budget is available.
-        
-        Args:
-            required_amount: Minimum required budget
-            
-        Returns:
-            True if budget is available
-        """
-        return self.get_budget_remaining() >= required_amount

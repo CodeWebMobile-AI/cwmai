@@ -1,0 +1,61 @@
+name: AI System Monitoring
+
+on:
+  schedule:
+    # Daily health check at 6 AM UTC
+    - cron: '0 6 * * *'
+    # Weekly report on Monday at 9 AM UTC  
+    - cron: '0 9 * * 1'
+    # Monthly budget reset on 1st at midnight UTC
+    - cron: '0 0 1 * *'
+  workflow_dispatch:
+    inputs:
+      report_type:
+        description: 'Type of report to generate'
+        required: true
+        type: choice
+        options:
+          - 'health_analysis'
+          - 'performance_summary'
+          - 'budget_analysis'
+          - 'emergency_analysis'
+
+jobs:
+  monitoring:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.CLAUDE_PAT }}
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Generate monitoring report
+      env:
+        GITHUB_TOKEN: ${{ secrets.CLAUDE_PAT }}
+        REPORT_TYPE: ${{ github.event.inputs.report_type || 'health_analysis' }}
+      run: |
+        python scripts/create_report.py --monitoring
+
+    - name: Upload monitoring artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: monitoring-report-${{ github.run_number }}
+        path: |
+          monitoring_report.json
+          system_health.json
+        retention-days: 90

@@ -73,26 +73,6 @@ def validate_environment() -> bool:
     return True
 
 
-def check_budget_constraints(state_manager: StateManager) -> bool:
-    """Check if system should proceed based on budget constraints.
-    
-    Args:
-        state_manager: StateManager instance
-        
-    Returns:
-        True if system should proceed with AI operations
-    """
-    if not state_manager.is_budget_available(5.0):
-        remaining = state_manager.get_budget_remaining()
-        print(f"Budget constraint active: ${remaining:.2f} remaining")
-        
-        if remaining <= 0:
-            print("No budget remaining - forcing DO_NOTHING_SAVE_BUDGET action")
-            return False
-        else:
-            print("Low budget - system will prefer cost-effective actions")
-    
-    return True
 
 
 def handle_forced_action() -> str:
@@ -108,12 +88,11 @@ def handle_forced_action() -> str:
         
         # Validate forced action
         valid_actions = [
-            'CREATE_NEW_PROJECT',
-            'IMPROVE_HEALTHIEST_PROJECT', 
-            'FIX_CRITICAL_BUG',
-            'STRATEGIC_REVIEW',
-            'SECURITY_SWEEP',
-            'DO_NOTHING_SAVE_BUDGET'
+            'GENERATE_TASKS',
+            'REVIEW_TASKS', 
+            'PRIORITIZE_TASKS',
+            'ANALYZE_PERFORMANCE',
+            'UPDATE_DASHBOARD'
         ]
         
         if forced_action in valid_actions:
@@ -143,9 +122,8 @@ def update_system_metrics(state: Dict[str, Any], report_data: Dict[str, Any]) ->
         total_actions = successful_actions + failed_actions
         decision_accuracy = successful_actions / total_actions if total_actions > 0 else 0.0
         
-        # Calculate resource efficiency (successful actions per dollar spent)
-        monthly_usage = state.get("api_budget", {}).get("monthly_usage_usd", 0)
-        resource_efficiency = successful_actions / max(monthly_usage, 1.0)
+        # Calculate resource efficiency (successful actions per cycle as proxy)
+        resource_efficiency = successful_actions / max(total_cycles, 1.0)
         
         # Calculate goal achievement (simplified metric based on project health)
         avg_health = sum(p.get("health_score", 50) for p in state.get("projects", {}).values())
@@ -180,12 +158,6 @@ def create_cycle_summary(state: Dict[str, Any], report_data: Dict[str, Any]) -> 
     print(f"Outcome: {report_data.get('outcome', 'Unknown')}")
     print(f"Duration: {report_data.get('duration_seconds', 0):.1f} seconds")
     
-    # Budget status
-    budget = state.get("api_budget", {})
-    used = budget.get("monthly_usage_usd", 0)
-    limit = budget.get("monthly_limit_usd", 100)
-    remaining = limit - used
-    print(f"Budget: ${used:.2f} used / ${limit:.2f} limit (${remaining:.2f} remaining)")
     
     # Portfolio status
     projects = state.get("projects", {})
@@ -233,27 +205,6 @@ def main():
     state = state_manager.load_state()
     print(f"Loaded state with {len(state.get('projects', {}))} projects")
     
-    # Check budget constraints
-    if not check_budget_constraints(state_manager):
-        # Force budget conservation if no budget available
-        print("Forcing budget conservation due to constraints")
-        # Create minimal report and exit
-        report_data = {
-            "cycle_number": state.get("system_performance", {}).get("total_cycles", 0) + 1,
-            "action_taken": "DO_NOTHING_SAVE_BUDGET",
-            "outcome": "success_budget_conservation",
-            "duration_seconds": 0,
-            "budget_used": 0,
-            "portfolio_health": 0,
-            "timestamp": datetime.now(timezone.utc).isoformat()
-        }
-        
-        state["system_performance"]["total_cycles"] += 1
-        state["system_performance"]["successful_actions"] += 1
-        
-        state_manager.save_state_locally(state)
-        create_cycle_summary(state, report_data)
-        return
     
     # Initialize AI Brain first
     print("Initializing AI Brain...")
@@ -303,9 +254,9 @@ def main():
             "action_taken": forced_action,
             "outcome": outcome,
             "duration_seconds": 1.0,
-            "budget_used": state.get("api_budget", {}).get("monthly_usage_usd", 0),
             "portfolio_health": ai_brain._get_average_project_health(),
-            "timestamp": datetime.now(timezone.utc).isoformat()
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "action_type": "task_management"
         }
         
         updated_state = ai_brain.state

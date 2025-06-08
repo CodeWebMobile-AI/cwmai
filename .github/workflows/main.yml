@@ -1,0 +1,116 @@
+name: Autonomous AI Development System
+
+on:
+  schedule:
+    # Run every 4 hours
+    - cron: '0 */4 * * *'
+  workflow_dispatch:
+    inputs:
+      action_override:
+        description: 'Force specific action'
+        required: false
+        type: choice
+        options:
+          - 'auto'
+          - 'generate_tasks'
+          - 'review_tasks'
+          - 'prioritize_tasks'
+          - 'analyze_performance'
+          - 'update_dashboard'
+  push:
+    branches: [ main ]
+    paths: 
+      - 'scripts/**'
+      - '.github/workflows/**'
+
+jobs:
+  ai_cycle:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.CLAUDE_PAT }}
+        fetch-depth: 0
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Cache system state
+      uses: actions/cache@v3
+      with:
+        path: system_state.json
+        key: ai-system-state-${{ github.sha }}
+        restore-keys: |
+          ai-system-state-
+
+    - name: Load system state
+      run: |
+        python -c "
+        from scripts.state_manager import StateManager
+        sm = StateManager()
+        state = sm.load_state()
+        print(f'System loaded. Projects: {len(state.get(\"projects\", {}))}')
+        "
+
+    - name: Gather external context
+      run: |
+        python scripts/context_gatherer.py
+        echo "Context gathering completed"
+
+    - name: Execute AI cycle
+      env:
+        GITHUB_TOKEN: ${{ secrets.CLAUDE_PAT }}
+        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        FORCE_ACTION: ${{ github.event.inputs.action_override }}
+      run: |
+        python scripts/main_cycle.py
+
+    - name: Create performance report
+      if: always()
+      run: |
+        python scripts/create_report.py
+        
+    - name: Upload artifacts
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: ai-cycle-report-${{ github.run_number }}
+        path: |
+          cycle_report.json
+          system_state.json
+          context.json
+          task_state.json
+          task_report.md
+          generated_tasks.json
+        retention-days: 30
+
+    - name: Save system state
+      if: always()
+      run: |
+        python -c "
+        from scripts.state_manager import StateManager
+        import json
+        
+        # Load current state and ensure it's saved
+        sm = StateManager()
+        state = sm.load_state()
+        sm.save_state(state)
+        print('System state preserved')
+        "

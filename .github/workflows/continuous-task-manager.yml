@@ -1,0 +1,117 @@
+name: Continuous Task Manager
+
+on:
+  schedule:
+    # Run every 30 minutes for 24/7 operation
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+    inputs:
+      task_focus:
+        description: 'Focus area for task generation'
+        required: false
+        type: choice
+        options:
+          - 'auto'
+          - 'new_features'
+          - 'bug_fixes'
+          - 'refactoring'
+          - 'documentation'
+          - 'testing'
+          - 'security'
+          - 'performance'
+      max_tasks:
+        description: 'Maximum tasks to create/manage this cycle'
+        required: false
+        type: number
+        default: 5
+
+jobs:
+  task_management:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.CLAUDE_PAT }}
+        fetch-depth: 0
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Cache task state
+      uses: actions/cache@v3
+      with:
+        path: |
+          task_state.json
+          task_history.json
+        key: task-state-${{ github.sha }}
+        restore-keys: |
+          task-state-
+
+    - name: Analyze existing tasks
+      env:
+        GITHUB_TOKEN: ${{ secrets.CLAUDE_PAT }}
+      run: |
+        echo "Analyzing open issues and PRs..."
+        python scripts/task_analyzer.py
+
+    - name: Generate new tasks
+      env:
+        GITHUB_TOKEN: ${{ secrets.CLAUDE_PAT }}
+        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        TASK_FOCUS: ${{ github.event.inputs.task_focus || 'auto' }}
+        MAX_TASKS: ${{ github.event.inputs.max_tasks || 5 }}
+      run: |
+        python scripts/task_manager.py generate
+
+    - name: Review completed tasks
+      env:
+        GITHUB_TOKEN: ${{ secrets.CLAUDE_PAT }}
+        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      run: |
+        python scripts/task_manager.py review
+
+    - name: Update task priorities
+      env:
+        GITHUB_TOKEN: ${{ secrets.CLAUDE_PAT }}
+      run: |
+        python scripts/task_manager.py prioritize
+
+    - name: Create task report
+      if: always()
+      run: |
+        python scripts/task_manager.py report
+        
+    - name: Upload task artifacts
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: task-cycle-${{ github.run_number }}
+        path: |
+          task_state.json
+          task_history.json
+          task_report.md
+          generated_tasks.json
+        retention-days: 30
+
+    - name: Update task dashboard
+      if: always()
+      env:
+        GITHUB_TOKEN: ${{ secrets.CLAUDE_PAT }}
+      run: |
+        python scripts/update_task_dashboard.py

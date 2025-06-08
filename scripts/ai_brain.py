@@ -21,35 +21,25 @@ class IntelligentAIBrain:
     
     # Action types with base scoring weights
     ACTION_TYPES = {
-        "CREATE_NEW_PROJECT": {
-            "base_score": 50,
-            "cost_estimate": 25.0,
-            "goal_alignment": {"innovation": 1.5, "growth": 1.2, "experimentation": 1.4}
+        "GENERATE_TASKS": {
+            "base_score": 80,
+            "goal_alignment": {"innovation": 1.3, "planning": 1.5, "efficiency": 1.4}
         },
-        "IMPROVE_HEALTHIEST_PROJECT": {
-            "base_score": 40,
-            "cost_estimate": 15.0,
-            "goal_alignment": {"stability": 1.4, "quality": 1.3, "community_engagement": 1.2}
-        },
-        "FIX_CRITICAL_BUG": {
+        "REVIEW_TASKS": {
             "base_score": 70,
-            "cost_estimate": 10.0,
-            "goal_alignment": {"stability": 1.6, "quality": 1.5, "reliability": 1.4}
+            "goal_alignment": {"quality": 1.5, "optimization": 1.3, "reliability": 1.4}
         },
-        "STRATEGIC_REVIEW": {
-            "base_score": 30,
-            "cost_estimate": 5.0,
-            "goal_alignment": {"optimization": 1.3, "planning": 1.2, "efficiency": 1.1}
-        },
-        "SECURITY_SWEEP": {
+        "PRIORITIZE_TASKS": {
             "base_score": 60,
-            "cost_estimate": 12.0,
-            "goal_alignment": {"security": 1.8, "stability": 1.3, "compliance": 1.4}
+            "goal_alignment": {"efficiency": 1.6, "planning": 1.4, "optimization": 1.3}
         },
-        "DO_NOTHING_SAVE_BUDGET": {
-            "base_score": 20,
-            "cost_estimate": 0.0,
-            "goal_alignment": {"budget_conservation": 2.0, "efficiency": 1.1}
+        "ANALYZE_PERFORMANCE": {
+            "base_score": 50,
+            "goal_alignment": {"optimization": 1.5, "learning": 1.4, "efficiency": 1.2}
+        },
+        "UPDATE_DASHBOARD": {
+            "base_score": 40,
+            "goal_alignment": {"transparency": 1.5, "communication": 1.3, "engagement": 1.2}
         }
     }
     
@@ -63,7 +53,6 @@ class IntelligentAIBrain:
         self.state = state
         self.context = context
         self.charter = state.get("charter", {})
-        self.api_budget = state.get("api_budget", {})
         self.projects = state.get("projects", {})
         self.system_performance = state.get("system_performance", {})
         
@@ -134,9 +123,6 @@ class IntelligentAIBrain:
         health_factor = self._calculate_health_factor(action_type)
         score *= health_factor
         
-        # Resource availability factor
-        resource_factor = self._calculate_resource_factor(action_config["cost_estimate"])
-        score *= resource_factor
         
         # External context factor
         context_factor = self._calculate_context_factor(action_type)
@@ -201,35 +187,6 @@ class IntelligentAIBrain:
         
         return 1.0
     
-    def _calculate_resource_factor(self, cost_estimate: float) -> float:
-        """Calculate resource availability factor.
-        
-        Args:
-            cost_estimate: Estimated cost of the action
-            
-        Returns:
-            Resource factor (0.1 to 1.5)
-        """
-        monthly_limit = self.api_budget.get("monthly_limit_usd", 100)
-        monthly_usage = self.api_budget.get("monthly_usage_usd", 0)
-        remaining_budget = monthly_limit - monthly_usage
-        
-        if remaining_budget <= 0:
-            return 0.1 if cost_estimate > 0 else 1.5  # Heavily favor free actions
-        
-        budget_ratio = remaining_budget / monthly_limit
-        
-        if budget_ratio > 0.5:
-            return 1.2  # Plenty of budget available
-        elif budget_ratio > 0.2:
-            cost_ratio = cost_estimate / remaining_budget
-            return max(0.3, 1.0 - cost_ratio)  # Scale based on cost
-        else:
-            # Low budget - heavily penalize expensive actions
-            if cost_estimate > remaining_budget * 0.5:
-                return 0.1
-            else:
-                return 0.7
     
     def _calculate_context_factor(self, action_type: str) -> float:
         """Calculate external context factor.
@@ -307,7 +264,6 @@ class IntelligentAIBrain:
             "chosen_action": chosen_action,
             "action_scores": all_scores,
             "context_summary": {
-                "budget_remaining": self.api_budget.get("monthly_limit_usd", 100) - self.api_budget.get("monthly_usage_usd", 0),
                 "avg_project_health": self._get_average_project_health(),
                 "external_factors": len(self.context.get("security_alerts", [])) + len(self.context.get("market_trends", []))
             }
@@ -350,12 +306,11 @@ class IntelligentAIBrain:
         external_context = self._format_external_context()
         
         base_prompts = {
-            "CREATE_NEW_PROJECT": self._generate_new_project_prompt(),
-            "IMPROVE_HEALTHIEST_PROJECT": self._generate_improvement_prompt(project_name),
-            "FIX_CRITICAL_BUG": self._generate_bug_fix_prompt(project_name),
-            "STRATEGIC_REVIEW": self._generate_review_prompt(),
-            "SECURITY_SWEEP": self._generate_security_prompt(),
-            "DO_NOTHING_SAVE_BUDGET": self._generate_conservation_prompt()
+            "GENERATE_TASKS": self._generate_task_generation_prompt(),
+            "REVIEW_TASKS": self._generate_task_review_prompt(),
+            "PRIORITIZE_TASKS": self._generate_task_prioritization_prompt(),
+            "ANALYZE_PERFORMANCE": self._generate_performance_analysis_prompt(),
+            "UPDATE_DASHBOARD": self._generate_dashboard_update_prompt()
         }
         
         base_prompt = base_prompts.get(action_type, "Perform the requested action.")
@@ -365,109 +320,85 @@ class IntelligentAIBrain:
         
         return full_prompt
     
-    def _generate_new_project_prompt(self) -> str:
-        """Generate prompt for creating new projects."""
+    def _generate_task_generation_prompt(self) -> str:
+        """Generate prompt for task generation."""
         trending_context = ""
         if self.context.get("github_trending"):
             trending_context = "Consider these trending technologies: " + ", ".join([
                 trend.get("title", "") for trend in self.context["github_trending"][:3]
             ])
         
-        return f"""Create a new innovative software project that aligns with current technology trends.
+        return f"""Generate development tasks for @claude based on current project needs.
 
-Requirements:
-- Must be technically sound and implementable
-- Should demonstrate modern best practices
-- Include comprehensive documentation and tests
-- Focus on solving real-world problems
-- Consider open source community engagement
+Considerations:
+- Current portfolio health and gaps
+- Trending technologies and market demands
+- Security vulnerabilities that need addressing
+- Documentation and testing coverage
+- Feature requests and improvements
 
 {trending_context}
 
-Charter Goals: {self.charter.get('primary_goal')} / {self.charter.get('secondary_goal')}"""
+Charter Goals: {self.charter.get('primary_goal')} / {self.charter.get('secondary_goal')}
+
+Create actionable, specific tasks that @claude can implement."""
     
-    def _generate_improvement_prompt(self, project_name: Optional[str]) -> str:
-        """Generate prompt for improving projects."""
-        if not project_name or project_name not in self.projects:
-            project_name = max(self.projects.keys(), key=lambda p: self.projects[p].get("health_score", 0))
-        
-        project = self.projects[project_name]
-        
-        return f"""Improve the project '{project_name}' (current health: {project.get('health_score', 'unknown')}).
+    def _generate_task_review_prompt(self) -> str:
+        """Generate prompt for task review."""
+        return f"""Review tasks completed by @claude and verify quality.
 
-Focus Areas:
-- Code quality and maintainability
-- Performance optimizations
-- Documentation improvements
-- Test coverage enhancement
-- Security hardening
-- User experience improvements
+Review Criteria:
+- Code quality and best practices
+- Test coverage and reliability
+- Documentation completeness
+- Security implications
+- Performance impact
 
-Recent Activity: {len(project.get('action_history', []))} previous actions
-Last Checked: {project.get('last_checked', 'Never')}"""
+Provide feedback and determine if tasks meet acceptance criteria."""
     
-    def _generate_bug_fix_prompt(self, project_name: Optional[str]) -> str:
-        """Generate prompt for fixing bugs."""
-        return f"""Identify and fix critical bugs in the project '{project_name or 'selected project'}'.
+    def _generate_task_prioritization_prompt(self) -> str:
+        """Generate prompt for task prioritization."""
+        return f"""Analyze and prioritize the current task backlog.
 
-Priority Areas:
-- Security vulnerabilities
-- Performance bottlenecks
-- Functional errors
-- Compatibility issues
-- Data integrity problems
+Prioritization Factors:
+- Business value and impact
+- Technical dependencies
+- Resource availability
+- Risk mitigation
+- Strategic alignment
 
-Ensure all fixes include:
-- Comprehensive testing
-- Clear documentation
-- Regression prevention measures"""
+Reorganize tasks to maximize efficiency and value delivery."""
     
-    def _generate_review_prompt(self) -> str:
-        """Generate prompt for strategic review."""
-        return f"""Conduct a strategic review of the project portfolio.
+    def _generate_performance_analysis_prompt(self) -> str:
+        """Generate prompt for performance analysis."""
+        return f"""Analyze system performance and @claude interaction effectiveness.
 
-Review Areas:
-- Goal alignment assessment
-- Resource allocation efficiency
-- Performance metrics analysis
-- Risk identification
-- Opportunity assessment
+Analysis Areas:
+- Task completion rates
+- Quality metrics
+- Time to completion
+- Bottleneck identification
+- Success patterns
 
-Current Portfolio: {len(self.projects)} projects
-Average Health: {self._get_average_project_health():.1f}
-System Performance: {self.system_performance.get('successful_actions', 0)}/{self.system_performance.get('total_cycles', 0)} success rate"""
+Current Metrics:
+- Total Cycles: {self.system_performance.get('total_cycles', 0)}
+- Success Rate: {self.system_performance.get('successful_actions', 0)}/{self.system_performance.get('total_cycles', 0)}
+
+Provide insights and optimization recommendations."""
     
-    def _generate_security_prompt(self) -> str:
-        """Generate prompt for security sweep."""
-        security_context = ""
-        if self.context.get("security_alerts"):
-            security_context = "Address these security concerns: " + "; ".join([
-                alert.get("title", "") for alert in self.context["security_alerts"][:3]
-            ])
-        
-        return f"""Perform a comprehensive security audit and remediation.
+    def _generate_dashboard_update_prompt(self) -> str:
+        """Generate prompt for dashboard update."""
+        return f"""Update the task management dashboard with current metrics.
 
-Security Focus:
-- Vulnerability scanning
-- Dependency updates
-- Access control review
-- Data protection assessment
-- Compliance verification
+Dashboard Sections:
+- Task status distribution
+- Performance metrics
+- @claude interaction summary
+- Insights and trends
+- Recommendations
 
-{security_context}"""
+Ensure the dashboard provides clear visibility into system operations."""
     
-    def _generate_conservation_prompt(self) -> str:
-        """Generate prompt for budget conservation."""
-        return f"""Focus on budget conservation and efficiency optimization.
-
-Conservation Strategies:
-- Optimize existing processes
-- Reduce API usage
-- Improve code efficiency
-- Automated maintenance tasks
-- Resource usage analysis
-
-Current Budget: ${self.api_budget.get('monthly_usage_usd', 0):.2f} / ${self.api_budget.get('monthly_limit_usd', 100):.2f} used"""
     
     def _get_historical_context(self, action_type: str, project_name: Optional[str]) -> str:
         """Get historical context for prompt enhancement."""
@@ -551,7 +482,6 @@ Current Budget: ${self.api_budget.get('monthly_usage_usd', 0):.2f} / ${self.api_
             "action_taken": chosen_action,
             "outcome": outcome,
             "duration_seconds": cycle_duration,
-            "budget_used": self.api_budget.get("monthly_usage_usd", 0),
             "portfolio_health": self._get_average_project_health(),
             "timestamp": cycle_start.isoformat()
         }
@@ -559,12 +489,7 @@ Current Budget: ${self.api_budget.get('monthly_usage_usd', 0):.2f} / ${self.api_
         return self.state, report_data
     
     def _execute_action_placeholder(self, action_type: str, prompt: str) -> bool:
-        """Placeholder for action execution.
-        
-        In a real implementation, this would:
-        1. Call appropriate AI APIs with the generated prompt
-        2. Execute the resulting actions (create PRs, files, etc.)
-        3. Monitor success/failure
+        """Execute task management actions.
         
         Args:
             action_type: Type of action to execute
@@ -574,29 +499,76 @@ Current Budget: ${self.api_budget.get('monthly_usage_usd', 0):.2f} / ${self.api_
             Success status
         """
         print(f"Executing {action_type}...")
-        print(f"Prompt length: {len(prompt)} characters")
         
-        # Simulate success/failure based on action type
-        success_rates = {
-            "CREATE_NEW_PROJECT": 0.7,
-            "IMPROVE_HEALTHIEST_PROJECT": 0.8,
-            "FIX_CRITICAL_BUG": 0.6,
-            "STRATEGIC_REVIEW": 0.9,
-            "SECURITY_SWEEP": 0.75,
-            "DO_NOTHING_SAVE_BUDGET": 1.0
-        }
-        
-        success_rate = success_rates.get(action_type, 0.5)
-        success = random.random() < success_rate
-        
-        # Simulate cost
-        cost = self.ACTION_TYPES[action_type]["cost_estimate"]
-        if success:
-            self.state["api_budget"]["monthly_usage_usd"] += cost
-        
-        print(f"Action {action_type}: {'SUCCESS' if success else 'FAILURE'}")
-        
-        return success
+        try:
+            # Import task management modules
+            from task_manager import TaskManager
+            from task_analyzer import TaskAnalyzer
+            from update_task_dashboard import TaskDashboardUpdater
+            
+            success = False
+            
+            if action_type == "GENERATE_TASKS":
+                # Generate new tasks for @claude
+                manager = TaskManager()
+                
+                # Determine focus based on context
+                focus = "auto"
+                if "security" in prompt.lower():
+                    focus = "security"
+                elif "feature" in prompt.lower():
+                    focus = "new_features"
+                elif "bug" in prompt.lower():
+                    focus = "bug_fixes"
+                elif "test" in prompt.lower():
+                    focus = "testing"
+                
+                tasks = manager.generate_tasks(focus=focus, max_tasks=3)
+                print(f"Generated {len(tasks)} new tasks")
+                success = len(tasks) > 0
+                
+            elif action_type == "REVIEW_TASKS":
+                # Review completed tasks
+                manager = TaskManager()
+                results = manager.review_completed_tasks()
+                print(f"Reviewed {results.get('reviewed', 0)} tasks")
+                print(f"- Approved: {results.get('approved', 0)}")
+                print(f"- Needs revision: {results.get('needs_revision', 0)}")
+                success = results.get('reviewed', 0) > 0 or True  # Success even if no tasks to review
+                
+            elif action_type == "PRIORITIZE_TASKS":
+                # Update task priorities
+                manager = TaskManager()
+                manager.prioritize_tasks()
+                print("Task priorities updated")
+                success = True
+                
+            elif action_type == "ANALYZE_PERFORMANCE":
+                # Analyze task performance
+                analyzer = TaskAnalyzer()
+                analysis = analyzer.analyze_all_tasks()
+                report = analyzer.generate_summary_report()
+                print(f"Analysis complete - {len(analysis.get('insights', []))} insights generated")
+                success = True
+                
+            elif action_type == "UPDATE_DASHBOARD":
+                # Update task dashboard
+                updater = TaskDashboardUpdater()
+                updater.update_dashboard()
+                print("Dashboard updated successfully")
+                success = True
+                
+            else:
+                print(f"Unknown action type: {action_type}")
+                success = False
+            
+            return success
+            
+        except Exception as e:
+            print(f"Error executing {action_type}: {e}")
+            import traceback
+            traceback.print_exc()
+            return False
     
     def _record_action_outcome(self, action_type: str, outcome: str, prompt: str) -> None:
         """Record action outcome for learning.
