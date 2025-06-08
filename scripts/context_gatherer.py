@@ -7,12 +7,9 @@ Searches for trending technologies, security alerts, and market trends to inform
 
 import json
 import os
-import requests
 import time
 from datetime import datetime, timezone
-from typing import Dict, List, Any
-from bs4 import BeautifulSoup
-import urllib.parse
+from typing import Dict, List, Any, Optional
 
 
 class ContextGatherer:
@@ -27,10 +24,6 @@ class ContextGatherer:
         """
         self.output_path = output_path
         self.ai_brain = ai_brain
-        self.session = requests.Session()
-        self.session.headers.update({
-            'User-Agent': 'Mozilla/5.0 (compatible; AI-Bot/1.0; +https://github.com/CodeWebMobile-AI/cwmai)'
-        })
     
     def gather_context(self, charter: Dict[str, Any]) -> Dict[str, Any]:
         """Gather external context based on system charter.
@@ -81,61 +74,89 @@ class ContextGatherer:
         return context
     
     def _get_innovation_trends(self) -> List[Dict[str, str]]:
-        """Get innovation and technology trends.
+        """Get innovation and technology trends using AI research.
         
         Returns:
             List of trend dictionaries
         """
         trends = []
         
-        try:
-            # Search for AI and technology trends
-            search_terms = [
-                "AI breakthrough 2025",
-                "new programming languages trending",
-                "cloud technology innovations",
-                "developer tools 2025"
-            ]
+        if not self.ai_brain:
+            return trends
             
-            for term in search_terms:
+        try:
+            # Use AI to research current trends
+            research_prompt = """
+            Research and provide the top 5 current technology and innovation trends in 2025.
+            For each trend, provide:
+            1. Title: A concise title for the trend
+            2. Description: 2-3 sentences describing the trend
+            3. Relevance: Why this trend matters for developers
+            
+            Focus on: AI breakthroughs, new programming languages, cloud innovations, and developer tools.
+            Format as a list of dictionaries with keys: title, snippet, url (set url to 'ai-research')
+            """
+            
+            response = self.ai_brain.generate_enhanced_response(research_prompt)
+            
+            # Parse AI response into trend format
+            if response and 'content' in response:
+                # The AI should return structured data we can parse
+                import ast
                 try:
-                    results = self._search_duckduckgo(term)
-                    if results:
-                        trends.extend(results[:2])  # Limit results per term
-                    time.sleep(1)  # Rate limiting
-                except Exception as e:
-                    print(f"Error searching for {term}: {e}")
+                    trend_data = ast.literal_eval(response['content'])
+                    if isinstance(trend_data, list):
+                        trends = trend_data[:10]
+                except:
+                    # Fallback: create trends from text response
+                    trends.append({
+                        'title': 'AI Technology Trends 2025',
+                        'snippet': response['content'][:200],
+                        'url': 'ai-research'
+                    })
                     
         except Exception as e:
             print(f"Error in _get_innovation_trends: {e}")
         
-        return trends[:10]  # Limit total results
+        return trends
     
     def _get_technology_updates(self) -> List[Dict[str, str]]:
-        """Get technology updates and releases.
+        """Get technology updates and releases using AI research.
         
         Returns:
             List of technology update dictionaries
         """
         updates = []
         
-        try:
-            # Search for recent technology updates
-            search_terms = [
-                "Python 3.13 new features",
-                "JavaScript framework updates 2025",
-                "Docker updates security",
-                "Kubernetes new release"
-            ]
+        if not self.ai_brain:
+            return updates
             
-            for term in search_terms:
+        try:
+            research_prompt = """
+            Research recent technology updates and releases in 2025. Include:
+            - Python language updates and new features
+            - JavaScript/TypeScript framework updates
+            - Container technology (Docker, Kubernetes) updates
+            - Major programming language releases
+            
+            For each update, provide: title, description, and impact.
+            Format as a list of dictionaries with keys: title, snippet, url (set url to 'ai-research')
+            """
+            
+            response = self.ai_brain.generate_enhanced_response(research_prompt)
+            
+            if response and 'content' in response:
+                import ast
                 try:
-                    results = self._search_duckduckgo(term)
-                    if results:
-                        updates.extend(results[:1])  # One result per term
-                    time.sleep(1)
-                except Exception as e:
-                    print(f"Error searching for {term}: {e}")
+                    update_data = ast.literal_eval(response['content'])
+                    if isinstance(update_data, list):
+                        updates = update_data
+                except:
+                    updates.append({
+                        'title': 'Technology Updates 2025',
+                        'snippet': response['content'][:200],
+                        'url': 'ai-research'
+                    })
                     
         except Exception as e:
             print(f"Error in _get_technology_updates: {e}")
@@ -143,99 +164,132 @@ class ContextGatherer:
         return updates
     
     def _get_security_alerts(self) -> List[Dict[str, str]]:
-        """Get security alerts and vulnerabilities.
+        """Get security alerts and vulnerabilities using AI research.
         
         Returns:
             List of security alert dictionaries
         """
         alerts = []
         
-        try:
-            # Search for recent security vulnerabilities
-            search_terms = [
-                "CVE 2025 critical vulnerabilities",
-                "npm security advisory",
-                "Python security vulnerabilities",
-                "GitHub security alert"
-            ]
+        if not self.ai_brain:
+            return alerts
             
-            for term in search_terms:
+        try:
+            research_prompt = """
+            Research current critical security vulnerabilities and alerts in 2025. Include:
+            - Recent CVEs with high severity
+            - npm/pip package vulnerabilities
+            - Framework security advisories
+            - Cloud platform security alerts
+            
+            For each alert, provide: title, severity, affected systems, and mitigation.
+            Format as a list of dictionaries with keys: title, snippet, url (set url to 'ai-research')
+            """
+            
+            response = self.ai_brain.generate_enhanced_response(research_prompt)
+            
+            if response and 'content' in response:
+                import ast
                 try:
-                    results = self._search_duckduckgo(term)
-                    if results:
-                        alerts.extend(results[:2])
-                    time.sleep(1)
-                except Exception as e:
-                    print(f"Error searching for {term}: {e}")
+                    alert_data = ast.literal_eval(response['content'])
+                    if isinstance(alert_data, list):
+                        alerts = alert_data[:8]
+                except:
+                    alerts.append({
+                        'title': 'Security Alerts 2025',
+                        'snippet': response['content'][:200],
+                        'url': 'ai-research'
+                    })
                     
         except Exception as e:
             print(f"Error in _get_security_alerts: {e}")
         
-        return alerts[:8]
+        return alerts
     
     def _get_github_trending(self) -> List[Dict[str, str]]:
-        """Get trending GitHub repositories.
+        """Get trending GitHub repositories using AI research.
         
         Returns:
             List of trending repository information
         """
         trending = []
         
-        try:
-            # Try to get trending repos from GitHub's trending page
-            url = "https://github.com/trending"
-            response = self.session.get(url, timeout=10)
+        if not self.ai_brain:
+            return trending
             
-            if response.status_code == 200:
-                soup = BeautifulSoup(response.content, 'html.parser')
-                repo_elements = soup.find_all('article', class_='Box-row')
-                
-                for repo in repo_elements[:5]:  # Limit to top 5
-                    try:
-                        title_elem = repo.find('h2', class_='h3')
-                        if title_elem:
-                            repo_name = title_elem.get_text(strip=True)
-                            description_elem = repo.find('p')
-                            description = description_elem.get_text(strip=True) if description_elem else ""
-                            
-                            trending.append({
-                                "title": f"GitHub Trending: {repo_name}",
-                                "description": description[:200],
-                                "source": "github_trending",
-                                "url": f"https://github.com/{repo_name}"
-                            })
-                    except Exception as e:
-                        print(f"Error parsing trending repo: {e}")
-                        
+        try:
+            research_prompt = """
+            Research the current trending GitHub repositories and open source projects in 2025.
+            Focus on:
+            - Popular new programming languages and frameworks
+            - AI/ML projects gaining traction
+            - Developer tools and productivity enhancers
+            - Innovative web technologies
+            
+            For each project, provide: name, description, primary language, and why it's trending.
+            Format as a list of dictionaries with keys: title (format as "GitHub Trending: {name}"), 
+            description, source (set to "github_trending"), url (format as "https://github.com/{owner}/{repo}")
+            """
+            
+            response = self.ai_brain.generate_enhanced_response(research_prompt)
+            
+            if response and 'content' in response:
+                import ast
+                try:
+                    trending_data = ast.literal_eval(response['content'])
+                    if isinstance(trending_data, list):
+                        trending = trending_data[:5]
+                except:
+                    trending.append({
+                        'title': 'GitHub Trending Projects',
+                        'description': response['content'][:200],
+                        'source': 'github_trending',
+                        'url': 'ai-research'
+                    })
+                    
         except Exception as e:
             print(f"Error getting GitHub trending: {e}")
         
         return trending
     
     def _get_programming_news(self) -> List[Dict[str, str]]:
-        """Get programming and development news.
+        """Get programming and development news using AI research.
         
         Returns:
             List of programming news dictionaries
         """
         news = []
         
-        try:
-            # Search for programming news
-            search_terms = [
-                "programming news June 2025",
-                "software development trends",
-                "open source projects news"
-            ]
+        if not self.ai_brain:
+            return news
             
-            for term in search_terms:
+        try:
+            research_prompt = """
+            Research current programming and software development news in June 2025.
+            Include:
+            - Major programming language updates or announcements
+            - New framework releases or significant updates
+            - Open source project milestones
+            - Developer community news
+            - Industry shifts or trends
+            
+            Format as a list of dictionaries with keys: title, snippet, url (set url to 'ai-research')
+            """
+            
+            response = self.ai_brain.generate_enhanced_response(research_prompt)
+            
+            if response and 'content' in response:
+                import ast
                 try:
-                    results = self._search_duckduckgo(term)
-                    if results:
-                        news.extend(results[:2])
-                    time.sleep(1)
-                except Exception as e:
-                    print(f"Error searching for {term}: {e}")
+                    news_data = ast.literal_eval(response['content'])
+                    if isinstance(news_data, list):
+                        news = news_data
+                except:
+                    news.append({
+                        'title': 'Programming News June 2025',
+                        'snippet': response['content'][:200],
+                        'url': 'ai-research'
+                    })
                     
         except Exception as e:
             print(f"Error in _get_programming_news: {e}")
@@ -243,82 +297,49 @@ class ContextGatherer:
         return news
     
     def _get_general_programming_trends(self) -> List[Dict[str, str]]:
-        """Get general programming trends.
+        """Get general programming trends using AI research.
         
         Returns:
             List of general trend dictionaries
         """
         trends = []
         
-        try:
-            search_terms = [
-                "best programming practices 2025",
-                "software architecture trends"
-            ]
+        if not self.ai_brain:
+            return trends
             
-            for term in search_terms:
+        try:
+            research_prompt = """
+            Research current best programming practices and software architecture trends in 2025.
+            Include:
+            - Emerging design patterns and architectural styles
+            - DevOps and deployment best practices
+            - Code quality and testing trends
+            - Performance optimization techniques
+            - Team collaboration patterns
+            
+            Format as a list of dictionaries with keys: title, snippet, url (set url to 'ai-research')
+            """
+            
+            response = self.ai_brain.generate_enhanced_response(research_prompt)
+            
+            if response and 'content' in response:
+                import ast
                 try:
-                    results = self._search_duckduckgo(term)
-                    if results:
-                        trends.extend(results[:1])
-                    time.sleep(1)
-                except Exception as e:
-                    print(f"Error searching for {term}: {e}")
+                    trend_data = ast.literal_eval(response['content'])
+                    if isinstance(trend_data, list):
+                        trends = trend_data
+                except:
+                    trends.append({
+                        'title': 'Programming Best Practices 2025',
+                        'snippet': response['content'][:200],
+                        'url': 'ai-research'
+                    })
                     
         except Exception as e:
             print(f"Error in _get_general_programming_trends: {e}")
         
         return trends
     
-    def _search_duckduckgo(self, query: str) -> List[Dict[str, str]]:
-        """Search DuckDuckGo for the given query.
-        
-        Args:
-            query: Search query string
-            
-        Returns:
-            List of search result dictionaries
-        """
-        results = []
-        
-        try:
-            # Use DuckDuckGo instant answers API
-            url = "https://api.duckduckgo.com/"
-            params = {
-                'q': query,
-                'format': 'json',
-                'no_html': '1',
-                'skip_disambig': '1'
-            }
-            
-            response = self.session.get(url, params=params, timeout=10)
-            
-            if response.status_code == 200:
-                data = response.json()
-                
-                # Get abstract if available
-                if data.get('Abstract'):
-                    results.append({
-                        "title": data.get('Heading', query),
-                        "description": data['Abstract'][:300],
-                        "source": "duckduckgo_abstract",
-                        "url": data.get('AbstractURL', '')
-                    })
-                
-                # Get related topics
-                for topic in data.get('RelatedTopics', [])[:3]:
-                    if isinstance(topic, dict) and topic.get('Text'):
-                        results.append({
-                            "title": topic.get('Text', '')[:100],
-                            "description": topic.get('Text', '')[:300],
-                            "source": "duckduckgo_related",
-                            "url": topic.get('FirstURL', '')
-                        })
-                        
-        except Exception as e:
-            print(f"Error searching DuckDuckGo for '{query}': {e}")
-        
-        return results
     
     def _save_context(self, context: Dict[str, Any]) -> None:
         """Save gathered context to file.
@@ -348,7 +369,7 @@ class ContextGatherer:
             
             # Analyze market trends
             if context.get("market_trends"):
-                trends_text = " ".join([item.get("description", "") for item in context["market_trends"][:5]])
+                trends_text = " ".join([item.get("snippet", "") for item in context["market_trends"][:5]])
                 if trends_text:
                     analysis = self.ai_brain.analyze_with_research_ai(trends_text, "market trends")
                     if analysis:
@@ -356,7 +377,7 @@ class ContextGatherer:
             
             # Analyze security alerts
             if context.get("security_alerts"):
-                security_text = " ".join([item.get("description", "") for item in context["security_alerts"][:3]])
+                security_text = " ".join([item.get("snippet", "") for item in context["security_alerts"][:3]])
                 if security_text:
                     analysis = self.ai_brain.analyze_with_research_ai(security_text, "security")
                     if analysis:
@@ -364,7 +385,7 @@ class ContextGatherer:
             
             # Analyze technology updates
             if context.get("technology_updates"):
-                tech_text = " ".join([item.get("description", "") for item in context["technology_updates"][:3]])
+                tech_text = " ".join([item.get("snippet", "") for item in context["technology_updates"][:3]])
                 if tech_text:
                     analysis = self.ai_brain.analyze_with_research_ai(tech_text, "technical")
                     if analysis:
@@ -375,7 +396,9 @@ class ContextGatherer:
             for key in ["market_trends", "security_alerts", "technology_updates", "github_trending"]:
                 if context.get(key):
                     for item in context[key][:2]:
-                        if item.get("description"):
+                        if item.get("snippet"):
+                            all_content.append(item["snippet"][:200])
+                        elif item.get("description"):
                             all_content.append(item["description"][:200])
             
             if all_content:

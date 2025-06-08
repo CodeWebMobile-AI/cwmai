@@ -1,16 +1,19 @@
 """
-Swarm Intelligence System
+Real Swarm Intelligence System
 
-Implements multi-agent coordination for parallel task execution and emergent intelligence.
+Implements multi-agent coordination using actual AI models for parallel task execution and emergent intelligence.
+Each agent is powered by a real AI model with specific expertise and persona.
 """
 
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Tuple
 from dataclasses import dataclass
 from enum import Enum
 import asyncio
 import json
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import numpy as np
+from datetime import datetime, timezone
+import logging
 
 
 class AgentRole(Enum):
@@ -28,480 +31,445 @@ class AgentRole(Enum):
 
 
 @dataclass
-class SwarmAgent:
-    """Individual agent in the swarm."""
+class RealSwarmAgent:
+    """Individual AI-powered agent in the swarm."""
     id: str
     role: AgentRole
+    model_name: str  # claude-3-opus, gpt-4, gemini-pro, etc.
     expertise_areas: List[str]
-    confidence_scores: Dict[str, float]
+    persona: str  # Agent's personality and approach
+    ai_brain: Any  # Reference to AI brain for making real calls
     task_history: List[Dict[str, Any]]
     performance_score: float = 1.0
     
-    def calculate_task_affinity(self, task: Dict[str, Any]) -> float:
-        """Calculate how well-suited this agent is for a task."""
-        # Role alignment
-        role_score = 1.5 if task.get("ideal_role") == self.role.value else 1.0
+    async def analyze_task(self, task: Dict[str, Any], 
+                          other_insights: List[Dict[str, Any]] = None) -> Dict[str, Any]:
+        """Have this agent analyze a task using its AI model."""
+        # Build context from other agents' insights
+        context = ""
+        if other_insights:
+            context = "\n\nOther agents' insights:\n"
+            for insight in other_insights:
+                context += f"- {insight['agent_role']}: {insight['key_points']}\n"
         
-        # Expertise matching
-        task_tags = set(task.get("tags", []))
-        expertise_tags = set(self.expertise_areas)
-        overlap = len(task_tags.intersection(expertise_tags))
-        expertise_score = 1 + (overlap * 0.2)
+        # Create agent-specific prompt
+        prompt = f"""
+        You are a {self.role.value} expert with the following expertise: {', '.join(self.expertise_areas)}.
+        {self.persona}
         
-        # Historical performance on similar tasks
-        similar_tasks = [t for t in self.task_history 
-                        if t.get("type") == task.get("type")]
-        if similar_tasks:
-            success_rate = sum(1 for t in similar_tasks if t.get("success")) / len(similar_tasks)
-            history_score = 0.5 + success_rate
-        else:
-            history_score = 1.0
+        Analyze this task from your specialized perspective:
+        Task Type: {task.get('type', 'unknown')}
+        Title: {task.get('title', 'untitled')}
+        Description: {task.get('description', 'no description')}
+        Requirements: {json.dumps(task.get('requirements', []))}
+        {context}
         
-        # Confidence in task domain
-        domain = task.get("domain", "general")
-        confidence = self.confidence_scores.get(domain, 0.5)
+        Provide your analysis including:
+        1. Key insights from your {self.role.value} perspective
+        2. Potential challenges or risks you foresee
+        3. Specific recommendations for implementation
+        4. Priority level from your viewpoint (1-10)
+        5. Estimated effort/complexity
         
-        return role_score * expertise_score * history_score * confidence * self.performance_score
-
-
-class SwarmIntelligence:
-    """Orchestrates multiple AI agents for emergent intelligence."""
+        Format your response as a JSON object with keys:
+        - key_points: List of your main insights
+        - challenges: List of identified challenges
+        - recommendations: List of specific recommendations
+        - priority: Your priority score (1-10)
+        - complexity: low/medium/high
+        - confidence: Your confidence in this analysis (0-1)
+        """
+        
+        try:
+            # Use the specific model for this agent
+            response = await self._call_ai_model(prompt)
+            
+            # Parse response
+            analysis = self._parse_ai_response(response)
+            analysis['agent_id'] = self.id
+            analysis['agent_role'] = self.role.value
+            analysis['model_used'] = self.model_name
+            
+            # Update task history
+            self.task_history.append({
+                'task_id': task.get('id', 'unknown'),
+                'timestamp': datetime.now(timezone.utc).isoformat(),
+                'analysis': analysis
+            })
+            
+            return analysis
+            
+        except Exception as e:
+            logging.error(f"Agent {self.id} analysis failed: {e}")
+            return {
+                'agent_id': self.id,
+                'agent_role': self.role.value,
+                'error': str(e),
+                'key_points': [],
+                'recommendations': [],
+                'priority': 5,
+                'complexity': 'unknown'
+            }
     
-    def __init__(self, num_agents: int = 10):
-        """Initialize swarm with diverse agents."""
-        self.agents = self._create_diverse_agents(num_agents)
-        self.collective_memory = {}
-        self.emergence_patterns = []
-        self.swarm_performance = 1.0
+    async def _call_ai_model(self, prompt: str) -> str:
+        """Call the AI model based on agent's configuration."""
+        if not self.ai_brain:
+            return "No AI brain configured"
+            
+        # Route to appropriate model
+        if 'claude' in self.model_name.lower():
+            response = self.ai_brain.generate_enhanced_response(prompt, model='claude')
+        elif 'gpt' in self.model_name.lower():
+            response = self.ai_brain.generate_enhanced_response(prompt, model='gpt')
+        elif 'gemini' in self.model_name.lower():
+            response = self.ai_brain.generate_enhanced_response(prompt, model='gemini')
+        else:
+            # Default to any available model
+            response = self.ai_brain.generate_enhanced_response(prompt)
+            
+        return response.get('content', '') if response else ""
+    
+    def _parse_ai_response(self, response: str) -> Dict[str, Any]:
+        """Parse AI response into structured format."""
+        import ast
         
-    def _create_diverse_agents(self, num_agents: int) -> List[SwarmAgent]:
-        """Create a diverse set of specialized agents."""
+        # Try to extract JSON from response
+        try:
+            # Look for JSON in the response
+            import re
+            json_match = re.search(r'\{[^{}]*\}', response, re.DOTALL)
+            if json_match:
+                return ast.literal_eval(json_match.group())
+        except:
+            pass
+        
+        # Fallback: create structured data from text
+        return {
+            'key_points': [response[:200]] if response else [],
+            'challenges': [],
+            'recommendations': [],
+            'priority': 5,
+            'complexity': 'medium',
+            'confidence': 0.7,
+            'raw_response': response
+        }
+
+
+class RealSwarmIntelligence:
+    """Orchestrates multiple real AI agents for emergent intelligence."""
+    
+    def __init__(self, ai_brain=None, num_agents: int = 7):
+        """Initialize swarm with diverse AI-powered agents."""
+        self.ai_brain = ai_brain
+        self.agents = self._create_real_agents(num_agents)
+        self.collective_decisions = []
+        self.swarm_performance_metrics = {
+            'consensus_rate': 0.0,
+            'decision_quality': 0.0,
+            'response_time': 0.0
+        }
+        self.executor = ThreadPoolExecutor(max_workers=num_agents)
+        
+    def _create_real_agents(self, num_agents: int) -> List[RealSwarmAgent]:
+        """Create diverse AI-powered agents with different models and personas."""
         agents = []
         
-        # Define agent templates
-        templates = [
+        # Define real agent configurations
+        agent_configs = [
             {
                 "role": AgentRole.ARCHITECT,
-                "expertise": ["system-design", "scalability", "microservices", "cloud"],
-                "confidence": {"backend": 0.9, "infrastructure": 0.95, "frontend": 0.6}
+                "model": "claude-3-opus",
+                "expertise": ["system-design", "scalability", "microservices", "cloud-architecture"],
+                "persona": "You are a senior system architect with 15+ years of experience. You think in terms of scalability, maintainability, and long-term system evolution. You always consider the bigger picture and how components fit together."
             },
             {
                 "role": AgentRole.DEVELOPER,
-                "expertise": ["laravel", "react", "typescript", "api-development"],
-                "confidence": {"backend": 0.85, "frontend": 0.9, "database": 0.8}
-            },
-            {
-                "role": AgentRole.TESTER,
-                "expertise": ["unit-testing", "e2e-testing", "tdd", "cypress"],
-                "confidence": {"testing": 0.95, "quality": 0.9, "automation": 0.85}
+                "model": "gpt-4",
+                "expertise": ["full-stack", "laravel", "react", "api-development", "database-design"],
+                "persona": "You are a pragmatic full-stack developer who values clean code, best practices, and rapid delivery. You balance perfectionism with getting things done and always think about developer experience."
             },
             {
                 "role": AgentRole.SECURITY,
-                "expertise": ["owasp", "penetration-testing", "encryption", "auth"],
-                "confidence": {"security": 0.95, "compliance": 0.9, "audit": 0.85}
+                "model": "claude-3-opus",
+                "expertise": ["cybersecurity", "penetration-testing", "owasp", "encryption", "auth"],
+                "persona": "You are a security expert with a hacker's mindset. You think like an attacker to defend better. You're paranoid about security but practical about implementation trade-offs."
             },
             {
-                "role": AgentRole.PERFORMANCE,
-                "expertise": ["optimization", "caching", "profiling", "scaling"],
-                "confidence": {"performance": 0.9, "optimization": 0.95, "monitoring": 0.8}
-            },
-            {
-                "role": AgentRole.RESEARCHER,
-                "expertise": ["market-analysis", "trends", "competitor-research", "innovation"],
-                "confidence": {"research": 0.9, "analysis": 0.85, "trends": 0.95}
+                "role": AgentRole.TESTER,
+                "model": "gemini-pro",
+                "expertise": ["test-automation", "quality-assurance", "tdd", "e2e-testing"],
+                "persona": "You are a quality champion who believes that good testing is the foundation of reliable software. You think about edge cases, user scenarios, and what could go wrong."
             },
             {
                 "role": AgentRole.STRATEGIST,
-                "expertise": ["roadmap", "prioritization", "risk-assessment", "planning"],
-                "confidence": {"strategy": 0.95, "planning": 0.9, "business": 0.85}
+                "model": "gpt-4",
+                "expertise": ["business-strategy", "product-management", "market-analysis", "user-research"],
+                "persona": "You are a strategic thinker who connects technology decisions to business outcomes. You always ask 'why' and focus on delivering value to users and stakeholders."
             },
             {
-                "role": AgentRole.LEARNER,
-                "expertise": ["ml-models", "data-analysis", "pattern-recognition", "prediction"],
-                "confidence": {"ml": 0.9, "data": 0.85, "analytics": 0.9}
-            },
-            {
-                "role": AgentRole.REVIEWER,
-                "expertise": ["code-review", "best-practices", "refactoring", "documentation"],
-                "confidence": {"quality": 0.95, "standards": 0.9, "review": 0.95}
+                "role": AgentRole.PERFORMANCE,
+                "model": "claude-3-opus",
+                "expertise": ["optimization", "profiling", "caching", "database-tuning", "scalability"],
+                "persona": "You are obsessed with performance and efficiency. You measure everything and believe that speed is a feature. You balance optimization with code clarity."
             },
             {
                 "role": AgentRole.ORCHESTRATOR,
-                "expertise": ["coordination", "delegation", "monitoring", "optimization"],
-                "confidence": {"management": 0.95, "coordination": 0.95, "decision": 0.9}
+                "model": "gemini-pro",
+                "expertise": ["project-management", "coordination", "risk-assessment", "decision-making"],
+                "persona": "You are a master coordinator who sees the big picture and ensures all pieces work together. You synthesize different viewpoints and drive towards consensus."
             }
         ]
         
-        # Create agents based on templates
-        for i in range(num_agents):
-            template = templates[i % len(templates)]
-            agent = SwarmAgent(
-                id=f"agent_{i}_{template['role'].value}",
-                role=template["role"],
-                expertise_areas=template["expertise"],
-                confidence_scores=template["confidence"],
+        # Create agents from configurations
+        for i, config in enumerate(agent_configs[:num_agents]):
+            agent = RealSwarmAgent(
+                id=f"agent_{config['role'].value}_{i}",
+                role=config['role'],
+                model_name=config['model'],
+                expertise_areas=config['expertise'],
+                persona=config['persona'],
+                ai_brain=self.ai_brain,
                 task_history=[]
             )
             agents.append(agent)
-        
+            
         return agents
     
     async def process_task_swarm(self, task: Dict[str, Any]) -> Dict[str, Any]:
-        """Process a task using swarm intelligence."""
-        # Phase 1: Task Analysis (All agents analyze)
-        analyses = await self._parallel_task_analysis(task)
+        """Process a task using the full swarm intelligence."""
+        start_time = datetime.now(timezone.utc)
         
-        # Phase 2: Agent Selection (Best agents volunteer)
-        selected_agents = self._select_optimal_agents(task, analyses)
+        # Phase 1: Individual Analysis - Each agent analyzes independently
+        individual_analyses = await self._phase_individual_analysis(task)
         
-        # Phase 3: Collaborative Solution (Agents work together)
-        solutions = await self._collaborative_solve(task, selected_agents)
+        # Phase 2: Cross-Pollination - Agents share insights
+        refined_analyses = await self._phase_cross_pollination(task, individual_analyses)
         
-        # Phase 4: Solution Synthesis (Combine best ideas)
-        final_solution = self._synthesize_solutions(solutions)
+        # Phase 3: Consensus Building - Synthesize collective intelligence
+        consensus = await self._phase_consensus_building(refined_analyses)
         
-        # Phase 5: Collective Review (All agents review)
-        reviewed_solution = await self._collective_review(final_solution)
+        # Phase 4: Action Planning - Generate concrete recommendations
+        action_plan = await self._phase_action_planning(task, consensus)
         
-        # Phase 6: Learning (Update agent models)
-        self._update_swarm_learning(task, reviewed_solution)
+        # Calculate metrics
+        end_time = datetime.now(timezone.utc)
+        duration = (end_time - start_time).total_seconds()
         
-        return reviewed_solution
+        result = {
+            'task_id': task.get('id', 'unknown'),
+            'timestamp': start_time.isoformat(),
+            'duration_seconds': duration,
+            'individual_analyses': individual_analyses,
+            'refined_analyses': refined_analyses,
+            'consensus': consensus,
+            'action_plan': action_plan,
+            'collective_review': self._generate_collective_review(consensus, action_plan)
+        }
+        
+        # Update metrics
+        self._update_swarm_metrics(result)
+        
+        return result
     
-    async def _parallel_task_analysis(self, task: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """All agents analyze the task in parallel."""
-        async def analyze(agent: SwarmAgent) -> Dict[str, Any]:
-            # Simulate agent analysis
-            affinity = agent.calculate_task_affinity(task)
-            insights = self._generate_agent_insights(agent, task)
-            
-            return {
-                "agent_id": agent.id,
-                "role": agent.role.value,
-                "affinity": affinity,
-                "insights": insights,
-                "recommended_approach": self._get_approach(agent, task)
-            }
+    async def _phase_individual_analysis(self, task: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Phase 1: Each agent analyzes the task independently."""
+        analyses = []
         
-        # Run all analyses in parallel
-        analyses = await asyncio.gather(*[analyze(agent) for agent in self.agents])
+        # Create async tasks for parallel analysis
+        async_tasks = []
+        for agent in self.agents:
+            async_tasks.append(agent.analyze_task(task))
+        
+        # Wait for all analyses to complete
+        analyses = await asyncio.gather(*async_tasks)
+        
         return analyses
     
-    def _select_optimal_agents(self, task: Dict[str, Any], analyses: List[Dict[str, Any]]) -> List[SwarmAgent]:
-        """Select best agents for the task based on affinity and diversity."""
-        # Sort by affinity
-        sorted_analyses = sorted(analyses, key=lambda x: x["affinity"], reverse=True)
+    async def _phase_cross_pollination(self, task: Dict[str, Any], 
+                                      initial_analyses: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Phase 2: Agents refine their analysis based on others' insights."""
+        refined_analyses = []
         
-        # Select top agents ensuring role diversity
-        selected = []
-        selected_roles = set()
+        # Each agent gets to see others' analyses and refine their own
+        async_tasks = []
+        for i, agent in enumerate(self.agents):
+            # Get other agents' analyses
+            other_analyses = [a for j, a in enumerate(initial_analyses) if j != i]
+            async_tasks.append(agent.analyze_task(task, other_analyses))
         
-        for analysis in sorted_analyses:
-            agent = next(a for a in self.agents if a.id == analysis["agent_id"])
+        refined_analyses = await asyncio.gather(*async_tasks)
+        
+        return refined_analyses
+    
+    async def _phase_consensus_building(self, analyses: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """Phase 3: Build consensus from all analyses."""
+        # Extract key themes
+        all_key_points = []
+        all_challenges = []
+        all_recommendations = []
+        priorities = []
+        
+        for analysis in analyses:
+            if 'error' not in analysis:
+                all_key_points.extend(analysis.get('key_points', []))
+                all_challenges.extend(analysis.get('challenges', []))
+                all_recommendations.extend(analysis.get('recommendations', []))
+                priorities.append(analysis.get('priority', 5))
+        
+        # Use orchestrator to synthesize if available
+        orchestrator = next((a for a in self.agents if a.role == AgentRole.ORCHESTRATOR), None)
+        
+        if orchestrator and self.ai_brain:
+            synthesis_prompt = f"""
+            As the swarm orchestrator, synthesize these analyses into a unified consensus:
             
-            # Always include high affinity agents
-            if analysis["affinity"] > 1.5:
-                selected.append(agent)
-                selected_roles.add(agent.role)
-            # Add diverse roles if space available
-            elif len(selected) < 5 and agent.role not in selected_roles:
-                selected.append(agent)
-                selected_roles.add(agent.role)
-        
-        return selected[:5]  # Max 5 agents per task
-    
-    async def _collaborative_solve(self, task: Dict[str, Any], agents: List[SwarmAgent]) -> List[Dict[str, Any]]:
-        """Selected agents collaborate to solve the task."""
-        solutions = []
-        
-        # Each agent proposes a solution
-        for agent in agents:
-            solution = {
-                "agent_id": agent.id,
-                "approach": self._generate_solution_approach(agent, task),
-                "implementation": self._generate_implementation_plan(agent, task),
-                "risks": self._identify_risks(agent, task),
-                "benefits": self._identify_benefits(agent, task),
-                "confidence": agent.calculate_task_affinity(task)
-            }
-            solutions.append(solution)
-        
-        # Agents review each other's solutions
-        for i, solution in enumerate(solutions):
-            reviews = []
-            for j, reviewer in enumerate(agents):
-                if i != j:  # Don't review own solution
-                    review = self._review_solution(reviewer, solution)
-                    reviews.append(review)
-            solution["peer_reviews"] = reviews
-        
-        return solutions
-    
-    def _synthesize_solutions(self, solutions: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Combine best aspects of all solutions."""
-        # Weight solutions by confidence and peer reviews
-        for solution in solutions:
-            peer_score = np.mean([r["score"] for r in solution.get("peer_reviews", [])])
-            solution["total_score"] = solution["confidence"] * (0.6 + 0.4 * peer_score)
-        
-        # Sort by total score
-        sorted_solutions = sorted(solutions, key=lambda x: x["total_score"], reverse=True)
-        
-        # Take best solution as base
-        synthesized = sorted_solutions[0].copy()
-        
-        # Incorporate best ideas from other solutions
-        synthesized["incorporated_ideas"] = []
-        for solution in sorted_solutions[1:]:
-            # Extract unique valuable aspects
-            for idea in solution.get("implementation", {}).get("key_features", []):
-                if idea not in synthesized.get("implementation", {}).get("key_features", []):
-                    synthesized["incorporated_ideas"].append({
-                        "from_agent": solution["agent_id"],
-                        "idea": idea
-                    })
-        
-        return synthesized
-    
-    async def _collective_review(self, solution: Dict[str, Any]) -> Dict[str, Any]:
-        """All agents review the final solution."""
-        reviews = []
-        
-        for agent in self.agents:
-            review = {
-                "agent_id": agent.id,
-                "role": agent.role.value,
-                "approval": self._calculate_approval(agent, solution),
-                "suggestions": self._generate_suggestions(agent, solution),
-                "concerns": self._identify_concerns(agent, solution)
-            }
-            reviews.append(review)
-        
-        # Calculate consensus
-        approval_rate = np.mean([r["approval"] for r in reviews])
-        
-        solution["collective_review"] = {
-            "approval_rate": approval_rate,
-            "reviews": reviews,
-            "consensus": approval_rate > 0.75,
-            "top_suggestions": self._aggregate_suggestions(reviews),
-            "critical_concerns": self._aggregate_concerns(reviews)
-        }
-        
-        return solution
-    
-    def _update_swarm_learning(self, task: Dict[str, Any], solution: Dict[str, Any]) -> None:
-        """Update agent models based on task outcome."""
-        # Update collective memory
-        self.collective_memory[task.get("id", "unknown")] = {
-            "task": task,
-            "solution": solution,
-            "timestamp": "now",
-            "success_probability": solution["collective_review"]["approval_rate"]
-        }
-        
-        # Identify emergence patterns
-        if len(self.collective_memory) > 10:
-            patterns = self._detect_emergence_patterns()
-            self.emergence_patterns.extend(patterns)
-        
-        # Update individual agent scores
-        for agent in self.agents:
-            if agent.id in [s["agent_id"] for s in solution.get("incorporated_ideas", [])]:
-                agent.performance_score *= 1.05  # Boost agents who contributed
+            Key Points from all agents:
+            {json.dumps(all_key_points, indent=2)}
             
-            # Update confidence based on domain
-            domain = task.get("domain", "general")
-            if solution["collective_review"]["consensus"]:
-                agent.confidence_scores[domain] = min(1.0, agent.confidence_scores.get(domain, 0.5) * 1.1)
+            Challenges identified:
+            {json.dumps(all_challenges, indent=2)}
+            
+            Recommendations:
+            {json.dumps(all_recommendations, indent=2)}
+            
+            Create a consensus that:
+            1. Identifies the most important insights (top 5)
+            2. Prioritizes the critical challenges (top 3)
+            3. Selects the best recommendations (top 5)
+            4. Resolves any conflicting viewpoints
+            5. Provides a unified priority score
+            
+            Format as JSON with keys: key_insights, critical_challenges, 
+            top_recommendations, conflicts_resolved, consensus_priority
+            """
+            
+            response = await orchestrator._call_ai_model(synthesis_prompt)
+            consensus = orchestrator._parse_ai_response(response)
+        else:
+            # Fallback: simple aggregation
+            consensus = {
+                'key_insights': list(set(all_key_points))[:5],
+                'critical_challenges': list(set(all_challenges))[:3],
+                'top_recommendations': list(set(all_recommendations))[:5],
+                'consensus_priority': np.mean(priorities) if priorities else 5
+            }
+        
+        return consensus
     
-    def _detect_emergence_patterns(self) -> List[Dict[str, Any]]:
-        """Detect patterns in collective behavior."""
-        patterns = []
+    async def _phase_action_planning(self, task: Dict[str, Any], 
+                                   consensus: Dict[str, Any]) -> Dict[str, Any]:
+        """Phase 4: Generate concrete action plan based on consensus."""
+        # Use strategist and architect to create action plan
+        strategist = next((a for a in self.agents if a.role == AgentRole.STRATEGIST), None)
+        architect = next((a for a in self.agents if a.role == AgentRole.ARCHITECT), None)
         
-        # Pattern: Certain agent combinations work well together
-        # Pattern: Specific approaches succeed for certain task types
-        # Pattern: Swarm consensus correlates with real-world success
-        
-        # This would use ML to detect patterns in practice
-        return patterns
-    
-    # Helper methods for generating insights, solutions, etc.
-    def _generate_agent_insights(self, agent: SwarmAgent, task: Dict[str, Any]) -> List[str]:
-        """Generate agent-specific insights about the task."""
-        insights = []
-        
-        if agent.role == AgentRole.ARCHITECT:
-            insights.append("Consider microservices architecture for scalability")
-            insights.append("Implement event-driven patterns for loose coupling")
-        elif agent.role == AgentRole.SECURITY:
-            insights.append("Implement OAuth2 with JWT tokens")
-            insights.append("Add rate limiting and DDoS protection")
-        elif agent.role == AgentRole.PERFORMANCE:
-            insights.append("Use Redis for caching frequently accessed data")
-            insights.append("Implement database query optimization")
-        # ... more role-specific insights
-        
-        return insights
-    
-    def _get_approach(self, agent: SwarmAgent, task: Dict[str, Any]) -> str:
-        """Get agent's recommended approach."""
-        approaches = {
-            AgentRole.ARCHITECT: "Design modular system with clear boundaries",
-            AgentRole.DEVELOPER: "Implement using Laravel React starter kit",
-            AgentRole.TESTER: "Create comprehensive test suite first (TDD)",
-            AgentRole.SECURITY: "Security-first approach with threat modeling",
-            AgentRole.PERFORMANCE: "Benchmark-driven development with metrics"
+        action_plan = {
+            'immediate_actions': [],
+            'short_term_goals': [],
+            'long_term_considerations': [],
+            'success_metrics': [],
+            'risk_mitigation': []
         }
-        return approaches.get(agent.role, "Standard development approach")
+        
+        if strategist and self.ai_brain:
+            planning_prompt = f"""
+            Based on the swarm consensus, create a concrete action plan:
+            
+            Task: {task.get('title', 'Unknown')}
+            Consensus Insights: {json.dumps(consensus.get('key_insights', []))}
+            Challenges: {json.dumps(consensus.get('critical_challenges', []))}
+            Recommendations: {json.dumps(consensus.get('top_recommendations', []))}
+            
+            Generate:
+            1. Immediate actions (next 24 hours)
+            2. Short-term goals (next week)
+            3. Long-term considerations
+            4. Success metrics
+            5. Risk mitigation strategies
+            
+            Format as JSON with the structure matching the requested sections.
+            """
+            
+            response = await strategist._call_ai_model(planning_prompt)
+            plan = strategist._parse_ai_response(response)
+            
+            # Merge with action_plan structure
+            if isinstance(plan, dict):
+                action_plan.update(plan)
+        
+        return action_plan
     
-    def _generate_solution_approach(self, agent: SwarmAgent, task: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate detailed solution approach."""
+    def _generate_collective_review(self, consensus: Dict[str, Any], 
+                                  action_plan: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate a collective review summary."""
         return {
-            "methodology": self._get_approach(agent, task),
-            "phases": ["planning", "implementation", "testing", "deployment"],
-            "key_decisions": ["tech stack", "architecture", "testing strategy"],
-            "timeline": "2-4 weeks depending on complexity"
+            'summary': f"Swarm analyzed task with {len(self.agents)} specialized agents",
+            'consensus_priority': consensus.get('consensus_priority', 5),
+            'key_insights': consensus.get('key_insights', [])[:3],
+            'immediate_actions': action_plan.get('immediate_actions', [])[:3],
+            'confidence_level': self._calculate_swarm_confidence(consensus),
+            'top_suggestions': self._extract_top_suggestions(consensus, action_plan)
         }
     
-    def _generate_implementation_plan(self, agent: SwarmAgent, task: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate implementation plan."""
-        return {
-            "key_features": [
-                "Laravel backend with RESTful API",
-                "React TypeScript frontend",
-                "PostgreSQL with Redis caching",
-                "Docker containerization",
-                "CI/CD with GitHub Actions"
-            ],
-            "milestones": [
-                "Project setup and scaffolding",
-                "Core feature implementation",
-                "Testing and quality assurance",
-                "Deployment and monitoring"
-            ]
-        }
+    def _calculate_swarm_confidence(self, consensus: Dict[str, Any]) -> float:
+        """Calculate overall swarm confidence in the analysis."""
+        # Simple confidence calculation based on consensus
+        factors = []
+        
+        # Factor 1: Number of insights
+        insight_count = len(consensus.get('key_insights', []))
+        factors.append(min(insight_count / 5, 1.0))
+        
+        # Factor 2: Recommendation count
+        rec_count = len(consensus.get('top_recommendations', []))
+        factors.append(min(rec_count / 5, 1.0))
+        
+        # Factor 3: Challenge identification
+        challenge_count = len(consensus.get('critical_challenges', []))
+        factors.append(min(challenge_count / 3, 1.0))
+        
+        return np.mean(factors) if factors else 0.5
     
-    def _identify_risks(self, agent: SwarmAgent, task: Dict[str, Any]) -> List[str]:
-        """Identify potential risks."""
-        risks = ["Scope creep", "Technical debt", "Security vulnerabilities"]
-        
-        if agent.role == AgentRole.SECURITY:
-            risks.extend(["Data breaches", "Compliance issues"])
-        elif agent.role == AgentRole.PERFORMANCE:
-            risks.extend(["Scalability bottlenecks", "Resource constraints"])
-        
-        return risks
-    
-    def _identify_benefits(self, agent: SwarmAgent, task: Dict[str, Any]) -> List[str]:
-        """Identify benefits of the approach."""
-        return [
-            "Improved user experience",
-            "Better maintainability",
-            "Enhanced security",
-            "Scalable architecture",
-            "Comprehensive testing"
-        ]
-    
-    def _review_solution(self, reviewer: SwarmAgent, solution: Dict[str, Any]) -> Dict[str, Any]:
-        """Review another agent's solution."""
-        # Simulate review based on reviewer's expertise
-        score = 0.7 + (0.3 * reviewer.performance_score)
-        
-        return {
-            "reviewer_id": reviewer.id,
-            "score": score,
-            "strengths": ["Well-structured", "Comprehensive"],
-            "improvements": ["Consider caching", "Add monitoring"]
-        }
-    
-    def _calculate_approval(self, agent: SwarmAgent, solution: Dict[str, Any]) -> float:
-        """Calculate agent's approval of solution."""
-        base_approval = 0.7
-        
-        # Boost if agent contributed
-        if agent.id == solution.get("agent_id"):
-            base_approval += 0.2
-        
-        # Adjust based on role alignment
-        if solution.get("approach", {}).get("methodology", "").lower().find(agent.role.value) != -1:
-            base_approval += 0.1
-        
-        return min(1.0, base_approval)
-    
-    def _generate_suggestions(self, agent: SwarmAgent, solution: Dict[str, Any]) -> List[str]:
-        """Generate improvement suggestions."""
+    def _extract_top_suggestions(self, consensus: Dict[str, Any], 
+                               action_plan: Dict[str, Any]) -> List[str]:
+        """Extract top actionable suggestions."""
         suggestions = []
         
-        if agent.role == AgentRole.TESTER:
-            suggestions.append("Add integration tests for API endpoints")
-        elif agent.role == AgentRole.SECURITY:
-            suggestions.append("Implement 2FA for admin accounts")
-        elif agent.role == AgentRole.PERFORMANCE:
-            suggestions.append("Add database indexing strategy")
+        # Add top recommendations
+        for rec in consensus.get('top_recommendations', [])[:2]:
+            if isinstance(rec, str):
+                suggestions.append(rec)
         
-        return suggestions
-    
-    def _identify_concerns(self, agent: SwarmAgent, solution: Dict[str, Any]) -> List[str]:
-        """Identify concerns with solution."""
-        concerns = []
+        # Add immediate actions
+        for action in action_plan.get('immediate_actions', [])[:2]:
+            if isinstance(action, str):
+                suggestions.append(action)
         
-        if agent.role == AgentRole.SECURITY:
-            concerns.append("Ensure proper input validation")
-        elif agent.role == AgentRole.ARCHITECT:
-            concerns.append("Consider future scaling needs")
+        return suggestions[:3]  # Limit to top 3
+    
+    def _update_swarm_metrics(self, result: Dict[str, Any]) -> None:
+        """Update swarm performance metrics."""
+        # Update consensus rate (how well agents agreed)
+        analyses = result.get('refined_analyses', [])
+        if analyses:
+            priorities = [a.get('priority', 5) for a in analyses if 'error' not in a]
+            if priorities:
+                variance = np.var(priorities)
+                self.swarm_performance_metrics['consensus_rate'] = 1 / (1 + variance)
         
-        return concerns
-    
-    def _aggregate_suggestions(self, reviews: List[Dict[str, Any]]) -> List[str]:
-        """Aggregate top suggestions from all reviews."""
-        all_suggestions = []
-        for review in reviews:
-            all_suggestions.extend(review.get("suggestions", []))
+        # Update response time
+        duration = result.get('duration_seconds', 0)
+        self.swarm_performance_metrics['response_time'] = duration
         
-        # In practice, would use NLP to group similar suggestions
-        return list(set(all_suggestions))[:5]
+        # Update decision quality (based on confidence)
+        confidence = result.get('collective_review', {}).get('confidence_level', 0.5)
+        self.swarm_performance_metrics['decision_quality'] = confidence
     
-    def _aggregate_concerns(self, reviews: List[Dict[str, Any]]) -> List[str]:
-        """Aggregate critical concerns."""
-        all_concerns = []
-        for review in reviews:
-            all_concerns.extend(review.get("concerns", []))
-        
-        return list(set(all_concerns))[:3]
-
-
-# Example usage
-async def demonstrate_swarm():
-    """Demonstrate swarm intelligence."""
-    swarm = SwarmIntelligence(num_agents=10)
-    
-    # Example task
-    task = {
-        "id": "TASK-001",
-        "type": "new_project",
-        "title": "Build AI-Powered Analytics Dashboard",
-        "domain": "backend",
-        "ideal_role": "architect",
-        "tags": ["dashboard", "analytics", "real-time", "laravel", "react"],
-        "requirements": [
-            "Real-time data processing",
-            "Interactive visualizations",
-            "User authentication",
-            "API integration"
-        ]
-    }
-    
-    # Process with swarm
-    result = await swarm.process_task_swarm(task)
-    
-    print(f"Swarm Solution Approval Rate: {result['collective_review']['approval_rate']:.2%}")
-    print(f"Consensus Reached: {result['collective_review']['consensus']}")
-    print(f"Top Suggestions: {result['collective_review']['top_suggestions']}")
-    
-    return result
-
-
-if __name__ == "__main__":
-    # Run demonstration
-    asyncio.run(demonstrate_swarm())
+    def get_swarm_status(self) -> Dict[str, Any]:
+        """Get current swarm status and metrics."""
+        return {
+            'active_agents': len(self.agents),
+            'agent_roles': [a.role.value for a in self.agents],
+            'performance_metrics': self.swarm_performance_metrics,
+            'total_decisions': len(self.collective_decisions)
+        }

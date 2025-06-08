@@ -334,27 +334,54 @@ class MultiRepoCoordinator:
         self.executor = ThreadPoolExecutor(max_workers=5)
         self.shutdown = False
         
-    def add_repository(self, repo_name: str) -> bool:
+    def add_repository(self, repo_url: str, create_if_not_exists: bool = False) -> Optional[str]:
         """Add a repository to manage.
         
         Args:
-            repo_name: Full repository name (owner/repo)
+            repo_url: Repository URL or full name (owner/repo)
+            create_if_not_exists: Create repository if it doesn't exist
             
         Returns:
-            Success status
+            Repository URL if successful, None otherwise
         """
+        # Extract repo name from URL if needed
+        if repo_url.startswith('https://github.com/'):
+            repo_name = repo_url.replace('https://github.com/', '').replace('.git', '')
+        else:
+            repo_name = repo_url
+            repo_url = f"https://github.com/{repo_name}"
+        
         if len(self.active_repos) >= self.max_concurrent:
             print(f"Cannot add {repo_name}: Maximum concurrent repos reached")
-            return False
+            return None
         
         if repo_name in self.repositories:
             print(f"Repository {repo_name} already added")
-            return True
+            return repo_url
         
         try:
-            # Get repository information
+            # Try to get existing repository
             self.rate_limiter.wait_if_needed()
-            repo = self.github.get_repo(repo_name)
+            try:
+                repo = self.github.get_repo(repo_name)
+            except Exception as e:
+                if create_if_not_exists and '404' in str(e):
+                    # Create the repository
+                    owner, name = repo_name.split('/')
+                    if owner == 'CodeWebMobile-AI':
+                        # Create in organization
+                        org = self.github.get_organization('CodeWebMobile-AI')
+                        repo = org.create_repo(
+                            name=name,
+                            description=f"AI-generated project for {name}",
+                            private=False,
+                            auto_init=True
+                        )
+                        print(f"Created new repository: {repo_name}")
+                    else:
+                        raise Exception("Can only create repos in CodeWebMobile-AI org")
+                else:
+                    raise
             
             # Create repository state
             repo_state = RepositoryState(
@@ -371,10 +398,53 @@ class MultiRepoCoordinator:
             self.active_repos.add(repo_name)
             
             print(f"Added repository: {repo_name}")
-            return True
+            return repo_url
             
         except Exception as e:
             print(f"Error adding repository {repo_name}: {e}")
+            return None
+    
+    def create_cross_repo_task(self, repo_url: str, task_type: str, 
+                              title: str, description: str) -> bool:
+        """Create a task/issue in a specific repository.
+        
+        Args:
+            repo_url: Repository URL
+            task_type: Type of task
+            title: Issue title
+            description: Issue description
+            
+        Returns:
+            Success status
+        """
+        # Extract repo name from URL
+        if repo_url.startswith('https://github.com/'):
+            repo_name = repo_url.replace('https://github.com/', '').replace('.git', '')
+        else:
+            repo_name = repo_url
+        
+        try:
+            # Get repository
+            self.rate_limiter.wait_if_needed()
+            repo = self.github.get_repo(repo_name)
+            
+            # Create issue with labels
+            labels = [task_type, 'ai-generated']
+            if 'feature' in task_type.lower():
+                labels.append('enhancement')
+            
+            self.rate_limiter.wait_if_needed()
+            issue = repo.create_issue(
+                title=title,
+                body=description + "\n\n---\n*This issue was created by the AI coordination system.*",
+                labels=labels
+            )
+            
+            print(f"Created issue #{issue.number} in {repo_name}: {title}")
+            return True
+            
+        except Exception as e:
+            print(f"Error creating issue in {repo_name}: {e}")
             return False
     
     def coordinate_cycle(self) -> Dict[str, Any]:

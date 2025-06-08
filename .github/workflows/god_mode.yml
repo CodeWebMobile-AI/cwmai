@@ -63,14 +63,21 @@ jobs:
           cat > run_god_mode.py << 'EOF'
           import asyncio
           import json
-          from god_mode_controller import GodModeController, GodModeConfig, GodModeIntensity
+          from ai_brain import AIBrain
+          from dynamic_god_mode_controller import DynamicGodModeController
+          from god_mode_controller import GodModeConfig, IntensityLevel
           
           async def run_god_mode():
               # Get intensity from input or default
               intensity_str = '${{ github.event.inputs.intensity }}' or 'balanced'
-              intensity = GodModeIntensity(intensity_str)
+              intensity = IntensityLevel(intensity_str)
               
-              print(f'Starting God Mode Controller (Intensity: {intensity.value})')
+              print(f'Starting Dynamic God Mode Controller (Intensity: {intensity.value})')
+              
+              # Initialize AI Brain
+              print('Initializing AI Brain...')
+              ai_brain = AIBrain()
+              print('✓ AI Brain ready')
               
               # Create configuration
               config = GodModeConfig(
@@ -79,11 +86,11 @@ jobs:
                   enable_multi_repo=True,
                   enable_predictive=True,
                   enable_quantum=True,
-                  safety_threshold=0.8 if intensity != GodModeIntensity.EXPERIMENTAL else 0.6
+                  safety_threshold=0.8 if intensity != IntensityLevel.EXPERIMENTAL else 0.6
               )
               
-              # Initialize controller
-              controller = GodModeController(config)
+              # Initialize dynamic controller with AI brain
+              controller = DynamicGodModeController(config, ai_brain)
               
               try:
                   # Run one cycle
@@ -96,14 +103,22 @@ jobs:
                   print(f'\nCycle completed successfully!')
                   print(f'Operations: {len(results["operations"])}')
                   print(f'Errors: {len(results["errors"])}')
+                  print(f'Tasks generated: {results.get("tasks_generated", 0)}')
+                  print(f'Tasks validated: {results.get("tasks_validated", 0)}')
                   
                   # Show metrics
                   print('\nMetrics:')
                   for metric, value in results['metrics'].items():
                       print(f'  {metric}: {value}')
                   
+                  # Show learnings
+                  if results.get('learnings'):
+                      print('\nLearnings:')
+                      for learning in results['learnings'][:5]:
+                          print(f'  - {learning.get("type", "unknown")}: {learning.get("impact", "N/A")}')
+                  
               except Exception as e:
-                  print(f'Error during God Mode execution: {e}')
+                  print(f'Error during Dynamic God Mode execution: {e}')
                   await controller.emergency_shutdown()
                   raise
               
@@ -288,17 +303,28 @@ jobs:
         run: |
           cd scripts
           cat > test_god_mode.py << 'EOF'
-          from god_mode_controller import GodModeController, GodModeConfig, GodModeIntensity
+          from ai_brain import AIBrain
+          from dynamic_god_mode_controller import DynamicGodModeController
+          from god_mode_controller import GodModeConfig, IntensityLevel
           
           # Quick test to ensure everything loads
-          config = GodModeConfig(intensity=GodModeIntensity.CONSERVATIVE)
-          controller = GodModeController(config)
+          print('Testing Dynamic God Mode Controller...')
+          
+          # Initialize AI Brain
+          ai_brain = AIBrain()
+          
+          # Create config
+          config = GodModeConfig(intensity=IntensityLevel.CONSERVATIVE)
+          
+          # Initialize dynamic controller
+          controller = DynamicGodModeController(config, ai_brain)
           status = controller.get_status()
           
-          print('God Mode Controller Status:')
+          print('Dynamic God Mode Controller Status:')
           print(f'  Active: {status["active"]}')
           print(f'  Intensity: {status["intensity"]}')
-          print('  Systems:', status['systems_status'])
+          print('  Core Systems:', status['systems_status'])
+          print('  Dynamic Systems:', list(status.get('dynamic_systems', {}).keys()))
           print('\nTest passed!')
           EOF
           python test_god_mode.py
