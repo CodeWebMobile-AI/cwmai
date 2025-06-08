@@ -194,7 +194,7 @@ jobs:
                 print('### Errors')
                 for error in errors[:3]:
                     print(f'- {error}')
-            EOF
+EOF
             python create_summary.py >> $GITHUB_STEP_SUMMARY
           else
             echo "## God Mode AI Execution" >> $GITHUB_STEP_SUMMARY

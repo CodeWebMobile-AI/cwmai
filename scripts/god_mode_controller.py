@@ -24,7 +24,7 @@ import traceback
 
 # Import all god-like systems
 from swarm_intelligence import SwarmIntelligence, AgentRole
-from evolutionary_nas import EvolutionaryNAS, ModificationType as NASTaskType
+from evolutionary_nas import EvolutionaryNAS
 from multi_repo_coordinator import MultiRepoCoordinator
 from safe_self_improver import SafeSelfImprover, ModificationType
 from predictive_task_engine import PredictiveTaskEngine
