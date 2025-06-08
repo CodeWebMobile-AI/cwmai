@@ -137,7 +137,7 @@ jobs:
           git push || echo "No changes to push"
       
       - name: Upload results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: god-mode-results-${{ github.run_id }}
           path: |
