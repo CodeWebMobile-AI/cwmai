@@ -150,52 +150,51 @@ jobs:
         if: always()
         run: |
           if [ -f "god_mode_results.json" ]; then
-            cat > create_summary.py << 'EOF'
-import json
-
-with open('god_mode_results.json', 'r') as f:
-    results = json.load(f)
-
-print('## God Mode AI Execution Summary')
-print()
-print(f'**Timestamp**: {results.get("timestamp", "N/A")}')
-print(f'**Intensity**: {results.get("intensity", "N/A")}')
-print(f'**Duration**: {results.get("duration", 0):.2f} seconds')
-print()
-
-# Operations summary
-operations = results.get('operations', [])
-successful = sum(1 for op in operations if op.get('status') == 'completed')
-print(f'### Operations')
-print(f'- Total: {len(operations)}')
-print(f'- Successful: {successful}')
-print(f'- Failed: {len(operations) - successful}')
-print()
-
-# Metrics
-metrics = results.get('metrics', {})
-if metrics:
-    print('### Performance Metrics')
-    for metric, value in metrics.items():
-        print(f'- {metric}: {value}')
-    print()
-
-# Learnings
-learnings = results.get('learnings', [])
-if learnings:
-    print('### Key Learnings')
-    for learning in learnings[:5]:
-        print(f'- {learning.get("type", "unknown")}: {learning.get("recommendation", "N/A")}')
-    print()
-
-# Errors
-errors = results.get('errors', [])
-if errors:
-    print('### Errors')
-    for error in errors[:3]:
-        print(f'- {error}')
-EOF
-            python create_summary.py >> $GITHUB_STEP_SUMMARY
+            python3 -c "
+          import json
+          
+          with open('god_mode_results.json', 'r') as f:
+              results = json.load(f)
+          
+          print('## God Mode AI Execution Summary')
+          print()
+          print(f'**Timestamp**: {results.get(\"timestamp\", \"N/A\")}')
+          print(f'**Intensity**: {results.get(\"intensity\", \"N/A\")}')
+          print(f'**Duration**: {results.get(\"duration\", 0):.2f} seconds')
+          print()
+          
+          # Operations summary
+          operations = results.get('operations', [])
+          successful = sum(1 for op in operations if op.get('status') == 'completed')
+          print(f'### Operations')
+          print(f'- Total: {len(operations)}')
+          print(f'- Successful: {successful}')
+          print(f'- Failed: {len(operations) - successful}')
+          print()
+          
+          # Metrics
+          metrics = results.get('metrics', {})
+          if metrics:
+              print('### Performance Metrics')
+              for metric, value in metrics.items():
+                  print(f'- {metric}: {value}')
+              print()
+          
+          # Learnings
+          learnings = results.get('learnings', [])
+          if learnings:
+              print('### Key Learnings')
+              for learning in learnings[:5]:
+                  print(f'- {learning.get(\"type\", \"unknown\")}: {learning.get(\"recommendation\", \"N/A\")}')
+              print()
+          
+          # Errors
+          errors = results.get('errors', [])
+          if errors:
+              print('### Errors')
+              for error in errors[:3]:
+                  print(f'- {error}')
+          " >> $GITHUB_STEP_SUMMARY
           else
             echo "## God Mode AI Execution" >> $GITHUB_STEP_SUMMARY
             echo "No results file found. The execution may have failed." >> $GITHUB_STEP_SUMMARY
@@ -204,7 +203,7 @@ EOF
       - name: Create issue for critical findings
         if: success()
         run: |
-          cat > create_issue.py << 'EOF'
+          python3 -c "
           import json
           import os
           from github import Github
@@ -235,7 +234,7 @@ EOF
           # Add important learnings
           for learning in learnings:
               if learning.get('type') == 'success_rate' and learning.get('rate', 1) < 0.5:
-                  critical_items.append(f'Low success rate for {learning.get("task_type", "unknown")}: {learning.get("rate", 0):.2%}')
+                  critical_items.append(f'Low success rate for {learning.get(\"task_type\", \"unknown\")}: {learning.get(\"rate\", 0):.2%}')
           
           if critical_items:
               # Create issue
@@ -263,9 +262,8 @@ EOF
               print(f'Created issue #{issue.number}')
           else:
               print('No critical items found')
-          EOF
-          python create_issue.py
-
+          "
+  
   # Optional: Run on push to test changes
   test-god-mode:
     if: github.event_name == 'push'
