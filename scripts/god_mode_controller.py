@@ -483,23 +483,32 @@ class GodModeController:
         actions = ['generate_tasks', 'improve_code', 'fix_bugs', 'optimize_performance']
         priorities = ['critical', 'high', 'medium', 'low']
         
-        # Quantum superposition search for best action
-        def objective_function(state):
-            action = actions[state[0] % len(actions)]
-            priority = priorities[state[1] % len(priorities)]
+        # Create a pickleable objective function class
+        class ContextObjective:
+            def __init__(self, actions, priorities, context):
+                self.actions = actions
+                self.priorities = priorities
+                self.context = context
             
-            # Score based on current context
-            score = 0
-            if context.get('open_issues', 0) > 10 and action == 'fix_bugs':
-                score += 10
-            if context.get('performance_issues', False) and action == 'optimize_performance':
-                score += 8
-            
-            return score
+            def __call__(self, state):
+                action = self.actions[state[0] % len(self.actions)]
+                priority = self.priorities[state[1] % len(self.priorities)]
+                
+                # Score based on current context
+                score = 0
+                if self.context.get('open_issues', 0) > 10 and action == 'fix_bugs':
+                    score += 10
+                if self.context.get('performance_issues', False) and action == 'optimize_performance':
+                    score += 8
+                
+                return score
+        
+        # Create objective instance
+        objective = ContextObjective(actions, priorities, context)
         
         # Search possibility space
         result = self.quantum.quantum_superposition_search(
-            objective_function,
+            objective,
             [[i, j] for i in range(len(actions)) for j in range(len(priorities))]
         )
         

@@ -151,51 +151,51 @@ jobs:
         run: |
           if [ -f "god_mode_results.json" ]; then
             cat > create_summary.py << 'EOF'
-            import json
-            
-            with open('god_mode_results.json', 'r') as f:
-                results = json.load(f)
-            
-            print('## God Mode AI Execution Summary')
-            print()
-            print(f'**Timestamp**: {results.get("timestamp", "N/A")}')
-            print(f'**Intensity**: {results.get("intensity", "N/A")}')
-            print(f'**Duration**: {results.get("duration", 0):.2f} seconds')
-            print()
-            
-            # Operations summary
-            operations = results.get('operations', [])
-            successful = sum(1 for op in operations if op.get('status') == 'completed')
-            print(f'### Operations')
-            print(f'- Total: {len(operations)}')
-            print(f'- Successful: {successful}')
-            print(f'- Failed: {len(operations) - successful}')
-            print()
-            
-            # Metrics
-            metrics = results.get('metrics', {})
-            if metrics:
-                print('### Performance Metrics')
-                for metric, value in metrics.items():
-                    print(f'- {metric}: {value}')
-                print()
-            
-            # Learnings
-            learnings = results.get('learnings', [])
-            if learnings:
-                print('### Key Learnings')
-                for learning in learnings[:5]:
-                    print(f'- {learning.get("type", "unknown")}: {learning.get("recommendation", "N/A")}')
-                print()
-            
-            # Errors
-            errors = results.get('errors', [])
-            if errors:
-                print('### Errors')
-                for error in errors[:3]:
-                    print(f'- {error}')
-          EOF
-          python create_summary.py >> $GITHUB_STEP_SUMMARY
+import json
+
+with open('god_mode_results.json', 'r') as f:
+    results = json.load(f)
+
+print('## God Mode AI Execution Summary')
+print()
+print(f'**Timestamp**: {results.get("timestamp", "N/A")}')
+print(f'**Intensity**: {results.get("intensity", "N/A")}')
+print(f'**Duration**: {results.get("duration", 0):.2f} seconds')
+print()
+
+# Operations summary
+operations = results.get('operations', [])
+successful = sum(1 for op in operations if op.get('status') == 'completed')
+print(f'### Operations')
+print(f'- Total: {len(operations)}')
+print(f'- Successful: {successful}')
+print(f'- Failed: {len(operations) - successful}')
+print()
+
+# Metrics
+metrics = results.get('metrics', {})
+if metrics:
+    print('### Performance Metrics')
+    for metric, value in metrics.items():
+        print(f'- {metric}: {value}')
+    print()
+
+# Learnings
+learnings = results.get('learnings', [])
+if learnings:
+    print('### Key Learnings')
+    for learning in learnings[:5]:
+        print(f'- {learning.get("type", "unknown")}: {learning.get("recommendation", "N/A")}')
+    print()
+
+# Errors
+errors = results.get('errors', [])
+if errors:
+    print('### Errors')
+    for error in errors[:3]:
+        print(f'- {error}')
+EOF
+            python create_summary.py >> $GITHUB_STEP_SUMMARY
           else
             echo "## God Mode AI Execution" >> $GITHUB_STEP_SUMMARY
             echo "No results file found. The execution may have failed." >> $GITHUB_STEP_SUMMARY

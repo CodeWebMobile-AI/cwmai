@@ -186,19 +186,36 @@ class TaskPredictor:
         features = df.copy()
         
         # Time-based features
-        features['hour'] = pd.to_datetime(features['created_at']).dt.hour
-        features['day_of_week'] = pd.to_datetime(features['created_at']).dt.dayofweek
-        features['month'] = pd.to_datetime(features['created_at']).dt.month
+        if 'created_at' in features.columns:
+            features['hour'] = pd.to_datetime(features['created_at']).dt.hour
+            features['day_of_week'] = pd.to_datetime(features['created_at']).dt.dayofweek
+            features['month'] = pd.to_datetime(features['created_at']).dt.month
+        else:
+            # Default time features
+            features['hour'] = 12
+            features['day_of_week'] = 1
+            features['month'] = datetime.now().month
         
         # Task complexity features
-        features['description_length'] = features['description'].str.len()
-        features['has_dependencies'] = features['dependencies'].apply(lambda x: len(x) > 0)
-        features['dependency_count'] = features['dependencies'].apply(len)
+        if 'description' in features.columns:
+            features['description_length'] = features['description'].str.len()
+        else:
+            features['description_length'] = 50  # Default length
+        
+        if 'dependencies' in features.columns:
+            features['has_dependencies'] = features['dependencies'].apply(lambda x: len(x) > 0)
+            features['dependency_count'] = features['dependencies'].apply(len)
+        else:
+            features['has_dependencies'] = False
+            features['dependency_count'] = 0
         
         # Historical features
-        features['prev_success_rate'] = features.groupby('type')['success'].transform(
-            lambda x: x.expanding().mean().shift()
-        )
+        if 'type' in features.columns and 'success' in features.columns:
+            features['prev_success_rate'] = features.groupby('type')['success'].transform(
+                lambda x: x.expanding().mean().shift()
+            )
+        else:
+            features['prev_success_rate'] = 0.8  # Default success rate
         
         # Project phase encoding
         features['project_phase'] = self._determine_project_phase(features)
