@@ -97,7 +97,7 @@ class ContextGatherer:
             Format as a list of dictionaries with keys: title, snippet, url (set url to 'ai-research')
             """
             
-            response = self.ai_brain.generate_enhanced_response(research_prompt)
+            response = self.ai_brain.generate_enhanced_response_sync(research_prompt)
             
             # Parse AI response into trend format
             if response and 'content' in response:
@@ -143,7 +143,7 @@ class ContextGatherer:
             Format as a list of dictionaries with keys: title, snippet, url (set url to 'ai-research')
             """
             
-            response = self.ai_brain.generate_enhanced_response(research_prompt)
+            response = self.ai_brain.generate_enhanced_response_sync(research_prompt)
             
             if response and 'content' in response:
                 import ast
@@ -186,7 +186,7 @@ class ContextGatherer:
             Format as a list of dictionaries with keys: title, snippet, url (set url to 'ai-research')
             """
             
-            response = self.ai_brain.generate_enhanced_response(research_prompt)
+            response = self.ai_brain.generate_enhanced_response_sync(research_prompt)
             
             if response and 'content' in response:
                 import ast
@@ -231,7 +231,7 @@ class ContextGatherer:
             description, source (set to "github_trending"), url (format as "https://github.com/{owner}/{repo}")
             """
             
-            response = self.ai_brain.generate_enhanced_response(research_prompt)
+            response = self.ai_brain.generate_enhanced_response_sync(research_prompt)
             
             if response and 'content' in response:
                 import ast
@@ -276,7 +276,7 @@ class ContextGatherer:
             Format as a list of dictionaries with keys: title, snippet, url (set url to 'ai-research')
             """
             
-            response = self.ai_brain.generate_enhanced_response(research_prompt)
+            response = self.ai_brain.generate_enhanced_response_sync(research_prompt)
             
             if response and 'content' in response:
                 import ast
@@ -320,7 +320,7 @@ class ContextGatherer:
             Format as a list of dictionaries with keys: title, snippet, url (set url to 'ai-research')
             """
             
-            response = self.ai_brain.generate_enhanced_response(research_prompt)
+            response = self.ai_brain.generate_enhanced_response_sync(research_prompt)
             
             if response and 'content' in response:
                 import ast

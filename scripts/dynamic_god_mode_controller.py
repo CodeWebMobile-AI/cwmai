@@ -648,7 +648,7 @@ class DynamicGodModeController(GodModeController):
         state['dynamic_metrics'] = self.dynamic_metrics
         state['charter'] = self.current_charter
         
-        self.state_manager.save_state(state)
+        self.state_manager.save_state_locally(state)
     
     def _get_active_projects(self) -> List[Dict[str, Any]]:
         """Get list of active projects.

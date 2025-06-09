@@ -67,24 +67,59 @@ class IntelligentAIBrain:
         self.gemini_client = None
         self.deepseek_api_key = None
         
-        # Primary AI provider - Anthropic (following 2024 official documentation)
+        # Primary AI provider - Anthropic (with GitHub Actions compatibility)
         try:
-            # Use official initialization pattern - defaults to ANTHROPIC_API_KEY env var
-            self.anthropic_client = anthropic.Anthropic()
+            # Check if we're in GitHub Actions environment
+            is_github_actions = os.getenv('GITHUB_ACTIONS') == 'true'
+            
+            if is_github_actions:
+                # GitHub Actions environment - use explicit parameters
+                api_key = os.getenv('ANTHROPIC_API_KEY')
+                if api_key:
+                    self.anthropic_client = anthropic.Anthropic(
+                        api_key=api_key,
+                        timeout=30.0
+                    )
+                else:
+                    self.anthropic_client = None
+            else:
+                # Local environment - use default initialization
+                self.anthropic_client = anthropic.Anthropic()
         except anthropic.APIError as e:
             print(f"Anthropic API error during initialization: {e}")
             self.anthropic_client = None
         except Exception as e:
             print(f"Failed to initialize Anthropic client: {e}")
-            self.anthropic_client = None
+            # Try fallback initialization without any extra parameters
+            try:
+                api_key = os.getenv('ANTHROPIC_API_KEY')
+                if api_key:
+                    self.anthropic_client = anthropic.Anthropic(api_key=api_key)
+                else:
+                    self.anthropic_client = None
+            except Exception:
+                self.anthropic_client = None
         
-        # Secondary AI provider - OpenAI
+        # Secondary AI provider - OpenAI (with GitHub Actions compatibility)
         if os.getenv('OPENAI_API_KEY'):
             try:
-                self.openai_client = openai.OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+                api_key = os.getenv('OPENAI_API_KEY')
+                if is_github_actions:
+                    # GitHub Actions environment - explicit parameters
+                    self.openai_client = openai.OpenAI(
+                        api_key=api_key,
+                        timeout=30.0
+                    )
+                else:
+                    # Local environment
+                    self.openai_client = openai.OpenAI(api_key=api_key)
             except Exception as e:
                 print(f"Failed to initialize OpenAI client: {e}")
-                self.openai_client = None
+                # Try minimal fallback
+                try:
+                    self.openai_client = openai.OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+                except Exception:
+                    self.openai_client = None
         
         # Research AI providers - Gemini and DeepSeek
         if os.getenv('GEMINI_API_KEY') and genai is not None:
@@ -974,6 +1009,30 @@ Ensure the dashboard provides clear visibility into system operations."""
         capabilities["research_functions"] = list(set(capabilities["research_functions"]))
         
         return capabilities
+    
+    def generate_enhanced_response_sync(self, prompt: str, model: Optional[str] = None) -> Dict[str, Any]:
+        """Synchronous wrapper for generate_enhanced_response.
+        
+        This method allows synchronous code to call the async generate_enhanced_response method.
+        
+        Args:
+            prompt: The prompt to send to the AI
+            model: Optional model preference ('claude', 'gpt', 'gemini')
+            
+        Returns:
+            Dictionary containing the AI response with content and metadata
+        """
+        import asyncio
+        
+        try:
+            # Check if we're already in an event loop
+            loop = asyncio.get_running_loop()
+            # If we're in a running loop, we can't use asyncio.run()
+            # Create a new task instead
+            return loop.run_until_complete(self.generate_enhanced_response(prompt, model))
+        except RuntimeError:
+            # No running event loop, safe to use asyncio.run()
+            return asyncio.run(self.generate_enhanced_response(prompt, model))
     
     async def generate_enhanced_response(self, prompt: str, model: str = None) -> Dict[str, Any]:
         """Generate enhanced response using primary AI provider.

@@ -22,6 +22,28 @@ import logging
 from concurrent.futures import ThreadPoolExecutor
 import traceback
 
+
+class ContextObjective:
+    """Pickleable objective function for quantum optimization."""
+    
+    def __init__(self, actions, priorities, context):
+        self.actions = actions
+        self.priorities = priorities
+        self.context = context
+    
+    def __call__(self, state):
+        try:
+            action = self.actions[state[0] % len(self.actions)]
+            priority = self.priorities[state[1] % len(self.priorities)]
+            
+            # Calculate score based on context relevance
+            context_score = len([k for k in self.context.keys() if k in action]) * 10
+            priority_score = {'critical': 40, 'high': 30, 'medium': 20, 'low': 10}.get(priority, 0)
+            
+            return context_score + priority_score
+        except Exception:
+            return 0
+
 # Import all god-like systems
 from swarm_intelligence import RealSwarmIntelligence, AgentRole
 from evolutionary_nas import EvolutionaryNAS
@@ -516,27 +538,7 @@ class GodModeController:
         actions = ['generate_tasks', 'improve_code', 'fix_bugs', 'optimize_performance']
         priorities = ['critical', 'high', 'medium', 'low']
         
-        # Create a pickleable objective function class
-        class ContextObjective:
-            def __init__(self, actions, priorities, context):
-                self.actions = actions
-                self.priorities = priorities
-                self.context = context
-            
-            def __call__(self, state):
-                action = self.actions[state[0] % len(self.actions)]
-                priority = self.priorities[state[1] % len(self.priorities)]
-                
-                # Score based on current context
-                score = 0
-                if self.context.get('open_issues', 0) > 10 and action == 'fix_bugs':
-                    score += 10
-                if self.context.get('performance_issues', False) and action == 'optimize_performance':
-                    score += 8
-                
-                return score
-        
-        # Create objective instance
+        # Create objective instance using the global pickleable class
         objective = ContextObjective(actions, priorities, context)
         
         # Search possibility space

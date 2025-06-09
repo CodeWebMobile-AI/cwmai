@@ -116,18 +116,22 @@ class RealSwarmAgent:
         if not self.ai_brain:
             return "No AI brain configured"
             
-        # Route to appropriate model
-        if 'claude' in self.model_name.lower():
-            response = self.ai_brain.generate_enhanced_response(prompt, model='claude')
-        elif 'gpt' in self.model_name.lower():
-            response = self.ai_brain.generate_enhanced_response(prompt, model='gpt')
-        elif 'gemini' in self.model_name.lower():
-            response = self.ai_brain.generate_enhanced_response(prompt, model='gemini')
-        else:
-            # Default to any available model
-            response = self.ai_brain.generate_enhanced_response(prompt)
-            
-        return response.get('content', '') if response else ""
+        try:
+            # Route to appropriate model - properly await async calls
+            if 'claude' in self.model_name.lower():
+                response = await self.ai_brain.generate_enhanced_response(prompt, model='claude')
+            elif 'gpt' in self.model_name.lower():
+                response = await self.ai_brain.generate_enhanced_response(prompt, model='gpt')
+            elif 'gemini' in self.model_name.lower():
+                response = await self.ai_brain.generate_enhanced_response(prompt, model='gemini')
+            else:
+                # Default to any available model
+                response = await self.ai_brain.generate_enhanced_response(prompt)
+                
+            return response.get('content', '') if response else ""
+        except Exception as e:
+            print(f"Error calling AI model {self.model_name}: {e}")
+            return f"Error generating response: {str(e)}"
     
     def _parse_ai_response(self, response: str) -> Dict[str, Any]:
         """Parse AI response into structured format."""
