@@ -1,11 +1,46 @@
 {
   "charter": {
-    "constraints": [
-      "maintain_quality",
-      "ensure_security"
+    "CAPABILITIES": [
+      "Create new projects from Laravel React starter kit",
+      "Generate and validate development tasks",
+      "Coordinate multi-repository development",
+      "Learn from outcomes and adapt"
     ],
-    "primary_goal": "innovation",
-    "secondary_goal": "community_engagement"
+    "CONSTRAINTS": [
+      "Only create features for existing projects",
+      "No hardcoded logic or templates",
+      "All decisions must be AI-driven"
+    ],
+    "CORE_OBJECTIVES": [
+      "Build a portfolio of Laravel React applications",
+      "Continuously improve AI capabilities",
+      "Maintain high code quality standards"
+    ],
+    "DECISION_PRINCIPLES": [
+      "Value-driven",
+      "Learn from outcomes",
+      "Continuous improvement"
+    ],
+    "PRIMARY_PURPOSE": "Autonomously create and manage software projects for CodeWebMobile-AI",
+    "PROJECT_METHODOLOGY": "Fork Laravel React starter kit and customize",
+    "SUCCESS_METRICS": [
+      "Portfolio growth",
+      "Task success rate",
+      "System improvements"
+    ],
+    "TASK_TYPES": {
+      "FEATURE": "Add features to existing projects only",
+      "NEW_PROJECT": "Create complete applications using starter kit",
+      "improvement": "Enhance the AI system itself"
+    }
+  },
+  "dynamic_metrics": {
+    "charters_generated": 1,
+    "outcomes_learned": 0,
+    "projects_created": 0,
+    "tasks_corrected": 0,
+    "tasks_validated": 0,
+    "value_created": 0.0
   },
   "external_context": {
     "last_updated": "2025-06-08T19:18:40.132372+00:00",
@@ -13,7 +48,24 @@
     "security_alerts": [],
     "technology_updates": []
   },
-  "last_updated": "2025-06-08T19:18:41.084339+00:00",
+  "last_cycle": {
+    "charter_version": "unknown",
+    "duration": 0.03515291213989258,
+    "errors": [
+      {
+        "error": "list index out of range",
+        "phase": "cycle_execution",
+        "traceback": "Traceback (most recent call last):\n  File \"/home/runner/work/cwmai/cwmai/scripts/dynamic_god_mode_controller.py\", line 121, in run_god_mode_cycle\n    swarm_analysis = await self._dynamic_swarm_analysis(context)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/cwmai/cwmai/scripts/dynamic_god_mode_controller.py\", line 237, in _dynamic_swarm_analysis\n    swarm_result = await self.swarm.process_task_swarm(analysis_task, context)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/cwmai/cwmai/scripts/dynamic_swarm.py\", line 298, in process_task_swarm\n    result = await self._enhanced_swarm_process(task, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/cwmai/cwmai/scripts/dynamic_swarm.py\", line 325, in _enhanced_swarm_process\n    refined_analyses = await self._phase_enhanced_cross_pollination(\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/cwmai/cwmai/scripts/dynamic_swarm.py\", line 384, in _phase_enhanced_cross_pollination\n    refined = await agent.analyze_task(task, other_analyses, iteration=2)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/cwmai/cwmai/scripts/dynamic_swarm.py\", line 46, in analyze_task\n    prompt = self._build_contextual_prompt(task, other_insights, iteration)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/cwmai/cwmai/scripts/dynamic_swarm.py\", line 146, in _build_contextual_prompt\n    {self._format_other_insights(other_insights)}\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/cwmai/cwmai/scripts/dynamic_swarm.py\", line 194, in _format_other_insights\n    - Main Challenge: {insight.get('challenges', ['None'])[0]}\n                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^\nIndexError: list index out of range\n"
+      }
+    ],
+    "improvements": [],
+    "intensity": "experimental",
+    "learnings": [],
+    "metrics": {},
+    "operations": [],
+    "timestamp": "2025-06-09T07:40:08.993206+00:00"
+  },
+  "last_updated": "2025-06-09T07:40:09.028365+00:00",
   "projects": {
     "sample-project": {
       "action_history": [
