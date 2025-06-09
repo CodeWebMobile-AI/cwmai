@@ -3,6 +3,7 @@ HTTP AI Client Module
 
 Pure HTTP API client for all AI providers - No SDK dependencies.
 Eliminates SDK initialization issues and proxies errors in GitHub Actions.
+Enhanced with comprehensive security features.
 """
 
 import asyncio
@@ -14,19 +15,41 @@ import time
 from typing import Dict, Any, Optional
 from datetime import datetime, timezone
 
+# Import security manager
+try:
+    from .security_manager import SecurityManager, SecurityLevel
+    SECURITY_AVAILABLE = True
+except ImportError:
+    SECURITY_AVAILABLE = False
+
 
 class HTTPAIClient:
     """Pure HTTP API client for all AI providers - No SDK dependencies."""
     
     def __init__(self):
         """Initialize HTTP AI client with API keys from environment variables."""
-        self.anthropic_api_key = os.getenv('ANTHROPIC_API_KEY')
-        self.openai_api_key = os.getenv('OPENAI_API_KEY')
-        self.gemini_api_key = os.getenv('GOOGLE_API_KEY')
-        self.deepseek_api_key = os.getenv('DEEPSEEK_API_KEY')
+        # Initialize security manager if available
+        self.security_manager = SecurityManager() if SECURITY_AVAILABLE else None
         
-        # Initialize comprehensive logging
-        self.logger = logging.getLogger(f"{__name__}.HTTPAIClient")
+        # Securely retrieve API keys
+        if self.security_manager:
+            self.anthropic_api_key = self.security_manager.credential_manager.get_secure_credential('ANTHROPIC_API_KEY')
+            self.openai_api_key = self.security_manager.credential_manager.get_secure_credential('OPENAI_API_KEY')
+            self.gemini_api_key = self.security_manager.credential_manager.get_secure_credential('GOOGLE_API_KEY')
+            self.deepseek_api_key = self.security_manager.credential_manager.get_secure_credential('DEEPSEEK_API_KEY')
+        else:
+            # Fallback to direct environment access
+            self.anthropic_api_key = os.getenv('ANTHROPIC_API_KEY')
+            self.openai_api_key = os.getenv('OPENAI_API_KEY')
+            self.gemini_api_key = os.getenv('GOOGLE_API_KEY')
+            self.deepseek_api_key = os.getenv('DEEPSEEK_API_KEY')
+        
+        # Initialize secure logging
+        if self.security_manager:
+            self.logger = self.security_manager.logger
+        else:
+            self.logger = logging.getLogger(f"{__name__}.HTTPAIClient")
+        
         self.debug_mode = False
         self.request_count = 0
         self.total_response_time = 0.0
@@ -40,21 +63,56 @@ class HTTPAIClient:
             'deepseek': bool(self.deepseek_api_key)
         }
         
+        # Validate credentials if security manager is available
+        if self.security_manager:
+            self._validate_credentials()
+        
         # Log initialization
         self.logger.info(f"HTTPAIClient initialized with {sum(self.providers_available.values())} available providers")
         for provider, available in self.providers_available.items():
             status = "AVAILABLE" if available else "UNAVAILABLE"
-            self.logger.debug(f"Provider {provider}: {status}")
+            if hasattr(self.logger, 'logger'):
+                self.logger.logger.debug(f"Provider {provider}: {status}")
+            else:
+                self.logger.debug(f"Provider {provider}: {status}")
+    
+    def _validate_credentials(self):
+        """Validate all API credentials using security manager."""
+        if not self.security_manager:
+            return
+        
+        credentials = [
+            ('ANTHROPIC_API_KEY', 'anthropic', self.anthropic_api_key),
+            ('OPENAI_API_KEY', 'openai', self.openai_api_key),
+            ('GOOGLE_API_KEY', 'google', self.gemini_api_key),
+            ('DEEPSEEK_API_KEY', 'deepseek', self.deepseek_api_key)
+        ]
+        
+        for env_var, provider, key in credentials:
+            if key:
+                violation = self.security_manager.credential_manager.validate_api_key(key, provider)
+                if violation:
+                    if violation.level in [SecurityLevel.HIGH, SecurityLevel.CRITICAL]:
+                        self.logger.error(f"Security violation for {env_var}: {violation.message}")
+                    else:
+                        self.logger.warning(f"Security warning for {env_var}: {violation.message}")
     
     def _sanitize_headers(self, headers: Dict[str, str]) -> Dict[str, str]:
         """Sanitize headers for logging by hiding sensitive information."""
-        sanitized = {}
-        for key, value in headers.items():
-            if 'authorization' in key.lower() or 'key' in key.lower():
-                sanitized[key] = '***'
-            else:
-                sanitized[key] = value
-        return sanitized
+        if self.security_manager:
+            # Use security manager for header sanitization
+            header_str = str(headers)
+            safe_str = self.security_manager.credential_manager.mask_sensitive_data(header_str)
+            return {'sanitized': safe_str}
+        else:
+            # Fallback sanitization
+            sanitized = {}
+            for key, value in headers.items():
+                if 'authorization' in key.lower() or 'key' in key.lower():
+                    sanitized[key] = '***'
+                else:
+                    sanitized[key] = value
+            return sanitized
     
     async def generate_enhanced_response(self, prompt: str, model: Optional[str] = None) -> Dict[str, Any]:
         """Generate enhanced response using the best available AI provider.
@@ -70,6 +128,32 @@ class HTTPAIClient:
         self.request_count += 1
         
         start_time = time.time()
+        
+        # Security validation if available
+        if self.security_manager:
+            violations = self.security_manager.validate_ai_request(prompt)
+            
+            # Check for critical violations
+            critical_violations = [v for v in violations if v.level in [SecurityLevel.HIGH, SecurityLevel.CRITICAL]]
+            if critical_violations:
+                self.logger.error(f"[{request_id}] Critical security violations detected, rejecting request")
+                return {
+                    'content': 'Request rejected due to security violations',
+                    'provider': 'security',
+                    'error': 'Security validation failed',
+                    'violations': [v.message for v in critical_violations],
+                    'confidence': 0.0,
+                    'request_id': request_id,
+                    'response_time': time.time() - start_time,
+                    'timestamp': datetime.now(timezone.utc).isoformat()
+                }
+            
+            # Sanitize prompt if there are medium-level violations
+            medium_violations = [v for v in violations if v.level == SecurityLevel.MEDIUM]
+            if medium_violations:
+                self.logger.warning(f"[{request_id}] Medium security violations detected, sanitizing prompt")
+                prompt = self.security_manager.sanitize_ai_request(prompt)
+        
         self.logger.info(f"[{request_id}] Starting AI request - Model preference: {model or 'auto'}, Prompt length: {len(prompt)}")
         
         try:
