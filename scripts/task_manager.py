@@ -232,6 +232,51 @@ class TaskManager:
             print(f"Error creating GitHub issue: {e}")
             return None
     
+    def create_ai_task_issue(self, title: str, description: str, labels: List[str] = None, 
+                           priority: str = "medium", task_type: str = "task") -> Optional[int]:
+        """Create a GitHub issue for AI tasks with @claude mention.
+        
+        This is the centralized method that all AI-generated task issues should use
+        to ensure consistent formatting and @claude mentions.
+        
+        Args:
+            title: Issue title
+            description: Issue description/body content
+            labels: Additional labels for the issue
+            priority: Task priority (low, medium, high)
+            task_type: Type of task (task, setup, bug, feature, etc.)
+            
+        Returns:
+            GitHub issue number or None if failed
+        """
+        if not self.repo:
+            print("GitHub repository not available")
+            return None
+        
+        try:
+            # Validate @claude mention is present
+            if "@claude" not in description:
+                print("Warning: AI task issue created without @claude mention, adding it")
+                description = f"@claude {description}"
+            
+            # Create labels list
+            issue_labels = labels or []
+            issue_labels.extend([f"priority:{priority}", f"type:{task_type}", "ai-managed"])
+            
+            # Create the issue directly with proper formatting
+            issue = self.repo.create_issue(
+                title=title,
+                body=description,
+                labels=issue_labels
+            )
+            
+            print(f"Created AI task issue #{issue.number}: {title}")
+            return issue.number
+            
+        except Exception as e:
+            print(f"Error creating AI task issue: {e}")
+            return None
+    
     def _format_issue_body(self, task: Dict[str, Any]) -> str:
         """Format issue body with @claude mention.
         

@@ -12,6 +12,7 @@ from typing import Dict, List, Any, Optional
 import asyncio
 from github import Github, GithubException
 import base64
+from scripts.task_manager import TaskManager
 
 
 class ProjectCreator:
@@ -31,6 +32,7 @@ class ProjectCreator:
         self.ai_brain = ai_brain
         self.logger = logging.getLogger(__name__)
         self.created_projects = []
+        self.task_manager = TaskManager(github_token)
         
     async def create_project(self, task: Dict[str, Any]) -> Dict[str, Any]:
         """Create project by forking starter kit and customizing.
@@ -601,10 +603,8 @@ This project is open source and available under the MIT License.
         """
         issue_numbers = []
         
-        # Create setup issue
-        setup_issue = repo.create_issue(
-            title="Initial Project Setup",
-            body="""## Initial Setup Tasks
+        # Create setup issue using centralized method
+        setup_description = """## Initial Setup Tasks
 
 - [ ] Configure environment variables
 - [ ] Set up database schema
@@ -613,16 +613,25 @@ This project is open source and available under the MIT License.
 - [ ] Add project documentation
 - [ ] Configure production deployment
 
-This issue tracks the initial setup of the project.""",
-            labels=['setup', 'high-priority']
+This issue tracks the initial setup of the project."""
+        
+        # Use task manager's centralized method to ensure @claude mention
+        self.task_manager.repo = repo
+        setup_issue_number = self.task_manager.create_ai_task_issue(
+            title="Initial Project Setup",
+            description=setup_description,
+            labels=['setup'],
+            priority="high",
+            task_type="setup"
         )
+        
+        # Get the issue object for compatibility
+        setup_issue = repo.get_issue(setup_issue_number) if setup_issue_number else None
         issue_numbers.append(setup_issue.number)
         
-        # Create feature issues
+        # Create feature issues using centralized method
         for i, feature in enumerate(details.get('initial_features', [])[:5]):
-            issue = repo.create_issue(
-                title=f"Implement: {feature}",
-                body=f"""## Feature Implementation
+            feature_description = f"""## Feature Implementation
 
 Implement the following feature: {feature}
 
@@ -635,10 +644,18 @@ Implement the following feature: {feature}
 ### Technical Considerations
 - Follow Laravel/React best practices
 - Ensure responsive design
-- Consider performance implications""",
-                labels=['feature', 'enhancement']
+- Consider performance implications"""
+            
+            feature_issue_number = self.task_manager.create_ai_task_issue(
+                title=f"Implement: {feature}",
+                description=feature_description,
+                labels=['feature', 'enhancement'],
+                priority="medium",
+                task_type="feature"
             )
-            issue_numbers.append(issue.number)
+            
+            if feature_issue_number:
+                issue_numbers.append(feature_issue_number)
             
         return issue_numbers
     

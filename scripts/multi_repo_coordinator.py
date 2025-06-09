@@ -18,6 +18,7 @@ from github import Github, RateLimitExceededException
 import numpy as np
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import pickle
+from scripts.task_manager import TaskManager
 
 
 @dataclass
@@ -324,6 +325,7 @@ class MultiRepoCoordinator:
         self.github = Github(self.github_token) if self.github_token else None
         self.rate_limiter = RateLimitManager()
         self.learning_system = CrossRepositoryLearning()
+        self.task_manager = TaskManager(self.github_token)
         
         # Repository management
         self.repositories: Dict[str, RepositoryState] = {}
@@ -428,17 +430,29 @@ class MultiRepoCoordinator:
             self.rate_limiter.wait_if_needed()
             repo = self.github.get_repo(repo_name)
             
-            # Create issue with labels
+            # Create issue using centralized method to ensure @claude mention
             labels = [task_type, 'ai-generated']
             if 'feature' in task_type.lower():
                 labels.append('enhancement')
             
+            # Use task manager's centralized method
+            self.task_manager.repo = repo
+            formatted_description = description + "\n\n---\n*This issue was created by the AI coordination system.*"
+            
             self.rate_limiter.wait_if_needed()
-            issue = repo.create_issue(
+            issue_number = self.task_manager.create_ai_task_issue(
                 title=title,
-                body=description + "\n\n---\n*This issue was created by the AI coordination system.*",
-                labels=labels
+                description=formatted_description,
+                labels=labels,
+                priority="medium",
+                task_type=task_type
             )
+            
+            if not issue_number:
+                print(f"Failed to create issue in {repo_name}")
+                return False
+            
+            issue = repo.get_issue(issue_number)
             
             print(f"Created issue #{issue.number} in {repo_name}: {title}")
             return True

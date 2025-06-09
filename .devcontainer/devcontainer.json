@@ -1,0 +1,107 @@
+{
+  "name": "CWMAI Development Environment",
+  "image": "mcr.microsoft.com/devcontainers/python:1-3.11-bullseye",
+  
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "configureZshAsDefaultShell": true,
+      "installOhMyZsh": true
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.pylint",
+        "ms-python.black-formatter",
+        "ms-python.isort",
+        "ms-toolsai.jupyter",
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+        "ms-vscode.vscode-json",
+        "redhat.vscode-yaml"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.formatting.provider": "black",
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": true,
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.organizeImports": "explicit"
+        }
+      }
+    }
+  },
+
+  "containerEnv": {
+    "ANTHROPIC_API_KEY": "${localEnv:ANTHROPIC_API_KEY}",
+    "OPENAI_API_KEY": "${localEnv:OPENAI_API_KEY}",
+    "GOOGLE_API_KEY": "${localEnv:GOOGLE_API_KEY}",
+    "GEMINI_API_KEY": "${localEnv:GEMINI_API_KEY}",
+    "DEEPSEEK_API_KEY": "${localEnv:DEEPSEEK_API_KEY}",
+    "CLAUDE_PAT": "${localEnv:CLAUDE_PAT}",
+    "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}",
+    "GITHUB_REPOSITORY": "CodeWebMobile-AI/cwmai"
+  },
+
+  "secrets": {
+    "ANTHROPIC_API_KEY": {
+      "description": "Anthropic API key for Claude AI access",
+      "documentationUrl": "https://console.anthropic.com/"
+    },
+    "OPENAI_API_KEY": {
+      "description": "OpenAI API key for GPT models",
+      "documentationUrl": "https://platform.openai.com/api-keys"
+    },
+    "GOOGLE_API_KEY": {
+      "description": "Google API key for Gemini models",
+      "documentationUrl": "https://aistudio.google.com/app/apikey"
+    },
+    "GEMINI_API_KEY": {
+      "description": "Google Gemini API key",
+      "documentationUrl": "https://aistudio.google.com/app/apikey"
+    },
+    "DEEPSEEK_API_KEY": {
+      "description": "DeepSeek API key",
+      "documentationUrl": "https://platform.deepseek.com/"
+    },
+    "CLAUDE_PAT": {
+      "description": "GitHub Personal Access Token with repo permissions",
+      "documentationUrl": "https://github.com/settings/tokens"
+    },
+    "GITHUB_TOKEN": {
+      "description": "GitHub token for repository operations",
+      "documentationUrl": "https://github.com/settings/tokens"
+    }
+  },
+
+  "postCreateCommand": "pip install -r requirements.txt && python scripts/environment_validator.py",
+
+  "postStartCommand": ".devcontainer/setup-environment.sh",
+
+  "remoteUser": "vscode",
+
+  "workspaceFolder": "/workspaces/cwmai",
+
+  "forwardPorts": [8000, 8080, 3000],
+
+  "portsAttributes": {
+    "8000": {
+      "label": "AI Server",
+      "onAutoForward": "notify"
+    },
+    "8080": {
+      "label": "Dashboard",
+      "onAutoForward": "notify"
+    },
+    "3000": {
+      "label": "Development Server",
+      "onAutoForward": "notify"
+    }
+  }
+}
