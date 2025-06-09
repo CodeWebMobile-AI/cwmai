@@ -49,6 +49,16 @@ class DynamicGodModeController(GodModeController):
         # Initialize parent
         super().__init__(config, ai_brain)
         
+        # Initialize repository discovery 
+        from state_manager import StateManager
+        self.state_manager = StateManager()
+        
+        # Discover and load repositories
+        self.logger.info("Discovering organization repositories...")
+        self.current_state = self.state_manager.load_state_with_repository_discovery()
+        self.discovered_repositories = self.current_state.get('projects', {})
+        self.logger.info(f"Loaded {len(self.discovered_repositories)} repositories from organization")
+        
         # Initialize dynamic systems
         self.logger.info("Initializing dynamic AI systems...")
         
@@ -79,6 +89,22 @@ class DynamicGodModeController(GodModeController):
             self.learning_system,
             self.charter_system
         )
+        
+        # Initialize multi-repo coordinator with discovered repositories
+        if github_token and self.discovered_repositories:
+            from multi_repo_coordinator import MultiRepoCoordinator
+            self.coordinator = MultiRepoCoordinator(github_token, max_concurrent=len(self.discovered_repositories))
+            
+            # Add discovered repositories to coordinator
+            for project_id, project_data in self.discovered_repositories.items():
+                if project_data.get('clone_url'):
+                    try:
+                        self.coordinator.add_repository(project_data['clone_url'])
+                        self.logger.info(f"Added repository {project_data['name']} to coordinator")
+                    except Exception as e:
+                        self.logger.warning(f"Failed to add repository {project_data['name']}: {e}")
+        else:
+            self.coordinator = None
         
         # Dynamic operation tracking
         self.dynamic_metrics = {
@@ -651,33 +677,57 @@ class DynamicGodModeController(GodModeController):
         self.state_manager.save_state_locally(state)
     
     def _get_active_projects(self) -> List[Dict[str, Any]]:
-        """Get list of active projects.
+        """Get list of active projects including discovered repositories.
         
         Returns:
-            Active project list
+            Active project list with real repositories
         """
         projects = []
         
-        # Get from multi-repo coordinator
+        # Add discovered repositories from organization
+        for project_id, project_data in self.discovered_repositories.items():
+            if project_data.get('status') == 'active':
+                projects.append({
+                    'name': project_data.get('name', project_id),
+                    'full_name': project_data.get('full_name', project_id),
+                    'url': project_data.get('url', ''),
+                    'health_score': project_data.get('health_score', 0),
+                    'language': project_data.get('language', 'Unknown'),
+                    'description': project_data.get('description', ''),
+                    'metrics': project_data.get('metrics', {}),
+                    'recent_activity': project_data.get('recent_activity', {}),
+                    'type': project_data.get('type', 'github_repository'),
+                    'last_checked': project_data.get('last_checked'),
+                    'topics': project_data.get('topics', [])
+                })
+        
+        # Get from multi-repo coordinator if available
         if self.coordinator and hasattr(self.coordinator, 'repositories'):
             for repo_url, repo_state in self.coordinator.repositories.items():
-                projects.append({
-                    'name': repo_state.name,
-                    'url': repo_url,
-                    'health_score': repo_state.health_score,
-                    'open_issues': repo_state.open_issues
-                })
+                # Avoid duplicates by checking if already added from discovery
+                if not any(p.get('url') == repo_url for p in projects):
+                    projects.append({
+                        'name': repo_state.name,
+                        'url': repo_url,
+                        'health_score': repo_state.health_score,
+                        'open_issues': repo_state.open_issues,
+                        'type': 'coordinator_managed'
+                    })
                 
         # Add created projects
         if self.project_creator:
             for project in self.project_creator.get_created_projects():
                 if project['success']:
-                    projects.append({
-                        'name': project['project_name'],
-                        'url': project['repo_url'],
-                        'created_at': project['created_at']
-                    })
-                    
+                    # Avoid duplicates
+                    if not any(p.get('url') == project['repo_url'] for p in projects):
+                        projects.append({
+                            'name': project['project_name'],
+                            'url': project['repo_url'],
+                            'created_at': project['created_at'],
+                            'type': 'ai_created'
+                        })
+        
+        self.logger.info(f"Found {len(projects)} active projects")
         return projects
     
     def _get_system_capabilities(self) -> List[str]:

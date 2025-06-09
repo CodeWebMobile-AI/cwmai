@@ -9,7 +9,7 @@ import json
 import os
 import base64
 from datetime import datetime, timezone
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 from github import Github
 
 
@@ -72,9 +72,245 @@ class StateManager:
         """
         self.local_path = local_path
         self.repo_path = repo_path
-        self.github_token = os.getenv('CLAUDE_PAT')
+        self.github_token = os.getenv('CLAUDE_PAT') or os.getenv('GITHUB_TOKEN')
         self.repo_name = os.getenv('GITHUB_REPOSITORY', 'CodeWebMobile-AI/cwmai')
+        self.organization = 'CodeWebMobile-AI'
         
+    def discover_organization_repositories(self) -> List[Dict[str, Any]]:
+        """Discover all repositories in the CodeWebMobile-AI organization.
+        
+        Returns:
+            List of repository information dictionaries
+        """
+        if not self.github_token:
+            print("Warning: GitHub token not available for repository discovery")
+            return []
+            
+        try:
+            g = Github(self.github_token)
+            org = g.get_organization(self.organization)
+            repositories = []
+            
+            print(f"Discovering repositories in {self.organization} organization...")
+            
+            for repo in org.get_repos():
+                # Skip archived or disabled repositories
+                if repo.archived or repo.disabled:
+                    continue
+                    
+                try:
+                    # Get repository metrics and health data
+                    repo_data = {
+                        'name': repo.name,
+                        'full_name': repo.full_name,
+                        'description': repo.description or f"Repository: {repo.name}",
+                        'url': repo.html_url,
+                        'clone_url': repo.clone_url,
+                        'language': repo.language,
+                        'private': repo.private,
+                        'created_at': repo.created_at.isoformat() if repo.created_at else None,
+                        'updated_at': repo.updated_at.isoformat() if repo.updated_at else None,
+                        'pushed_at': repo.pushed_at.isoformat() if repo.pushed_at else None,
+                        'size': repo.size,
+                        'metrics': {
+                            'stars': repo.stargazers_count,
+                            'forks': repo.forks_count,
+                            'watchers': repo.watchers_count,
+                            'issues_open': repo.open_issues_count,
+                            'has_issues': repo.has_issues,
+                            'has_projects': repo.has_projects,
+                            'has_wiki': repo.has_wiki
+                        },
+                        'topics': list(repo.get_topics()),
+                        'default_branch': repo.default_branch,
+                        'health_score': self._calculate_repository_health_score(repo),
+                        'discovered_at': datetime.now(timezone.utc).isoformat()
+                    }
+                    
+                    # Get recent activity summary
+                    repo_data['recent_activity'] = self._get_repository_activity_summary(repo)
+                    
+                    repositories.append(repo_data)
+                    print(f"✓ Discovered repository: {repo.name}")
+                    
+                except Exception as e:
+                    print(f"Error processing repository {repo.name}: {e}")
+                    continue
+            
+            print(f"Successfully discovered {len(repositories)} repositories")
+            return repositories
+            
+        except Exception as e:
+            print(f"Error discovering organization repositories: {e}")
+            return []
+    
+    def _calculate_repository_health_score(self, repo) -> float:
+        """Calculate a health score for a repository based on various metrics.
+        
+        Args:
+            repo: GitHub repository object
+            
+        Returns:
+            Health score between 0.0 and 100.0
+        """
+        try:
+            score = 50.0  # Base score
+            
+            # Recent activity (pushed within last 30 days)
+            if repo.pushed_at:
+                days_since_push = (datetime.now(timezone.utc) - repo.pushed_at.replace(tzinfo=timezone.utc)).days
+                if days_since_push <= 7:
+                    score += 20
+                elif days_since_push <= 30:
+                    score += 10
+                elif days_since_push <= 90:
+                    score += 5
+            
+            # Documentation and setup
+            if repo.has_wiki:
+                score += 5
+            if repo.description:
+                score += 5
+                
+            # Community engagement
+            if repo.stargazers_count > 0:
+                score += min(10, repo.stargazers_count)
+            if repo.forks_count > 0:
+                score += min(5, repo.forks_count)
+                
+            # Project management
+            if repo.has_issues:
+                score += 5
+            if repo.has_projects:
+                score += 5
+                
+            # Size and content (reasonable size indicates active development)
+            if repo.size > 100:  # Has some content
+                score += 5
+                
+            return min(100.0, max(0.0, score))
+            
+        except Exception as e:
+            print(f"Error calculating health score for {repo.name}: {e}")
+            return 50.0
+    
+    def _get_repository_activity_summary(self, repo) -> Dict[str, Any]:
+        """Get a summary of recent repository activity.
+        
+        Args:
+            repo: GitHub repository object
+            
+        Returns:
+            Dictionary with activity summary
+        """
+        try:
+            activity = {
+                'recent_commits': 0,
+                'recent_issues': 0,
+                'recent_prs': 0,
+                'contributors_count': 0,
+                'last_commit_date': None,
+                'active_branches': 0
+            }
+            
+            # Get recent commits (last 30 days)
+            try:
+                from datetime import timedelta
+                since_date = datetime.now(timezone.utc) - timedelta(days=30)
+                commits = list(repo.get_commits(since=since_date))
+                activity['recent_commits'] = len(commits)
+                if commits:
+                    activity['last_commit_date'] = commits[0].commit.author.date.isoformat()
+            except:
+                pass
+            
+            # Get contributors count
+            try:
+                contributors = list(repo.get_contributors())
+                activity['contributors_count'] = len(contributors)
+            except:
+                pass
+                
+            # Count branches
+            try:
+                branches = list(repo.get_branches())
+                activity['active_branches'] = len(branches)
+            except:
+                pass
+            
+            return activity
+            
+        except Exception as e:
+            print(f"Error getting activity summary for {repo.name}: {e}")
+            return {
+                'recent_commits': 0,
+                'recent_issues': 0,
+                'recent_prs': 0,
+                'contributors_count': 0,
+                'last_commit_date': None,
+                'active_branches': 0
+            }
+    
+    def load_state_with_repository_discovery(self) -> Dict[str, Any]:
+        """Load system state and automatically discover organization repositories.
+        
+        Returns:
+            Dict containing the system state with discovered repositories
+        """
+        # Load existing state
+        state = self.load_state()
+        
+        # Discover repositories and update state
+        discovered_repos = self.discover_organization_repositories()
+        
+        if discovered_repos:
+            # Clear sample project and replace with real repositories
+            state['projects'] = {}
+            
+            for repo_data in discovered_repos:
+                project_id = repo_data['name']
+                state['projects'][project_id] = {
+                    'name': repo_data['name'],
+                    'full_name': repo_data['full_name'],
+                    'description': repo_data['description'],
+                    'url': repo_data['url'],
+                    'clone_url': repo_data['clone_url'],
+                    'language': repo_data['language'],
+                    'health_score': repo_data['health_score'],
+                    'last_checked': repo_data['discovered_at'],
+                    'metrics': repo_data['metrics'],
+                    'recent_activity': repo_data['recent_activity'],
+                    'topics': repo_data['topics'],
+                    'default_branch': repo_data['default_branch'],
+                    'type': 'github_repository',
+                    'status': 'active',
+                    'action_history': [
+                        {
+                            "action": "repository_discovered",
+                            "details": f"Repository {repo_data['name']} discovered and integrated into system",
+                            "outcome": "success_discovered",
+                            "timestamp": repo_data['discovered_at']
+                        }
+                    ]
+                }
+            
+            # Update state metadata
+            state['repository_discovery'] = {
+                'last_discovery': datetime.now(timezone.utc).isoformat(),
+                'repositories_found': len(discovered_repos),
+                'discovery_source': 'github_organization',
+                'organization': self.organization
+            }
+            
+            # Save updated state
+            self.save_state_locally(state)
+            
+            print(f"✓ Integrated {len(discovered_repos)} repositories into system state")
+        else:
+            print("No repositories discovered, keeping existing state")
+        
+        return state
+
     def load_state(self) -> Dict[str, Any]:
         """Load system state with fallback hierarchy.
         

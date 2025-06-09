@@ -34,16 +34,23 @@ class AIBrainFactory:
             if not os.getenv('GITHUB_ACTIONS'):
                 logger.warning("Not in GitHub Actions environment - using workflow defaults")
             
-            # Load minimal state for workflow
+            # Load minimal state for workflow with repository discovery
             from state_manager import StateManager
             state_manager = StateManager()
             
             try:
-                state = state_manager.load_workflow_state()
-            except (AttributeError, FileNotFoundError):
-                # Fallback to regular state if workflow-specific method doesn't exist
-                logger.info("Using standard state loading for workflow")
-                state = state_manager.load_state()
+                # Use repository discovery for workflows to get real project data
+                logger.info("Loading state with repository discovery for workflow")
+                state = state_manager.load_state_with_repository_discovery()
+                logger.info(f"Workflow loaded {len(state.get('projects', {}))} repositories")
+            except Exception as e:
+                logger.warning(f"Repository discovery failed, using fallback: {e}")
+                try:
+                    state = state_manager.load_workflow_state()
+                except (AttributeError, FileNotFoundError):
+                    # Fallback to regular state if workflow-specific method doesn't exist
+                    logger.info("Using standard state loading for workflow")
+                    state = state_manager.load_state()
             
             # Gather CI-specific context
             from context_gatherer import ContextGatherer
@@ -97,15 +104,22 @@ class AIBrainFactory:
         logger = logging.getLogger('AIBrainFactory')
         
         try:
-            # Load complete production state
+            # Load complete production state with repository discovery
             from state_manager import StateManager
             state_manager = StateManager()
             
             try:
-                state = state_manager.load_production_state()
-            except (AttributeError, FileNotFoundError):
-                logger.info("Using standard state loading for production")
-                state = state_manager.load_state()
+                # Always use repository discovery for production to get latest repo data
+                logger.info("Loading production state with repository discovery")
+                state = state_manager.load_state_with_repository_discovery()
+                logger.info(f"Production loaded {len(state.get('projects', {}))} repositories")
+            except Exception as e:
+                logger.warning(f"Repository discovery failed in production, using fallback: {e}")
+                try:
+                    state = state_manager.load_production_state()
+                except (AttributeError, FileNotFoundError):
+                    logger.info("Using standard state loading for production")
+                    state = state_manager.load_state()
             
             # Gather full production context
             from context_gatherer import ContextGatherer
