@@ -714,7 +714,7 @@ class DynamicGodModeController(GodModeController):
         Returns:
             System status
         """
-        status = await super().get_status()
+        status = super().get_status()
         
         # Add dynamic system status
         status['dynamic_systems'] = {

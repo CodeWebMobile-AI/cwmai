@@ -10,15 +10,8 @@ import os
 import random
 from datetime import datetime, timezone
 from typing import Dict, List, Any, Tuple, Optional
-import openai
-import anthropic
-try:
-    from google import genai
-    from google.genai import types
-except ImportError:
-    genai = None
-    types = None
 import requests
+from http_ai_client import HTTPAIClient
 
 
 class IntelligentAIBrain:
@@ -61,93 +54,16 @@ class IntelligentAIBrain:
         self.projects = self.state.get("projects", {})
         self.system_performance = self.state.get("system_performance", {})
         
-        # Initialize AI clients - Anthropic is now primary
+        # Initialize HTTP AI client - No SDK dependencies!
+        self.http_ai_client = HTTPAIClient()
+        
+        # Legacy compatibility - these will be None but code won't break
         self.anthropic_client = None
         self.openai_client = None
         self.gemini_client = None
         self.deepseek_api_key = None
         
-        # Primary AI provider - Anthropic (with GitHub Actions compatibility)
-        try:
-            # Check if we're in GitHub Actions environment
-            is_github_actions = os.getenv('GITHUB_ACTIONS') == 'true'
-            
-            if is_github_actions:
-                # GitHub Actions environment - use explicit parameters
-                api_key = os.getenv('ANTHROPIC_API_KEY')
-                if api_key:
-                    self.anthropic_client = anthropic.Anthropic(
-                        api_key=api_key,
-                        timeout=30.0
-                    )
-                else:
-                    self.anthropic_client = None
-            else:
-                # Local environment - use default initialization
-                self.anthropic_client = anthropic.Anthropic()
-        except anthropic.APIError as e:
-            print(f"Anthropic API error during initialization: {e}")
-            self.anthropic_client = None
-        except Exception as e:
-            print(f"Failed to initialize Anthropic client: {e}")
-            # Try fallback initialization without any extra parameters
-            try:
-                api_key = os.getenv('ANTHROPIC_API_KEY')
-                if api_key:
-                    self.anthropic_client = anthropic.Anthropic(api_key=api_key)
-                else:
-                    self.anthropic_client = None
-            except Exception:
-                self.anthropic_client = None
-        
-        # Secondary AI provider - OpenAI (with GitHub Actions compatibility)
-        if os.getenv('OPENAI_API_KEY'):
-            try:
-                api_key = os.getenv('OPENAI_API_KEY')
-                if is_github_actions:
-                    # GitHub Actions environment - explicit parameters
-                    self.openai_client = openai.OpenAI(
-                        api_key=api_key,
-                        timeout=30.0
-                    )
-                else:
-                    # Local environment
-                    self.openai_client = openai.OpenAI(api_key=api_key)
-            except Exception as e:
-                print(f"Failed to initialize OpenAI client: {e}")
-                # Try minimal fallback
-                try:
-                    self.openai_client = openai.OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
-                except Exception:
-                    self.openai_client = None
-        
-        # Research AI providers - Gemini and DeepSeek
-        if os.getenv('GEMINI_API_KEY') and genai is not None:
-            try:
-                self.gemini_client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
-            except Exception as e:
-                print(f"Failed to initialize Gemini client: {e}")
-                # Try fallback initialization
-                try:
-                    import google.generativeai as fallback_genai
-                    fallback_genai.configure(api_key=os.getenv('GEMINI_API_KEY'))
-                    self.gemini_client = fallback_genai.GenerativeModel('gemini-pro')
-                    print("Successfully initialized Gemini with fallback method")
-                except Exception as e2:
-                    print(f"Fallback Gemini initialization also failed: {e2}")
-                    self.gemini_client = None
-        else:
-            self.gemini_client = None
-        
-        if os.getenv('DEEPSEEK_API_KEY'):
-            try:
-                self.deepseek_api_key = os.getenv('DEEPSEEK_API_KEY')
-                # Validate API key format (basic check)
-                if self.deepseek_api_key and not self.deepseek_api_key.startswith('sk-'):
-                    print("Warning: DeepSeek API key format may be incorrect")
-            except Exception as e:
-                print(f"Failed to configure DeepSeek API key: {e}")
-                self.deepseek_api_key = None
+        print(f"✅ HTTP AI Client initialized with providers: {list(self.http_ai_client.providers_available.keys())}")
     
     def decide_next_action(self) -> str:
         """Intelligently decide the next action based on multiple factors.
@@ -678,7 +594,7 @@ Ensure the dashboard provides clear visibility into system operations."""
             self.projects[project_key]["action_history"] = self.projects[project_key]["action_history"][-20:]
     
     def analyze_with_research_ai(self, content: str, analysis_type: str = "general") -> str:
-        """Use research AI providers (Gemini/DeepSeek) to analyze content.
+        """Use research AI providers to analyze content.
         
         Args:
             content: Content to analyze
@@ -687,40 +603,10 @@ Ensure the dashboard provides clear visibility into system operations."""
         Returns:
             Analysis result or empty string if failed
         """
-        try:
-            # Try Gemini first for research tasks
-            if self.gemini_client:
-                prompt = f"Analyze this {analysis_type} content and provide insights: {content[:1000]}"
-                try:
-                    response = self.gemini_client.models.generate_content(
-                        model='gemini-2.0-flash-001',
-                        contents=prompt,
-                        config=types.GenerateContentConfig(
-                            temperature=0.7,
-                            max_output_tokens=1000
-                        ) if types else None
-                    )
-                    if hasattr(response, 'text') and response.text:
-                        return response.text
-                    elif hasattr(response, 'content'):
-                        return str(response.content)
-                    return ""
-                except Exception as e:
-                    print(f"Gemini analysis failed: {e}")
-            
-            # Fallback to DeepSeek API
-            if self.deepseek_api_key:
-                # Use deepseek-reasoner for complex analysis, deepseek-chat for general
-                model = "deepseek-reasoner" if analysis_type in ["technical", "security", "strategic"] else "deepseek-chat"
-                return self._call_deepseek_api(content, analysis_type, model)
-                
-        except Exception as e:
-            print(f"Research AI analysis failed: {e}")
-        
-        return ""
+        return self.http_ai_client.analyze_with_research_ai(content, analysis_type)
     
     def _call_deepseek_api(self, content: str, analysis_type: str, model: str = "deepseek-chat") -> str:
-        """Call DeepSeek API for content analysis.
+        """Call DeepSeek API for content analysis (legacy compatibility).
         
         Args:
             content: Content to analyze
@@ -730,147 +616,27 @@ Ensure the dashboard provides clear visibility into system operations."""
         Returns:
             Analysis result or empty string if failed
         """
-        try:
-            # Use correct DeepSeek API base URL
-            url = "https://api.deepseek.com/chat/completions"
-            headers = {
-                "Authorization": f"Bearer {self.deepseek_api_key}",
-                "Content-Type": "application/json"
-            }
-            
-            # Validate model parameter
-            valid_models = ["deepseek-chat", "deepseek-reasoner"]
-            if model not in valid_models:
-                print(f"Invalid DeepSeek model: {model}. Using deepseek-chat.")
-                model = "deepseek-chat"
-            
-            # Use configuration helper for consistent request setup
-            data = self.configure_deepseek_request(content, analysis_type, max_tokens=500)
-            
-            # Override model if explicitly specified
-            if model != "deepseek-chat":
-                data["model"] = model
-            
-            response = requests.post(url, headers=headers, json=data, timeout=30)
-            
-            # Enhanced error handling for different HTTP status codes
-            if response.status_code == 200:
-                try:
-                    result = response.json()
-                    
-                    # Validate response structure
-                    if not result.get("choices"):
-                        print("DeepSeek API: No choices in response")
-                        return ""
-                    
-                    if len(result["choices"]) == 0:
-                        print("DeepSeek API: Empty choices array")
-                        return ""
-                    
-                    choice = result["choices"][0]
-                    if not choice.get("message"):
-                        print("DeepSeek API: No message in choice")
-                        return ""
-                    
-                    content_result = choice["message"].get("content")
-                    if content_result is None:
-                        print("DeepSeek API: No content in message")
-                        return ""
-                    
-                    return content_result
-                    
-                except ValueError as e:
-                    print(f"DeepSeek API: Invalid JSON response: {e}")
-                    return ""
-                    
-            elif response.status_code == 401:
-                print("DeepSeek API error: Unauthorized (401) - Check API key")
-            elif response.status_code == 429:
-                print("DeepSeek API error: Rate limit exceeded (429) - Please retry later")
-            elif response.status_code == 500:
-                print("DeepSeek API error: Internal server error (500)")
-            elif response.status_code == 503:
-                print("DeepSeek API error: Service unavailable (503)")
-            else:
-                print(f"DeepSeek API error: HTTP {response.status_code}")
-                try:
-                    error_detail = response.json()
-                    if error_detail.get("error"):
-                        print(f"Error details: {error_detail['error']}")
-                except:
-                    pass
-                
-        except requests.exceptions.Timeout:
-            print("DeepSeek API call failed: Request timeout")
-        except requests.exceptions.ConnectionError:
-            print("DeepSeek API call failed: Connection error")
-        except requests.exceptions.RequestException as e:
-            print(f"DeepSeek API call failed: Request error - {e}")
-        except Exception as e:
-            print(f"DeepSeek API call failed: Unexpected error - {e}")
-        
-        return ""
+        prompt = f"Analyze this {analysis_type} content and provide insights: {content[:1000]}"
+        result = self.http_ai_client.generate_enhanced_response_sync(prompt, 'deepseek')
+        return result.get('content', '')
     
-    def get_deepseek_model_for_analysis(self, analysis_type: str) -> str:
-        """Get the appropriate DeepSeek model for the analysis type.
-        
-        Args:
-            analysis_type: Type of analysis being performed
-            
-        Returns:
-            Model name to use ('deepseek-chat' or 'deepseek-reasoner')
-        """
-        # Use reasoner for complex analytical tasks
-        complex_analysis_types = [
-            "technical", "security", "strategic", "performance", 
-            "competitive", "optimization", "algorithmic"
-        ]
-        
-        if analysis_type.lower() in complex_analysis_types:
-            return "deepseek-reasoner"
-        else:
-            return "deepseek-chat"
     
-    def configure_deepseek_request(self, content: str, analysis_type: str, max_tokens: int = 500) -> Dict[str, Any]:
-        """Configure DeepSeek API request parameters.
-        
-        Args:
-            content: Content to analyze
-            analysis_type: Type of analysis
-            max_tokens: Maximum tokens for response
-            
-        Returns:
-            Configured request data
-        """
-        model = self.get_deepseek_model_for_analysis(analysis_type)
-        
-        return {
-            "model": model,
-            "messages": [
-                {
-                    "role": "user",
-                    "content": f"Analyze this {analysis_type} content and provide insights: {content[:1000]}"
-                }
-            ],
-            "max_tokens": max_tokens,
-            "temperature": 0.7 if model == "deepseek-chat" else 0.3  # Lower temp for reasoner
-        }
     
     def get_primary_ai_client(self):
-        """Get the primary AI client (Anthropic).
+        """Get the primary AI client (HTTP-based).
         
         Returns:
-            Primary AI client or None
+            HTTP AI client
         """
-        return self.anthropic_client
+        return self.http_ai_client
     
     def get_secondary_ai_client(self):
-        """Get the secondary AI client (OpenAI).
+        """Get the secondary AI client (HTTP-based).
         
         Returns:
-            Secondary AI client or None  
+            HTTP AI client
         """
-        return self.openai_client
+        return self.http_ai_client
     
     def get_research_ai_status(self) -> Dict[str, bool]:
         """Get status of research AI providers.
@@ -878,12 +644,7 @@ Ensure the dashboard provides clear visibility into system operations."""
         Returns:
             Dictionary indicating which research AIs are available
         """
-        return {
-            "gemini_available": self.gemini_client is not None,
-            "deepseek_available": self.deepseek_api_key is not None,
-            "anthropic_primary": self.anthropic_client is not None,
-            "openai_secondary": self.openai_client is not None
-        }
+        return self.http_ai_client.get_research_ai_status()
     
     def get_research_capabilities(self) -> Dict[str, Any]:
         """Get comprehensive information about research AI capabilities.
@@ -892,123 +653,7 @@ Ensure the dashboard provides clear visibility into system operations."""
             Dictionary containing detailed information about research AI capabilities,
             availability, and specialized functions
         """
-        capabilities = {
-            "available_providers": {},
-            "research_functions": [],
-            "analysis_types": [],
-            "total_providers": 0,
-            "primary_provider": None,
-            "research_ready": False
-        }
-        
-        # Check Anthropic (Primary AI)
-        if self.anthropic_client is not None:
-            capabilities["available_providers"]["anthropic"] = {
-                "status": "available",
-                "role": "primary_ai",
-                "capabilities": ["strategic_analysis", "code_generation", "task_planning", "decision_making"],
-                "api_key_present": True
-            }
-            capabilities["primary_provider"] = "anthropic"
-            capabilities["total_providers"] += 1
-        else:
-            capabilities["available_providers"]["anthropic"] = {
-                "status": "unavailable",
-                "role": "primary_ai",
-                "reason": "API key not configured"
-            }
-        
-        # Check OpenAI (Secondary AI)
-        if self.openai_client is not None:
-            capabilities["available_providers"]["openai"] = {
-                "status": "available",
-                "role": "secondary_ai",
-                "capabilities": ["content_generation", "analysis", "coding_assistance"],
-                "api_key_present": True
-            }
-            capabilities["total_providers"] += 1
-        else:
-            capabilities["available_providers"]["openai"] = {
-                "status": "unavailable",
-                "role": "secondary_ai",
-                "reason": "API key not configured"
-            }
-        
-        # Check Gemini (Research AI)
-        if self.gemini_client is not None:
-            capabilities["available_providers"]["gemini"] = {
-                "status": "available",
-                "role": "research_ai",
-                "capabilities": ["market_research", "trend_analysis", "content_analysis", "knowledge_synthesis"],
-                "api_key_present": True
-            }
-            capabilities["research_functions"].extend([
-                "market_trend_analysis",
-                "technology_research",
-                "competitive_intelligence"
-            ])
-            capabilities["total_providers"] += 1
-        else:
-            capabilities["available_providers"]["gemini"] = {
-                "status": "unavailable",
-                "role": "research_ai",
-                "reason": "API key not configured"
-            }
-        
-        # Check DeepSeek (Research AI)
-        if self.deepseek_api_key is not None:
-            capabilities["available_providers"]["deepseek"] = {
-                "status": "available",
-                "role": "research_ai",
-                "capabilities": ["deep_analysis", "technical_research", "code_optimization", "pattern_recognition"],
-                "api_key_present": True
-            }
-            capabilities["research_functions"].extend([
-                "deep_technical_analysis",
-                "optimization_research",
-                "algorithmic_insights"
-            ])
-            capabilities["total_providers"] += 1
-        else:
-            capabilities["available_providers"]["deepseek"] = {
-                "status": "unavailable",
-                "role": "research_ai",
-                "reason": "API key not configured"
-            }
-        
-        # Define supported analysis types
-        capabilities["analysis_types"] = [
-            "general",
-            "security",
-            "trends",
-            "technical",
-            "market",
-            "strategic",
-            "performance",
-            "competitive"
-        ]
-        
-        # Determine if system is research ready
-        research_providers = [
-            capabilities["available_providers"]["gemini"]["status"] == "available",
-            capabilities["available_providers"]["deepseek"]["status"] == "available"
-        ]
-        primary_available = capabilities["available_providers"]["anthropic"]["status"] == "available"
-        
-        capabilities["research_ready"] = primary_available and any(research_providers)
-        
-        # Add research function availability
-        if capabilities["research_ready"]:
-            capabilities["research_functions"].extend([
-                "analyze_with_research_ai",
-                "enhance_context_analysis",
-                "multi_provider_synthesis"
-            ])
-        
-        # Remove duplicates from research functions
-        capabilities["research_functions"] = list(set(capabilities["research_functions"]))
-        
-        return capabilities
+        return self.http_ai_client.get_research_capabilities()
     
     def generate_enhanced_response_sync(self, prompt: str, model: Optional[str] = None) -> Dict[str, Any]:
         """Synchronous wrapper for generate_enhanced_response.
@@ -1034,173 +679,23 @@ Ensure the dashboard provides clear visibility into system operations."""
             # No running event loop, safe to use asyncio.run()
             return asyncio.run(self.generate_enhanced_response(prompt, model))
     
-    async def generate_enhanced_response(self, prompt: str, model: str = None) -> Dict[str, Any]:
-        """Generate enhanced response using primary AI provider.
+    async def generate_enhanced_response(self, prompt: str, model: Optional[str] = None) -> Dict[str, Any]:
+        """Generate enhanced response using HTTP AI client.
         
         This is the main AI reasoning method used throughout the dynamic system.
-        Uses the best available AI provider to generate comprehensive responses.
+        Uses the HTTP AI client for all AI provider communications.
         
         Args:
             prompt: The prompt to send to the AI
-            model: Optional model preference ('claude', 'gpt', 'gemini')
+            model: Optional model preference ('claude', 'gpt', 'gemini', 'deepseek')
             
         Returns:
             Dictionary containing the AI response with content and metadata
         """
-        
-        try:
-            # Determine which provider to use
-            if model == 'claude' or (model is None and self.anthropic_client):
-                # Use Anthropic Claude (primary)
-                return await self._generate_anthropic_response(prompt)
-            elif model == 'gpt' or (model is None and self.openai_client):
-                # Use OpenAI GPT (secondary)
-                return await self._generate_openai_response(prompt)
-            elif model == 'gemini' or (model is None and self.gemini_client):
-                # Use Google Gemini (research)
-                return await self._generate_gemini_response(prompt)
-            else:
-                # Fallback: return mock response if no providers available
-                return {
-                    'content': 'Mock AI response - no providers available',
-                    'provider': 'mock',
-                    'reasoning': 'No AI providers configured',
-                    'confidence': 0.1
-                }
-                
-        except Exception as e:
-            # Error fallback
-            return {
-                'content': f'Error generating response: {str(e)}',
-                'provider': 'error',
-                'error': str(e),
-                'confidence': 0.0
-            }
+        return await self.http_ai_client.generate_enhanced_response(prompt, model)
     
-    async def _generate_anthropic_response(self, prompt: str) -> Dict[str, Any]:
-        """Generate response using Anthropic Claude (2024 official API pattern)."""
-        if self.anthropic_client is None:
-            return {
-                'content': 'Anthropic client not initialized',
-                'provider': 'anthropic',
-                'error': 'Client not available',
-                'confidence': 0.0
-            }
-            
-        try:
-            # Use latest Claude 3.7 Sonnet model and official API pattern
-            response = self.anthropic_client.messages.create(
-                model="claude-3-7-sonnet-20250219",
-                max_tokens=4000,
-                temperature=0.7,
-                messages=[{"role": "user", "content": prompt}]
-            )
-            
-            # Standard response parsing as per official documentation
-            content_text = response.content[0].text if response.content else "No content generated"
-            
-            return {
-                'content': content_text,
-                'provider': 'anthropic',
-                'model': 'claude-3-7-sonnet',
-                'confidence': 0.9,
-                'usage': {
-                    'input_tokens': response.usage.input_tokens,
-                    'output_tokens': response.usage.output_tokens
-                }
-            }
-        except anthropic.APIError as e:
-            return {
-                'content': f'Anthropic API error: {str(e)}',
-                'provider': 'anthropic',
-                'error': f'API Error: {str(e)}',
-                'error_type': 'api_error',
-                'confidence': 0.0
-            }
-        except Exception as e:
-            return {
-                'content': f'Unexpected error: {str(e)}',
-                'provider': 'anthropic',
-                'error': str(e),
-                'error_type': 'unexpected_error',
-                'confidence': 0.0
-            }
     
-    async def _generate_openai_response(self, prompt: str) -> Dict[str, Any]:
-        """Generate response using OpenAI GPT."""
-        if self.openai_client is None:
-            return {
-                'content': 'OpenAI client not initialized',
-                'provider': 'openai',
-                'error': 'Client not available',
-                'confidence': 0.0
-            }
-            
-        try:
-            response = self.openai_client.chat.completions.create(
-                model="gpt-4",
-                messages=[{"role": "user", "content": prompt}],
-                max_tokens=4000,
-                temperature=0.7,
-                timeout=30
-            )
-            
-            content = response.choices[0].message.content or "No content returned"
-            return {
-                'content': content,
-                'provider': 'openai',
-                'model': 'gpt-4',
-                'confidence': 0.8
-            }
-        except Exception as e:
-            return {
-                'content': f'OpenAI API error: {str(e)}',
-                'provider': 'openai',
-                'error': str(e),
-                'confidence': 0.0
-            }
     
-    async def _generate_gemini_response(self, prompt: str) -> Dict[str, Any]:
-        """Generate response using Google Gemini."""
-        if self.gemini_client is None:
-            return {
-                'content': 'Gemini client not initialized',
-                'provider': 'gemini',
-                'error': 'Client not available',
-                'confidence': 0.0
-            }
-            
-        try:
-            response = self.gemini_client.models.generate_content(
-                model='gemini-2.0-flash-001',
-                contents=prompt,
-                config=types.GenerateContentConfig(
-                    temperature=0.7,
-                    max_output_tokens=4000
-                ) if types else None
-            )
-            
-            content_text = ""
-            if hasattr(response, 'text') and response.text:
-                content_text = response.text
-            elif hasattr(response, 'content') and response.content:
-                content_text = str(response.content)
-            else:
-                content_text = 'No response generated'
-            
-            return {
-                'content': content_text,
-                'provider': 'gemini',
-                'model': 'gemini-2.0-flash',
-                'confidence': 0.7
-            }
-        except Exception as e:
-            return {
-                'content': f'Gemini API error: {str(e)}',
-                'provider': 'gemini',
-                'error': str(e),
-                'confidence': 0.0
-            }
 
 
 # Simple alias for compatibility
