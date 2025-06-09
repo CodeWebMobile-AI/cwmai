@@ -152,6 +152,121 @@ Each task type includes specific templates optimized for @claude:
 - **Response Time**: @claude interaction speed
 - **Bottleneck Detection**: Identify process improvements
 
+## 📊 Data Export Feature
+
+CWMAI includes a comprehensive data export system supporting multiple formats and data types for analysis and reporting.
+
+### Supported Export Formats
+
+- **CSV**: Tabular data with full pandas integration for easy analysis
+- **JSON**: Structured data with complete metadata and relationships
+- **PDF**: Professional reports with tables, charts, and formatted layouts
+
+### Data Types Available for Export
+
+1. **Task Data** (`DataType.TASKS`)
+   - Individual task details with status, priority, and progress
+   - Task dependencies and relationships
+   - Time tracking and completion metrics
+   - Filterable by status, priority, date range
+
+2. **Performance Metrics** (`DataType.PERFORMANCE`)
+   - System performance indicators and success rates
+   - Task completion velocity and quality metrics
+   - Repository health scores and activity levels
+   - Learning algorithm effectiveness measurements
+
+3. **Repository Analytics** (`DataType.REPOSITORIES`)
+   - Repository health scores and activity metrics
+   - Contributor statistics and code quality indicators
+   - Issue and pull request analytics
+   - Filterable by health score, language, activity
+
+4. **System Analytics** (`DataType.ANALYTICS`)
+   - AI decision-making accuracy and learning metrics
+   - Goal achievement and resource efficiency tracking
+   - External context integration and trend analysis
+   - System charter and constraint compliance
+
+5. **Complete System State** (`DataType.SYSTEM_STATE`)
+   - Full system snapshot including all components
+   - Historical state progression and change tracking
+   - Configuration and environment details
+
+### Usage Examples
+
+#### Command Line Interface
+
+```bash
+# Export all task data as JSON
+python scripts/data_export_service.py --data-type tasks --format json
+
+# Export performance metrics as CSV
+python scripts/data_export_service.py --data-type performance --format csv
+
+# Export repository data as PDF with custom filename
+python scripts/data_export_service.py --data-type repositories --format pdf --filename repo_report.pdf
+
+# Run performance benchmark
+python scripts/data_export_service.py --data-type all --format json --benchmark
+```
+
+#### Programmatic Usage
+
+```python
+from scripts.data_export_service import DataExportService, DataType, ExportFormat
+
+# Initialize export service
+export_service = DataExportService(output_dir="exports")
+
+# Export filtered task data
+filepath = export_service.export_data(
+    data_type=DataType.TASKS,
+    export_format=ExportFormat.CSV,
+    filters={"status": "completed", "priority": "high"}
+)
+
+# Export repository data with health score filter
+filepath = export_service.export_data(
+    data_type=DataType.REPOSITORIES,
+    export_format=ExportFormat.JSON,
+    filters={"min_health_score": 85}
+)
+
+# Run performance benchmark
+benchmark = export_service.get_export_performance_benchmark(
+    DataType.PERFORMANCE, 
+    ExportFormat.PDF
+)
+print(f"Export took {benchmark['execution_time_seconds']} seconds")
+```
+
+### Advanced Filtering Options
+
+- **Task Filters**: status, priority, type, start_date, end_date
+- **Repository Filters**: min_health_score, language, status
+- **Date Range Filters**: ISO 8601 formatted date strings
+- **Custom Filters**: Extensible filtering system for specific use cases
+
+### Performance Monitoring
+
+The export service includes built-in performance benchmarking:
+
+- **Execution Time**: Precise timing for export operations
+- **Memory Usage**: Memory consumption tracking during export
+- **File Size**: Output file size metrics
+- **Success Rate**: Export operation reliability tracking
+- **Format Comparison**: Performance comparison across export formats
+
+### API Integration
+
+Export functionality integrates seamlessly with existing CWMAI components:
+
+- **Real-time Updates**: Exports reflect current system state
+- **Backward Compatibility**: Maintains compatibility with existing data structures
+- **Automated Scheduling**: Can be integrated with workflow automation
+- **Error Handling**: Comprehensive error handling and recovery
+
 ## 🚦 Getting Started
 
 1. Fork this repository
