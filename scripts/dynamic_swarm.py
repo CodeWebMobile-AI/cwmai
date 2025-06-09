@@ -7,12 +7,13 @@ Agents have full system context and adjust based on outcomes.
 
 import json
 import logging
+import traceback
 from datetime import datetime, timezone
 from typing import Dict, List, Any, Optional
 import asyncio
 
 # Import base swarm
-from .swarm_intelligence import RealSwarmIntelligence, RealSwarmAgent, AgentRole
+from swarm_intelligence import RealSwarmIntelligence, RealSwarmAgent, AgentRole
 
 
 class DynamicSwarmAgent(RealSwarmAgent):
@@ -714,7 +715,7 @@ class DynamicSwarmIntelligence(RealSwarmIntelligence):
             'predicted_value': value_prediction.get('predicted_value', 0.5),
             'key_insights': consensus.get('key_insights', [])[:3],
             'immediate_actions': action_plan.get('immediate_actions', [])[:3],
-            'confidence_level': self._calculate_swarm_confidence(consensus, value_prediction),
+            'confidence_level': self._calculate_swarm_confidence(consensus),
             'top_suggestions': self._extract_top_suggestions(consensus, action_plan),
             'recommendation': self._make_recommendation(consensus, value_prediction)
         }
@@ -894,6 +895,7 @@ class DynamicSwarmIntelligence(RealSwarmIntelligence):
                 }
             
             # Update basic metrics
+            self.swarm_performance_metrics.setdefault('total_tasks', 0)
             self.swarm_performance_metrics['total_tasks'] += 1
             
             # Update duration average

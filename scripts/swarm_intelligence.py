@@ -134,29 +134,64 @@ class RealSwarmAgent:
             return f"Error generating response: {str(e)}"
     
     def _parse_ai_response(self, response: str) -> Dict[str, Any]:
-        """Parse AI response into structured format."""
-        import ast
+        """Parse AI response into structured format with comprehensive logging."""
+        import re
+        import json
+        
+        # Add logging for response parsing
+        print(f"[SWARM_PARSE] Agent {self.id} parsing response (length: {len(response)})")
         
         # Try to extract JSON from response
         try:
-            # Look for JSON in the response
-            import re
-            json_match = re.search(r'\{[^{}]*\}', response, re.DOTALL)
+            # FIXED: Use proper nested JSON regex instead of broken r'\{[^{}]*\}'
+            json_match = re.search(r'\{.*\}', response, re.DOTALL)
             if json_match:
-                return ast.literal_eval(json_match.group())
-        except:
-            pass
+                json_str = json_match.group()
+                print(f"[SWARM_PARSE] Agent {self.id} extracted JSON: {json_str[:100]}...")
+                
+                # FIXED: Use json.loads() instead of ast.literal_eval()
+                parsed_data = json.loads(json_str)
+                
+                # Validate required fields and log missing ones
+                required_fields = ['key_points', 'challenges', 'recommendations', 'priority']
+                for field in required_fields:
+                    if field not in parsed_data:
+                        print(f"[SWARM_PARSE] WARNING: Agent {self.id} missing required field '{field}'")
+                        if field in ['key_points', 'challenges', 'recommendations']:
+                            parsed_data[field] = []
+                        elif field == 'priority':
+                            parsed_data[field] = 5
+                    elif field in ['key_points', 'challenges', 'recommendations'] and not isinstance(parsed_data[field], list):
+                        print(f"[SWARM_PARSE] WARNING: Agent {self.id} field '{field}' is not a list, converting")
+                        parsed_data[field] = []
+                
+                # Log if challenges list is empty (this causes the line 194 crash)
+                if not parsed_data.get('challenges'):
+                    print(f"[SWARM_PARSE] WARNING: Agent {self.id} ({self.role.value}) produced EMPTY challenges list!")
+                
+                print(f"[SWARM_PARSE] Agent {self.id} successfully parsed response with {len(parsed_data.get('challenges', []))} challenges")
+                return parsed_data
+                
+        except json.JSONDecodeError as e:
+            print(f"[SWARM_PARSE] ERROR: Agent {self.id} JSON decode failed: {e}")
+        except Exception as e:
+            print(f"[SWARM_PARSE] ERROR: Agent {self.id} parsing failed: {e}")
         
-        # Fallback: create structured data from text
-        return {
-            'key_points': [response[:200]] if response else [],
-            'challenges': [],
-            'recommendations': [],
+        # Enhanced fallback with logging
+        print(f"[SWARM_PARSE] Agent {self.id} falling back to default structure due to parse failure")
+        fallback_response = {
+            'key_points': [response[:200]] if response else ["No response received"],
+            'challenges': ["Unable to parse specific challenges from AI response"],
+            'recommendations': ["Review AI response format and improve parsing"],
             'priority': 5,
             'complexity': 'medium',
-            'confidence': 0.7,
-            'raw_response': response
+            'confidence': 0.3,  # Lower confidence for fallback
+            'raw_response': response,
+            'parse_error': True
         }
+        
+        print(f"[SWARM_PARSE] Agent {self.id} created fallback response with {len(fallback_response['challenges'])} challenges")
+        return fallback_response
 
 
 class RealSwarmIntelligence:
