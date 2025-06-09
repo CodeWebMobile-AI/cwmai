@@ -67,13 +67,24 @@ class IntelligentAIBrain:
         self.gemini_client = None
         self.deepseek_api_key = None
         
-        # Primary AI provider - Anthropic
-        if os.getenv('ANTHROPIC_API_KEY'):
-            self.anthropic_client = anthropic.Anthropic(api_key=os.getenv('ANTHROPIC_API_KEY'))
+        # Primary AI provider - Anthropic (following 2024 official documentation)
+        try:
+            # Use official initialization pattern - defaults to ANTHROPIC_API_KEY env var
+            self.anthropic_client = anthropic.Anthropic()
+        except anthropic.APIError as e:
+            print(f"Anthropic API error during initialization: {e}")
+            self.anthropic_client = None
+        except Exception as e:
+            print(f"Failed to initialize Anthropic client: {e}")
+            self.anthropic_client = None
         
         # Secondary AI provider - OpenAI
         if os.getenv('OPENAI_API_KEY'):
-            self.openai_client = openai.OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+            try:
+                self.openai_client = openai.OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+            except Exception as e:
+                print(f"Failed to initialize OpenAI client: {e}")
+                self.openai_client = None
         
         # Research AI providers - Gemini and DeepSeek
         if os.getenv('GEMINI_API_KEY') and genai is not None:
@@ -81,12 +92,27 @@ class IntelligentAIBrain:
                 self.gemini_client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
             except Exception as e:
                 print(f"Failed to initialize Gemini client: {e}")
-                self.gemini_client = None
+                # Try fallback initialization
+                try:
+                    import google.generativeai as fallback_genai
+                    fallback_genai.configure(api_key=os.getenv('GEMINI_API_KEY'))
+                    self.gemini_client = fallback_genai.GenerativeModel('gemini-pro')
+                    print("Successfully initialized Gemini with fallback method")
+                except Exception as e2:
+                    print(f"Fallback Gemini initialization also failed: {e2}")
+                    self.gemini_client = None
         else:
             self.gemini_client = None
         
         if os.getenv('DEEPSEEK_API_KEY'):
-            self.deepseek_api_key = os.getenv('DEEPSEEK_API_KEY')
+            try:
+                self.deepseek_api_key = os.getenv('DEEPSEEK_API_KEY')
+                # Validate API key format (basic check)
+                if self.deepseek_api_key and not self.deepseek_api_key.startswith('sk-'):
+                    print("Warning: DeepSeek API key format may be incorrect")
+            except Exception as e:
+                print(f"Failed to configure DeepSeek API key: {e}")
+                self.deepseek_api_key = None
     
     def decide_next_action(self) -> str:
         """Intelligently decide the next action based on multiple factors.
@@ -993,7 +1019,7 @@ Ensure the dashboard provides clear visibility into system operations."""
             }
     
     async def _generate_anthropic_response(self, prompt: str) -> Dict[str, Any]:
-        """Generate response using Anthropic Claude."""
+        """Generate response using Anthropic Claude (2024 official API pattern)."""
         if self.anthropic_client is None:
             return {
                 'content': 'Anthropic client not initialized',
@@ -1003,37 +1029,41 @@ Ensure the dashboard provides clear visibility into system operations."""
             }
             
         try:
-            message = self.anthropic_client.messages.create(
-                model="claude-3-5-sonnet-20241022",
+            # Use latest Claude 3.7 Sonnet model and official API pattern
+            response = self.anthropic_client.messages.create(
+                model="claude-3-7-sonnet-20250219",
                 max_tokens=4000,
                 temperature=0.7,
                 messages=[{"role": "user", "content": prompt}]
             )
             
-            # Handle the response content properly
-            content_text = ""
-            if message.content and len(message.content) > 0:
-                content_block = message.content[0]
-                # Handle different content block types
-                try:
-                    if hasattr(content_block, 'text'):
-                        content_text = content_block.text
-                    else:
-                        content_text = str(content_block)
-                except AttributeError:
-                    content_text = str(content_block)
+            # Standard response parsing as per official documentation
+            content_text = response.content[0].text if response.content else "No content generated"
             
             return {
                 'content': content_text,
                 'provider': 'anthropic',
-                'model': 'claude-3-5-sonnet',
-                'confidence': 0.9
+                'model': 'claude-3-7-sonnet',
+                'confidence': 0.9,
+                'usage': {
+                    'input_tokens': response.usage.input_tokens,
+                    'output_tokens': response.usage.output_tokens
+                }
             }
-        except Exception as e:
+        except anthropic.APIError as e:
             return {
                 'content': f'Anthropic API error: {str(e)}',
                 'provider': 'anthropic',
+                'error': f'API Error: {str(e)}',
+                'error_type': 'api_error',
+                'confidence': 0.0
+            }
+        except Exception as e:
+            return {
+                'content': f'Unexpected error: {str(e)}',
+                'provider': 'anthropic',
                 'error': str(e),
+                'error_type': 'unexpected_error',
                 'confidence': 0.0
             }
     
