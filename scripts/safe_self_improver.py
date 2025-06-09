@@ -12,6 +12,7 @@ import hashlib
 import subprocess
 import tempfile
 import shutil
+import shlex
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Any, Optional, Tuple, Set
 from dataclasses import dataclass, field
@@ -52,11 +53,24 @@ class SafetyConstraints:
         r'__import__\s*\(',
         r'os\.system\s*\(',
         r'subprocess\.call\s*\(',
+        r'subprocess\.run\s*\([^)]*shell\s*=\s*True',  # shell=True is dangerous
+        r'subprocess\.Popen\s*\([^)]*shell\s*=\s*True',
         r'open\s*\(.+[\'"]w[\'"]',  # File write operations
         r'shutil\.rmtree',
         r'os\.remove',
         r'requests\.post',  # Network operations
-        r'socket\.'
+        r'socket\.',
+        r'pickle\.loads\s*\(',  # Insecure deserialization
+        r'pickle\.load\s*\(',
+        r'marshal\.loads\s*\(',
+        r'compile\s*\(',  # Code compilation
+        r'globals\s*\(\)',  # Access to global namespace
+        r'locals\s*\(\)',   # Access to local namespace
+        r'vars\s*\(\)',     # Access to variables
+        r'dir\s*\(\)',      # Directory listing
+        r'hasattr\s*\([^,]+,\s*[\'"][^\'\"]*__',  # Dunder attribute access
+        r'getattr\s*\([^,]+,\s*[\'"][^\'\"]*__',  # Dunder attribute access
+        r'setattr\s*\([^,]+,\s*[\'"][^\'\"]*__',  # Dunder attribute access
     ])
     allowed_modules: Set[str] = field(default_factory=lambda: {
         'json', 'time', 'datetime', 'typing', 'dataclasses',
@@ -94,6 +108,10 @@ class SafeSelfImprover:
             max_changes_per_day: Maximum daily modifications allowed
         """
         self.repo_path = os.path.abspath(repo_path)
+        
+        # Security: Validate repository path
+        if not self._is_safe_path(self.repo_path):
+            raise ValueError("Unsafe repository path detected")
         
         # Find the Git repository root
         current_path = self.repo_path
@@ -629,54 +647,100 @@ def {prop_name}(self):
         
         # Test in sandbox with resource limits
         try:
-            # Run basic syntax check
+            # Validate file path to prevent path traversal
+            if not sandbox_file.startswith(self.sandbox_dir):
+                print("Security error: Path traversal attempt detected")
+                return False
+            
+            # Run basic syntax check with secure command construction
+            sandbox_file_escaped = shlex.quote(sandbox_file)
             result = subprocess.run(
-                ['python', '-m', 'py_compile', sandbox_file],
+                ['python', '-m', 'py_compile', sandbox_file_escaped],
                 capture_output=True,
                 text=True,
-                timeout=10
+                timeout=10,
+                shell=False  # Explicitly disable shell
             )
             
             if result.returncode != 0:
                 print(f"Syntax error in sandbox: {result.stderr}")
                 return False
             
-            # Run with resource limits
-            test_script = f"""
+            # Run with resource limits using a secure approach
+            # Create a secure test script template
+            import tempfile
+            import json
+            
+            # Sanitize file paths
+            safe_dirname = os.path.abspath(os.path.dirname(sandbox_file))
+            safe_basename = os.path.splitext(os.path.basename(sandbox_file))[0]
+            
+            # Validate paths are within sandbox
+            if not safe_dirname.startswith(os.path.abspath(self.sandbox_dir)):
+                print("Security error: Path outside sandbox detected")
+                return False
+            
+            # Create secure test configuration
+            test_config = {
+                'memory_limit_mb': self.constraints.max_memory_usage_mb,
+                'timeout_seconds': self.constraints.max_execution_time_seconds,
+                'module_path': safe_dirname,
+                'module_name': safe_basename
+            }
+            
+            # Use a separate secure test runner script
+            test_script = '''
 import resource
 import signal
+import sys
+import json
+import os
 
-# Set memory limit (MB to bytes)
-resource.setrlimit(resource.RLIMIT_AS, ({self.constraints.max_memory_usage_mb} * 1024 * 1024, -1))
-
-# Set CPU time limit
 def timeout_handler(signum, frame):
     raise TimeoutError("Execution timeout")
 
-signal.signal(signal.SIGALRM, timeout_handler)
-signal.alarm({self.constraints.max_execution_time_seconds})
-
 try:
+    # Load configuration
+    config = json.loads(sys.argv[1])
+    
+    # Set memory limit (MB to bytes)
+    memory_limit = config['memory_limit_mb'] * 1024 * 1024
+    resource.setrlimit(resource.RLIMIT_AS, (memory_limit, -1))
+    
+    # Set CPU time limit
+    signal.signal(signal.SIGALRM, timeout_handler)
+    signal.alarm(config['timeout_seconds'])
+    
+    # Validate paths
+    module_path = os.path.abspath(config['module_path'])
+    module_name = config['module_name']
+    
+    # Basic validation of module name (alphanumeric and underscore only)
+    if not module_name.replace('_', '').isalnum():
+        raise ValueError("Invalid module name")
+    
     # Import and test the module
-    import sys
-    sys.path.insert(0, '{os.path.dirname(sandbox_file)}')
-    __import__('{os.path.splitext(os.path.basename(sandbox_file))[0]}')
+    sys.path.insert(0, module_path)
+    __import__(module_name)
     print("SUCCESS")
+    
 except Exception as e:
-    print(f"ERROR: {{e}}")
+    print(f"ERROR: {e}")
 finally:
     signal.alarm(0)
-"""
+'''
             
             with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
                 f.write(test_script)
                 test_file = f.name
             
+            # Run with JSON configuration instead of string interpolation
             result = subprocess.run(
-                ['python', test_file],
+                ['python', test_file, json.dumps(test_config)],
                 capture_output=True,
                 text=True,
-                timeout=self.constraints.max_execution_time_seconds + 5
+                timeout=self.constraints.max_execution_time_seconds + 5,
+                shell=False  # Explicitly disable shell
             )
             
             os.unlink(test_file)
@@ -732,21 +796,43 @@ finally:
         
         start_time = time.time()
         
-        # Try common test runners
+        # Try common test runners with secure command construction
         test_commands = [
-            ['python', '-m', 'pytest', '-v'],
-            ['python', '-m', 'unittest', 'discover'],
+            ['python', '-m', 'pytest', '-v', '--tb=short'],
+            ['python', '-m', 'unittest', 'discover', '-v'],
             ['python', 'setup.py', 'test']
         ]
         
+        # Validate repo_path to prevent path traversal
+        safe_repo_path = os.path.abspath(self.repo_path)
+        if not os.path.exists(safe_repo_path):
+            print("Error: Repository path does not exist")
+            results['pass_rate'] = 0.0
+            return results
+        
         for cmd in test_commands:
             try:
+                # Validate that all command components are safe
+                safe_cmd = []
+                for component in cmd:
+                    # Only allow alphanumeric, dots, hyphens, and underscores
+                    if re.match(r'^[a-zA-Z0-9.\-_]+$', component):
+                        safe_cmd.append(component)
+                    else:
+                        print(f"Unsafe command component detected: {component}")
+                        continue
+                
+                if len(safe_cmd) != len(cmd):
+                    print("Skipping unsafe test command")
+                    continue
+                
                 result = subprocess.run(
-                    cmd,
+                    safe_cmd,
                     capture_output=True,
                     text=True,
                     timeout=300,  # 5 minute timeout
-                    cwd=self.repo_path
+                    cwd=safe_repo_path,
+                    shell=False  # Explicitly disable shell
                 )
                 
                 if result.returncode == 0:
@@ -1049,6 +1135,138 @@ This modification was automatically generated and tested by the Safe Self-Improv
             print(f"Error analyzing {filepath}: {e}")
         
         return opportunities
+    
+    def _is_safe_path(self, path: str) -> bool:
+        """Validate that a file path is safe and within allowed boundaries.
+        
+        Args:
+            path: Path to validate
+            
+        Returns:
+            True if path is safe, False otherwise
+        """
+        try:
+            # Convert to absolute path
+            abs_path = os.path.abspath(path)
+            
+            # Check for path traversal attempts
+            if '..' in path or '~' in path:
+                return False
+            
+            # Check for suspicious patterns
+            suspicious_patterns = [
+                '/etc/', '/proc/', '/sys/', '/dev/',
+                'C:\\Windows\\', 'C:\\Program Files\\',
+                '/root/', '/home/root/',
+                '__pycache__', '.git/'
+            ]
+            
+            for pattern in suspicious_patterns:
+                if pattern in abs_path:
+                    return False
+            
+            # Must be a valid directory
+            if os.path.exists(abs_path) and not os.path.isdir(abs_path):
+                return False
+            
+            return True
+            
+        except Exception:
+            return False
+    
+    def _secure_file_operation(self, filepath: str, operation: str, content: str = None) -> tuple[bool, str]:
+        """Perform file operations with security validation.
+        
+        Args:
+            filepath: File path to operate on
+            operation: Operation type ('read', 'write', 'exists')
+            content: Content to write (for write operations)
+            
+        Returns:
+            Tuple of (success, result/error_message)
+        """
+        try:
+            # Validate file path
+            abs_path = os.path.abspath(filepath)
+            
+            # Ensure path is within repository bounds
+            if not abs_path.startswith(os.path.abspath(self.repo_path)):
+                return False, "File path outside repository bounds"
+            
+            # Check for malicious patterns
+            if '..' in filepath or '~' in filepath:
+                return False, "Path traversal attempt detected"
+            
+            # Validate file extension (only allow Python files for modification)
+            if operation == 'write' and not filepath.endswith('.py'):
+                return False, "Only Python files can be modified"
+            
+            if operation == 'read':
+                if not os.path.exists(abs_path):
+                    return False, "File does not exist"
+                with open(abs_path, 'r', encoding='utf-8') as f:
+                    return True, f.read()
+                    
+            elif operation == 'write':
+                if content is None:
+                    return False, "No content provided for write operation"
+                
+                # Validate content doesn't contain dangerous patterns
+                for pattern in self.constraints.forbidden_patterns:
+                    if re.search(pattern, content):
+                        return False, f"Content contains forbidden pattern: {pattern}"
+                
+                with open(abs_path, 'w', encoding='utf-8') as f:
+                    f.write(content)
+                return True, "File written successfully"
+                
+            elif operation == 'exists':
+                return True, str(os.path.exists(abs_path))
+                
+            else:
+                return False, f"Unknown operation: {operation}"
+                
+        except Exception as e:
+            return False, f"File operation error: {str(e)}"
+    
+    def _validate_input_sanitization(self, user_input: str) -> bool:
+        """Validate and sanitize user input.
+        
+        Args:
+            user_input: Input to validate
+            
+        Returns:
+            True if input is safe, False otherwise
+        """
+        if not isinstance(user_input, str):
+            return False
+        
+        # Check length
+        if len(user_input) > 10000:  # Reasonable limit
+            return False
+        
+        # Check for dangerous patterns
+        dangerous_patterns = [
+            r'<script[^>]*>',  # Script tags
+            r'javascript:',    # JavaScript URLs
+            r'data:text/html', # Data URLs
+            r'vbscript:',      # VBScript
+            r'on\w+\s*=',      # Event handlers
+            r'eval\s*\(',      # eval calls
+            r'exec\s*\(',      # exec calls
+            r'__import__',     # Dynamic imports
+            r'subprocess',     # System commands
+            r'os\.system',     # OS system calls
+            r'cmd\.exe',       # Windows command prompt
+            r'/bin/sh',        # Unix shell
+            r'/bin/bash',      # Bash shell
+        ]
+        
+        for pattern in dangerous_patterns:
+            if re.search(pattern, user_input, re.IGNORECASE):
+                return False
+        
+        return True
 
 
 def demonstrate_safe_self_improver():

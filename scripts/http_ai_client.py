@@ -50,10 +50,18 @@ class HTTPAIClient:
         """Sanitize headers for logging by hiding sensitive information."""
         sanitized = {}
         for key, value in headers.items():
-            if 'authorization' in key.lower() or 'key' in key.lower():
-                sanitized[key] = '***'
+            # More comprehensive header sanitization
+            sensitive_patterns = [
+                'authorization', 'auth', 'key', 'token', 'secret', 
+                'password', 'credential', 'bearer', 'x-api-key',
+                'anthropic-version'  # Don't log version info either
+            ]
+            
+            if any(pattern in key.lower() for pattern in sensitive_patterns):
+                sanitized[key] = '***REDACTED***'
             else:
-                sanitized[key] = value
+                # Even for non-sensitive headers, limit value length
+                sanitized[key] = value[:100] + '...' if len(value) > 100 else value
         return sanitized
     
     async def generate_enhanced_response(self, prompt: str, model: Optional[str] = None) -> Dict[str, Any]:
@@ -149,13 +157,20 @@ class HTTPAIClient:
                 "messages": [{"role": "user", "content": prompt}]
             }
             
-            # Log request details
+            # Log request details (excluding sensitive information)
             self.logger.debug(f"[{request_id}] Anthropic request URL: {url}")
             self.logger.debug(f"[{request_id}] Anthropic request headers: {self._sanitize_headers(headers)}")
             self.logger.debug(f"[{request_id}] Anthropic request payload size: {len(json.dumps(data))} bytes")
             
             request_start = time.time()
-            response = requests.post(url, headers=headers, json=data, timeout=30)
+            response = requests.post(
+                url, 
+                headers=headers, 
+                json=data, 
+                timeout=30,
+                verify=True,  # Ensure SSL/TLS verification
+                allow_redirects=False  # Prevent redirect attacks
+            )
             request_duration = time.time() - request_start
             
             self.logger.debug(f"[{request_id}] Anthropic HTTP response: {response.status_code} in {request_duration:.2f}s")
@@ -232,7 +247,14 @@ class HTTPAIClient:
             
             self.logger.debug(f"[{request_id}] OpenAI request URL: {url}")
             request_start = time.time()
-            response = requests.post(url, headers=headers, json=data, timeout=30)
+            response = requests.post(
+                url, 
+                headers=headers, 
+                json=data, 
+                timeout=30,
+                verify=True,  # Ensure SSL/TLS verification
+                allow_redirects=False  # Prevent redirect attacks
+            )
             request_duration = time.time() - request_start
             
             self.logger.debug(f"[{request_id}] OpenAI HTTP response: {response.status_code} in {request_duration:.2f}s")
@@ -290,7 +312,14 @@ class HTTPAIClient:
             
             self.logger.debug(f"[{request_id}] Gemini request URL: {url}")
             request_start = time.time()
-            response = requests.post(url, headers=headers, json=data, timeout=30)
+            response = requests.post(
+                url, 
+                headers=headers, 
+                json=data, 
+                timeout=30,
+                verify=True,  # Ensure SSL/TLS verification
+                allow_redirects=False  # Prevent redirect attacks
+            )
             request_duration = time.time() - request_start
             
             self.logger.debug(f"[{request_id}] Gemini HTTP response: {response.status_code} in {request_duration:.2f}s")
@@ -355,7 +384,14 @@ class HTTPAIClient:
             
             self.logger.debug(f"[{request_id}] DeepSeek request URL: {url}")
             request_start = time.time()
-            response = requests.post(url, headers=headers, json=data, timeout=30)
+            response = requests.post(
+                url, 
+                headers=headers, 
+                json=data, 
+                timeout=30,
+                verify=True,  # Ensure SSL/TLS verification
+                allow_redirects=False  # Prevent redirect attacks
+            )
             request_duration = time.time() - request_start
             
             self.logger.debug(f"[{request_id}] DeepSeek HTTP response: {response.status_code} in {request_duration:.2f}s")
