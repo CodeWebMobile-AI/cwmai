@@ -153,3 +153,5 @@ god_mode_results.json
 *.tmp
 *.temp
 *.bak
+scripts/system_state.json
+scripts/context.json
