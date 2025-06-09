@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-06-09T08:19:10.750613+00:00",
+  "timestamp": "2025-06-09T09:28:14.076102+00:00",
   "intensity": "experimental",
   "operations": [],
   "metrics": {},
@@ -7,11 +7,11 @@
   "errors": [
     {
       "phase": "cycle_execution",
-      "error": "list index out of range",
-      "traceback": "Traceback (most recent call last):\n  File \"/home/runner/work/cwmai/cwmai/scripts/dynamic_god_mode_controller.py\", line 121, in run_god_mode_cycle\n    swarm_analysis = await self._dynamic_swarm_analysis(context)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/cwmai/cwmai/scripts/dynamic_god_mode_controller.py\", line 237, in _dynamic_swarm_analysis\n    swarm_result = await self.swarm.process_task_swarm(analysis_task, context)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/cwmai/cwmai/scripts/dynamic_swarm.py\", line 298, in process_task_swarm\n    result = await self._enhanced_swarm_process(task, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/cwmai/cwmai/scripts/dynamic_swarm.py\", line 325, in _enhanced_swarm_process\n    refined_analyses = await self._phase_enhanced_cross_pollination(\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/cwmai/cwmai/scripts/dynamic_swarm.py\", line 384, in _phase_enhanced_cross_pollination\n    refined = await agent.analyze_task(task, other_analyses, iteration=2)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/cwmai/cwmai/scripts/dynamic_swarm.py\", line 46, in analyze_task\n    prompt = self._build_contextual_prompt(task, other_insights, iteration)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/cwmai/cwmai/scripts/dynamic_swarm.py\", line 146, in _build_contextual_prompt\n    {self._format_other_insights(other_insights)}\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/cwmai/cwmai/scripts/dynamic_swarm.py\", line 194, in _format_other_insights\n    - Main Challenge: {insight.get('challenges', ['None'])[0]}\n                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^\nIndexError: list index out of range\n"
+      "error": "'need_type'",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/runner/work/cwmai/cwmai/scripts/dynamic_god_mode_controller.py\", line 124, in run_god_mode_cycle\n    tasks = await self._generate_intelligent_tasks(context, swarm_analysis)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/cwmai/cwmai/scripts/dynamic_god_mode_controller.py\", line 263, in _generate_intelligent_tasks\n    tasks = await self.task_generator.generate_multiple_tasks(\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/cwmai/cwmai/scripts/intelligent_task_generator.py\", line 465, in generate_multiple_tasks\n    task = await self.generate_task(generation_context)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/cwmai/cwmai/scripts/intelligent_task_generator.py\", line 51, in generate_task\n    task = await self._create_task_for_need(need_analysis, context, charter)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/cwmai/cwmai/scripts/intelligent_task_generator.py\", line 213, in _create_task_for_need\n    Based on the need type '{need['need_type']}', generate an appropriate task:\n                             ~~~~^^^^^^^^^^^^^\nKeyError: 'need_type'\n"
     }
   ],
   "improvements": [],
   "charter_version": "unknown",
-  "duration": 78.48285245895386
+  "duration": 60.855934858322144
 }
