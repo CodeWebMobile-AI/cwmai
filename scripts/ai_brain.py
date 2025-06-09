@@ -12,7 +12,12 @@ from datetime import datetime, timezone
 from typing import Dict, List, Any, Tuple, Optional
 import openai
 import anthropic
-import google.generativeai as genai
+try:
+    from google import genai
+    from google.genai import types
+except ImportError:
+    genai = None
+    types = None
 import requests
 
 
@@ -43,7 +48,7 @@ class IntelligentAIBrain:
         }
     }
     
-    def __init__(self, state: Dict[str, Any] = None, context: Dict[str, Any] = None):
+    def __init__(self, state: Optional[Dict[str, Any]] = None, context: Optional[Dict[str, Any]] = None):
         """Initialize the AI Brain.
         
         Args:
@@ -71,9 +76,14 @@ class IntelligentAIBrain:
             self.openai_client = openai.OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
         
         # Research AI providers - Gemini and DeepSeek
-        if os.getenv('GEMINI_API_KEY'):
-            genai.configure(api_key=os.getenv('GEMINI_API_KEY'))
-            self.gemini_client = genai.GenerativeModel('gemini-pro')
+        if os.getenv('GEMINI_API_KEY') and genai is not None:
+            try:
+                self.gemini_client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
+            except Exception as e:
+                print(f"Failed to initialize Gemini client: {e}")
+                self.gemini_client = None
+        else:
+            self.gemini_client = None
         
         if os.getenv('DEEPSEEK_API_KEY'):
             self.deepseek_api_key = os.getenv('DEEPSEEK_API_KEY')
@@ -611,7 +621,7 @@ Ensure the dashboard provides clear visibility into system operations."""
         
         Args:
             content: Content to analyze
-            analysis_type: Type of analysis (general, security, trends, technical)
+            analysis_type: Type of analysis (general, security, trends, technical, strategic, performance)
             
         Returns:
             Analysis result or empty string if failed
@@ -621,62 +631,169 @@ Ensure the dashboard provides clear visibility into system operations."""
             if self.gemini_client:
                 prompt = f"Analyze this {analysis_type} content and provide insights: {content[:1000]}"
                 try:
-                    response = self.gemini_client.generate_content(prompt)
-                    return response.text if response.text else ""
+                    response = self.gemini_client.models.generate_content(
+                        model='gemini-2.0-flash-001',
+                        contents=prompt,
+                        config=types.GenerateContentConfig(
+                            temperature=0.7,
+                            max_output_tokens=1000
+                        ) if types else None
+                    )
+                    if hasattr(response, 'text') and response.text:
+                        return response.text
+                    elif hasattr(response, 'content'):
+                        return str(response.content)
+                    return ""
                 except Exception as e:
                     print(f"Gemini analysis failed: {e}")
             
             # Fallback to DeepSeek API
             if self.deepseek_api_key:
-                return self._call_deepseek_api(content, analysis_type)
+                # Use deepseek-reasoner for complex analysis, deepseek-chat for general
+                model = "deepseek-reasoner" if analysis_type in ["technical", "security", "strategic"] else "deepseek-chat"
+                return self._call_deepseek_api(content, analysis_type, model)
                 
         except Exception as e:
             print(f"Research AI analysis failed: {e}")
         
         return ""
     
-    def _call_deepseek_api(self, content: str, analysis_type: str) -> str:
+    def _call_deepseek_api(self, content: str, analysis_type: str, model: str = "deepseek-chat") -> str:
         """Call DeepSeek API for content analysis.
         
         Args:
             content: Content to analyze
             analysis_type: Type of analysis
+            model: DeepSeek model to use ('deepseek-chat' or 'deepseek-reasoner')
             
         Returns:
             Analysis result or empty string if failed
         """
         try:
-            url = "https://api.deepseek.com/v1/chat/completions"
+            # Use correct DeepSeek API base URL
+            url = "https://api.deepseek.com/chat/completions"
             headers = {
                 "Authorization": f"Bearer {self.deepseek_api_key}",
                 "Content-Type": "application/json"
             }
             
-            data = {
-                "model": "deepseek-chat",
-                "messages": [
-                    {
-                        "role": "user",
-                        "content": f"Analyze this {analysis_type} content and provide insights: {content[:1000]}"
-                    }
-                ],
-                "max_tokens": 500,
-                "temperature": 0.7
-            }
+            # Validate model parameter
+            valid_models = ["deepseek-chat", "deepseek-reasoner"]
+            if model not in valid_models:
+                print(f"Invalid DeepSeek model: {model}. Using deepseek-chat.")
+                model = "deepseek-chat"
+            
+            # Use configuration helper for consistent request setup
+            data = self.configure_deepseek_request(content, analysis_type, max_tokens=500)
+            
+            # Override model if explicitly specified
+            if model != "deepseek-chat":
+                data["model"] = model
             
             response = requests.post(url, headers=headers, json=data, timeout=30)
             
+            # Enhanced error handling for different HTTP status codes
             if response.status_code == 200:
-                result = response.json()
-                if result.get("choices") and len(result["choices"]) > 0:
-                    return result["choices"][0]["message"]["content"]
+                try:
+                    result = response.json()
+                    
+                    # Validate response structure
+                    if not result.get("choices"):
+                        print("DeepSeek API: No choices in response")
+                        return ""
+                    
+                    if len(result["choices"]) == 0:
+                        print("DeepSeek API: Empty choices array")
+                        return ""
+                    
+                    choice = result["choices"][0]
+                    if not choice.get("message"):
+                        print("DeepSeek API: No message in choice")
+                        return ""
+                    
+                    content_result = choice["message"].get("content")
+                    if content_result is None:
+                        print("DeepSeek API: No content in message")
+                        return ""
+                    
+                    return content_result
+                    
+                except ValueError as e:
+                    print(f"DeepSeek API: Invalid JSON response: {e}")
+                    return ""
+                    
+            elif response.status_code == 401:
+                print("DeepSeek API error: Unauthorized (401) - Check API key")
+            elif response.status_code == 429:
+                print("DeepSeek API error: Rate limit exceeded (429) - Please retry later")
+            elif response.status_code == 500:
+                print("DeepSeek API error: Internal server error (500)")
+            elif response.status_code == 503:
+                print("DeepSeek API error: Service unavailable (503)")
             else:
-                print(f"DeepSeek API error: {response.status_code}")
+                print(f"DeepSeek API error: HTTP {response.status_code}")
+                try:
+                    error_detail = response.json()
+                    if error_detail.get("error"):
+                        print(f"Error details: {error_detail['error']}")
+                except:
+                    pass
                 
+        except requests.exceptions.Timeout:
+            print("DeepSeek API call failed: Request timeout")
+        except requests.exceptions.ConnectionError:
+            print("DeepSeek API call failed: Connection error")
+        except requests.exceptions.RequestException as e:
+            print(f"DeepSeek API call failed: Request error - {e}")
         except Exception as e:
-            print(f"DeepSeek API call failed: {e}")
+            print(f"DeepSeek API call failed: Unexpected error - {e}")
         
         return ""
+    
+    def get_deepseek_model_for_analysis(self, analysis_type: str) -> str:
+        """Get the appropriate DeepSeek model for the analysis type.
+        
+        Args:
+            analysis_type: Type of analysis being performed
+            
+        Returns:
+            Model name to use ('deepseek-chat' or 'deepseek-reasoner')
+        """
+        # Use reasoner for complex analytical tasks
+        complex_analysis_types = [
+            "technical", "security", "strategic", "performance", 
+            "competitive", "optimization", "algorithmic"
+        ]
+        
+        if analysis_type.lower() in complex_analysis_types:
+            return "deepseek-reasoner"
+        else:
+            return "deepseek-chat"
+    
+    def configure_deepseek_request(self, content: str, analysis_type: str, max_tokens: int = 500) -> Dict[str, Any]:
+        """Configure DeepSeek API request parameters.
+        
+        Args:
+            content: Content to analyze
+            analysis_type: Type of analysis
+            max_tokens: Maximum tokens for response
+            
+        Returns:
+            Configured request data
+        """
+        model = self.get_deepseek_model_for_analysis(analysis_type)
+        
+        return {
+            "model": model,
+            "messages": [
+                {
+                    "role": "user",
+                    "content": f"Analyze this {analysis_type} content and provide insights: {content[:1000]}"
+                }
+            ],
+            "max_tokens": max_tokens,
+            "temperature": 0.7 if model == "deepseek-chat" else 0.3  # Lower temp for reasoner
+        }
     
     def get_primary_ai_client(self):
         """Get the primary AI client (Anthropic).
@@ -845,7 +962,6 @@ Ensure the dashboard provides clear visibility into system operations."""
         Returns:
             Dictionary containing the AI response with content and metadata
         """
-        import asyncio
         
         try:
             # Determine which provider to use
@@ -878,18 +994,39 @@ Ensure the dashboard provides clear visibility into system operations."""
     
     async def _generate_anthropic_response(self, prompt: str) -> Dict[str, Any]:
         """Generate response using Anthropic Claude."""
+        if self.anthropic_client is None:
+            return {
+                'content': 'Anthropic client not initialized',
+                'provider': 'anthropic',
+                'error': 'Client not available',
+                'confidence': 0.0
+            }
+            
         try:
             message = self.anthropic_client.messages.create(
-                model="claude-3-sonnet-20240229",
+                model="claude-3-5-sonnet-20241022",
                 max_tokens=4000,
                 temperature=0.7,
                 messages=[{"role": "user", "content": prompt}]
             )
             
+            # Handle the response content properly
+            content_text = ""
+            if message.content and len(message.content) > 0:
+                content_block = message.content[0]
+                # Handle different content block types
+                try:
+                    if hasattr(content_block, 'text'):
+                        content_text = content_block.text
+                    else:
+                        content_text = str(content_block)
+                except AttributeError:
+                    content_text = str(content_block)
+            
             return {
-                'content': message.content[0].text,
+                'content': content_text,
                 'provider': 'anthropic',
-                'model': 'claude-3-sonnet',
+                'model': 'claude-3-5-sonnet',
                 'confidence': 0.9
             }
         except Exception as e:
@@ -902,16 +1039,26 @@ Ensure the dashboard provides clear visibility into system operations."""
     
     async def _generate_openai_response(self, prompt: str) -> Dict[str, Any]:
         """Generate response using OpenAI GPT."""
+        if self.openai_client is None:
+            return {
+                'content': 'OpenAI client not initialized',
+                'provider': 'openai',
+                'error': 'Client not available',
+                'confidence': 0.0
+            }
+            
         try:
             response = self.openai_client.chat.completions.create(
                 model="gpt-4",
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=4000,
-                temperature=0.7
+                temperature=0.7,
+                timeout=30
             )
             
+            content = response.choices[0].message.content or "No content returned"
             return {
-                'content': response.choices[0].message.content,
+                'content': content,
                 'provider': 'openai',
                 'model': 'gpt-4',
                 'confidence': 0.8
@@ -926,13 +1073,36 @@ Ensure the dashboard provides clear visibility into system operations."""
     
     async def _generate_gemini_response(self, prompt: str) -> Dict[str, Any]:
         """Generate response using Google Gemini."""
+        if self.gemini_client is None:
+            return {
+                'content': 'Gemini client not initialized',
+                'provider': 'gemini',
+                'error': 'Client not available',
+                'confidence': 0.0
+            }
+            
         try:
-            response = self.gemini_client.generate_content(prompt)
+            response = self.gemini_client.models.generate_content(
+                model='gemini-2.0-flash-001',
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    temperature=0.7,
+                    max_output_tokens=4000
+                ) if types else None
+            )
+            
+            content_text = ""
+            if hasattr(response, 'text') and response.text:
+                content_text = response.text
+            elif hasattr(response, 'content') and response.content:
+                content_text = str(response.content)
+            else:
+                content_text = 'No response generated'
             
             return {
-                'content': response.text if response.text else 'No response generated',
+                'content': content_text,
                 'provider': 'gemini',
-                'model': 'gemini-pro',
+                'model': 'gemini-2.0-flash',
                 'confidence': 0.7
             }
         except Exception as e:
