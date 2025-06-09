@@ -3,6 +3,7 @@ HTTP AI Client Module
 
 Pure HTTP API client for all AI providers - No SDK dependencies.
 Eliminates SDK initialization issues and proxies errors in GitHub Actions.
+Now includes sophisticated Redis-based rate limiting.
 """
 
 import asyncio
@@ -14,12 +15,26 @@ import time
 from typing import Dict, Any, Optional
 from datetime import datetime, timezone
 
+# Import rate limiter
+try:
+    from rate_limiter import RateLimiter, RateLimitTier, RateLimitResult
+except ImportError:
+    # Fallback if rate_limiter module is not available
+    RateLimiter = None
+    RateLimitTier = None
+    RateLimitResult = None
+
 
 class HTTPAIClient:
     """Pure HTTP API client for all AI providers - No SDK dependencies."""
     
-    def __init__(self):
-        """Initialize HTTP AI client with API keys from environment variables."""
+    def __init__(self, client_id: Optional[str] = None, rate_limit_tier: Optional[str] = None):
+        """Initialize HTTP AI client with API keys from environment variables.
+        
+        Args:
+            client_id: Unique client identifier for rate limiting
+            rate_limit_tier: Rate limit tier ('basic', 'premium', 'admin', 'system')
+        """
         self.anthropic_api_key = os.getenv('ANTHROPIC_API_KEY')
         self.openai_api_key = os.getenv('OPENAI_API_KEY')
         self.gemini_api_key = os.getenv('GOOGLE_API_KEY')
@@ -40,6 +55,37 @@ class HTTPAIClient:
             'deepseek': bool(self.deepseek_api_key)
         }
         
+        # Initialize rate limiting
+        self.client_id = client_id or os.getenv('RATE_LIMIT_CLIENT_ID', 'default_client')
+        self.rate_limiter = None
+        self.rate_limit_enabled = os.getenv('RATE_LIMIT_ENABLED', 'true').lower() == 'true'
+        
+        if self.rate_limit_enabled and RateLimiter:
+            try:
+                self.rate_limiter = RateLimiter()
+                
+                # Set rate limit tier
+                if rate_limit_tier:
+                    if hasattr(RateLimitTier, rate_limit_tier.upper()):
+                        self.rate_limit_tier = getattr(RateLimitTier, rate_limit_tier.upper())
+                    else:
+                        self.rate_limit_tier = RateLimitTier.BASIC
+                else:
+                    # Determine tier based on environment or default to basic
+                    tier_env = os.getenv('RATE_LIMIT_TIER', 'basic').upper()
+                    self.rate_limit_tier = getattr(RateLimitTier, tier_env, RateLimitTier.BASIC)
+                
+                self.logger.info(f"Rate limiting enabled - Client: {self.client_id}, Tier: {self.rate_limit_tier.value}")
+            except Exception as e:
+                self.logger.warning(f"Rate limiter initialization failed: {e}. Continuing without rate limiting.")
+                self.rate_limiter = None
+        else:
+            self.rate_limit_tier = None
+            if not RateLimiter:
+                self.logger.info("Rate limiter module not available")
+            else:
+                self.logger.info("Rate limiting disabled via configuration")
+        
         # Log initialization
         self.logger.info(f"HTTPAIClient initialized with {sum(self.providers_available.values())} available providers")
         for provider, available in self.providers_available.items():
@@ -56,12 +102,13 @@ class HTTPAIClient:
                 sanitized[key] = value
         return sanitized
     
-    async def generate_enhanced_response(self, prompt: str, model: Optional[str] = None) -> Dict[str, Any]:
+    async def generate_enhanced_response(self, prompt: str, model: Optional[str] = None, endpoint: str = "ai_generation") -> Dict[str, Any]:
         """Generate enhanced response using the best available AI provider.
         
         Args:
             prompt: The prompt to send to the AI
             model: Optional model preference ('claude', 'gpt', 'gemini', 'deepseek')
+            endpoint: API endpoint identifier for rate limiting
             
         Returns:
             Dictionary containing the AI response with content and metadata
@@ -71,6 +118,43 @@ class HTTPAIClient:
         
         start_time = time.time()
         self.logger.info(f"[{request_id}] Starting AI request - Model preference: {model or 'auto'}, Prompt length: {len(prompt)}")
+        
+        # Check rate limiting before making the request
+        if self.rate_limiter and self.rate_limit_enabled:
+            try:
+                rate_limit_result = self.rate_limiter.check_rate_limit(
+                    client_id=self.client_id,
+                    tier=self.rate_limit_tier,
+                    endpoint=endpoint
+                )
+                
+                if not rate_limit_result.allowed:
+                    # Rate limit exceeded
+                    self.logger.warning(f"[{request_id}] Rate limit exceeded - Remaining: {rate_limit_result.remaining_requests}, Reset: {rate_limit_result.reset_time}")
+                    
+                    return {
+                        'content': f'Rate limit exceeded. Try again in {rate_limit_result.retry_after} seconds.',
+                        'provider': 'rate_limiter',
+                        'error': 'Rate limit exceeded',
+                        'confidence': 0.0,
+                        'request_id': request_id,
+                        'response_time': time.time() - start_time,
+                        'timestamp': datetime.now(timezone.utc).isoformat(),
+                        'rate_limit': {
+                            'allowed': False,
+                            'remaining': rate_limit_result.remaining_requests,
+                            'reset_time': rate_limit_result.reset_time.isoformat(),
+                            'retry_after': rate_limit_result.retry_after,
+                            'tier': rate_limit_result.tier,
+                            'strategy': rate_limit_result.strategy
+                        }
+                    }
+                else:
+                    # Rate limit passed, log the info
+                    self.logger.debug(f"[{request_id}] Rate limit check passed - Remaining: {rate_limit_result.remaining_requests}")
+                    
+            except Exception as e:
+                self.logger.error(f"[{request_id}] Rate limit check failed: {e}. Proceeding with request.")
         
         try:
             # Determine which provider to use
@@ -476,3 +560,97 @@ class HTTPAIClient:
             return result.get('content', '')
         
         return ""
+    
+    # Rate Limiting Management Methods
+    
+    def get_rate_limit_status(self) -> Dict[str, Any]:
+        """Get current rate limit status for this client."""
+        if not self.rate_limiter:
+            return {
+                "enabled": False,
+                "reason": "Rate limiter not initialized"
+            }
+        
+        try:
+            stats = self.rate_limiter.get_client_stats(self.client_id)
+            return {
+                "enabled": True,
+                "client_id": self.client_id,
+                "tier": self.rate_limit_tier.value if self.rate_limit_tier else "unknown",
+                "stats": stats
+            }
+        except Exception as e:
+            return {
+                "enabled": True,
+                "error": str(e)
+            }
+    
+    def get_rate_limit_metrics(self) -> Dict[str, Any]:
+        """Get system-wide rate limiting metrics."""
+        if not self.rate_limiter:
+            return {
+                "enabled": False,
+                "reason": "Rate limiter not initialized"
+            }
+        
+        try:
+            return self.rate_limiter.get_system_metrics()
+        except Exception as e:
+            return {
+                "enabled": True,
+                "error": str(e)
+            }
+    
+    def update_rate_limit_tier(self, new_tier: str) -> bool:
+        """Update the rate limit tier for this client.
+        
+        Args:
+            new_tier: New tier ('basic', 'premium', 'admin', 'system')
+            
+        Returns:
+            Success status
+        """
+        if not self.rate_limiter:
+            return False
+        
+        try:
+            if hasattr(RateLimitTier, new_tier.upper()):
+                tier_enum = getattr(RateLimitTier, new_tier.upper())
+                success = self.rate_limiter.update_client_tier(self.client_id, tier_enum)
+                if success:
+                    self.rate_limit_tier = tier_enum
+                    self.logger.info(f"Updated rate limit tier to {new_tier}")
+                return success
+            else:
+                self.logger.error(f"Invalid tier: {new_tier}")
+                return False
+        except Exception as e:
+            self.logger.error(f"Failed to update rate limit tier: {e}")
+            return False
+    
+    def reset_rate_limits(self) -> bool:
+        """Reset rate limits for this client.
+        
+        Returns:
+            Success status
+        """
+        if not self.rate_limiter:
+            return False
+        
+        try:
+            success = self.rate_limiter.reset_client_limits(self.client_id)
+            if success:
+                self.logger.info(f"Reset rate limits for client {self.client_id}")
+            return success
+        except Exception as e:
+            self.logger.error(f"Failed to reset rate limits: {e}")
+            return False
+    
+    def close(self) -> None:
+        """Close all connections and cleanup resources."""
+        try:
+            if self.rate_limiter:
+                self.rate_limiter.close()
+                self.logger.info("Rate limiter connection closed")
+        except Exception as e:
+            self.logger.error(f"Error closing rate limiter: {e}")
