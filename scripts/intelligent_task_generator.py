@@ -47,8 +47,40 @@ class IntelligentTaskGenerator:
         # Analyze what the system needs
         need_analysis = await self._analyze_system_needs(context, charter)
         
+        # Ensure need_analysis has required fields
+        if not need_analysis or not need_analysis.get('need_type'):
+            self.logger.warning("Failed to analyze system needs, using default analysis")
+            need_analysis = {
+                'need_type': 'portfolio_expansion',
+                'specific_need': 'System requires initial project to begin operations',
+                'priority': 'high',
+                'rationale': 'No active projects detected in portfolio',
+                'opportunity': 'Establish development portfolio',
+                'suggested_approach': 'Create new project using Laravel React starter kit'
+            }
+        
         # Generate task addressing the need
         task = await self._create_task_for_need(need_analysis, context, charter)
+        
+        # Ensure task has required fields
+        if not task or not task.get('type'):
+            self.logger.warning("Failed to create task, using default task")
+            task = {
+                'type': 'NEW_PROJECT',
+                'title': 'Laravel React Starter Application',
+                'description': 'Create a new web application using Laravel React starter kit as foundation',
+                'requirements': [
+                    'Fork Laravel React starter kit repository',
+                    'Customize branding and configuration',
+                    'Implement core features and authentication',
+                    'Set up development environment',
+                    'Create initial documentation'
+                ],
+                'priority': 'high',
+                'estimated_complexity': 'medium',
+                'success_criteria': 'Functional web application deployed with custom features',
+                'target_project': None
+            }
         
         # Ensure Laravel React starter kit for new projects
         if task.get('type') == 'NEW_PROJECT':
@@ -210,7 +242,7 @@ class IntelligentTaskGenerator:
         Current Projects (for FEATURE tasks):
         {json.dumps(context.get('projects', []), indent=2)}
         
-        Based on the need type '{need['need_type']}', generate an appropriate task:
+        Based on the need type '{need.get('need_type', 'unknown')}', generate an appropriate task:
         
         If portfolio_expansion → Create a NEW_PROJECT task for a complete application
         If project_enhancement → Create a FEATURE task for a specific existing project

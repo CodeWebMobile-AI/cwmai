@@ -46,6 +46,16 @@ class HTTPAIClient:
             status = "AVAILABLE" if available else "UNAVAILABLE"
             self.logger.debug(f"Provider {provider}: {status}")
     
+    def _sanitize_headers(self, headers: Dict[str, str]) -> Dict[str, str]:
+        """Sanitize headers for logging by hiding sensitive information."""
+        sanitized = {}
+        for key, value in headers.items():
+            if 'authorization' in key.lower() or 'key' in key.lower():
+                sanitized[key] = '***'
+            else:
+                sanitized[key] = value
+        return sanitized
+    
     async def generate_enhanced_response(self, prompt: str, model: Optional[str] = None) -> Dict[str, Any]:
         """Generate enhanced response using the best available AI provider.
         
