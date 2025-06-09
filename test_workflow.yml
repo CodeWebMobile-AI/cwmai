@@ -1,0 +1,202 @@
+# GitHub Actions Workflow for CWMAI Testing
+# Place this file in .github/workflows/test.yml
+
+name: CWMAI Test Suite
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    # Run tests daily at 6 AM UTC
+    - cron: '0 6 * * *'
+
+jobs:
+  test:
+    name: Run Test Suite
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.8', '3.9', '3.10', '3.11']
+        
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+        
+    - name: Cache pip dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+          
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Lint with flake8
+      run: |
+        pip install flake8
+        # Stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # Exit-zero treats all errors as warnings
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        
+    - name: Type check with mypy
+      run: |
+        pip install mypy types-requests
+        mypy scripts/ --ignore-missing-imports || true
+        
+    - name: Run security checks
+      run: |
+        pip install bandit safety
+        bandit -r scripts/ || true
+        safety check || true
+        
+    - name: Run unit tests
+      run: |
+        python run_tests.py unit
+        
+    - name: Run integration tests
+      run: |
+        python run_tests.py integration
+        
+    - name: Run security tests
+      run: |
+        python run_tests.py security
+        
+    - name: Run performance benchmarks
+      run: |
+        python run_tests.py performance
+        
+    - name: Generate coverage report
+      run: |
+        python run_tests.py coverage
+        
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+        
+    - name: Archive test results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: test-results-${{ matrix.python-version }}
+        path: |
+          test_report_*.txt
+          htmlcov/
+          coverage.xml
+          performance_benchmark_results_*.json
+          
+    - name: Archive performance benchmarks
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: performance-benchmarks-${{ matrix.python-version }}
+        path: |
+          performance_benchmark_results_*.json
+          *_report.txt
+
+  security:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'
+        scan-ref: '.'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+        
+    - name: Upload Trivy scan results to GitHub Security tab
+      uses: github/codeql-action/upload-sarif@v2
+      if: always()
+      with:
+        sarif_file: 'trivy-results.sarif'
+
+  performance:
+    name: Performance Benchmarks
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || contains(github.event.head_commit.message, '[benchmark]')
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Run performance benchmarks
+      run: |
+        python test_performance_benchmarks.py
+        
+    - name: Archive benchmark results
+      uses: actions/upload-artifact@v3
+      with:
+        name: performance-benchmarks
+        path: |
+          performance_benchmark_results_*.json
+          *_report.txt
+          
+    - name: Comment benchmark results
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          const glob = require('@actions/glob');
+          
+          const globber = await glob.create('performance_benchmark_results_*.json');
+          const files = await globber.glob();
+          
+          if (files.length > 0) {
+            const results = JSON.parse(fs.readFileSync(files[0], 'utf8'));
+            const summary = results.benchmark_summary;
+            
+            const comment = `
+          ## 📊 Performance Benchmark Results
+          
+          **Test Execution:** ${summary.test_execution_time}
+          **Successful Suites:** ${summary.successful_suites}/${summary.total_suites_run}
+          
+          ### Performance Highlights
+          ${Object.entries(summary.performance_highlights || {})
+            .map(([key, value]) => `- **${key}:** ${value}`)
+            .join('\n')}
+          
+          ### Recommendations
+          ${(summary.recommendations || [])
+            .map(rec => `- ${rec}`)
+            .join('\n')}
+          `;
+          
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+          }
