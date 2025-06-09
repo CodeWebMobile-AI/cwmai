@@ -1,13 +1,20 @@
 import asyncio
 import json
-from god_mode_controller import GodModeController, GodModeConfig, GodModeIntensity
+from ai_brain_factory import AIBrainFactory
+from dynamic_god_mode_controller import DynamicGodModeController  
+from god_mode_controller import GodModeConfig, IntensityLevel
 
 async def run_god_mode():
     # Get intensity from input or default
     intensity_str = 'experimental' or 'balanced'
-    intensity = GodModeIntensity(intensity_str)
+    intensity = IntensityLevel(intensity_str)
     
-    print(f'Starting God Mode Controller (Intensity: {intensity.value})')
+    print(f'Starting Dynamic God Mode Controller (Intensity: {intensity.value})')
+    
+    # Initialize AI Brain using factory
+    print('Initializing AI Brain for workflow...')
+    ai_brain = AIBrainFactory.create_for_workflow()
+    print('✓ AI Brain ready with workflow optimization')
     
     # Create configuration
     config = GodModeConfig(
@@ -16,11 +23,11 @@ async def run_god_mode():
         enable_multi_repo=True,
         enable_predictive=True,
         enable_quantum=True,
-        safety_threshold=0.8 if intensity != GodModeIntensity.EXPERIMENTAL else 0.6
+        safety_threshold=0.8 if intensity != IntensityLevel.EXPERIMENTAL else 0.6
     )
     
-    # Initialize controller
-    controller = GodModeController(config)
+    # Initialize dynamic controller with AI brain
+    controller = DynamicGodModeController(config, ai_brain)
     
     try:
         # Run one cycle
@@ -33,14 +40,22 @@ async def run_god_mode():
         print(f'\nCycle completed successfully!')
         print(f'Operations: {len(results["operations"])}')
         print(f'Errors: {len(results["errors"])}')
+        print(f'Tasks generated: {results.get("tasks_generated", 0)}')
+        print(f'Tasks validated: {results.get("tasks_validated", 0)}')
         
         # Show metrics
         print('\nMetrics:')
         for metric, value in results['metrics'].items():
             print(f'  {metric}: {value}')
         
+        # Show learnings
+        if results.get('learnings'):
+            print('\nLearnings:')
+            for learning in results['learnings'][:5]:
+                print(f'  - {learning.get("type", "unknown")}: {learning.get("impact", "N/A")}')
+        
     except Exception as e:
-        print(f'Error during God Mode execution: {e}')
+        print(f'Error during Dynamic God Mode execution: {e}')
         await controller.emergency_shutdown()
         raise
     
