@@ -12,7 +12,7 @@ from typing import Dict, List, Any, Optional
 import asyncio
 
 # Import base swarm
-from swarm_intelligence import RealSwarmIntelligence, RealSwarmAgent, AgentRole
+from .swarm_intelligence import RealSwarmIntelligence, RealSwarmAgent, AgentRole
 
 
 class DynamicSwarmAgent(RealSwarmAgent):
@@ -42,15 +42,35 @@ class DynamicSwarmAgent(RealSwarmAgent):
         Returns:
             Agent's analysis
         """
+        logging.info(f"[SWARM_DEBUG] Agent {self.id} ({self.role.value}) starting analysis - Iteration {iteration}")
+        
         # Build context-aware prompt
         prompt = self._build_contextual_prompt(task, other_insights, iteration)
         
         try:
             # Call AI model
+            logging.debug(f"[SWARM_DEBUG] Agent {self.id} calling AI model with prompt length: {len(prompt)}")
             response = await self._call_ai_model(prompt)
+            logging.debug(f"[SWARM_DEBUG] Agent {self.id} got AI response length: {len(str(response))}")
+            logging.debug(f"[SWARM_DEBUG] Agent {self.id} raw AI response: {str(response)[:500]}...")
             
             # Parse response
             analysis = self._parse_ai_response(response)
+            logging.debug(f"[SWARM_DEBUG] Agent {self.id} parsed analysis keys: {list(analysis.keys())}")
+            
+            # Log analysis structure
+            challenges = analysis.get('challenges', [])
+            key_points = analysis.get('key_points', [])
+            recommendations = analysis.get('recommendations', [])
+            logging.info(f"[SWARM_DEBUG] Agent {self.id} analysis - Challenges: {len(challenges)}, Key Points: {len(key_points)}, Recommendations: {len(recommendations)}")
+            
+            if not challenges:
+                logging.warning(f"[SWARM_DEBUG] Agent {self.id} produced EMPTY challenges list!")
+            if not key_points:
+                logging.warning(f"[SWARM_DEBUG] Agent {self.id} produced EMPTY key_points list!")
+            if not recommendations:
+                logging.warning(f"[SWARM_DEBUG] Agent {self.id} produced EMPTY recommendations list!")
+                
             analysis['agent_id'] = self.id
             analysis['agent_role'] = self.role.value
             analysis['model_used'] = self.model_name
@@ -64,10 +84,12 @@ class DynamicSwarmAgent(RealSwarmAgent):
                 'iteration': iteration
             })
             
+            logging.info(f"[SWARM_DEBUG] Agent {self.id} completed analysis successfully")
             return analysis
             
         except Exception as e:
-            logging.error(f"Agent {self.id} analysis failed: {e}")
+            logging.error(f"[SWARM_DEBUG] Agent {self.id} analysis failed: {e}")
+            logging.error(f"[SWARM_DEBUG] Agent {self.id} traceback: {traceback.format_exc()}")
             return self._error_response(str(e))
     
     def _build_contextual_prompt(self, task: Dict[str, Any],
@@ -169,6 +191,48 @@ class DynamicSwarmAgent(RealSwarmAgent):
         
         return prompt
     
+    def _parse_ai_response(self, response):
+        """Parse AI response into structured format with debug logging."""
+        logging.debug(f"[SWARM_DEBUG] Agent {self.id} parsing AI response type: {type(response)}")
+        
+        try:
+            # Call parent parsing method
+            parsed = super()._parse_ai_response(response)
+            
+            # Debug log the parsed structure
+            if isinstance(parsed, dict):
+                logging.debug(f"[SWARM_DEBUG] Agent {self.id} parsed response keys: {list(parsed.keys())}")
+                
+                # Check for empty critical lists
+                for key in ['challenges', 'key_points', 'recommendations']:
+                    if key in parsed:
+                        value = parsed[key]
+                        if isinstance(value, list) and not value:
+                            logging.warning(f"[SWARM_DEBUG] Agent {self.id} parsed EMPTY {key} list")
+                        elif isinstance(value, list):
+                            logging.debug(f"[SWARM_DEBUG] Agent {self.id} parsed {key}: {len(value)} items")
+            else:
+                logging.warning(f"[SWARM_DEBUG] Agent {self.id} parsed response is not a dict: {type(parsed)}")
+                
+            return parsed
+            
+        except Exception as e:
+            logging.error(f"[SWARM_DEBUG] Agent {self.id} parse error: {e}")
+            logging.error(f"[SWARM_DEBUG] Agent {self.id} parse traceback: {traceback.format_exc()}")
+            logging.error(f"[SWARM_DEBUG] Agent {self.id} raw response that failed to parse: {str(response)[:1000]}")
+            
+            # Return safe fallback
+            return {
+                'key_points': [],
+                'challenges': [],
+                'recommendations': [],
+                'priority': 5,
+                'complexity': 'unknown',
+                'confidence': 0,
+                'alignment_score': 0,
+                'parse_error': str(e)
+            }
+    
     def _format_other_insights(self, other_insights: List[Dict[str, Any]]) -> str:
         """Format other agents' insights for prompt.
         
@@ -178,22 +242,44 @@ class DynamicSwarmAgent(RealSwarmAgent):
         Returns:
             Formatted string
         """
+        logging.info(f"[SWARM_DEBUG] Formatting {len(other_insights) if other_insights else 0} other insights")
+        
         if not other_insights:
+            logging.debug(f"[SWARM_DEBUG] No other insights to format")
             return "No other insights available yet."
             
         formatted = []
-        for insight in other_insights:
+        for i, insight in enumerate(other_insights):
             agent_role = insight.get('agent_role', 'Unknown')
             key_points = insight.get('key_points', [])
+            challenges = insight.get('challenges', [])
             priority = insight.get('priority', 'N/A')
+            
+            logging.debug(f"[SWARM_DEBUG] Insight {i} from {agent_role}: {len(key_points)} key_points, {len(challenges)} challenges")
+            
+            # CRITICAL FIX: Check if challenges list is empty before accessing [0]
+            if challenges:
+                main_challenge = challenges[0]
+                logging.debug(f"[SWARM_DEBUG] Insight {i} main challenge: {main_challenge}")
+            else:
+                main_challenge = "No challenges identified"
+                logging.warning(f"[SWARM_DEBUG] Insight {i} from {agent_role} has EMPTY challenges list!")
+            
+            # Safety check for key_points too
+            if key_points:
+                key_points_str = '; '.join(key_points[:3])
+            else:
+                key_points_str = "No key points identified"
+                logging.warning(f"[SWARM_DEBUG] Insight {i} from {agent_role} has EMPTY key_points list!")
             
             formatted.append(f"""
             {agent_role.upper()} Agent:
-            - Key Points: {'; '.join(key_points[:3])}
+            - Key Points: {key_points_str}
             - Priority: {priority}
-            - Main Challenge: {insight.get('challenges', ['None'])[0]}
+            - Main Challenge: {main_challenge}
             """)
             
+        logging.info(f"[SWARM_DEBUG] Successfully formatted {len(formatted)} insights")
         return '\n'.join(formatted)
     
     def _error_response(self, error: str) -> Dict[str, Any]:
@@ -319,12 +405,38 @@ class DynamicSwarmIntelligence(RealSwarmIntelligence):
             Enhanced swarm result
         """
         # Phase 1: Independent Analysis
+        logging.info(f"[SWARM_DEBUG] Starting Phase 1: Independent Analysis")
         individual_analyses = await self._phase_individual_analysis(task)
+        logging.info(f"[SWARM_DEBUG] Phase 1 completed with {len(individual_analyses)} analyses")
+        
+        # Debug log each individual analysis
+        for i, analysis in enumerate(individual_analyses):
+            agent_id = analysis.get('agent_id', 'unknown')
+            challenges = analysis.get('challenges', [])
+            key_points = analysis.get('key_points', [])
+            has_error = 'error' in analysis
+            logging.info(f"[SWARM_DEBUG] Individual analysis {i} from {agent_id}: {len(challenges)} challenges, {len(key_points)} key_points, error: {has_error}")
+            
+            if has_error:
+                logging.error(f"[SWARM_DEBUG] Individual analysis {i} from {agent_id} has error: {analysis.get('error')}")
         
         # Phase 2: Cross-Pollination with Learning
+        logging.info(f"[SWARM_DEBUG] Starting Phase 2: Cross-Pollination")
         refined_analyses = await self._phase_enhanced_cross_pollination(
             task, individual_analyses, context
         )
+        logging.info(f"[SWARM_DEBUG] Phase 2 completed with {len(refined_analyses)} refined analyses")
+        
+        # Debug log each refined analysis
+        for i, analysis in enumerate(refined_analyses):
+            agent_id = analysis.get('agent_id', 'unknown')
+            challenges = analysis.get('challenges', [])
+            key_points = analysis.get('key_points', [])
+            has_error = 'error' in analysis
+            logging.info(f"[SWARM_DEBUG] Refined analysis {i} from {agent_id}: {len(challenges)} challenges, {len(key_points)} key_points, error: {has_error}")
+            
+            if has_error:
+                logging.error(f"[SWARM_DEBUG] Refined analysis {i} from {agent_id} has error: {analysis.get('error')}")
         
         # Phase 3: Intelligent Consensus
         consensus = await self._phase_intelligent_consensus(
@@ -367,23 +479,50 @@ class DynamicSwarmIntelligence(RealSwarmIntelligence):
         Returns:
             Refined analyses
         """
+        logging.info(f"[SWARM_DEBUG] Starting cross-pollination with {len(initial_analyses)} initial analyses")
+        
+        # Debug log initial analyses structure
+        for i, analysis in enumerate(initial_analyses):
+            agent_id = analysis.get('agent_id', 'unknown')
+            challenges = analysis.get('challenges', [])
+            key_points = analysis.get('key_points', [])
+            logging.debug(f"[SWARM_DEBUG] Initial analysis {i} from {agent_id}: {len(challenges)} challenges, {len(key_points)} key_points")
+            
+            if not challenges:
+                logging.warning(f"[SWARM_DEBUG] Initial analysis {i} from {agent_id} has EMPTY challenges!")
+        
         # Add learning insights to cross-pollination
         if self.learning_system:
             # Get insights about similar tasks
             similar_outcomes = self.learning_system._find_similar_outcomes(task)
             context['similar_task_outcomes'] = similar_outcomes
+            logging.debug(f"[SWARM_DEBUG] Added {len(similar_outcomes) if similar_outcomes else 0} similar outcomes to context")
             
         # Each agent refines with full context
         refined_analyses = []
         
         for i, agent in enumerate(self.agents):
+            logging.info(f"[SWARM_DEBUG] Cross-pollination: Agent {i} ({agent.id}) refining analysis")
+            
             # Get other agents' analyses
             other_analyses = [a for j, a in enumerate(initial_analyses) if j != i]
+            logging.debug(f"[SWARM_DEBUG] Agent {agent.id} considering {len(other_analyses)} other analyses")
+            
+            # Debug log what this agent will see from others
+            for j, other in enumerate(other_analyses):
+                other_agent_id = other.get('agent_id', 'unknown')
+                other_challenges = other.get('challenges', [])
+                logging.debug(f"[SWARM_DEBUG] Agent {agent.id} will see from {other_agent_id}: {len(other_challenges)} challenges")
             
             # Refine with iteration 2
             refined = await agent.analyze_task(task, other_analyses, iteration=2)
             refined_analyses.append(refined)
             
+            # Log refined result
+            refined_challenges = refined.get('challenges', [])
+            logging.info(f"[SWARM_DEBUG] Agent {agent.id} refined analysis: {len(refined_challenges)} challenges")
+            
+        logging.info(f"[SWARM_DEBUG] Cross-pollination completed with {len(refined_analyses)} refined analyses")
         return refined_analyses
     
     async def _phase_intelligent_consensus(self, analyses: List[Dict[str, Any]],
@@ -735,3 +874,171 @@ class DynamicSwarmIntelligence(RealSwarmIntelligence):
                 }
                 
         return performance
+    
+    def _update_swarm_metrics(self, result: Dict[str, Any]) -> None:
+        """Update swarm performance metrics with debug logging.
+        
+        Args:
+            result: Swarm analysis result
+        """
+        logging.debug(f"[SWARM_DEBUG] Updating swarm metrics for result with keys: {list(result.keys())}")
+        
+        try:
+            # Initialize metrics if not present
+            if not hasattr(self, 'swarm_performance_metrics'):
+                self.swarm_performance_metrics = {
+                    'total_tasks': 0,
+                    'average_duration': 0,
+                    'success_rate': 0,
+                    'average_confidence': 0
+                }
+            
+            # Update basic metrics
+            self.swarm_performance_metrics['total_tasks'] += 1
+            
+            # Update duration average
+            duration = result.get('duration_seconds', 0)
+            if duration > 0:
+                current_avg = self.swarm_performance_metrics.get('average_duration', 0)
+                total_tasks = self.swarm_performance_metrics['total_tasks']
+                new_avg = ((current_avg * (total_tasks - 1)) + duration) / total_tasks
+                self.swarm_performance_metrics['average_duration'] = new_avg
+            
+            # Update confidence average
+            consensus = result.get('consensus', {})
+            if consensus:
+                confidence = consensus.get('success_probability', 0)
+                current_avg = self.swarm_performance_metrics.get('average_confidence', 0)
+                total_tasks = self.swarm_performance_metrics['total_tasks']
+                new_avg = ((current_avg * (total_tasks - 1)) + confidence) / total_tasks
+                self.swarm_performance_metrics['average_confidence'] = new_avg
+                
+            logging.debug(f"[SWARM_DEBUG] Successfully updated swarm metrics: {self.swarm_performance_metrics}")
+                
+        except Exception as e:
+            logging.error(f"[SWARM_DEBUG] Error updating swarm metrics: {e}")
+            logging.error(f"[SWARM_DEBUG] Metrics update traceback: {traceback.format_exc()}")
+    
+    async def _phase_individual_analysis(self, task: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Run individual analysis phase with debug logging.
+        
+        Args:
+            task: Task to analyze
+            
+        Returns:
+            Individual analyses from all agents
+        """
+        logging.info(f"[SWARM_DEBUG] Starting individual analysis with {len(self.agents)} agents")
+        
+        analyses = []
+        for i, agent in enumerate(self.agents):
+            logging.info(f"[SWARM_DEBUG] Agent {i} ({agent.id}, {agent.role.value}) starting individual analysis")
+            
+            try:
+                analysis = await agent.analyze_task(task, iteration=1)
+                analyses.append(analysis)
+                
+                # Log agent performance
+                challenges = analysis.get('challenges', [])
+                key_points = analysis.get('key_points', [])
+                has_error = 'error' in analysis
+                confidence = analysis.get('confidence', 0)
+                
+                logging.info(f"[SWARM_DEBUG] Agent {agent.id} individual analysis: {len(challenges)} challenges, {len(key_points)} key_points, confidence: {confidence}, error: {has_error}")
+                
+                if has_error:
+                    logging.error(f"[SWARM_DEBUG] Agent {agent.id} individual analysis error: {analysis.get('error')}")
+                    
+            except Exception as e:
+                logging.error(f"[SWARM_DEBUG] Agent {agent.id} individual analysis exception: {e}")
+                logging.error(f"[SWARM_DEBUG] Agent {agent.id} traceback: {traceback.format_exc()}")
+                
+                # Add error analysis
+                analyses.append({
+                    'agent_id': agent.id,
+                    'agent_role': agent.role.value,
+                    'error': f"Exception during analysis: {str(e)}",
+                    'key_points': [],
+                    'challenges': [],
+                    'recommendations': [],
+                    'priority': 5,
+                    'complexity': 'unknown',
+                    'confidence': 0,
+                    'alignment_score': 0
+                })
+        
+        logging.info(f"[SWARM_DEBUG] Individual analysis completed with {len(analyses)} results")
+        return analyses
+    
+    def enable_debug_logging(self, log_level: str = "DEBUG") -> None:
+        """Enable comprehensive debug logging for the swarm system.
+        
+        Args:
+            log_level: Logging level (DEBUG, INFO, WARNING, ERROR)
+        """
+        numeric_level = getattr(logging, log_level.upper(), logging.DEBUG)
+        
+        # Configure root logger
+        logging.basicConfig(
+            level=numeric_level,
+            format='%(asctime)s - %(levelname)s - %(message)s',
+            force=True
+        )
+        
+        # Log swarm configuration
+        logging.info(f"[SWARM_DEBUG] Debug logging enabled at level {log_level}")
+        logging.info(f"[SWARM_DEBUG] Swarm has {len(self.agents)} agents:")
+        
+        for i, agent in enumerate(self.agents):
+            logging.info(f"[SWARM_DEBUG]   Agent {i}: {agent.id} ({agent.role.value}) using {agent.model_name}")
+        
+        logging.info(f"[SWARM_DEBUG] Learning system: {'Available' if self.learning_system else 'Not available'}")
+        logging.info(f"[SWARM_DEBUG] Charter system: {'Available' if self.charter_system else 'Not available'}")
+        
+    def get_debug_summary(self) -> Dict[str, Any]:
+        """Get a comprehensive debug summary of the swarm state.
+        
+        Returns:
+            Debug summary with detailed swarm information
+        """
+        summary = {
+            'timestamp': datetime.now(timezone.utc).isoformat(),
+            'swarm_config': {
+                'total_agents': len(self.agents),
+                'agent_details': [
+                    {
+                        'id': agent.id,
+                        'role': agent.role.value,
+                        'model': agent.model_name,
+                        'performance_history_size': len(agent.performance_history)
+                    } for agent in self.agents
+                ],
+                'learning_system_available': self.learning_system is not None,
+                'charter_system_available': self.charter_system is not None
+            },
+            'performance_metrics': getattr(self, 'swarm_performance_metrics', {}),
+            'history_size': len(self.swarm_history),
+            'agent_performance_tracking': {
+                agent_id: len(history) 
+                for agent_id, history in self.agent_performance_tracking.items()
+            }
+        }
+        
+        # Add recent analysis summary
+        if self.swarm_history:
+            recent_analyses = self.swarm_history[-5:]  # Last 5 analyses
+            summary['recent_analyses'] = []
+            
+            for analysis in recent_analyses:
+                result = analysis.get('result', {})
+                consensus = result.get('consensus', {})
+                
+                summary['recent_analyses'].append({
+                    'timestamp': analysis.get('timestamp', 'unknown'),
+                    'task_id': result.get('task_id', 'unknown'),
+                    'consensus_priority': consensus.get('consensus_priority', 'N/A'),
+                    'success_probability': consensus.get('success_probability', 'N/A'),
+                    'recommendation': result.get('collective_review', {}).get('recommendation', 'N/A')
+                })
+        
+        return summary
