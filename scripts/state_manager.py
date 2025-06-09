@@ -11,6 +11,7 @@ import base64
 from datetime import datetime, timezone
 from typing import Dict, Any, Optional, List
 from github import Github
+from .security_validator import security_validator, safe_json_load
 
 
 class StateManager:
@@ -323,10 +324,11 @@ class StateManager:
         if os.path.exists(self.local_path):
             try:
                 with open(self.local_path, 'r') as f:
-                    state = json.load(f)
+                    # Use secure JSON loading with validation
+                    state = safe_json_load(f.read())
                     self._validate_and_migrate_state(state)
                     return state
-            except (json.JSONDecodeError, KeyError) as e:
+            except (json.JSONDecodeError, ValueError, KeyError) as e:
                 print(f"Error loading local state: {e}")
         
         # Try loading from remote repository
@@ -366,7 +368,8 @@ class StateManager:
             else:
                 content = file_content.content
             
-            return json.loads(content)
+            # Use secure JSON loading with validation
+            return safe_json_load(content)
         except Exception as e:
             print(f"State file not found in repository: {e}")
             return None

@@ -10,6 +10,7 @@ import os
 import time
 from datetime import datetime, timezone
 from typing import Dict, List, Any, Optional
+from security_validator import safe_json_load
 
 
 class ContextGatherer:
@@ -102,9 +103,9 @@ class ContextGatherer:
             # Parse AI response into trend format
             if response and 'content' in response:
                 # The AI should return structured data we can parse
-                import ast
                 try:
-                    trend_data = ast.literal_eval(response['content'])
+                    # Use secure JSON parsing instead of ast.literal_eval (AI responses can be malicious)
+                    trend_data = safe_json_load(response['content'])
                     if isinstance(trend_data, list):
                         trends = trend_data[:10]
                 except:

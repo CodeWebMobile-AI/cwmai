@@ -18,6 +18,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 import git
 import difflib
+from security_validator import safe_json_load
 import re
 from collections import defaultdict
 import traceback
@@ -894,7 +895,8 @@ This modification was automatically generated and tested by the Safe Self-Improv
         if os.path.exists(history_file):
             try:
                 with open(history_file, 'r') as f:
-                    data = json.load(f)
+                    # Use secure JSON loading with validation
+                    data = safe_json_load(f.read())
                     
                 for mod_data in data:
                     # Reconstruct modification
@@ -932,7 +934,8 @@ This modification was automatically generated and tested by the Safe Self-Improv
                 
                 try:
                     with open(filepath, 'r') as f:
-                        data = json.load(f)
+                        # Use secure JSON loading with validation
+                        data = safe_json_load(f.read())
                         
                     for mod_data in data:
                         mod = Modification(
@@ -968,7 +971,8 @@ This modification was automatically generated and tested by the Safe Self-Improv
         if os.path.exists(history_file):
             try:
                 with open(history_file, 'r') as f:
-                    modifications = json.load(f)
+                    # Use secure JSON loading with validation
+                    modifications = safe_json_load(f.read())
             except:
                 pass
         

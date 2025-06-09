@@ -18,6 +18,7 @@ import argparse
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from state_manager import StateManager
+from security_validator import security_validator, safe_json_load, safe_github_content
 from ai_brain import IntelligentAIBrain
 from context_gatherer import ContextGatherer
 
@@ -85,7 +86,8 @@ class TaskManager:
         if os.path.exists(self.state_file):
             try:
                 with open(self.state_file, 'r') as f:
-                    return json.load(f)
+                    # Use secure JSON loading with validation
+                    return safe_json_load(f.read())
             except Exception as e:
                 print(f"Error loading task state: {e}")
         
@@ -103,7 +105,8 @@ class TaskManager:
         if os.path.exists(self.history_file):
             try:
                 with open(self.history_file, 'r') as f:
-                    return json.load(f)
+                    # Use secure JSON loading with validation
+                    return safe_json_load(f.read())
             except Exception as e:
                 print(f"Error loading task history: {e}")
         return []
@@ -212,9 +215,15 @@ class TaskManager:
             labels.append(f"type:{task['type']}")
             labels.append("ai-managed")
             
+            # Sanitize title for GitHub
+            sanitized_title = safe_github_content(
+                title=task["title"],
+                body=""
+            )["title"]
+            
             # Create the issue
             issue = self.repo.create_issue(
-                title=task["title"],
+                title=sanitized_title,
                 body=body,
                 labels=labels
             )
@@ -263,10 +272,16 @@ class TaskManager:
             issue_labels = labels or []
             issue_labels.extend([f"priority:{priority}", f"type:{task_type}", "ai-managed"])
             
+            # Sanitize title and description for GitHub
+            sanitized_content = safe_github_content(
+                title=title,
+                body=description
+            )
+            
             # Create the issue directly with proper formatting
             issue = self.repo.create_issue(
-                title=title,
-                body=description,
+                title=sanitized_content["title"],
+                body=sanitized_content["body"],
                 labels=issue_labels
             )
             
@@ -305,7 +320,13 @@ class TaskManager:
             if block_issues:
                 block_info = f"\n## Blocks\nThis task blocks: {', '.join(block_issues)}\n"
         
-        body = f"""@claude {task["description"]}
+        # Sanitize user-provided content for GitHub
+        sanitized_content = safe_github_content(
+            title="", # Title will be sanitized separately  
+            body=task["description"]
+        )
+        
+        body = f"""@claude {sanitized_content["body"]}
 
 {template}
 

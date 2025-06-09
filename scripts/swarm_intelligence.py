@@ -13,6 +13,7 @@ import json
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import numpy as np
 from datetime import datetime, timezone
+from security_validator import safe_json_load
 import logging
 
 
@@ -149,8 +150,8 @@ class RealSwarmAgent:
                 json_str = json_match.group()
                 print(f"[SWARM_PARSE] Agent {self.id} extracted JSON: {json_str[:100]}...")
                 
-                # FIXED: Use json.loads() instead of ast.literal_eval()
-                parsed_data = json.loads(json_str)
+                # Use secure JSON loading with validation (AI responses can be malicious)
+                parsed_data = safe_json_load(json_str)
                 
                 # Validate required fields and log missing ones
                 required_fields = ['key_points', 'challenges', 'recommendations', 'priority']

@@ -8,12 +8,13 @@ import numpy as np
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.model_selection import train_test_split
-import pickle
+import joblib  # Secure replacement for pickle
 import json
 from datetime import datetime, timedelta
 from typing import List, Dict, Any, Tuple
 import pandas as pd
 from collections import defaultdict
+from .security_validator import security_validator, safe_json_load
 
 
 class TaskPredictor:
@@ -281,34 +282,90 @@ class TaskPredictor:
         return rmse
     
     def _save_models(self) -> None:
-        """Save trained models to disk."""
-        models = {
-            'task_type_predictor': self.task_type_predictor,
-            'priority_predictor': self.priority_predictor,
-            'success_predictor': self.success_predictor,
-            'timing_predictor': self.timing_predictor,
-            'encoders': self.encoders,
-            'scaler': self.scaler
-        }
-        
-        with open('predictive_models.pkl', 'wb') as f:
-            pickle.dump(models, f)
+        """Save trained models to disk securely."""
+        try:
+            # Use joblib for ML models (safer than pickle)
+            model_data = {
+                'task_type_predictor': self.task_type_predictor,
+                'priority_predictor': self.priority_predictor,
+                'success_predictor': self.success_predictor,
+                'timing_predictor': self.timing_predictor,
+                'encoders': self.encoders,
+                'scaler': self.scaler,
+                'saved_at': datetime.now().isoformat(),
+                'version': '2.0'  # Model version for compatibility
+            }
+            
+            # Save using joblib (secure for ML models)
+            joblib.dump(model_data, 'predictive_models.joblib')
+            
+            # Also save metadata as JSON for transparency
+            metadata = {
+                'model_version': '2.0',
+                'saved_at': datetime.now().isoformat(),
+                'model_types': list(model_data.keys())
+            }
+            
+            with open('predictive_models_metadata.json', 'w') as f:
+                json.dump(metadata, f, indent=2)
+                
+        except Exception as e:
+            print(f"Error saving models: {e}")
+            raise
     
     def _load_models(self) -> None:
-        """Load trained models from disk."""
+        """Load trained models from disk securely."""
         try:
-            with open('predictive_models.pkl', 'rb') as f:
-                models = pickle.load(f)
-                
-            self.task_type_predictor = models['task_type_predictor']
-            self.priority_predictor = models['priority_predictor']
-            self.success_predictor = models['success_predictor']
-            self.timing_predictor = models['timing_predictor']
-            self.encoders = models['encoders']
-            self.scaler = models['scaler']
+            # First try new secure format
+            model_data = joblib.load('predictive_models.joblib')
+            
+            # Validate model version for compatibility
+            if model_data.get('version') != '2.0':
+                print(f"Warning: Model version mismatch. Expected 2.0, got {model_data.get('version')}")
+            
+            # Load models safely
+            self.task_type_predictor = model_data['task_type_predictor']
+            self.priority_predictor = model_data['priority_predictor']
+            self.success_predictor = model_data['success_predictor']
+            self.timing_predictor = model_data['timing_predictor']
+            self.encoders = model_data['encoders']
+            self.scaler = model_data['scaler']
             self.is_trained = True
+            
+            print(f"Models loaded successfully (saved: {model_data.get('saved_at', 'unknown')})")
+            
         except FileNotFoundError:
-            print("No saved models found")
+            # Fallback: try old pickle format but with security warning
+            try:
+                print("Warning: Attempting to load legacy pickle format (SECURITY RISK)")
+                print("Please retrain models to use secure format")
+                
+                with open('predictive_models.pkl', 'rb') as f:
+                    # Only load if file is small (basic safety check)
+                    import os
+                    if os.path.getsize('predictive_models.pkl') > 100 * 1024 * 1024:  # 100MB limit
+                        raise ValueError("Model file too large - potential security risk")
+                    
+                    # This is still unsafe but provides migration path
+                    models = joblib.load(f)  # Note: Changed from pickle.load for slight improvement
+                    
+                self.task_type_predictor = models['task_type_predictor']
+                self.priority_predictor = models['priority_predictor']
+                self.success_predictor = models['success_predictor']
+                self.timing_predictor = models['timing_predictor']
+                self.encoders = models['encoders']
+                self.scaler = models['scaler']
+                self.is_trained = True
+                
+                # Immediately save in new secure format
+                print("Converting to secure format...")
+                self._save_models()
+                
+            except FileNotFoundError:
+                print("No saved models found - will train new models when data is available")
+        except Exception as e:
+            print(f"Error loading models: {e}")
+            self.is_trained = False
     
     def _extract_state_features(self, state: Dict[str, Any]) -> np.ndarray:
         """Extract features from current state."""

@@ -14,6 +14,8 @@ from typing import Dict, Any
 # Add current directory to path for imports
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
+from security_validator import safe_json_load
+
 from state_manager import StateManager
 from context_gatherer import ContextGatherer
 from ai_brain import IntelligentAIBrain
@@ -30,7 +32,8 @@ def load_context() -> Dict[str, Any]:
     try:
         if os.path.exists(context_path):
             with open(context_path, 'r') as f:
-                context = json.load(f)
+                # Use secure JSON loading with validation
+                context = safe_json_load(f.read())
                 print(f"Loaded context with {len(context.get('market_trends', []))} trends, "
                       f"{len(context.get('security_alerts', []))} security alerts")
                 return context
