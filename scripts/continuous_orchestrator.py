@@ -895,27 +895,29 @@ class ContinuousOrchestrator:
             self.logger.info(f"🔍 GitHub creator instance: {self.github_creator}")
             self.logger.info(f"🔍 GitHub creator class: {type(self.github_creator)}")
             
-            if can_create:
-                self.logger.info("✅ GitHub integration IS available - will create real issue")
-                # No distributed lock needed - using optimistic concurrency
-                result = await self.github_creator.execute_work_item(work_item)
-                
-                # Record completion if successful
-                if result.get('success'):
-                    if asyncio.iscoroutinefunction(self.task_persistence.record_completed_task):
-                        await self.task_persistence.record_completed_task(work_item, result)
-                    else:
-                        self.task_persistence.record_completed_task(work_item, result)
-                
-                return result
-            else:
-                # Fallback to logged task if GitHub integration not available
-                self.logger.error("❌ GitHub integration NOT available - will use fallback")
+            if not can_create:
+                self.logger.error("❌ GitHub integration NOT available!")
                 self.logger.error("📊 Debugging why GitHub integration failed:")
                 self.logger.error(f"   - GitHub Token exists: {bool(os.getenv('GITHUB_TOKEN') or os.getenv('CLAUDE_PAT'))}")
                 self.logger.error(f"   - GitHub Repo: {os.getenv('GITHUB_REPOSITORY')}")
                 self.logger.error(f"   - Current working directory: {os.getcwd()}")
-                return await self._log_task_only(work_item)
+                raise RuntimeError(
+                    f"No handler found for task type '{work_item.task_type}' and GitHub integration is not available. "
+                    "Cannot execute task."
+                )
+            
+            self.logger.info("✅ GitHub integration IS available - will create real issue")
+            # No distributed lock needed - using optimistic concurrency
+            result = await self.github_creator.execute_work_item(work_item)
+            
+            # Record completion if successful
+            if result.get('success'):
+                if asyncio.iscoroutinefunction(self.task_persistence.record_completed_task):
+                    await self.task_persistence.record_completed_task(work_item, result)
+                else:
+                    self.task_persistence.record_completed_task(work_item, result)
+            
+            return result
     
     async def _execute_feature_task(self, work_item: WorkItem) -> Dict[str, Any]:
         """Execute a feature development task."""
@@ -1282,22 +1284,28 @@ class ContinuousOrchestrator:
         self.logger.info(f"📋 Creating GitHub issue for task: {work_item.title}")
         
         # Check if GitHub integration is available
-        if self.github_creator.can_create_issues():
-            self.logger.info("✅ GitHub integration available - creating issue")
-            result = await self.github_creator.execute_work_item(work_item)
-            
-            # Record completion if successful
-            if result.get('success'):
-                if asyncio.iscoroutinefunction(self.task_persistence.record_completed_task):
-                    await self.task_persistence.record_completed_task(work_item, result)
-                else:
-                    self.task_persistence.record_completed_task(work_item, result)
-            
-            return result
-        else:
-            # Fallback to logging if GitHub integration not available
-            self.logger.warning("⚠️ GitHub integration not available - falling back to logging")
-            return await self._log_task_only(work_item)
+        if not self.github_creator.can_create_issues():
+            self.logger.error("❌ GitHub integration NOT available!")
+            self.logger.error("📊 GitHub configuration check:")
+            self.logger.error(f"   - GITHUB_TOKEN exists: {bool(os.getenv('GITHUB_TOKEN'))}")
+            self.logger.error(f"   - CLAUDE_PAT exists: {bool(os.getenv('CLAUDE_PAT'))}")
+            self.logger.error(f"   - GITHUB_REPOSITORY: {os.getenv('GITHUB_REPOSITORY')}")
+            raise RuntimeError(
+                "GitHub integration is required but not available. "
+                "Please ensure GITHUB_TOKEN/CLAUDE_PAT and GITHUB_REPOSITORY environment variables are set."
+            )
+        
+        self.logger.info("✅ GitHub integration available - creating issue")
+        result = await self.github_creator.execute_work_item(work_item)
+        
+        # Record completion if successful
+        if result.get('success'):
+            if asyncio.iscoroutinefunction(self.task_persistence.record_completed_task):
+                await self.task_persistence.record_completed_task(work_item, result)
+            else:
+                self.task_persistence.record_completed_task(work_item, result)
+        
+        return result
     
     async def _log_task_only(self, work_item: WorkItem) -> Dict[str, Any]:
         """Log task without creating GitHub issue (fallback mode)."""
