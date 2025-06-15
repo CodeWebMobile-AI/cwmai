@@ -1,0 +1,24 @@
+{
+  "worker_id": "smart_worker_1",
+  "specialization": "system_tasks",
+  "current_load": 0.0,
+  "active_tasks": 0,
+  "total_completed": 3,
+  "capabilities": {
+    "NEW_PROJECT:none": {
+      "success_rate": 0.6499999999999999,
+      "avg_duration": 1.8277676728603462,
+      "total_tasks": 1,
+      "confidence_multiplier": 0.931110285836491
+    },
+    "SYSTEM_IMPROVEMENT:none": {
+      "success_rate": 0.7549999999999999,
+      "avg_duration": 0.9410998794235428,
+      "total_tasks": 2,
+      "confidence_multiplier": 0.7989954087024701
+    }
+  },
+  "overall_success_rate": 0.7024999999999999,
+  "exploration_rate": 0.2,
+  "last_updated": "2025-06-12T00:44:33.614596+00:00"
+}

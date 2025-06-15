@@ -1,0 +1,13 @@
+{
+  "overall_success_rate": 0.85,
+  "total_completed": 25,
+  "capabilities": {
+    "REFACTOR_CODE:system": {
+      "success_rate": 0.9,
+      "avg_duration": 1.5,
+      "total_tasks": 10
+    }
+  },
+  "last_updated": "2025-06-12T00:43:30.080436+00:00",
+  "worker_id": "test_worker_6"
+}

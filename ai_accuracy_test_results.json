@@ -1,0 +1,86 @@
+{
+  "timestamp": "2025-06-15T10:18:53.853703",
+  "summary": {
+    "total": 15,
+    "passed": 14,
+    "failed": 1,
+    "success_rate": 93.33333333333333
+  },
+  "results": [
+    {
+      "name": "Repository Count",
+      "passed": true,
+      "message": "Correctly reported 12 repositories"
+    },
+    {
+      "name": "Repository Status Breakdown",
+      "passed": true,
+      "message": "Correctly reported 12 active, 0 archived"
+    },
+    {
+      "name": "Repository Listing",
+      "passed": true,
+      "message": "All 12 repositories correctly listed"
+    },
+    {
+      "name": "Repo Details: ai-powered-inventory-sync",
+      "passed": true,
+      "message": "Details match"
+    },
+    {
+      "name": "Repo Details: brand-guardian-ai",
+      "passed": true,
+      "message": "Details match"
+    },
+    {
+      "name": "Repo Details: business-analytics-dashboard",
+      "passed": true,
+      "message": "Details match"
+    },
+    {
+      "name": "Task Count",
+      "passed": true,
+      "message": "Correctly reported 0 tasks"
+    },
+    {
+      "name": "Task Status Breakdown",
+      "passed": false,
+      "message": "AI: {'active': 0, 'pending': 0, 'completed': 0, 'failed': 0} | Actual: {}"
+    },
+    {
+      "name": "System Health Status",
+      "passed": true,
+      "message": "Reported health: True"
+    },
+    {
+      "name": "System Task Metrics",
+      "passed": true,
+      "message": "Task counts accurate"
+    },
+    {
+      "name": "Repository Health Check",
+      "passed": true,
+      "message": "Checked all 12 repositories"
+    },
+    {
+      "name": "AI Health Dashboard",
+      "passed": true,
+      "message": "Successfully generated dashboard"
+    },
+    {
+      "name": "Tool Statistics",
+      "passed": true,
+      "message": "Reported 22 total tools, 1 AI-created"
+    },
+    {
+      "name": "Invalid Parameter Handling",
+      "passed": true,
+      "message": "Handled negative limit gracefully"
+    },
+    {
+      "name": "Non-existent Tool",
+      "passed": true,
+      "message": "Correctly reported tool not found"
+    }
+  ]
+}

@@ -106,9 +106,9 @@ class DynamicTaskValidator:
            - FEATURE: Does it target a real, existing project?
            - improvement: Does it enhance the AI system itself?
            
-        3. FEASIBILITY: Can this be realistically completed?
+        3. FEASIBILITY: Can this be realistically completed by a 24/7 AI system?
         
-        4. VALUE: Will this create meaningful value?
+        4. VALUE: Will this create meaningful value for the autonomous AI development system?
         
         5. SPECIFICITY: Is the task specific enough to execute?
         
@@ -118,12 +118,20 @@ class DynamicTaskValidator:
         
         8. LARAVEL REACT: For NEW_PROJECT, does it mention the starter kit?
         
+        9. AI SYSTEM APPROPRIATENESS: Is this designed for 24/7 autonomous AI operation?
+           - Uses dependencies/sequences model rather than hour estimates
+           - Considers AI processing cycles, not human work hours
+           - Accounts for parallel processing capabilities
+           - Appropriate for continuous operation
+        
         Common Issues to Check:
         - FEATURE tasks targeting non-existent projects
         - Vague or ambiguous requirements
         - Busy work that doesn't advance the mission
         - Tasks that are too large or should be split
         - Missing technical specifications
+        - Inappropriate resource allocation assumptions (this is a 24/7 AI system, not human teams)
+        - Timeline estimates based on human hours rather than AI processing cycles
         
         Return validation as JSON with:
         - valid: true/false
@@ -195,8 +203,51 @@ class DynamicTaskValidator:
             for field in ['type', 'priority']:
                 if field not in corrected and field in task:
                     corrected[field] = task[field]
+            
+            # Add correction history
+            if 'ai_collaboration' not in corrected:
+                corrected['ai_collaboration'] = {}
+            
+            if 'correction_history' not in corrected['ai_collaboration']:
+                corrected['ai_collaboration']['correction_history'] = []
+                
+            corrected['ai_collaboration']['correction_history'].append({
+                'timestamp': datetime.now(timezone.utc).isoformat(),
+                'issues': issues,
+                'corrections_made': self._identify_changes(task, corrected),
+                'validator': 'dynamic_validator'
+            })
                     
         return corrected
+    
+    def _identify_changes(self, original: Dict[str, Any], corrected: Dict[str, Any]) -> List[str]:
+        """Identify what changed between original and corrected task.
+        
+        Args:
+            original: Original task
+            corrected: Corrected task
+            
+        Returns:
+            List of changes made
+        """
+        changes = []
+        
+        # Check for changed fields
+        for key in ['title', 'description', 'type', 'target_project']:
+            if key in corrected and key in original:
+                if corrected[key] != original[key]:
+                    changes.append(f"Changed {key}")
+            elif key in corrected and key not in original:
+                changes.append(f"Added {key}")
+        
+        # Check requirements changes
+        if 'requirements' in corrected:
+            orig_reqs = set(original.get('requirements', []))
+            corr_reqs = set(corrected.get('requirements', []))
+            if orig_reqs != corr_reqs:
+                changes.append(f"Modified requirements ({len(corr_reqs - orig_reqs)} added, {len(orig_reqs - corr_reqs)} removed)")
+        
+        return changes
     
     async def validate_batch(self, tasks: List[Dict[str, Any]], 
                            context: Dict[str, Any]) -> List[Dict[str, Any]]:
@@ -211,11 +262,15 @@ class DynamicTaskValidator:
         """
         validations = []
         
+        # Get existing tasks from context for deduplication
+        existing_tasks = context.get('existing_tasks', [])
+        
         # Validate each task with awareness of others
         for i, task in enumerate(tasks):
             # Add other tasks to context
             batch_context = context.copy()
             batch_context['batch_tasks'] = [t for j, t in enumerate(tasks) if j != i]
+            batch_context['existing_tasks'] = existing_tasks
             
             validation = await self.validate_task(task, batch_context)
             
@@ -226,6 +281,13 @@ class DynamicTaskValidator:
                 if batch_issues.get('critical'):
                     validation['valid'] = False
                     validation['issues'].extend(batch_issues['issues'])
+            
+            # Check for duplication with existing tasks
+            existing_duplicates = await self._check_existing_duplicates(task, existing_tasks)
+            if existing_duplicates:
+                validation['existing_duplicates'] = existing_duplicates
+                validation['valid'] = False
+                validation['issues'].append(f"Task duplicates existing task: {existing_duplicates['duplicate_of']}")
                     
             validations.append(validation)
             
@@ -256,7 +318,11 @@ class DynamicTaskValidator:
         {json.dumps(other_tasks, indent=2)}
         
         Check for:
-        1. DUPLICATION: Is this task too similar to another?
+        1. DUPLICATION: Is this task too similar to another? Check for:
+           - Similar titles/descriptions
+           - Same type and target project
+           - Overlapping requirements or functionality
+           - Near-identical implementation approaches
         2. CONFLICTS: Do tasks conflict with each other?
         3. DEPENDENCIES: Should tasks be ordered differently?
         4. RESOURCE COMPETITION: Do tasks compete for same resources?
@@ -275,6 +341,50 @@ class DynamicTaskValidator:
         
         if batch_analysis.get('has_issues'):
             return batch_analysis
+            
+        return None
+    
+    async def _check_existing_duplicates(self, task: Dict[str, Any], 
+                                       existing_tasks: List[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
+        """Check if task duplicates any existing tasks.
+        
+        Args:
+            task: Task to check
+            existing_tasks: List of existing tasks in the system
+            
+        Returns:
+            Duplicate information if found
+        """
+        if not existing_tasks:
+            return None
+            
+        prompt = f"""
+        Check if this new task duplicates any existing tasks.
+        
+        New Task:
+        {json.dumps(task, indent=2)}
+        
+        Existing Tasks:
+        {json.dumps(existing_tasks, indent=2)}
+        
+        Look for:
+        1. Same or very similar functionality
+        2. Same type and target project  
+        3. Overlapping requirements
+        4. Similar titles or descriptions
+        
+        Return as JSON:
+        - is_duplicate: true/false
+        - duplicate_of: task ID/title if duplicate found
+        - similarity_score: 0-1 (how similar)
+        - reason: explanation of why it's a duplicate
+        """
+        
+        response = await self.ai_brain.generate_enhanced_response(prompt)
+        duplicate_check = self._parse_json_response(response)
+        
+        if duplicate_check.get('is_duplicate'):
+            return duplicate_check
             
         return None
     

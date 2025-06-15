@@ -26,6 +26,8 @@ from scripts.research_evolution_engine import ResearchEvolutionEngine
 from scripts.ai_brain_factory import AIBrainFactory
 from scripts.alternative_task_generator import AlternativeTaskGenerator
 from scripts.enhanced_work_generator import EnhancedWorkGenerator
+from scripts.github_issue_queue import GitHubIssueQueue
+from scripts.mcp_redis_integration import MCPRedisIntegration
 
 
 class WorkerStatus(Enum):
@@ -52,7 +54,7 @@ class WorkerState:
 class ContinuousOrchestrator:
     """24/7 Continuous AI Orchestrator with parallel processing."""
     
-    def __init__(self, max_workers: int = 3, enable_parallel: bool = True, enable_research: bool = True,
+    def __init__(self, max_workers: int = 10, enable_parallel: bool = True, enable_research: bool = True,
                  enable_round_robin: bool = False):
         """Initialize the continuous orchestrator.
         
@@ -72,8 +74,6 @@ class ContinuousOrchestrator:
         try:
             from scripts.redis_lockfree_state_manager import RedisLockFreeStateManager
             self.redis_state_manager = RedisLockFreeStateManager()
-            # Initialize Redis in background
-            asyncio.create_task(self._init_redis_state())
             self.logger.info("✓ Using Redis lock-free state manager")
         except Exception as e:
             self.logger.warning(f"Redis lock-free state manager not available: {e}")
@@ -87,7 +87,8 @@ class ContinuousOrchestrator:
             self.logger.warning(f"Redis state manager not available: {e}, using file-based")
             self.state_manager = StateManager()
         
-        self.system_state = self.state_manager.load_state()
+        # Load state with repository discovery
+        self.system_state = self.state_manager.load_state_with_repository_discovery()
         self.ai_brain = IntelligentAIBrain(self.system_state, {}, enable_round_robin=enable_round_robin)
         
         # Work management - try Redis work queue first
@@ -130,6 +131,11 @@ class ContinuousOrchestrator:
         self.failed_task_cooldown_base = 60  # Base cooldown in seconds
         self.failed_task_cooldown_multiplier = 2  # Exponential backoff multiplier
         
+        # Repository cleanup settings
+        self.cleanup_check_interval = 3600  # Check every hour
+        self.last_cleanup_check = 0
+        self.cleanup_manager = None
+        
         # Work discovery components (will be initialized later)
         self.work_finder = None
         self.resource_manager = None
@@ -137,6 +143,12 @@ class ContinuousOrchestrator:
         
         # Real work execution components
         self.github_creator = GitHubIssueCreator()
+        
+        # GitHub issue queue for async processing
+        self.github_issue_queue = GitHubIssueQueue(
+            redis_client=None,  # Will use default from get_redis_client
+            logger=self.logger
+        )
         
         # Alternative task generator for handling duplicates
         self.alternative_task_generator = AlternativeTaskGenerator(
@@ -168,9 +180,6 @@ class ContinuousOrchestrator:
         self.redis_analytics = None
         self.workflow_executor = None
         
-        # Initialize Redis components in background
-        asyncio.create_task(self._init_redis_components())
-        
         # Initialize Research Evolution Engine
         self.research_engine = None
         self.research_task = None
@@ -179,6 +188,10 @@ class ContinuousOrchestrator:
         
         # Track last state update time for each worker
         self._last_state_update: Dict[str, float] = {}
+        
+        # MCP-Redis integration
+        self.mcp_redis: Optional[MCPRedisIntegration] = None
+        self._use_mcp = os.getenv("USE_MCP_REDIS", "false").lower() == "true"
         
         if self.research_enabled:
             self._init_research_engine()
@@ -215,6 +228,10 @@ class ContinuousOrchestrator:
         # Stop all workers
         for worker_id in list(self.workers.keys()):
             await self._stop_worker(worker_id)
+        
+        # Stop GitHub issue queue processor
+        await self.github_issue_queue.stop_processor()
+        self.logger.info("GitHub issue queue processor stopped")
         
         # Stop research engine if running
         if self.research_engine and self.research_task:
@@ -346,6 +363,37 @@ class ContinuousOrchestrator:
         """Initialize all orchestrator components."""
         self.logger.info("Initializing orchestrator components...")
         
+        # Run repository cleanup check first
+        try:
+            from repository_cleanup_manager import RepositoryCleanupManager
+            cleanup_manager = RepositoryCleanupManager()
+            cleanup_result = cleanup_manager.perform_cleanup()
+            if cleanup_result['items_removed'] > 0:
+                self.logger.warning(f"Cleaned up {cleanup_result['items_removed']} references to deleted repositories: {', '.join(cleanup_result['deleted_repos'])}")
+                # Reload system state after cleanup
+                self.system_state = self.state_manager.load_state_with_repository_discovery()
+        except Exception as e:
+            self.logger.warning(f"Repository cleanup check failed: {e}")
+        
+        # Initialize Redis components first
+        await self._init_redis_state()
+        await self._init_redis_components()
+        
+        # Initialize MCP-Redis if enabled
+        if self._use_mcp:
+            try:
+                self.mcp_redis = MCPRedisIntegration()
+                await self.mcp_redis.initialize()
+                self.logger.info("✓ MCP-Redis integration enabled for orchestrator")
+            except Exception as e:
+                self.logger.warning(f"Failed to initialize MCP-Redis: {e}")
+                self._use_mcp = False
+        
+        # Initialize GitHub issue queue
+        await self.github_issue_queue.initialize()
+        await self.github_issue_queue.start_processor()
+        self.logger.info("✓ GitHub issue queue processor started")
+        
         # Import and initialize work finder
         try:
             from intelligent_work_finder import IntelligentWorkFinder
@@ -474,10 +522,9 @@ class ContinuousOrchestrator:
                     'started_at': worker.started_at.isoformat(),
                     'last_activity': worker.last_activity.isoformat()
                 }
-                await self.redis_state_manager.update_state(
-                    f"workers:{worker.id}", 
-                    worker_data,
-                    distributed=True
+                await self.redis_state_manager.update_worker_state(
+                    worker.id, 
+                    worker_data
                 )
                 self.logger.debug(f"Worker {worker.id} registered with Redis")
             except Exception as e:
@@ -507,10 +554,9 @@ class ContinuousOrchestrator:
                                     'repository': worker.current_work.repository,
                                     'started_at': worker.current_work.started_at.isoformat() if worker.current_work.started_at else None
                                 }
-                            await self.redis_state_manager.update_state(
-                                f"workers:{worker.id}", 
-                                worker_data,
-                                distributed=True
+                            await self.redis_state_manager.update_worker_state(
+                                worker.id, 
+                                worker_data
                             )
                             self._last_state_update[worker.id] = time.time()
                         except Exception as e:
@@ -651,6 +697,28 @@ class ContinuousOrchestrator:
         
         self.logger.info(f"Worker {worker.id} executing: {work_item.title}")
         
+        # Update worker status in Redis immediately
+        if self.redis_state_manager:
+            try:
+                worker_data = {
+                    'status': worker.status.value,
+                    'specialization': worker.specialization,
+                    'last_activity': datetime.now(timezone.utc).isoformat(),
+                    'total_completed': worker.total_completed,
+                    'total_errors': worker.total_errors,
+                    'current_task': {
+                        'id': work_item.id,
+                        'title': work_item.title,
+                        'task_type': work_item.task_type,
+                        'repository': work_item.repository,
+                        'started_at': work_item.started_at.isoformat() if work_item.started_at else None
+                    }
+                }
+                await self.redis_state_manager.update_worker_state(worker.id, worker_data)
+                self._last_state_update[worker.id] = time.time()
+            except Exception as e:
+                self.logger.error(f"Failed to update worker {worker.id} status in Redis: {e}")
+        
         # Broadcast task start event
         if self.worker_coordinator and hasattr(self, 'WorkerEvent') and self.WorkerEvent:
             await self.worker_coordinator.broadcast_event(
@@ -697,6 +765,24 @@ class ContinuousOrchestrator:
                 })
             
             self.logger.info(f"Worker {worker.id} completed: {work_item.title} in {completion_time:.2f}s")
+            
+            # Update worker status in Redis after completion
+            worker.status = WorkerStatus.IDLE
+            worker.current_work = None
+            if self.redis_state_manager:
+                try:
+                    worker_data = {
+                        'status': worker.status.value,
+                        'specialization': worker.specialization,
+                        'last_activity': datetime.now(timezone.utc).isoformat(),
+                        'total_completed': worker.total_completed,
+                        'total_errors': worker.total_errors,
+                        'current_task': None
+                    }
+                    await self.redis_state_manager.update_worker_state(worker.id, worker_data)
+                    self._last_state_update[worker.id] = time.time()
+                except Exception as e:
+                    self.logger.error(f"Failed to update worker {worker.id} status after completion: {e}")
             
             # Broadcast task completion
             if self.worker_coordinator and hasattr(self, 'WorkerEvent') and self.WorkerEvent:
@@ -817,19 +903,71 @@ class ContinuousOrchestrator:
                 else:
                     self.task_persistence.record_skipped_task(work_item.title, reason="duplicate")
             
-            # Generate alternative task instead of just failing
+            # Generate alternative task with max attempts to prevent infinite loops
             self.logger.info(f"🔄 Generating alternative task for duplicate: {work_item.title}")
-            alternative_task = await self.alternative_task_generator.generate_alternative_task(
-                work_item,
-                context={
-                    'repository': work_item.repository,
-                    'original_type': work_item.task_type,
-                    'worker_id': work_item.assigned_worker
-                }
-            )
+            
+            # Track attempted alternatives to prevent infinite loops
+            max_alternative_attempts = 3
+            attempted_alternatives = set()
+            attempted_alternatives.add(work_item.title.lower())
+            
+            alternative_task = None
+            for attempt in range(max_alternative_attempts):
+                self.logger.debug(f"Alternative generation attempt {attempt + 1}/{max_alternative_attempts}")
+                
+                candidate_task = await self.alternative_task_generator.generate_alternative_task(
+                    work_item,
+                    context={
+                        'repository': work_item.repository,
+                        'original_type': work_item.task_type,
+                        'worker_id': work_item.assigned_worker,
+                        'attempted_alternatives': list(attempted_alternatives),
+                        'attempt_number': attempt + 1
+                    }
+                )
+                
+                if not candidate_task:
+                    self.logger.warning(f"No alternative generated on attempt {attempt + 1}")
+                    break
+                
+                # Check if the alternative is also a duplicate
+                is_alternative_duplicate = False
+                if hasattr(self.task_persistence, 'is_duplicate_task'):
+                    if asyncio.iscoroutinefunction(self.task_persistence.is_duplicate_task):
+                        is_alternative_duplicate = await self.task_persistence.is_duplicate_task(candidate_task)
+                    else:
+                        is_alternative_duplicate = self.task_persistence.is_duplicate_task(candidate_task)
+                
+                # Also check if we've already tried this alternative
+                if candidate_task.title.lower() in attempted_alternatives:
+                    self.logger.debug(f"Alternative '{candidate_task.title}' already attempted")
+                    is_alternative_duplicate = True
+                
+                if not is_alternative_duplicate:
+                    # Found a unique alternative!
+                    alternative_task = candidate_task
+                    self.logger.info(f"✨ Found unique alternative: {alternative_task.title}")
+                    break
+                else:
+                    # This alternative is also a duplicate, try again
+                    self.logger.debug(f"Alternative '{candidate_task.title}' is also a duplicate")
+                    attempted_alternatives.add(candidate_task.title.lower())
+                    
+                    # Record this failed alternative
+                    if hasattr(self.task_persistence, 'record_skipped_task'):
+                        if asyncio.iscoroutinefunction(self.task_persistence.record_skipped_task):
+                            await self.task_persistence.record_skipped_task(
+                                candidate_task.title, 
+                                reason="duplicate_alternative"
+                            )
+                        else:
+                            self.task_persistence.record_skipped_task(
+                                candidate_task.title, 
+                                reason="duplicate_alternative"
+                            )
             
             if alternative_task:
-                self.logger.info(f"✨ Generated alternative task: {alternative_task.title}")
+                self.logger.info(f"✨ Successfully generated alternative task: {alternative_task.title}")
                 
                 # Add the alternative task to the work queue
                 if self.use_redis_queue and self.redis_work_queue:
@@ -845,15 +983,62 @@ class ContinuousOrchestrator:
                     'original_task': work_item.title,
                     'alternative_task': alternative_task.title,
                     'reason': 'duplicate_with_alternative',
-                    'value_created': 0.3  # Some value for generating alternative
+                    'value_created': 0.3,  # Some value for generating alternative
+                    'attempts_made': len(attempted_alternatives) - 1  # Excluding original
                 }
             else:
-                # Fallback if alternative generation fails
-                self.logger.warning(f"Failed to generate alternative for duplicate: {work_item.title}")
+                # Exhausted attempts or failed to generate alternatives
+                self.logger.warning(
+                    f"Failed to generate unique alternative for duplicate: {work_item.title} "
+                    f"after {len(attempted_alternatives) - 1} attempts"
+                )
+                
+                # Record this as a problematic task
+                if hasattr(self.task_persistence, 'record_problematic_task'):
+                    if asyncio.iscoroutinefunction(self.task_persistence.record_problematic_task):
+                        await self.task_persistence.record_problematic_task(
+                            work_item.title,
+                            work_item.task_type,
+                            work_item.repository
+                        )
+                    else:
+                        self.task_persistence.record_problematic_task(
+                            work_item.title,
+                            work_item.task_type,
+                            work_item.repository
+                        )
+                
                 return {
                     'success': False,
                     'skipped': True,
-                    'reason': 'duplicate_task',
+                    'reason': 'duplicate_task_no_alternatives',
+                    'value_created': 0,
+                    'attempts_made': len(attempted_alternatives) - 1
+                }
+        
+        # Check if there are any projects in the system
+        projects = self.system_state.get('projects', {})
+        repositories = self.system_state.get('repositories', {})
+        all_projects = {**projects, **repositories}
+        
+        # Filter out excluded repositories
+        from scripts.repository_exclusion import is_excluded_repo
+        active_projects = {
+            name: data for name, data in all_projects.items()
+            if not is_excluded_repo(name)
+        }
+        
+        # If no active projects exist, only allow NEW_PROJECT tasks
+        if not active_projects:
+            self.logger.warning(f"⚠️ No active projects in system. Only NEW_PROJECT tasks allowed.")
+            if work_item.task_type != 'NEW_PROJECT':
+                self.logger.info(f"🔄 Converting {work_item.task_type} task to NEW_PROJECT since no projects exist")
+                # Skip this task and generate a NEW_PROJECT task instead
+                return {
+                    'success': False,
+                    'skipped': True,
+                    'reason': 'no_projects_exist',
+                    'message': f'Cannot execute {work_item.task_type} tasks when no projects exist',
                     'value_created': 0
                 }
         
@@ -924,7 +1109,8 @@ class ContinuousOrchestrator:
         # Integrate with existing task manager
         from task_manager import TaskManager, TaskType, TaskPriority as LegacyPriority
         
-        task_manager = TaskManager()
+        # Don't create task manager with default repository
+        task_manager = TaskManager(repository=work_item.repository if hasattr(work_item, 'repository') else None)
         
         # Convert our work item to legacy task format
         priority_map = {
@@ -958,7 +1144,8 @@ class ContinuousOrchestrator:
         # Similar to feature task but with BUG_FIX type
         from task_manager import TaskManager, TaskType, TaskPriority as LegacyPriority
         
-        task_manager = TaskManager()
+        # Don't create task manager with default repository
+        task_manager = TaskManager(repository=work_item.repository if hasattr(work_item, 'repository') else None)
         priority_map = {
             TaskPriority.CRITICAL: LegacyPriority.CRITICAL,
             TaskPriority.HIGH: LegacyPriority.HIGH,
@@ -988,7 +1175,8 @@ class ContinuousOrchestrator:
         """Execute a documentation task."""
         from task_manager import TaskManager, TaskType, TaskPriority as LegacyPriority
         
-        task_manager = TaskManager()
+        # Don't create task manager with default repository
+        task_manager = TaskManager(repository=work_item.repository if hasattr(work_item, 'repository') else None)
         priority_map = {
             TaskPriority.CRITICAL: LegacyPriority.CRITICAL,
             TaskPriority.HIGH: LegacyPriority.HIGH,
@@ -1044,6 +1232,19 @@ class ContinuousOrchestrator:
         try:
             # Get configuration from environment
             import os
+            
+            # Check if we're in development mode
+            is_development = os.getenv('NODE_ENV', 'production').lower() == 'development'
+            if is_development:
+                self.logger.info("⚠️ Skipping SYSTEM_IMPROVEMENT task in development mode")
+                return {
+                    'success': True,
+                    'skipped': True,
+                    'reason': 'development_mode',
+                    'message': 'System improvement tasks are disabled in development mode',
+                    'value_created': 0
+                }
+            
             use_intelligent = os.getenv('INTELLIGENT_IMPROVEMENT_ENABLED', 'true').lower() == 'true'
             staging_enabled = os.getenv('SELF_IMPROVEMENT_STAGING_ENABLED', 'true').lower() == 'true'
             auto_validate = os.getenv('SELF_IMPROVEMENT_AUTO_VALIDATE', 'true').lower() == 'true'
@@ -1234,8 +1435,185 @@ class ContinuousOrchestrator:
         """Execute a new project creation task."""
         self.logger.info(f"📂 Executing new project task: {work_item.title}")
         
-        # Create GitHub issue for new project task
-        return await self._create_github_issue_for_task(work_item)
+        try:
+            # Initialize project creator with GitHub token
+            from scripts.project_creator import ProjectCreator
+            import os
+            
+            github_token = os.getenv('CLAUDE_PAT') or os.getenv('GITHUB_TOKEN')
+            if not github_token:
+                self.logger.error("No GitHub token available for project creation")
+                return {
+                    'success': False,
+                    'status': 'failed',
+                    'error': 'No GitHub token available',
+                    'message': 'Cannot create project without GitHub credentials'
+                }
+            
+            project_creator = ProjectCreator(github_token, self.ai_brain)
+            
+            # Convert WorkItem to task dict format expected by ProjectCreator
+            # IMPORTANT: Include metadata so project gets full customization
+            task_dict = {
+                'title': work_item.title,
+                'description': work_item.description,
+                'requirements': getattr(work_item, 'requirements', []),
+                'type': 'NEW_PROJECT',
+                'metadata': getattr(work_item, 'metadata', {})  # Pass metadata to ensure customization
+            }
+            
+            # Log metadata availability
+            metadata = task_dict.get('metadata', {})
+            self.logger.info(f"📊 Task metadata for project creation:")
+            self.logger.info(f"  - Has selected_project: {bool(metadata.get('selected_project'))}")
+            self.logger.info(f"  - Has architecture: {bool(metadata.get('architecture'))}")
+            
+            # Create the new project using the Laravel React starter kit
+            self.logger.info(f"🚀 Creating new project from Laravel React starter kit")
+            result = await project_creator.create_project(task_dict)
+            
+            if result.get('success'):
+                project_name = result.get('project_name')
+                repo_name = result.get('repo_name')
+                repo_full_name = f"{ProjectCreator.ORGANIZATION}/{repo_name}"
+                
+                self.logger.info(f"✅ Successfully created new project: {repo_full_name}")
+                
+                # Add the new repository to system state with full details
+                if self.state_manager:
+                    state = self.state_manager.load_state()
+                    if 'projects' not in state:
+                        state['projects'] = {}
+                    
+                    # Extract venture analyst research and architecture from work item metadata
+                    metadata = getattr(work_item, 'metadata', {})
+                    selected_project = metadata.get('selected_project', {})
+                    architecture = metadata.get('architecture', {})
+                    
+                    # Store comprehensive project information
+                    state['projects'][repo_name] = {
+                        'status': 'active',
+                        'created_at': datetime.now(timezone.utc).isoformat(),
+                        'last_activity': datetime.now(timezone.utc).isoformat(),
+                        'project_type': 'laravel-react',
+                        'auto_created': True,
+                        'full_name': repo_full_name,
+                        'description': result.get('description', ''),
+                        'venture_analysis': {
+                            'problem_solved': selected_project.get('problem_solved', ''),
+                            'target_audience': selected_project.get('target_audience', ''),
+                            'market_opportunity': selected_project.get('market_opportunity', ''),
+                            'monetization_strategy': selected_project.get('monetization_strategy', ''),
+                            'competitive_advantage': selected_project.get('competitive_advantage', ''),
+                            'key_features': selected_project.get('key_features', []),
+                            'project_goal': selected_project.get('project_goal', '')
+                        },
+                        'architecture': {
+                            'design_system': architecture.get('foundational_architecture', {}).get('design_system', {}),
+                            'database_schema': architecture.get('foundational_architecture', {}).get('database_schema', {}),
+                            'api_architecture': architecture.get('foundational_architecture', {}).get('api_architecture', {}),
+                            'authentication': architecture.get('foundational_architecture', {}).get('authentication', {}),
+                            'deployment': architecture.get('foundational_architecture', {}).get('deployment', {}),
+                            'performance': architecture.get('foundational_architecture', {}).get('performance', {}),
+                            'testing_strategy': architecture.get('foundational_architecture', {}).get('testing_strategy', {}),
+                            'core_entities': selected_project.get('core_entities', [])
+                        },
+                        'customizations': result.get('customizations', {}),
+                        'initial_issues': result.get('initial_issues', [])
+                    }
+                    self.state_manager.update_state({'projects': state['projects']})
+                
+                # Create initial setup tasks for the new project
+                if repo_full_name:
+                    # Generate follow-up work for Laravel+React project setup
+                    setup_tasks = [
+                        WorkItem(
+                            id=f"setup_{repo_name}_env",
+                            title=f"Configure environment variables for {repo_name}",
+                            description="Set up .env file with database credentials, API keys, and other configuration",
+                            task_type="FEATURE",
+                            priority=TaskPriority.CRITICAL,
+                            repository=repo_full_name
+                        ),
+                        WorkItem(
+                            id=f"setup_{repo_name}_database",
+                            title=f"Set up database migrations for {repo_name}",
+                            description="Create initial database schema and run Laravel migrations",
+                            task_type="FEATURE",
+                            priority=TaskPriority.HIGH,
+                            repository=repo_full_name
+                        ),
+                        WorkItem(
+                            id=f"setup_{repo_name}_ci",
+                            title=f"Set up CI/CD pipeline for {repo_name}",
+                            description="Configure GitHub Actions for Laravel tests, React builds, and deployment",
+                            task_type="INTEGRATION",
+                            priority=TaskPriority.HIGH,
+                            repository=repo_full_name
+                        ),
+                        WorkItem(
+                            id=f"setup_{repo_name}_api",
+                            title=f"Create initial API endpoints for {repo_name}",
+                            description="Set up RESTful API structure with authentication and basic CRUD operations",
+                            task_type="FEATURE",
+                            priority=TaskPriority.HIGH,
+                            repository=repo_full_name
+                        ),
+                        WorkItem(
+                            id=f"setup_{repo_name}_components",
+                            title=f"Create React component structure for {repo_name}",
+                            description="Set up component hierarchy, routing, and state management",
+                            task_type="FEATURE",
+                            priority=TaskPriority.MEDIUM,
+                            repository=repo_full_name
+                        ),
+                        WorkItem(
+                            id=f"setup_{repo_name}_docs",
+                            title=f"Create comprehensive documentation for {repo_name}",
+                            description="Document API endpoints, component structure, and development workflow",
+                            task_type="DOCUMENTATION",
+                            priority=TaskPriority.MEDIUM,
+                            repository=repo_full_name
+                        )
+                    ]
+                    
+                    # Queue the setup tasks
+                    async with self.work_queue_lock:
+                        self.work_queue.extend(setup_tasks)
+                        self.metrics['total_work_created'] += len(setup_tasks)
+                    
+                    self.logger.info(f"📋 Queued {len(setup_tasks)} Laravel+React setup tasks for {repo_name}")
+                
+                return {
+                    'success': True,
+                    'status': 'completed',
+                    'project_name': project_name,
+                    'repository': repo_full_name,
+                    'url': result.get('repo_url'),
+                    'message': f"Successfully created Laravel+React project: {repo_full_name}",
+                    'value_created': 10.0,  # High value for new project creation
+                    'initial_issues': result.get('initial_issues', []),
+                    'customizations': result.get('customizations', {})
+                }
+            else:
+                self.logger.error(f"❌ Failed to create project: {result.get('error', 'Unknown error')}")
+                return {
+                    'success': False,
+                    'status': 'failed',
+                    'error': result.get('error', 'Unknown error'),
+                    'message': f"Failed to create project from Laravel React starter kit"
+                }
+                
+        except Exception as e:
+            self.logger.error(f"Error creating new project: {e}")
+            import traceback
+            self.logger.error(traceback.format_exc())
+            return {
+                'success': False,
+                'status': 'failed',
+                'error': str(e),
+                'message': f"Error creating project: {str(e)}"
+            }
     
     async def _execute_testing_task(self, work_item: WorkItem) -> Dict[str, Any]:
         """Execute a testing task."""
@@ -1248,8 +1626,56 @@ class ContinuousOrchestrator:
         """Execute a maintenance task."""
         self.logger.info(f"🔧 Executing maintenance task: {work_item.title}")
         
-        # Create GitHub issue for maintenance task
+        # Check if this is a repository customization fix
+        if work_item.metadata.get('fix_type') == 'repository_customization':
+            return await self._execute_repository_fix(work_item)
+        
+        # Create GitHub issue for other maintenance tasks
         return await self._create_github_issue_for_task(work_item)
+    
+    async def _execute_repository_fix(self, work_item: WorkItem) -> Dict[str, Any]:
+        """Execute repository customization fixes."""
+        try:
+            self.logger.info(f"🔧 Executing repository fix for: {work_item.repository}")
+            
+            # Import the fixer
+            from fix_repository_customizations import RepositoryCustomizationFixer
+            
+            # Initialize the fixer with AI brain
+            fixer = RepositoryCustomizationFixer(
+                github_token=os.environ.get('GITHUB_TOKEN'),
+                organization='CodeWebMobile-AI',
+                ai_brain=self.ai_brain
+            )
+            
+            # Fix the specific repository
+            results = await fixer.fix_repository(work_item.repository)
+            
+            if results and results.get('status') == 'fixed':
+                fixes_applied = results.get('fixes_applied', [])
+                success_count = sum(1 for fix in fixes_applied if fix.get('result') == 'success')
+                
+                self.logger.info(f"✅ Repository fix completed for {work_item.repository}: {success_count} fixes applied")
+                
+                return {
+                    'status': 'success',
+                    'fixes_applied': fixes_applied,
+                    'message': f"Applied {success_count} customization fixes to {work_item.repository}"
+                }
+            else:
+                message = results.get('message', f"Failed to apply fixes to {work_item.repository}") if results else f"Failed to apply fixes to {work_item.repository}"
+                return {
+                    'status': 'failed',
+                    'message': message
+                }
+                
+        except Exception as e:
+            self.logger.error(f"Error executing repository fix: {e}")
+            return {
+                'status': 'error',
+                'error': str(e),
+                'message': f"Error fixing repository {work_item.repository}: {e}"
+            }
     
     async def _execute_monitoring_task(self, work_item: WorkItem) -> Dict[str, Any]:
         """Execute a monitoring task."""
@@ -1281,8 +1707,35 @@ class ContinuousOrchestrator:
     
     async def _create_github_issue_for_task(self, work_item: WorkItem) -> Dict[str, Any]:
         """Create GitHub issue for any task type."""
-        self.logger.info(f"📋 Creating GitHub issue for task: {work_item.title}")
+        self.logger.info(f"📋 Queueing GitHub issue for task: {work_item.title}")
         
+        # Generate a task ID for tracking
+        task_id = f"task_{int(time.time())}_{work_item.id}"
+        
+        # Queue the GitHub issue creation
+        queue_id = await self.github_issue_queue.add_issue(work_item, task_id)
+        
+        # Record task completion immediately
+        result = {
+            'success': True,
+            'status': 'completed',
+            'github_issue': 'queued',
+            'github_queue_id': queue_id,
+            'task_id': task_id,
+            'message': f"Task completed and queued for GitHub issue creation",
+            'value_created': 1.0  # Full value since task is complete
+        }
+        
+        # Record in persistence
+        if asyncio.iscoroutinefunction(self.task_persistence.record_completed_task):
+            await self.task_persistence.record_completed_task(work_item, result)
+        else:
+            self.task_persistence.record_completed_task(work_item, result)
+        
+        self.logger.info(f"✅ Task completed and GitHub issue queued: {work_item.title}")
+        return result
+        
+        # OLD CODE - Keeping for reference but not used
         # Check if GitHub integration is available
         if not self.github_creator.can_create_issues():
             self.logger.error("❌ GitHub integration NOT available!")
@@ -1391,13 +1844,14 @@ class ContinuousOrchestrator:
     async def _create_feature_workflow(self, feature_work: WorkItem, result: Dict[str, Any]):
         """Create a comprehensive workflow for feature development using Redis workflow orchestration."""
         try:
-            from redis_distributed_workflows import WorkflowDefinition, WorkflowTask
+            from redis_distributed_workflows import WorkflowDefinition, WorkflowTask, WorkflowTrigger
             
             # Create workflow definition for feature development
             workflow_def = WorkflowDefinition(
                 workflow_id=f"feature_dev_{feature_work.id}",
                 name=f"Feature Development: {feature_work.title}",
                 description=f"Complete development workflow for {feature_work.title}",
+                trigger=WorkflowTrigger.MANUAL,  # Triggered manually after feature completion
                 tasks=[
                     # Phase 1: Initial implementation is done (the feature_work)
                     
@@ -1507,8 +1961,12 @@ class ContinuousOrchestrator:
                 }
             )
             
-            # Execute the workflow
-            workflow_id = await self.workflow_executor.execute_workflow(workflow_def)
+            # Register and start the workflow
+            await self.workflow_executor.register_workflow(workflow_def)
+            workflow_id = await self.workflow_executor.start_workflow(
+                workflow_id=workflow_def.workflow_id,
+                initial_context={'feature_work': feature_work.to_dict()}
+            )
             
             self.logger.info(f"Created feature development workflow {workflow_id} for {feature_work.title}")
             
@@ -1568,6 +2026,109 @@ class ContinuousOrchestrator:
             
             self.logger.info(f"Generated {len(followup_items)} traditional follow-up tasks for {completed_work.title}")
     
+    async def _check_repository_cleanup(self):
+        """Periodically check for and cleanup deleted repositories."""
+        current_time = time.time()
+        
+        # Only check periodically based on interval
+        if current_time - self.last_cleanup_check < self.cleanup_check_interval:
+            return
+        
+        self.last_cleanup_check = current_time
+        
+        try:
+            # Initialize cleanup manager if needed
+            if not self.cleanup_manager:
+                from repository_cleanup_manager import RepositoryCleanupManager
+                self.cleanup_manager = RepositoryCleanupManager()
+            
+            # Perform cleanup check
+            cleanup_result = self.cleanup_manager.perform_cleanup()
+            
+            if cleanup_result['items_removed'] > 0:
+                self.logger.warning(
+                    f"Automatic cleanup: removed {cleanup_result['items_removed']} references to "
+                    f"deleted repositories: {', '.join(cleanup_result['deleted_repos'])}"
+                )
+                
+                # Reload system state after cleanup
+                self.system_state = self.state_manager.load_state_with_repository_discovery()
+                
+                # Clear any in-memory work items for deleted repos
+                if not self.use_redis_queue:
+                    deleted_repos = set(cleanup_result['deleted_repos'])
+                    original_count = len(self.work_queue)
+                    self.work_queue = [
+                        item for item in self.work_queue
+                        if item.repository not in deleted_repos
+                    ]
+                    removed_count = original_count - len(self.work_queue)
+                    if removed_count > 0:
+                        self.logger.info(f"Removed {removed_count} in-memory work items for deleted repositories")
+                
+        except Exception as e:
+            self.logger.error(f"Repository cleanup check failed: {e}")
+    
+    async def _check_repositories_needing_fixes(self) -> List[WorkItem]:
+        """Check for repositories that need customization fixes."""
+        try:
+            # Import needed for checking repositories
+            from fix_repository_customizations import RepositoryCustomizationFixer
+            
+            # Only check every 30 minutes to avoid too frequent checks
+            current_time = datetime.now(timezone.utc)
+            if hasattr(self, '_last_repo_fix_check'):
+                if (current_time - self._last_repo_fix_check).total_seconds() < 1800:
+                    return []
+            
+            self._last_repo_fix_check = current_time
+            
+            self.logger.info("Checking repositories for customization issues")
+            
+            # Initialize the fixer
+            fixer = RepositoryCustomizationFixer(
+                github_token=os.environ.get('GITHUB_TOKEN'),
+                organization='CodeWebMobile-AI'
+            )
+            
+            # Check repositories
+            issues = await fixer.check_repositories()
+            
+            work_items = []
+            
+            # Create work items for repositories with issues
+            for repo_name, repo_issues in issues.items():
+                if repo_issues:
+                    # Skip excluded repositories
+                    if repo_name in ['cwmai', '.github']:
+                        continue
+                    
+                    # Create a maintenance task to fix the repository
+                    work_item = WorkItem(
+                        id=f"repo-fix-{repo_name}-{int(current_time.timestamp())}",
+                        task_type="maintenance",
+                        title=f"Fix customization issues in {repo_name}",
+                        description=f"Repository {repo_name} has the following issues that need fixing: {', '.join(issue['type'] for issue in repo_issues)}",
+                        priority=TaskPriority.MEDIUM,
+                        repository=repo_name,
+                        estimated_cycles=1,
+                        metadata={
+                            'auto_generated': True,
+                            'fix_type': 'repository_customization',
+                            'issues': repo_issues
+                        }
+                    )
+                    work_items.append(work_item)
+            
+            if work_items:
+                self.logger.info(f"Found {len(work_items)} repositories needing customization fixes")
+            
+            return work_items
+            
+        except Exception as e:
+            self.logger.error(f"Error checking repositories for fixes: {e}")
+            return []
+    
     async def _run_main_loop(self):
         """Main orchestration loop - continuously discovers and queues work."""
         self.logger.info("Starting main orchestration loop")
@@ -1576,6 +2137,9 @@ class ContinuousOrchestrator:
         
         while not self.shutdown_requested:
             try:
+                # Check for deleted repositories periodically
+                await self._check_repository_cleanup()
+                
                 # Discover new work
                 await self._discover_work()
                 
@@ -1708,7 +2272,10 @@ class ContinuousOrchestrator:
             maintenance_work = await self.enhanced_work_generator.generate_maintenance_work(count=2)
             research_work = await self.enhanced_work_generator.generate_research_work(count=1)
             
-            all_work = maintenance_work + research_work
+            # Check for repositories needing customization
+            repo_fix_work = await self._check_repositories_needing_fixes()
+            
+            all_work = maintenance_work + research_work + repo_fix_work
             
             if all_work:
                 if self.use_redis_queue and self.redis_work_queue:
@@ -1816,9 +2383,22 @@ class ContinuousOrchestrator:
             with open('continuous_orchestrator_state.json', 'r') as f:
                 state = json.load(f)
             
+            # Get valid repositories from system state
+            valid_repositories = set(self.system_state.get('projects', {}).keys())
+            valid_repositories.update(self.system_state.get('repositories', {}).keys())
+            self.logger.info(f"Valid repositories: {valid_repositories}")
+            
             # Restore work queue
+            skipped_count = 0
             for item_data in state.get('work_queue', []):
                 try:
+                    # Check if repository is valid (skip if it's for a deleted repo)
+                    repository = item_data.get('repository')
+                    if repository and repository not in valid_repositories:
+                        self.logger.warning(f"Skipping work item for non-existent repository: {repository} - {item_data.get('title', 'Unknown')}")
+                        skipped_count += 1
+                        continue
+                    
                     # Handle priority parsing safely
                     priority_value = item_data['priority']
                     if isinstance(priority_value, int):
@@ -1844,7 +2424,7 @@ class ContinuousOrchestrator:
                     self.logger.warning(f"Error loading work item: {e}")
                     continue
             
-            self.logger.info(f"Restored {len(self.work_queue)} work items from state")
+            self.logger.info(f"Restored {len(self.work_queue)} work items from state (skipped {skipped_count} for deleted repos)")
             
         except FileNotFoundError:
             self.logger.info("No previous state found - starting fresh")
@@ -2200,3 +2780,270 @@ class ContinuousOrchestrator:
         except Exception as e:
             self.logger.error(f"Error getting Redis metrics: {e}")
             return {}
+    
+    # MCP-Redis Enhanced Methods
+    async def analyze_orchestration_patterns(self) -> Dict[str, Any]:
+        """Analyze orchestration patterns using MCP-Redis natural language processing."""
+        if not self._use_mcp or not self.mcp_redis:
+            return {"message": "MCP-Redis not available"}
+        
+        try:
+            # Gather orchestration metrics
+            status = self.get_status()
+            
+            analysis = await self.mcp_redis.execute(f"""
+                Analyze the orchestration patterns:
+                
+                Workers: {len(self.workers)}
+                Active Workers: {sum(1 for w in self.workers.values() if w.status == WorkerStatus.WORKING)}
+                Queue Size: {status['queue_size']}
+                Total Completed: {self.metrics['total_work_completed']}
+                Total Errors: {self.metrics['total_errors']}
+                Success Rate: {self.metrics.get('success_rate', 0):.2%}
+                
+                Analyze:
+                - Worker utilization patterns
+                - Task distribution efficiency
+                - Error patterns and causes
+                - Bottlenecks in processing
+                - Optimal worker count recommendation
+                - Task type distribution
+                - Performance trends
+                
+                Provide actionable insights to improve orchestration.
+            """)
+            
+            return analysis if isinstance(analysis, dict) else {"analysis": analysis}
+            
+        except Exception as e:
+            self.logger.error(f"Error analyzing orchestration patterns: {e}")
+            return {"error": str(e)}
+    
+    async def predict_resource_needs(self, time_window: str = "next 24 hours") -> Dict[str, Any]:
+        """Predict resource needs using MCP-Redis AI capabilities."""
+        if not self._use_mcp or not self.mcp_redis:
+            return {"message": "MCP-Redis not available"}
+        
+        try:
+            # Get current and historical metrics
+            current_status = self.get_status()
+            work_per_hour = self.metrics.get('work_per_hour', 0)
+            
+            prediction = await self.mcp_redis.execute(f"""
+                Predict resource needs for: {time_window}
+                
+                Current state:
+                - Workers: {len(self.workers)} (max: {self.max_workers})
+                - Queue size: {current_status['queue_size']}
+                - Work completion rate: {work_per_hour:.2f} items/hour
+                - Average completion time: {self.metrics['average_completion_time']:.2f}s
+                - Error rate: {self.metrics['total_errors'] / max(self.metrics['total_work_completed'], 1):.2%}
+                
+                Predict:
+                - Expected workload changes
+                - Optimal worker count
+                - Memory usage trends
+                - CPU requirements
+                - Potential bottlenecks
+                - Scaling recommendations
+                
+                Consider patterns, time of day, and historical trends.
+            """)
+            
+            return prediction if isinstance(prediction, dict) else {"prediction": prediction}
+            
+        except Exception as e:
+            self.logger.error(f"Error predicting resource needs: {e}")
+            return {"error": str(e)}
+    
+    async def optimize_worker_distribution(self) -> Dict[str, Any]:
+        """Optimize worker distribution using MCP-Redis intelligent analysis."""
+        if not self._use_mcp or not self.mcp_redis:
+            return {"message": "MCP-Redis not available"}
+        
+        try:
+            # Gather worker specializations and performance
+            worker_data = []
+            for worker_id, worker in self.workers.items():
+                worker_data.append({
+                    'id': worker_id,
+                    'status': worker.status.value,
+                    'specialization': worker.specialization,
+                    'completed': worker.total_completed,
+                    'errors': worker.total_errors,
+                    'success_rate': worker.total_completed / max(worker.total_completed + worker.total_errors, 1)
+                })
+            
+            optimization = await self.mcp_redis.execute(f"""
+                Optimize worker distribution and specialization:
+                
+                Current workers:
+                {json.dumps(worker_data, indent=2)}
+                
+                Queue characteristics:
+                - Size: {await self._get_queue_size()}
+                - Task types in queue: analyze based on patterns
+                
+                Optimize:
+                - Worker specialization assignments
+                - Load balancing strategy
+                - Task routing rules
+                - Performance-based worker adjustments
+                - Specialization effectiveness
+                
+                Provide specific reassignment recommendations.
+            """)
+            
+            return optimization if isinstance(optimization, dict) else {"optimization": optimization}
+            
+        except Exception as e:
+            self.logger.error(f"Error optimizing worker distribution: {e}")
+            return {"error": str(e)}
+    
+    async def diagnose_performance_issues(self) -> Dict[str, Any]:
+        """Diagnose performance issues using MCP-Redis deep analysis."""
+        if not self._use_mcp or not self.mcp_redis:
+            return {"message": "MCP-Redis not available"}
+        
+        try:
+            # Gather comprehensive metrics
+            status = self.get_status()
+            analytics = await self.get_analytics_dashboard()
+            
+            diagnosis = await self.mcp_redis.execute(f"""
+                Diagnose performance issues in the orchestration system:
+                
+                System metrics:
+                - Uptime: {status['uptime']}
+                - Queue size: {status['queue_size']}
+                - Worker utilization: {status['worker_utilization']:.2%}
+                - Average completion time: {self.metrics['average_completion_time']:.2f}s
+                - Error rate: {analytics.get('error_rate', 0):.2%}
+                - Work per hour: {self.metrics['work_per_hour']:.2f}
+                
+                Error patterns:
+                {json.dumps(analytics.get('error_breakdown', {}), indent=2)}
+                
+                Diagnose:
+                - Root causes of performance degradation
+                - Specific bottlenecks
+                - Error pattern analysis
+                - Resource constraints
+                - Inefficiencies in task processing
+                - Queue backup reasons
+                
+                Provide specific fixes and improvements.
+            """)
+            
+            return diagnosis if isinstance(diagnosis, dict) else {"diagnosis": diagnosis}
+            
+        except Exception as e:
+            self.logger.error(f"Error diagnosing performance: {e}")
+            return {"error": str(e)}
+    
+    async def generate_orchestration_insights(self) -> Dict[str, Any]:
+        """Generate comprehensive orchestration insights using MCP-Redis."""
+        if not self._use_mcp or not self.mcp_redis:
+            return {"message": "MCP-Redis not available"}
+        
+        try:
+            # Collect all relevant data
+            status = self.get_status()
+            analytics = await self.get_analytics_dashboard()
+            
+            insights = await self.mcp_redis.execute(f"""
+                Generate orchestration insights report:
+                
+                System overview:
+                - Total tasks completed: {self.metrics['total_work_completed']}
+                - Success rate: {analytics.get('success_rate', 0):.2%}
+                - Health score: {analytics.get('health_score', 0):.2f}
+                - Active since: {status['start_time']}
+                
+                Worker performance:
+                - Active workers: {status['active_workers']}
+                - Utilization: {status['worker_utilization']:.2%}
+                - Specializations: {[w.specialization for w in self.workers.values()]}
+                
+                Task processing:
+                - Queue depth: {status['queue_size']}
+                - Processing rate: {self.metrics['work_per_hour']:.2f}/hour
+                - Average time: {self.metrics['average_completion_time']:.2f}s
+                
+                Generate insights on:
+                - Overall system efficiency
+                - Worker performance rankings
+                - Task type success patterns
+                - Optimization opportunities
+                - Scaling recommendations
+                - Future performance predictions
+                
+                Format as executive summary with key metrics and actions.
+            """)
+            
+            return insights if isinstance(insights, dict) else {"insights": insights}
+            
+        except Exception as e:
+            self.logger.error(f"Error generating insights: {e}")
+            return {"error": str(e)}
+    
+    async def intelligent_task_routing(self, task: WorkItem) -> Optional[str]:
+        """Route task to optimal worker using MCP-Redis intelligence."""
+        if not self._use_mcp or not self.mcp_redis:
+            # Fallback to round-robin
+            return self._basic_task_routing(task)
+        
+        try:
+            # Gather worker states and capabilities
+            worker_info = []
+            for worker_id, worker in self.workers.items():
+                if worker.status == WorkerStatus.IDLE:
+                    worker_info.append({
+                        'id': worker_id,
+                        'specialization': worker.specialization,
+                        'completed': worker.total_completed,
+                        'error_rate': worker.total_errors / max(worker.total_completed + worker.total_errors, 1),
+                        'last_activity': worker.last_activity.isoformat()
+                    })
+            
+            if not worker_info:
+                return None
+            
+            routing = await self.mcp_redis.execute(f"""
+                Route task to optimal worker:
+                
+                Task details:
+                - Type: {task.type}
+                - Repository: {task.repository}
+                - Priority: {task.priority.value if hasattr(task.priority, 'value') else task.priority}
+                - Description: {task.title}
+                
+                Available workers:
+                {json.dumps(worker_info, indent=2)}
+                
+                Select the best worker based on:
+                - Specialization match
+                - Historical performance
+                - Error rates
+                - Load balancing
+                
+                Return: worker_id of the best match
+            """)
+            
+            # Extract worker ID from response
+            if isinstance(routing, dict) and 'worker_id' in routing:
+                return routing['worker_id']
+            elif isinstance(routing, str) and routing.startswith('worker_'):
+                return routing
+            else:
+                return self._basic_task_routing(task)
+                
+        except Exception as e:
+            self.logger.error(f"Error in intelligent routing: {e}")
+            return self._basic_task_routing(task)
+    
+    def _basic_task_routing(self, task: WorkItem) -> Optional[str]:
+        """Basic round-robin task routing fallback."""
+        idle_workers = [w_id for w_id, w in self.workers.items() 
+                       if w.status == WorkerStatus.IDLE]
+        return idle_workers[0] if idle_workers else None

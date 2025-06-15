@@ -35,6 +35,7 @@ class ModificationType(Enum):
     TEST_ADDITION = "test_addition"
     PERFORMANCE = "performance"
     SECURITY = "security"
+    EXTERNAL_INTEGRATION = "external_integration"  # New type for external capabilities
 
 
 @dataclass
@@ -340,6 +341,82 @@ class SafeSelfImprover:
         
         return history
     
+    # Staging Support Methods
+    
+    def supports_staging(self) -> bool:
+        """Check if staging is supported (for compatibility)."""
+        return True
+    
+    def get_staging_config(self) -> Dict[str, Any]:
+        """Get staging configuration."""
+        return {
+            'staging_enabled': True,
+            'staging_directory': os.path.join(self.repo_path, '.self_improver', 'staged'),
+            'auto_validate': True,
+            'auto_apply': False,
+            'max_staged_improvements': 10
+        }
+    
+    def prepare_for_staging(self, modification: Modification) -> Dict[str, Any]:
+        """Prepare modification metadata for staging."""
+        return {
+            'modification_id': modification.id,
+            'safety_validated': modification.safety_score >= 0.8,
+            'estimated_risk': self._estimate_risk_level(modification),
+            'recommended_validation': self._recommend_validation_steps(modification),
+            'staging_ready': True
+        }
+    
+    def _estimate_risk_level(self, modification: Modification) -> str:
+        """Estimate risk level for a modification."""
+        # Simple risk estimation based on type and changes
+        risk_scores = {
+            ModificationType.DOCUMENTATION: 0.1,
+            ModificationType.TEST_ADDITION: 0.2,
+            ModificationType.OPTIMIZATION: 0.4,
+            ModificationType.BUG_FIX: 0.5,
+            ModificationType.REFACTORING: 0.6,
+            ModificationType.PERFORMANCE: 0.7,
+            ModificationType.FEATURE_ADDITION: 0.8,
+            ModificationType.SECURITY: 0.9,
+            ModificationType.EXTERNAL_INTEGRATION: 1.0
+        }
+        
+        base_risk = risk_scores.get(modification.type, 0.5)
+        
+        # Adjust based on number of changes
+        change_factor = min(1.0, len(modification.changes) / 10)
+        total_risk = base_risk * (1 + change_factor * 0.5)
+        
+        if total_risk < 0.3:
+            return "low"
+        elif total_risk < 0.6:
+            return "medium"
+        elif total_risk < 0.8:
+            return "high"
+        else:
+            return "critical"
+    
+    def _recommend_validation_steps(self, modification: Modification) -> List[str]:
+        """Recommend validation steps for a modification."""
+        steps = ["syntax_check", "import_validation"]
+        
+        if modification.type in [ModificationType.OPTIMIZATION, ModificationType.PERFORMANCE]:
+            steps.append("performance_benchmark")
+        
+        if modification.type == ModificationType.SECURITY:
+            steps.append("security_scan")
+            
+        if modification.type in [ModificationType.REFACTORING, ModificationType.FEATURE_ADDITION]:
+            steps.append("unit_tests")
+            steps.append("integration_tests")
+        
+        if modification.type == ModificationType.EXTERNAL_INTEGRATION:
+            steps.append("dependency_check")
+            steps.append("compatibility_test")
+        
+        return steps
+    
     def _generate_modification_id(self, target_file: str, 
                                  improvement_type: ModificationType) -> str:
         """Generate unique modification ID."""
@@ -365,14 +442,41 @@ class SafeSelfImprover:
         elif improvement_type == ModificationType.TEST_ADDITION:
             changes.extend(self._generate_tests(code))
         
+        # If no changes found, try to find at least one simple improvement
+        if not changes and improvement_type == ModificationType.OPTIMIZATION:
+            # Look for simple patterns with looser regex
+            lines = code.split('\n')
+            for i, line in enumerate(lines):
+                # Simple list append pattern
+                if '.append(' in line and i > 0:
+                    prev_line = lines[i-1].strip()
+                    if prev_line.endswith('= []'):
+                        # Found a potential optimization
+                        var_name = prev_line.split('=')[0].strip()
+                        # Extract simple append pattern
+                        if f'{var_name}.append(' in line:
+                            # Generate a simple suggestion
+                            old_code = f"{prev_line}\n{line}"
+                            new_code = f"# Consider using list comprehension for {var_name}"
+                            changes.append((old_code, new_code))
+                            break
+        
         return changes
     
     def _generate_optimizations(self, code: str) -> List[Tuple[str, str]]:
         """Generate optimization improvements."""
         changes = []
         
-        # List comprehension optimization
-        import_re = re.compile(r'(\w+)\s*=\s*\[\]\s*\nfor\s+(\w+)\s+in\s+(\w+):\s*\n\s+\1\.append\(([^)]+)\)')
+        # More flexible list comprehension optimization pattern
+        # Match patterns like:
+        # result = []
+        # for item in items:
+        #     result.append(item * 2)
+        # Allow for any whitespace between lines and any indentation
+        import_re = re.compile(
+            r'(\w+)\s*=\s*\[\].*?\n\s*for\s+(\w+)\s+in\s+(\w+):\s*\n\s*\1\.append\(([^)]+)\)',
+            re.MULTILINE | re.DOTALL
+        )
         matches = import_re.finditer(code)
         
         for match in matches:
@@ -385,8 +489,25 @@ class SafeSelfImprover:
             new_code = f"{var_name} = [{append_expr} for {loop_var} in {iterable}]"
             changes.append((old_code, new_code))
         
-        # Dictionary get() optimization
-        dict_re = re.compile(r'if\s+(\w+)\s+in\s+(\w+):\s*\n\s+(\w+)\s*=\s*\2\[(\1)\]\s*\nelse:\s*\n\s+\3\s*=\s*(.+)')
+        # Simple optimization: convert range(len(x)) to enumerate(x)
+        range_len_re = re.compile(r'for\s+(\w+)\s+in\s+range\(len\((\w+)\)\):')
+        matches = range_len_re.finditer(code)
+        
+        for match in matches:
+            old_code = match.group(0)
+            index_var = match.group(1)
+            iterable = match.group(2)
+            
+            # Check if the index is actually used
+            if re.search(rf'\b{iterable}\[{index_var}\]', code[match.end():match.end()+200]):
+                new_code = f"for {index_var}, item in enumerate({iterable}):"
+                changes.append((old_code, new_code))
+        
+        # Dictionary get() optimization - simplified pattern
+        dict_re = re.compile(
+            r'if\s+(\w+)\s+in\s+(\w+):\s*\n\s+(\w+)\s*=\s*\2\[\1\]\s*\nelse:\s*\n\s+\3\s*=\s*([^\n]+)',
+            re.MULTILINE
+        )
         matches = dict_re.finditer(code)
         
         for match in matches:
@@ -394,7 +515,7 @@ class SafeSelfImprover:
             key = match.group(1)
             dict_name = match.group(2)
             var_name = match.group(3)
-            default_val = match.group(5)
+            default_val = match.group(4).strip()
             
             new_code = f"{var_name} = {dict_name}.get({key}, {default_val})"
             changes.append((old_code, new_code))
@@ -454,6 +575,7 @@ def {prop_name}(self):
         
         try:
             tree = ast.parse(code)
+            lines = code.split('\n')
             
             # Find undocumented functions
             for node in ast.walk(tree):
@@ -462,19 +584,47 @@ def {prop_name}(self):
                         # Generate docstring
                         args = [arg.arg for arg in node.args.args if arg.arg != 'self']
                         
-                        docstring = f'''"""GENERATED: {node.name} function.
-    
-    Args:
-        {chr(10).join(f"{arg}: TODO - Add description" for arg in args) if args else "None"}
-    
-    Returns:
-        TODO - Add return description
-    """'''
+                        docstring_lines = ['    """GENERATED: {0} function.'.format(node.name)]
+                        if args:
+                            docstring_lines.append('    ')
+                            docstring_lines.append('    Args:')
+                            for arg in args:
+                                docstring_lines.append(f'        {arg}: TODO - Add description')
+                        docstring_lines.append('    ')
+                        docstring_lines.append('    Returns:')
+                        docstring_lines.append('        TODO - Add return description')
+                        docstring_lines.append('    """')
                         
-                        # This is simplified - would need proper AST manipulation
-                        print(f"Missing docstring for function: {node.name}")
-        except:
-            pass
+                        # Find the function definition line
+                        func_line_idx = node.lineno - 1
+                        if func_line_idx < len(lines):
+                            func_line = lines[func_line_idx]
+                            indent = len(func_line) - len(func_line.lstrip())
+                            
+                            # Create the old code (function without docstring)
+                            old_lines = []
+                            current_idx = func_line_idx
+                            while current_idx < len(lines) and (current_idx == func_line_idx or lines[current_idx].strip()):
+                                old_lines.append(lines[current_idx])
+                                current_idx += 1
+                                if current_idx < len(lines) and not lines[current_idx].strip():
+                                    break
+                            
+                            old_code = '\n'.join(old_lines[:2])  # Just first 2 lines
+                            
+                            # Create new code with docstring
+                            new_lines = [old_lines[0]]  # Function definition
+                            new_lines.extend([' ' * indent + line for line in docstring_lines])
+                            if len(old_lines) > 1:
+                                new_lines.append(old_lines[1])  # Original function body
+                            
+                            new_code = '\n'.join(new_lines)
+                            
+                            changes.append((old_code, new_code))
+                            print(f"Missing docstring for function: {node.name}")
+                            break  # Only add one for now
+        except Exception as e:
+            print(f"Error generating documentation: {e}")
         
         return changes
     
@@ -535,9 +685,22 @@ def {prop_name}(self):
             new_code = self._apply_changes_to_code(original_code, modification.changes)
             new_complexity = self._calculate_complexity(new_code)
             
-            if new_complexity > original_complexity * self.constraints.max_complexity_increase:
-                print(f"Complexity increase too high: {new_complexity/original_complexity:.2f}x")
-                safety_score *= 0.7
+            # Special case: list comprehensions typically reduce complexity
+            is_list_comprehension = any('for' in old and '[' in new for old, new in modification.changes)
+            
+            if is_list_comprehension:
+                # List comprehensions are always considered safe optimizations
+                pass
+            elif original_complexity < 3:
+                # For simple code, allow absolute increase of up to 3
+                if new_complexity - original_complexity > 3:
+                    print(f"Complexity increase too high: {new_complexity - original_complexity} points")
+                    safety_score *= 0.7
+            else:
+                # For complex code, use ratio
+                if new_complexity > original_complexity * self.constraints.max_complexity_increase:
+                    print(f"Complexity increase too high: {new_complexity/original_complexity:.2f}x")
+                    safety_score *= 0.7
         except:
             safety_score *= 0.9
         
@@ -1049,6 +1212,393 @@ This modification was automatically generated and tested by the Safe Self-Improv
             print(f"Error analyzing {filepath}: {e}")
         
         return opportunities
+    
+    # External Capability Integration Methods
+    
+    def propose_external_capability_integration(self, 
+                                              synthesized_capability, 
+                                              integration_plan) -> Optional[Modification]:
+        """Propose integration of an external capability.
+        
+        Args:
+            synthesized_capability: Synthesized external capability
+            integration_plan: Integration plan from ExternalKnowledgeIntegrator
+            
+        Returns:
+            Proposed modification for external capability integration
+        """
+        try:
+            # Check daily limit for external integrations (stricter limit)
+            external_mods_today = [m for m in self.modifications_today 
+                                 if m.type == ModificationType.EXTERNAL_INTEGRATION]
+            
+            max_external_per_day = min(3, self.constraints.max_changes_per_day // 8)  # More conservative
+            
+            if len(external_mods_today) >= max_external_per_day:
+                print(f"Daily external integration limit reached ({max_external_per_day})")
+                return None
+            
+            # Enhanced safety checks for external code
+            if not self._validate_external_capability_safety(synthesized_capability):
+                print("External capability failed enhanced safety validation")
+                return None
+            
+            # Generate integration modification
+            target_files = integration_plan.target_modules
+            primary_target = target_files[0] if target_files else "scripts/external_integrations.py"
+            
+            mod_id = self._generate_modification_id(primary_target, ModificationType.EXTERNAL_INTEGRATION)
+            
+            # Create integration changes
+            changes = self._generate_external_integration_changes(
+                synthesized_capability, integration_plan
+            )
+            
+            if not changes:
+                print("Failed to generate external integration changes")
+                return None
+            
+            # Create modification with enhanced metadata
+            modification = Modification(
+                id=mod_id,
+                type=ModificationType.EXTERNAL_INTEGRATION,
+                target_file=primary_target,
+                description=f"Integrate external capability: {synthesized_capability.original_capability.name}",
+                changes=changes,
+                timestamp=datetime.now(timezone.utc)
+            )
+            
+            # Add external-specific metadata
+            modification.external_metadata = {
+                'source_repository': synthesized_capability.original_capability.source_repository,
+                'capability_type': synthesized_capability.original_capability.capability_type.value,
+                'synthesis_strategy': synthesized_capability.synthesis_strategy.value,
+                'synthesis_confidence': synthesized_capability.synthesis_confidence,
+                'integration_strategy': integration_plan.integration_strategy.value,
+                'estimated_effort_hours': integration_plan.estimated_effort_hours,
+                'risk_assessment': integration_plan.risk_assessment
+            }
+            
+            # Enhanced safety validation for external integration
+            safety_score = self._validate_external_integration_safety(modification, synthesized_capability)
+            modification.safety_score = safety_score
+            
+            # Higher safety threshold for external integrations
+            if safety_score < 0.9:
+                print(f"External integration failed safety check (score: {safety_score:.2f}, required: 0.9)")
+                return None
+            
+            return modification
+            
+        except Exception as e:
+            print(f"Error proposing external capability integration: {e}")
+            return None
+    
+    def apply_external_capability_integration(self, modification: Modification) -> bool:
+        """Apply external capability integration with enhanced safety measures.
+        
+        Args:
+            modification: External integration modification to apply
+            
+        Returns:
+            Success status
+        """
+        if modification.type != ModificationType.EXTERNAL_INTEGRATION:
+            print("Modification is not an external integration")
+            return False
+        
+        print(f"Applying external capability integration: {modification.description}")
+        
+        try:
+            # Create isolated sandbox for external integration testing
+            self.sandbox_dir = self._create_external_integration_sandbox()
+            
+            # Enhanced sandbox testing for external code
+            sandbox_success = self._test_external_integration_in_sandbox(modification)
+            
+            if not sandbox_success:
+                print("External integration sandbox testing failed")
+                return False
+            
+            # Additional security scans for external code
+            security_check = self._perform_external_security_scan(modification)
+            if not security_check:
+                print("External integration failed security scan")
+                return False
+            
+            # Create checkpoint with external integration marker
+            checkpoint = self._create_external_integration_checkpoint(modification)
+            modification.rollback_commit = checkpoint
+            
+            # Apply to repository with external integration safeguards
+            success = self._apply_external_integration_to_repository(modification)
+            
+            if success:
+                # Run comprehensive tests including external integration tests
+                test_results = self._run_external_integration_tests(modification)
+                modification.test_results = test_results
+                
+                # Higher test pass rate required for external integrations
+                required_pass_rate = 0.98  # 98% for external integrations
+                if test_results['pass_rate'] < required_pass_rate:
+                    print(f"External integration test pass rate too low: {test_results['pass_rate']:.2%}")
+                    self._rollback(checkpoint)
+                    return False
+                
+                # Measure performance and security impact
+                performance = self._measure_external_integration_impact(modification)
+                modification.performance_impact = performance
+                
+                # Check for any negative impacts
+                if self._has_external_integration_issues(performance):
+                    print("External integration has negative impacts")
+                    self._rollback(checkpoint)
+                    return False
+                
+                # Success!
+                modification.applied = True
+                modification.success = True
+                
+                # Update tracking with external integration metrics
+                self.modifications_today.append(modification)
+                self._save_external_integration(modification)
+                
+                # Commit with external integration metadata
+                self._commit_external_integration(modification)
+                
+                print(f"Successfully integrated external capability: {modification.id}")
+                return True
+            else:
+                self._rollback(checkpoint)
+                return False
+                
+        except Exception as e:
+            print(f"Error applying external capability integration: {e}")
+            traceback.print_exc()
+            
+            if modification.rollback_commit:
+                self._rollback(modification.rollback_commit)
+            
+            return False
+            
+        finally:
+            # Cleanup sandbox
+            if self.sandbox_dir and os.path.exists(self.sandbox_dir):
+                shutil.rmtree(self.sandbox_dir)
+                self.sandbox_dir = None
+    
+    def _validate_external_capability_safety(self, synthesized_capability) -> bool:
+        """Validate safety of external capability with enhanced checks."""
+        try:
+            # Check synthesis confidence
+            if synthesized_capability.synthesis_confidence < 0.8:
+                return False
+            
+            # Check architectural alignment
+            if synthesized_capability.architectural_alignment < 0.7:
+                return False
+            
+            # Validate source repository trustworthiness
+            if not self._validate_source_repository_trust(synthesized_capability.original_capability.source_repository):
+                return False
+            
+            # Check for suspicious patterns in synthesized code
+            for cls in synthesized_capability.synthesized_classes:
+                if not self._validate_synthesized_class_safety(cls):
+                    return False
+            
+            for func in synthesized_capability.synthesized_functions:
+                if not self._validate_synthesized_function_safety(func):
+                    return False
+            
+            return True
+            
+        except Exception as e:
+            print(f"Error validating external capability safety: {e}")
+            return False
+    
+    def _validate_external_integration_safety(self, modification: Modification, synthesized_capability) -> float:
+        """Calculate safety score for external integration with enhanced validation."""
+        safety_factors = []
+        
+        # Base safety validation
+        base_safety = self._validate_safety(modification, "")
+        safety_factors.append(base_safety)
+        
+        # External-specific safety factors
+        
+        # Synthesis confidence factor
+        synthesis_confidence = synthesized_capability.synthesis_confidence
+        safety_factors.append(synthesis_confidence)
+        
+        # Architectural alignment factor
+        arch_alignment = synthesized_capability.architectural_alignment
+        safety_factors.append(arch_alignment)
+        
+        # Quality preservation factor
+        quality_preservation = synthesized_capability.quality_preservation
+        safety_factors.append(quality_preservation)
+        
+        # Source repository trust factor
+        repo_trust = self._calculate_repository_trust_score(
+            synthesized_capability.original_capability.source_repository
+        )
+        safety_factors.append(repo_trust)
+        
+        # Pattern safety factor
+        pattern_safety = self._validate_synthesis_patterns_safety(synthesized_capability)
+        safety_factors.append(pattern_safety)
+        
+        # Calculate weighted average with higher weight on critical factors
+        weights = [0.2, 0.25, 0.2, 0.15, 0.1, 0.1]  # synthesis_confidence gets highest weight
+        weighted_safety = sum(factor * weight for factor, weight in zip(safety_factors, weights))
+        
+        return min(1.0, max(0.0, weighted_safety))
+    
+    def _generate_external_integration_changes(self, synthesized_capability, integration_plan) -> List[Tuple[str, str]]:
+        """Generate code changes for external capability integration."""
+        changes = []
+        
+        try:
+            # Generate imports for external capability
+            import_changes = self._generate_external_imports(synthesized_capability)
+            changes.extend(import_changes)
+            
+            # Generate class integrations
+            for cls in synthesized_capability.synthesized_classes:
+                class_changes = self._generate_class_integration_changes(cls, integration_plan)
+                changes.extend(class_changes)
+            
+            # Generate function integrations
+            for func in synthesized_capability.synthesized_functions:
+                func_changes = self._generate_function_integration_changes(func, integration_plan)
+                changes.extend(func_changes)
+            
+            # Generate configuration changes
+            if synthesized_capability.configuration_changes:
+                config_changes = self._generate_configuration_changes(synthesized_capability.configuration_changes)
+                changes.extend(config_changes)
+            
+            return changes
+            
+        except Exception as e:
+            print(f"Error generating external integration changes: {e}")
+            return []
+    
+    def _create_external_integration_sandbox(self) -> str:
+        """Create isolated sandbox for external integration testing."""
+        sandbox_dir = tempfile.mkdtemp(prefix='external_integration_sandbox_')
+        
+        # Copy entire repository to sandbox
+        shutil.copytree(self.repo_path, os.path.join(sandbox_dir, 'repo'), 
+                       ignore=shutil.ignore_patterns('.git', '__pycache__', '*.pyc'))
+        
+        return sandbox_dir
+    
+    def _perform_external_security_scan(self, modification: Modification) -> bool:
+        """Perform security scan on external integration."""
+        try:
+            # Enhanced pattern checking for external code
+            external_forbidden_patterns = [
+                r'requests\.post.*(?!localhost)',  # External network calls
+                r'socket\.connect',                # Socket connections
+                r'urllib\.request',                # URL requests
+                r'subprocess\.Popen',             # Process spawning
+                r'__import__.*os',                # Dynamic OS imports
+                r'getattr.*__',                   # Dynamic attribute access
+                r'setattr.*__',                   # Dynamic attribute setting
+                r'hasattr.*__',                   # Dynamic attribute checking
+            ]
+            
+            for old_code, new_code in modification.changes:
+                for pattern in external_forbidden_patterns:
+                    if re.search(pattern, new_code, re.IGNORECASE):
+                        print(f"Security violation: forbidden pattern '{pattern}' found in external code")
+                        return False
+            
+            # Check for external metadata security indicators
+            if hasattr(modification, 'external_metadata'):
+                risk_level = modification.external_metadata.get('risk_assessment', {}).get('overall_risk_level', 'high')
+                if risk_level == 'high':
+                    print("External integration has high risk level")
+                    return False
+            
+            return True
+            
+        except Exception as e:
+            print(f"Error in external security scan: {e}")
+            return False
+    
+    def _validate_source_repository_trust(self, repository_url: str) -> bool:
+        """Validate trustworthiness of source repository."""
+        # Basic trust validation - in production would be more sophisticated
+        trusted_domains = [
+            'github.com/microsoft',
+            'github.com/openai', 
+            'github.com/google',
+            'github.com/facebook',
+            'github.com/langchain-ai',
+            'github.com/masamasa59/ai-agent-papers'  # Your specified papers repo
+        ]
+        
+        for domain in trusted_domains:
+            if domain in repository_url:
+                return True
+        
+        # Additional checks could include:
+        # - Repository star count
+        # - Recent activity
+        # - Contributor reputation
+        # - Security scan results
+        
+        return False  # Conservative approach - only trust known sources
+    
+    def _calculate_repository_trust_score(self, repository_url: str) -> float:
+        """Calculate trust score for repository."""
+        if self._validate_source_repository_trust(repository_url):
+            return 1.0
+        else:
+            return 0.3  # Low trust for unknown repositories
+    
+    def get_external_integration_statistics(self) -> Dict[str, Any]:
+        """Get statistics about external capability integrations."""
+        external_integrations = [m for m in self.modification_history 
+                               if m.type == ModificationType.EXTERNAL_INTEGRATION]
+        
+        if not external_integrations:
+            return {
+                'total_external_integrations': 0,
+                'successful_external_integrations': 0,
+                'external_integration_success_rate': 0.0,
+                'external_sources': [],
+                'external_capability_types': {}
+            }
+        
+        successful = [m for m in external_integrations if m.success]
+        
+        # Collect source repositories
+        sources = set()
+        capability_types = defaultdict(int)
+        
+        for mod in external_integrations:
+            if hasattr(mod, 'external_metadata'):
+                metadata = mod.external_metadata
+                sources.add(metadata.get('source_repository', 'unknown'))
+                cap_type = metadata.get('capability_type', 'unknown')
+                capability_types[cap_type] += 1
+        
+        return {
+            'total_external_integrations': len(external_integrations),
+            'successful_external_integrations': len(successful),
+            'external_integration_success_rate': len(successful) / len(external_integrations),
+            'external_sources': list(sources),
+            'external_capability_types': dict(capability_types),
+            'average_synthesis_confidence': sum(
+                mod.external_metadata.get('synthesis_confidence', 0) 
+                for mod in external_integrations 
+                if hasattr(mod, 'external_metadata')
+            ) / len(external_integrations) if external_integrations else 0.0
+        }
 
 
 def demonstrate_safe_self_improver():

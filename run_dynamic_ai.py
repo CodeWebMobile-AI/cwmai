@@ -2,39 +2,188 @@
 """
 Run the Dynamic AI Development Orchestrator
 
-This script runs the fully dynamic AI system with no hardcoded values.
-All decisions are made through AI reasoning.
+This script runs the complete production AI system orchestrating all workflows:
+- Task Management (30 min cycles)
+- Main AI Cycle (4 hour cycles)
+- God Mode Controller (6 hour cycles)
+- System Monitoring (daily cycles)
 """
 
 import asyncio
 import os
 import sys
+import signal
+import argparse
 from datetime import datetime
+from dotenv import load_dotenv
+
+# Load environment variables from .env files
+load_dotenv('.env.local')  # Load local environment first
+load_dotenv()  # Then load .env as fallback
 
 # Add scripts directory to path
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'scripts'))
 
-from scripts.ai_brain_factory import AIBrainFactory
-from scripts.dynamic_god_mode_controller import DynamicGodModeController
-from scripts.god_mode_controller import GodModeConfig, IntensityLevel
+from scripts.production_config import create_config, ExecutionMode
+from scripts.production_orchestrator import ProductionOrchestrator
 
 
 async def main():
-    """Run the dynamic AI system."""
+    """Run the production AI orchestrator."""
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(
+        description='Dynamic AI Development Orchestrator - Production System',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  python run_dynamic_ai.py                    # Run in production mode
+  python run_dynamic_ai.py --mode development # Run with faster cycles
+  python run_dynamic_ai.py --mode test        # Run each cycle once
+  python run_dynamic_ai.py --cycles task main # Run only specific cycles
+        """
+    )
+    
+    parser.add_argument(
+        '--mode', 
+        choices=['development', 'production', 'test', 'legacy'],
+        default='production',
+        help='Execution mode (default: production)'
+    )
+    
+    parser.add_argument(
+        '--cycles',
+        nargs='+',
+        choices=['task', 'main', 'god_mode', 'monitoring'],
+        help='Specific cycles to enable (default: all)'
+    )
+    
+    parser.add_argument(
+        '--legacy',
+        action='store_true',
+        help='Run legacy God Mode only (5 min cycles)'
+    )
+    
+    args = parser.parse_args()
+    
+    # Legacy mode - run old behavior
+    if args.legacy or args.mode == 'legacy':
+        await run_legacy_mode()
+        return
+    
     print("""
 ╔══════════════════════════════════════════════════════════════════╗
 ║          DYNAMIC AI DEVELOPMENT ORCHESTRATOR                     ║
+║                  PRODUCTION SYSTEM                               ║
 ║                                                                  ║
-║  Fully autonomous AI system that:                                ║
-║  • Creates software projects from Laravel React starter kit      ║
-║  • Manages a portfolio of applications                           ║
-║  • Learns from outcomes to improve                               ║
-║  • Uses only AI reasoning - no hardcoded logic                   ║
+║  Complete autonomous AI system orchestrating:                    ║
+║  • Task Management    - Issue/PR creation and tracking           ║
+║  • Main AI Cycle     - Core development operations               ║
+║  • God Mode Control  - Advanced AI capabilities                  ║
+║  • System Monitoring - Health checks and reporting               ║
+║                                                                  ║
+║  All workflows run concurrently with proper scheduling           ║
+╚══════════════════════════════════════════════════════════════════╝
+    """)
+    
+    # Create configuration
+    config = create_config(args.mode)
+    
+    # Apply cycle filter if specified
+    if args.cycles:
+        all_cycles = ['task', 'main', 'god_mode', 'monitoring']
+        for cycle in all_cycles:
+            if cycle not in args.cycles:
+                getattr(config, f"{cycle}_cycle").enabled = False
+                
+    # Validate configuration
+    print("\nValidating configuration...")
+    if not config.validate():
+        return
+        
+    print("✓ Configuration validated")
+    print(f"\nMode: {config.mode.value}")
+    print(f"Enabled cycles: {list(config.get_enabled_cycles().keys())}")
+    
+    # Show cycle intervals
+    print("\nCycle intervals:")
+    for name, cycle in config.get_enabled_cycles().items():
+        hours = cycle.interval_seconds / 3600
+        if hours >= 1:
+            print(f"  • {name}: every {hours:.1f} hours")
+        else:
+            minutes = cycle.interval_seconds / 60
+            print(f"  • {name}: every {minutes:.0f} minutes")
+    
+    # Create orchestrator
+    print("\nInitializing Production Orchestrator...")
+    orchestrator = ProductionOrchestrator(config)
+    
+    # Set up signal handlers for graceful shutdown
+    shutdown_requested = False
+    
+    def signal_handler(sig, frame):
+        nonlocal shutdown_requested
+        if not shutdown_requested:
+            shutdown_requested = True
+            print("\n\nShutdown requested. Stopping all cycles gracefully...")
+            asyncio.create_task(orchestrator.stop())
+        else:
+            print("\nForce shutdown requested. Exiting...")
+            sys.exit(1)
+            
+    signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGTERM, signal_handler)
+    
+    # Start orchestrator
+    print("\nStarting all workflow cycles...")
+    print("Press Ctrl+C to stop\n")
+    
+    try:
+        await orchestrator.start()
+        await orchestrator.wait_for_completion()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        if orchestrator.running:
+            await orchestrator.stop()
+            
+    # Print final summary
+    print(f"\n{'='*60}")
+    print("ORCHESTRATOR SESSION SUMMARY")
+    print(f"{'='*60}")
+    
+    status = orchestrator.get_status()
+    uptime = status['uptime_seconds']
+    hours = int(uptime // 3600)
+    minutes = int((uptime % 3600) // 60)
+    
+    print(f"\nRuntime: {hours}h {minutes}m")
+    print(f"Total cycles executed: {status['total_cycles']}")
+    print("\nCycle breakdown:")
+    for cycle, count in status['cycle_counts'].items():
+        if count > 0:
+            print(f"  • {cycle}: {count} executions")
+            
+    print("\n✓ Production Orchestrator session complete")
+
+
+async def run_legacy_mode():
+    """Run the legacy God Mode only behavior."""
+    from scripts.ai_brain_factory import AIBrainFactory
+    from scripts.dynamic_god_mode_controller import DynamicGodModeController
+    from scripts.god_mode_controller import GodModeConfig, IntensityLevel
+    
+    print("""
+╔══════════════════════════════════════════════════════════════════╗
+║          DYNAMIC AI DEVELOPMENT ORCHESTRATOR                     ║
+║                    (LEGACY MODE)                                 ║
+║                                                                  ║
+║  Running God Mode Controller only with 5 minute cycles           ║
 ╚══════════════════════════════════════════════════════════════════╝
     """)
     
     # Check environment
-    print("Checking environment...")
+    print("\nChecking environment...")
     
     required_keys = {
         'ANTHROPIC_API_KEY': 'Required for Claude AI',
@@ -161,7 +310,7 @@ async def main():
         
     # Final summary
     print(f"\n{'='*60}")
-    print("SESSION SUMMARY")
+    print("LEGACY MODE SESSION SUMMARY")
     print(f"{'='*60}")
     print(f"Total cycles: {cycle_count}")
     print(f"Total value created: {total_value:.2f}")
@@ -173,7 +322,7 @@ async def main():
     print(f"Tasks generated: {status.get('dynamic_systems', {}).get('task_generation', {}).get('tasks_generated', 0)}")
     print(f"Outcomes learned: {status.get('dynamic_systems', {}).get('learning', {}).get('outcomes_recorded', 0)}")
     
-    print("\n✓ Dynamic AI Orchestrator session complete")
+    print("\n✓ Legacy mode session complete")
 
 
 if __name__ == "__main__":

@@ -54,7 +54,7 @@ from quantum_inspired_optimizer import QuantumInspiredOptimizer
 from task_manager import TaskManager, TaskType
 from ai_brain import IntelligentAIBrain
 from state_manager import StateManager
-from context_gatherer import ContextGatherer
+# ContextGatherer functionality migrated to IntelligentAIBrain
 
 
 class IntensityLevel(Enum):
@@ -114,10 +114,15 @@ class GodModeController:
         
         # Initialize AI Brain if not provided
         if ai_brain is None:
-            from context_gatherer import ContextGatherer
-            context_gatherer = ContextGatherer()
-            context = context_gatherer.gather_context(self.state.get('charter', {}))
-            self.ai_brain = IntelligentAIBrain(self.state, context)
+            # ContextGatherer functionality migrated to IntelligentAIBrain
+            # Create brain first, then gather context using integrated methods
+            self.ai_brain = IntelligentAIBrain(self.state, {})
+            try:
+                import asyncio
+                context = asyncio.run(self.ai_brain.gather_context(self.state.get('charter', {})))
+                self.ai_brain.context.update(context)
+            except Exception as e:
+                self.logger.warning(f"Context gathering failed in god mode init: {e}")
         else:
             self.ai_brain = ai_brain
         
@@ -227,9 +232,20 @@ class GodModeController:
         """Gather context using all available systems."""
         self.logger.info("Gathering enhanced context...")
         
-        # Basic context gathering
-        context_gatherer = ContextGatherer()
-        basic_context = context_gatherer.gather_context(self.state.get('charter', {}))
+        # Basic context gathering using integrated AI brain methods
+        try:
+            basic_context = await self.ai_brain.gather_context(self.state.get('charter', {}))
+        except Exception as e:
+            self.logger.warning(f"Context gathering failed: {e}")
+            basic_context = {
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+                "charter_goals": [self.state.get('charter', {}).get("primary_goal", "")],
+                "environment": "god_mode",
+                "market_trends": [],
+                "technology_updates": [],
+                "github_trending": [],
+                "programming_news": []
+            }
         
         # Enhance with multi-repo insights
         if self.config.enable_multi_repo:

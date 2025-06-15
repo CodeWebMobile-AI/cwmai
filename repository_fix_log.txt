@@ -1,0 +1,94 @@
+2025-06-14 14:00:47,901 - scripts.http_ai_client.HTTPAIClient - INFO - HTTPAIClient initialized with 4 available providers
+2025-06-14 14:00:47,901 - scripts.http_ai_client.HTTPAIClient - WARNING - ⚠ AI response cache not available
+2025-06-14 14:00:47,901 - __main__ - INFO - 🔍 Starting repository scan (fix_mode=True)
+2025-06-14 14:00:48,144 - __main__ - INFO - ✓ Connected to organization: CodeWebMobile-AI
+2025-06-14 14:00:48,413 - __main__ - INFO - ⏭️  Skipping excluded repository: .github
+2025-06-14 14:00:48,414 - __main__ - INFO - ⏭️  Skipping excluded repository: cwmai
+2025-06-14 14:00:48,414 - __main__ - INFO - 
+📦 Checking repository: project-analytics-dashboard
+2025-06-14 14:00:49,321 - __main__ - WARNING -   ⚠️  Found 1 issues:
+2025-06-14 14:00:49,321 - __main__ - WARNING -     - missing_architecture: ARCHITECTURE.md file is missing
+2025-06-14 14:00:49,321 - __main__ - INFO -   🔧 Applying fixes...
+2025-06-14 14:00:49,322 - scripts.repository_analyzer - INFO - Analyzing repository: CodeWebMobile-AI/project-analytics-dashboard
+2025-06-14 14:01:00,600 - scripts.repository_analyzer - INFO - No architecture document found for CodeWebMobile-AI/project-analytics-dashboard: 404 {"message": "Not Found", "documentation_url": "https://docs.github.com/rest/repos/contents#get-repository-content", "status": "404"}
+2025-06-14 14:01:00,600 - scripts.repository_analyzer - INFO - Generating architecture for CodeWebMobile-AI/project-analytics-dashboard
+2025-06-14 14:01:00,600 - scripts.http_ai_client.HTTPAIClient - INFO - [req_0] Starting AI request - Model preference: auto, Prompt length: 1395
+2025-06-14 14:01:00,601 - AIAPILogger - INFO - AI API Logger initialized (file_logging=True, sensitive_data=False)
+2025-06-14 14:01:00,601 - AIAPILogger - INFO - [req_0] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1395
+2025-06-14 14:01:04,286 - scripts.http_ai_client.HTTPAIClient - INFO - [req_0] Request completed successfully in 3.69s - Provider: gemini
+2025-06-14 14:01:04,286 - AIAPILogger - INFO - [req_0] AI Request COMPLETE - Time: 3.69s, Length: 3127, Cost: $0.0000
+2025-06-14 14:01:04,286 - scripts.architecture_generator - INFO - Generating architecture for CodeWebMobile-AI/project-analytics-dashboard
+2025-06-14 14:01:06,260 - scripts.http_ai_client.HTTPAIClient - INFO - [req_1] Starting AI request - Model preference: auto, Prompt length: 4051
+2025-06-14 14:01:06,261 - AIAPILogger - INFO - [req_1] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 4051
+2025-06-14 14:01:15,442 - scripts.http_ai_client.HTTPAIClient - INFO - [req_1] Request completed successfully in 9.18s - Provider: gemini
+2025-06-14 14:01:15,442 - AIAPILogger - INFO - [req_1] AI Request COMPLETE - Time: 9.18s, Length: 6152, Cost: $0.0000
+2025-06-14 14:01:15,443 - __main__ - INFO -   ✅ Applied 1 fixes:
+2025-06-14 14:01:15,443 - __main__ - INFO -     - architecture_generated: failed
+2025-06-14 14:01:15,443 - __main__ - INFO - 
+📦 Checking repository: business-analytics-dashboard
+2025-06-14 14:01:16,274 - __main__ - WARNING -   ⚠️  Found 1 issues:
+2025-06-14 14:01:16,274 - __main__ - WARNING -     - missing_architecture: ARCHITECTURE.md file is missing
+2025-06-14 14:01:16,274 - __main__ - INFO -   🔧 Applying fixes...
+2025-06-14 14:01:16,274 - scripts.repository_analyzer - INFO - Analyzing repository: CodeWebMobile-AI/business-analytics-dashboard
+2025-06-14 14:01:27,355 - scripts.repository_analyzer - INFO - No architecture document found for CodeWebMobile-AI/business-analytics-dashboard: 404 {"message": "Not Found", "documentation_url": "https://docs.github.com/rest/repos/contents#get-repository-content", "status": "404"}
+2025-06-14 14:01:27,355 - scripts.repository_analyzer - INFO - Generating architecture for CodeWebMobile-AI/business-analytics-dashboard
+2025-06-14 14:01:27,356 - scripts.http_ai_client.HTTPAIClient - INFO - [req_2] Starting AI request - Model preference: auto, Prompt length: 1404
+2025-06-14 14:01:27,356 - AIAPILogger - INFO - [req_2] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1404
+2025-06-14 14:01:31,958 - scripts.http_ai_client.HTTPAIClient - INFO - [req_2] Request completed successfully in 4.60s - Provider: gemini
+2025-06-14 14:01:31,958 - AIAPILogger - INFO - [req_2] AI Request COMPLETE - Time: 4.60s, Length: 3094, Cost: $0.0000
+2025-06-14 14:01:31,959 - scripts.architecture_generator - INFO - Generating architecture for CodeWebMobile-AI/business-analytics-dashboard
+2025-06-14 14:01:34,037 - scripts.http_ai_client.HTTPAIClient - INFO - [req_3] Starting AI request - Model preference: auto, Prompt length: 4080
+2025-06-14 14:01:34,038 - AIAPILogger - INFO - [req_3] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 4080
+2025-06-14 14:01:45,959 - scripts.http_ai_client.HTTPAIClient - INFO - [req_3] Request completed successfully in 11.92s - Provider: gemini
+2025-06-14 14:01:45,959 - AIAPILogger - INFO - [req_3] AI Request COMPLETE - Time: 11.92s, Length: 8199, Cost: $0.0000
+2025-06-14 14:01:45,961 - __main__ - INFO -   ✅ Applied 1 fixes:
+2025-06-14 14:01:45,961 - __main__ - INFO -     - architecture_generated: failed
+2025-06-14 14:01:45,961 - __main__ - INFO - 
+📦 Checking repository: summarize-ai-mobile
+2025-06-14 14:01:46,813 - __main__ - WARNING -   ⚠️  Found 2 issues:
+2025-06-14 14:01:46,813 - __main__ - WARNING -     - missing_architecture: ARCHITECTURE.md file is missing
+2025-06-14 14:01:46,813 - __main__ - WARNING -     - missing_topics: Repository has no topics/tags
+2025-06-14 14:01:46,813 - __main__ - INFO -   🔧 Applying fixes...
+2025-06-14 14:01:46,814 - scripts.repository_analyzer - INFO - Analyzing repository: CodeWebMobile-AI/summarize-ai-mobile
+2025-06-14 14:01:58,602 - scripts.repository_analyzer - INFO - No architecture document found for CodeWebMobile-AI/summarize-ai-mobile: 404 {"message": "Not Found", "documentation_url": "https://docs.github.com/rest/repos/contents#get-repository-content", "status": "404"}
+2025-06-14 14:01:58,603 - scripts.repository_analyzer - INFO - Generating architecture for CodeWebMobile-AI/summarize-ai-mobile
+2025-06-14 14:01:58,603 - scripts.http_ai_client.HTTPAIClient - INFO - [req_4] Starting AI request - Model preference: auto, Prompt length: 1387
+2025-06-14 14:01:58,603 - AIAPILogger - INFO - [req_4] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1387
+2025-06-14 14:02:01,823 - scripts.http_ai_client.HTTPAIClient - INFO - [req_4] Request completed successfully in 3.22s - Provider: gemini
+2025-06-14 14:02:01,824 - AIAPILogger - INFO - [req_4] AI Request COMPLETE - Time: 3.22s, Length: 2286, Cost: $0.0000
+2025-06-14 14:02:01,824 - scripts.architecture_generator - INFO - Generating architecture for CodeWebMobile-AI/summarize-ai-mobile
+2025-06-14 14:02:03,860 - scripts.http_ai_client.HTTPAIClient - INFO - [req_5] Starting AI request - Model preference: auto, Prompt length: 4044
+2025-06-14 14:02:03,860 - AIAPILogger - INFO - [req_5] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 4044
+2025-06-14 14:02:15,346 - scripts.http_ai_client.HTTPAIClient - INFO - [req_5] Request completed successfully in 11.49s - Provider: gemini
+2025-06-14 14:02:15,346 - AIAPILogger - INFO - [req_5] AI Request COMPLETE - Time: 11.49s, Length: 8850, Cost: $0.0000
+2025-06-14 14:02:17,308 - __main__ - INFO -   ✅ Applied 2 fixes:
+2025-06-14 14:02:17,308 - __main__ - INFO -     - architecture_generated: failed
+2025-06-14 14:02:17,308 - __main__ - INFO -     - topics_added: success
+2025-06-14 14:02:17,308 - __main__ - INFO - 
+📦 Checking repository: brand-guardian-ai
+2025-06-14 14:02:18,174 - __main__ - WARNING -   ⚠️  Found 1 issues:
+2025-06-14 14:02:18,174 - __main__ - WARNING -     - missing_architecture: ARCHITECTURE.md file is missing
+2025-06-14 14:02:18,174 - __main__ - INFO -   🔧 Applying fixes...
+2025-06-14 14:02:18,174 - scripts.repository_analyzer - INFO - Analyzing repository: CodeWebMobile-AI/brand-guardian-ai
+2025-06-14 14:02:28,927 - scripts.repository_analyzer - INFO - No architecture document found for CodeWebMobile-AI/brand-guardian-ai: 404 {"message": "Not Found", "documentation_url": "https://docs.github.com/rest/repos/contents#get-repository-content", "status": "404"}
+2025-06-14 14:02:28,927 - scripts.repository_analyzer - INFO - Generating architecture for CodeWebMobile-AI/brand-guardian-ai
+2025-06-14 14:02:28,927 - scripts.http_ai_client.HTTPAIClient - INFO - [req_6] Starting AI request - Model preference: auto, Prompt length: 1390
+2025-06-14 14:02:28,928 - AIAPILogger - INFO - [req_6] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1390
+2025-06-14 14:02:32,566 - scripts.http_ai_client.HTTPAIClient - INFO - [req_6] Request completed successfully in 3.64s - Provider: gemini
+2025-06-14 14:02:32,567 - AIAPILogger - INFO - [req_6] AI Request COMPLETE - Time: 3.64s, Length: 3174, Cost: $0.0000
+2025-06-14 14:02:32,567 - scripts.architecture_generator - INFO - Generating architecture for CodeWebMobile-AI/brand-guardian-ai
+2025-06-14 14:02:34,550 - scripts.http_ai_client.HTTPAIClient - INFO - [req_7] Starting AI request - Model preference: auto, Prompt length: 4053
+2025-06-14 14:02:34,551 - AIAPILogger - INFO - [req_7] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 4053
+2025-06-14 14:02:43,628 - scripts.http_ai_client.HTTPAIClient - INFO - [req_7] Request completed successfully in 9.08s - Provider: gemini
+2025-06-14 14:02:43,628 - AIAPILogger - INFO - [req_7] AI Request COMPLETE - Time: 9.08s, Length: 6602, Cost: $0.0000
+2025-06-14 14:02:43,629 - __main__ - INFO -   ✅ Applied 1 fixes:
+2025-06-14 14:02:43,629 - __main__ - INFO -     - architecture_generated: failed
+2025-06-14 14:02:43,629 - __main__ - INFO - 
+📦 Checking repository: reputation-ai
+2025-06-14 14:02:44,431 - __main__ - WARNING -   ⚠️  Found 3 issues:
+2025-06-14 14:02:44,431 - __main__ - WARNING -     - missing_architecture: ARCHITECTURE.md file is missing
+2025-06-14 14:02:44,431 - __main__ - WARNING -     - missing_readme: README.md file is missing
+2025-06-14 14:02:44,431 - __main__ - WARNING -     - missing_topics: Repository has no topics/tags
+2025-06-14 14:02:44,431 - __main__ - INFO -   🔧 Applying fixes...
+2025-06-14 14:02:44,431 - scripts.repository_analyzer - INFO - Analyzing repository: CodeWebMobile-AI/reputation-ai
+2025-06-14 14:02:45,391 - scripts.repository_analyzer - WARNING - Error analyzing code structure: 404 {"message": "This repository is empty.", "documentation_url": "https://docs.github.com/v3/repos/contents/#get-contents", "status": "404"}

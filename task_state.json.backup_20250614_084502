@@ -1,0 +1,365 @@
+{
+  "tasks": {
+    "TASK-1749889322777-58b535a7": {
+      "id": "TASK-1749889322777-58b535a7",
+      "type": "documentation",
+      "title": "Update documentation for mobile-app-platform changes",
+      "description": "Document recent features and changes in mobile-app-platform for better maintainability.",
+      "priority": "medium",
+      "status": "pending",
+      "dependencies": [],
+      "blocks": [],
+      "estimated_hours": 4.0,
+      "actual_hours": 0,
+      "created_at": "2025-06-14T08:22:02.777211+00:00",
+      "updated_at": "2025-06-14T08:22:02.777220+00:00",
+      "assigned_at": null,
+      "completed_at": null,
+      "github_issue_number": null,
+      "github_pr_numbers": [],
+      "iterations": 0,
+      "labels": [],
+      "repository": "mobile-app-platform",
+      "metrics": {
+        "comments": 0,
+        "reactions": 0,
+        "code_changes": 0
+      },
+      "complexity": {
+        "sequence_steps": [
+          "Content analysis",
+          "Documentation structure",
+          "Content creation",
+          "Review and validation"
+        ],
+        "parallel_opportunities": [
+          [
+            "Content creation",
+            "Example preparation"
+          ]
+        ],
+        "blocking_dependencies": [],
+        "estimated_ai_cycles": 2,
+        "complexity_score": 0.5,
+        "can_parallelize": true,
+        "repository_context": "mobile-app-platform",
+        "description_keywords": [
+          "ai"
+        ]
+      },
+      "relationships": {
+        "upstream_impacts": [],
+        "downstream_dependencies": [],
+        "cross_project_relevance": {},
+        "knowledge_artifacts": []
+      },
+      "performance_tracking": {
+        "performance_baseline": {},
+        "performance_target": {},
+        "actual_performance_delta": {},
+        "reusable_components": []
+      }
+    },
+    "TASK-1749889324431-f2fc73d5": {
+      "id": "TASK-1749889324431-f2fc73d5",
+      "type": "documentation",
+      "title": "Improve cms-platform-laravel-react documentation",
+      "description": "Repository needs better documentation and README updates.",
+      "priority": "medium",
+      "status": "pending",
+      "dependencies": [],
+      "blocks": [],
+      "estimated_hours": 4.0,
+      "actual_hours": 0,
+      "created_at": "2025-06-14T08:22:04.431921+00:00",
+      "updated_at": "2025-06-14T08:22:04.431931+00:00",
+      "assigned_at": null,
+      "completed_at": null,
+      "github_issue_number": null,
+      "github_pr_numbers": [],
+      "iterations": 0,
+      "labels": [],
+      "repository": "cms-platform-laravel-react",
+      "metrics": {
+        "comments": 0,
+        "reactions": 0,
+        "code_changes": 0
+      },
+      "complexity": {
+        "sequence_steps": [
+          "Content analysis",
+          "Documentation structure",
+          "Content creation",
+          "Review and validation"
+        ],
+        "parallel_opportunities": [
+          [
+            "Content creation",
+            "Example preparation"
+          ]
+        ],
+        "blocking_dependencies": [],
+        "estimated_ai_cycles": 2,
+        "complexity_score": 0.4,
+        "can_parallelize": true,
+        "repository_context": "cms-platform-laravel-react",
+        "description_keywords": []
+      },
+      "relationships": {
+        "upstream_impacts": [],
+        "downstream_dependencies": [],
+        "cross_project_relevance": {},
+        "knowledge_artifacts": []
+      },
+      "performance_tracking": {
+        "performance_baseline": {},
+        "performance_target": {},
+        "actual_performance_delta": {},
+        "reusable_components": []
+      }
+    },
+    "TASK-1749889326745-4821771a": {
+      "id": "TASK-1749889326745-4821771a",
+      "type": "documentation",
+      "title": "Update documentation for mobile-portfolio-app changes",
+      "description": "Document recent features and changes in mobile-portfolio-app for better maintainability.",
+      "priority": "medium",
+      "status": "pending",
+      "dependencies": [],
+      "blocks": [],
+      "estimated_hours": 4.0,
+      "actual_hours": 0,
+      "created_at": "2025-06-14T08:22:06.745372+00:00",
+      "updated_at": "2025-06-14T08:22:06.745381+00:00",
+      "assigned_at": null,
+      "completed_at": null,
+      "github_issue_number": null,
+      "github_pr_numbers": [],
+      "iterations": 0,
+      "labels": [],
+      "repository": "mobile-portfolio-app",
+      "metrics": {
+        "comments": 0,
+        "reactions": 0,
+        "code_changes": 0
+      },
+      "complexity": {
+        "sequence_steps": [
+          "Content analysis",
+          "Documentation structure",
+          "Content creation",
+          "Review and validation"
+        ],
+        "parallel_opportunities": [
+          [
+            "Content creation",
+            "Example preparation"
+          ]
+        ],
+        "blocking_dependencies": [],
+        "estimated_ai_cycles": 2,
+        "complexity_score": 0.5,
+        "can_parallelize": true,
+        "repository_context": "mobile-portfolio-app",
+        "description_keywords": [
+          "ai"
+        ]
+      },
+      "relationships": {
+        "upstream_impacts": [],
+        "downstream_dependencies": [],
+        "cross_project_relevance": {},
+        "knowledge_artifacts": []
+      },
+      "performance_tracking": {
+        "performance_baseline": {},
+        "performance_target": {},
+        "actual_performance_delta": {},
+        "reusable_components": []
+      }
+    },
+    "TASK-1749889328340-78fefc6f": {
+      "id": "TASK-1749889328340-78fefc6f",
+      "type": "documentation",
+      "title": "Improve mobile-portfolio-app documentation",
+      "description": "Repository needs better documentation and README updates.",
+      "priority": "medium",
+      "status": "pending",
+      "dependencies": [],
+      "blocks": [],
+      "estimated_hours": 4.0,
+      "actual_hours": 0,
+      "created_at": "2025-06-14T08:22:08.340206+00:00",
+      "updated_at": "2025-06-14T08:22:08.340215+00:00",
+      "assigned_at": null,
+      "completed_at": null,
+      "github_issue_number": null,
+      "github_pr_numbers": [],
+      "iterations": 0,
+      "labels": [],
+      "repository": "mobile-portfolio-app",
+      "metrics": {
+        "comments": 0,
+        "reactions": 0,
+        "code_changes": 0
+      },
+      "complexity": {
+        "sequence_steps": [
+          "Content analysis",
+          "Documentation structure",
+          "Content creation",
+          "Review and validation"
+        ],
+        "parallel_opportunities": [
+          [
+            "Content creation",
+            "Example preparation"
+          ]
+        ],
+        "blocking_dependencies": [],
+        "estimated_ai_cycles": 2,
+        "complexity_score": 0.3,
+        "can_parallelize": true,
+        "repository_context": "mobile-portfolio-app",
+        "description_keywords": []
+      },
+      "relationships": {
+        "upstream_impacts": [],
+        "downstream_dependencies": [],
+        "cross_project_relevance": {},
+        "knowledge_artifacts": []
+      },
+      "performance_tracking": {
+        "performance_baseline": {},
+        "performance_target": {},
+        "actual_performance_delta": {},
+        "reusable_components": []
+      }
+    },
+    "TASK-1749889356697-c07ff135": {
+      "id": "TASK-1749889356697-c07ff135",
+      "type": "documentation",
+      "title": "Update documentation for business-analytics-dashboard changes",
+      "description": "Document recent features and changes in business-analytics-dashboard for better maintainability.",
+      "priority": "medium",
+      "status": "assigned",
+      "dependencies": [],
+      "blocks": [],
+      "estimated_hours": 4.0,
+      "actual_hours": 0,
+      "created_at": "2025-06-14T08:22:36.697948+00:00",
+      "updated_at": "2025-06-14T08:22:36.697957+00:00",
+      "assigned_at": "2025-06-14T08:22:37.259172+00:00",
+      "completed_at": null,
+      "github_issue_number": 1,
+      "github_pr_numbers": [],
+      "iterations": 0,
+      "labels": [],
+      "repository": "business-analytics-dashboard",
+      "metrics": {
+        "comments": 0,
+        "reactions": 0,
+        "code_changes": 0
+      },
+      "complexity": {
+        "sequence_steps": [
+          "Content analysis",
+          "Documentation structure",
+          "Content creation",
+          "Review and validation"
+        ],
+        "parallel_opportunities": [
+          [
+            "Content creation",
+            "Example preparation"
+          ]
+        ],
+        "blocking_dependencies": [],
+        "estimated_ai_cycles": 2,
+        "complexity_score": 0.5,
+        "can_parallelize": true,
+        "repository_context": "business-analytics-dashboard",
+        "description_keywords": [
+          "ai"
+        ]
+      },
+      "relationships": {
+        "upstream_impacts": [],
+        "downstream_dependencies": [],
+        "cross_project_relevance": {},
+        "knowledge_artifacts": []
+      },
+      "performance_tracking": {
+        "performance_baseline": {},
+        "performance_target": {},
+        "actual_performance_delta": {},
+        "reusable_components": []
+      }
+    },
+    "TASK-1749889359448-617ded81": {
+      "id": "TASK-1749889359448-617ded81",
+      "type": "documentation",
+      "title": "Update documentation for cms-platform-laravel-react changes",
+      "description": "Document recent features and changes in cms-platform-laravel-react for better maintainability.",
+      "priority": "medium",
+      "status": "pending",
+      "dependencies": [],
+      "blocks": [],
+      "estimated_hours": 4.0,
+      "actual_hours": 0,
+      "created_at": "2025-06-14T08:22:39.448667+00:00",
+      "updated_at": "2025-06-14T08:22:39.448675+00:00",
+      "assigned_at": null,
+      "completed_at": null,
+      "github_issue_number": null,
+      "github_pr_numbers": [],
+      "iterations": 0,
+      "labels": [],
+      "repository": "cms-platform-laravel-react",
+      "metrics": {
+        "comments": 0,
+        "reactions": 0,
+        "code_changes": 0
+      },
+      "complexity": {
+        "sequence_steps": [
+          "Content analysis",
+          "Documentation structure",
+          "Content creation",
+          "Review and validation"
+        ],
+        "parallel_opportunities": [
+          [
+            "Content creation",
+            "Example preparation"
+          ]
+        ],
+        "blocking_dependencies": [],
+        "estimated_ai_cycles": 2,
+        "complexity_score": 0.6,
+        "can_parallelize": true,
+        "repository_context": "cms-platform-laravel-react",
+        "description_keywords": [
+          "ai"
+        ]
+      },
+      "relationships": {
+        "upstream_impacts": [],
+        "downstream_dependencies": [],
+        "cross_project_relevance": {},
+        "knowledge_artifacts": []
+      },
+      "performance_tracking": {
+        "performance_baseline": {},
+        "performance_target": {},
+        "actual_performance_delta": {},
+        "reusable_components": []
+      }
+    }
+  },
+  "task_counter": 1000,
+  "last_updated": "2025-06-14T08:22:39.449590+00:00",
+  "active_tasks": 0,
+  "completed_today": 0,
+  "success_rate": 0.0
+}

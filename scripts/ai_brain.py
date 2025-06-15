@@ -11,7 +11,12 @@ import random
 from datetime import datetime, timezone
 from typing import Dict, List, Any, Tuple, Optional
 import requests
-from http_ai_client import HTTPAIClient
+from scripts.http_ai_client import HTTPAIClient
+
+# Fix asyncio event loop issues for nested loops (Jupyter, web servers, etc.)
+import nest_asyncio
+nest_asyncio.apply()
+import asyncio
 
 
 class IntelligentAIBrain:
@@ -41,12 +46,14 @@ class IntelligentAIBrain:
         }
     }
     
-    def __init__(self, state: Optional[Dict[str, Any]] = None, context: Optional[Dict[str, Any]] = None):
+    def __init__(self, state: Optional[Dict[str, Any]] = None, context: Optional[Dict[str, Any]] = None,
+                 enable_round_robin: bool = False):
         """Initialize the AI Brain.
         
         Args:
             state: Current system state (optional)
             context: External context information
+            enable_round_robin: Whether to enable round-robin AI provider selection
         """
         self.state = state or {}
         self.context = context or {}
@@ -55,15 +62,45 @@ class IntelligentAIBrain:
         self.system_performance = self.state.get("system_performance", {})
         
         # Initialize HTTP AI client - No SDK dependencies!
-        self.http_ai_client = HTTPAIClient()
+        self.http_ai_client = HTTPAIClient(enable_round_robin=enable_round_robin)
         
-        # Legacy compatibility - these will be None but code won't break
-        self.anthropic_client = None
-        self.openai_client = None
-        self.gemini_client = None
-        self.deepseek_api_key = None
+    def extract_json_from_response(self, text: str) -> Any:
+        """Extract JSON from AI response using HTTP client's extractor.
         
-        print(f"✅ HTTP AI Client initialized with providers: {list(self.http_ai_client.providers_available.keys())}")
+        Args:
+            text: The AI response text that may contain JSON
+            
+        Returns:
+            Parsed JSON object or None if extraction fails
+        """
+        return self.http_ai_client.extract_json_from_response(text)
+    
+    async def execute_capability(self, capability: str, params: Dict[str, Any]) -> Dict[str, Any]:
+        """Execute an AI capability.
+        
+        Args:
+            capability: Name of the capability (e.g., 'problem_analysis')
+            params: Parameters for the capability (must include 'prompt')
+            
+        Returns:
+            Dict with 'status' and 'result' keys
+        """
+        try:
+            prompt = params.get('prompt', '')
+            if not prompt:
+                return {'status': 'error', 'result': 'No prompt provided'}
+            
+            # Use the HTTP AI client to get response
+            response_data = await self.http_ai_client.generate_enhanced_response(prompt)
+            
+            if response_data and response_data.get('content'):
+                return {'status': 'success', 'result': response_data['content']}
+            else:
+                return {'status': 'error', 'result': 'No response from AI'}
+                
+        except Exception as e:
+            print(f"Error executing capability {capability}: {e}")
+            return {'status': 'error', 'result': str(e)}
     
     def decide_next_action(self) -> str:
         """Intelligently decide the next action based on multiple factors.
@@ -494,8 +531,10 @@ Ensure the dashboard provides clear visibility into system operations."""
             from update_task_dashboard import TaskDashboardUpdater
             
             success = False
+            print(f"[DEBUG] Starting action execution: {action_type}")
             
             if action_type == "GENERATE_TASKS":
+                print(f"[DEBUG] Executing GENERATE_TASKS action")
                 # Generate new tasks for @claude
                 manager = TaskManager()
                 
@@ -510,9 +549,11 @@ Ensure the dashboard provides clear visibility into system operations."""
                 elif "test" in prompt.lower():
                     focus = "testing"
                 
+                print(f"[DEBUG] Calling manager.generate_tasks with focus: {focus}")
                 tasks = manager.generate_tasks(focus=focus, max_tasks=3)
                 print(f"Generated {len(tasks)} new tasks")
                 success = len(tasks) > 0
+                print(f"[DEBUG] Task generation result: success={success}, task_count={len(tasks)}")
                 
             elif action_type == "REVIEW_TASKS":
                 # Review completed tasks
@@ -655,7 +696,7 @@ Ensure the dashboard provides clear visibility into system operations."""
         """
         return self.http_ai_client.get_research_capabilities()
     
-    def generate_enhanced_response_sync(self, prompt: str, model: Optional[str] = None) -> Dict[str, Any]:
+    def generate_enhanced_response_sync(self, prompt: str, model: Optional[str] = None, prefill: str = None) -> Dict[str, Any]:
         """Synchronous wrapper for generate_enhanced_response.
         
         This method allows synchronous code to call the async generate_enhanced_response method.
@@ -663,6 +704,7 @@ Ensure the dashboard provides clear visibility into system operations."""
         Args:
             prompt: The prompt to send to the AI
             model: Optional model preference ('claude', 'gpt', 'gemini')
+            prefill: Optional assistant message to prefill (for structured outputs with Claude)
             
         Returns:
             Dictionary containing the AI response with content and metadata
@@ -672,14 +714,22 @@ Ensure the dashboard provides clear visibility into system operations."""
         try:
             # Check if we're already in an event loop
             loop = asyncio.get_running_loop()
-            # If we're in a running loop, we can't use asyncio.run()
-            # Create a new task instead
-            return loop.run_until_complete(self.generate_enhanced_response(prompt, model))
-        except RuntimeError:
+            print(f"[DEBUG] Event loop already running, creating task for AI generation")
+            # If we're in a running loop, create a task and handle it properly
+            task = loop.create_task(self.generate_enhanced_response(prompt, model, prefill))
+            return loop.run_until_complete(task)
+        except RuntimeError as e:
+            print(f"[DEBUG] No running event loop, using asyncio.run(): {e}")
             # No running event loop, safe to use asyncio.run()
-            return asyncio.run(self.generate_enhanced_response(prompt, model))
+            return asyncio.run(self.generate_enhanced_response(prompt, model, prefill))
+        except Exception as e:
+            print(f"ERROR: Failed to generate AI response: {e}")
+            print(f"ERROR: Exception type: {type(e).__name__}")
+            import traceback
+            traceback.print_exc()
+            return {"content": "", "error": str(e), "success": False}
     
-    async def generate_enhanced_response(self, prompt: str, model: Optional[str] = None) -> Dict[str, Any]:
+    async def generate_enhanced_response(self, prompt: str, model: Optional[str] = None, prefill: str = None) -> Dict[str, Any]:
         """Generate enhanced response using HTTP AI client.
         
         This is the main AI reasoning method used throughout the dynamic system.
@@ -688,14 +738,373 @@ Ensure the dashboard provides clear visibility into system operations."""
         Args:
             prompt: The prompt to send to the AI
             model: Optional model preference ('claude', 'gpt', 'gemini', 'deepseek')
+            prefill: Optional assistant message to prefill (for structured outputs with Claude)
             
         Returns:
             Dictionary containing the AI response with content and metadata
         """
-        return await self.http_ai_client.generate_enhanced_response(prompt, model)
+        return await self.http_ai_client.generate_enhanced_response(prompt, model, prefill)
     
+    # Context Gathering Methods (migrated from ContextGatherer)
     
+    async def gather_context(self, charter: Dict[str, Any] = None) -> Dict[str, Any]:
+        """Gather external context based on system charter.
+        
+        Args:
+            charter: System charter defining goals and constraints
+            
+        Returns:
+            Dictionary containing gathered context
+        """
+        import os
+        from datetime import datetime, timezone
+        
+        debug = os.getenv('CONTEXT_DEBUG', 'false').lower() == 'true'
+        
+        if debug:
+            print(f"[DEBUG] gather_context called with charter: {charter}")
+        
+        # Use default charter if none provided
+        if charter is None:
+            charter = self.context.get('charter', {})
+        
+        context = {
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "charter_goals": [charter.get("primary_goal", ""), charter.get("secondary_goal", "")],
+            "environment": "ai_brain_context",
+            "research_note": "Context gathering now delegated to Research Intelligence System"
+        }
+        
+        try:
+            primary_goal = charter.get("primary_goal", "")
+            if debug:
+                print(f"[DEBUG] Primary goal: '{primary_goal}'")
+                print(f"[DEBUG] Secondary goal: '{charter.get('secondary_goal', '')}'")
+                print("[DEBUG] Basic trend gathering removed - Research Intelligence System handles research")
+            
+            # Note: Research Intelligence System will handle specific research based on defined domains:
+            # - task_generation: Task decomposition, complexity scoring, validation
+            # - claude_interaction: GitHub formatting, prompt engineering, AI context  
+            # - multi_agent_coordination: Consensus, swarm intelligence, voting systems
+            # - outcome_learning: Pattern recognition, feedback loops, predictive modeling
+            # - portfolio_management: Project selection, resource allocation, synergy
+            
+            context["research_domains"] = [
+                "task_generation",
+                "claude_interaction", 
+                "multi_agent_coordination",
+                "outcome_learning",
+                "portfolio_management"
+            ]
+            
+        except Exception as e:
+            print(f"Error gathering context: {e}")
+            if debug:
+                import traceback
+                print(f"[DEBUG] Traceback:\n{traceback.format_exc()}")
+            context["error"] = str(e)
+        
+        # Enhance context with AI analysis
+        if debug:
+            print("[DEBUG] Enhancing context with AI analysis...")
+        context = self.enhance_context_with_ai(context)
+        
+        # Save context to file
+        self.save_context(context)
+        return context
     
+    async def gather_workflow_context(self) -> Dict[str, Any]:
+        """Gather minimal context optimized for GitHub Actions workflow.
+        
+        Returns lightweight context with only essential data for CI performance.
+        
+        Returns:
+            Minimal context dictionary for workflow execution
+        """
+        import os
+        from datetime import datetime, timezone
+        
+        debug = os.getenv('CONTEXT_DEBUG', 'false').lower() == 'true'
+        
+        if debug:
+            print("[DEBUG] gather_workflow_context called")
+        
+        # Minimal context for fast CI execution
+        context = {
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "charter_goals": ["workflow_execution", "ci_optimization"],
+            "environment": "github_actions",
+            "research_note": "Workflow context optimized - Research Intelligence System handles research"
+        }
+        
+        try:
+            if debug:
+                print("[DEBUG] Workflow context optimized for CI performance")
+                print("[DEBUG] Research Intelligence System will handle targeted research when needed")
+            
+            # Research Intelligence System will handle research based on performance needs
+            context["research_domains"] = [
+                "task_generation",
+                "claude_interaction", 
+                "multi_agent_coordination",
+                "outcome_learning",
+                "portfolio_management"
+            ]
+            
+            if debug:
+                print(f"[DEBUG] Workflow context gathering complete")
+            
+        except Exception as e:
+            print(f"Error in workflow context gathering: {e}")
+            if debug:
+                import traceback
+                print(f"[DEBUG] Traceback:\n{traceback.format_exc()}")
+            context["error"] = str(e)
+        
+        # Minimal enhancement for workflow
+        context = self.enhance_context_with_ai(context)
+        
+        # Save workflow context
+        self.save_context(context, "workflow_context.json")
+        
+        return context
+    
+    async def gather_production_context(self, charter: Dict[str, Any] = None) -> Dict[str, Any]:
+        """Gather complete context for production environment.
+        
+        Loads all available context data including comprehensive market intelligence.
+        
+        Args:
+            charter: Optional system charter
+            
+        Returns:
+            Complete context dictionary for production use
+        """
+        import os
+        from datetime import datetime, timezone
+        
+        debug = os.getenv('CONTEXT_DEBUG', 'false').lower() == 'true'
+        
+        if debug:
+            print("[DEBUG] gather_production_context called")
+        
+        # Use default charter if none provided
+        if charter is None:
+            charter = self.context.get('charter', {})
+        
+        context = {
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "charter_goals": [charter.get("primary_goal", ""), charter.get("secondary_goal", "")],
+            "environment": "production",
+            "research_note": "Production context enhanced with Research Intelligence System"
+        }
+        
+        try:
+            if debug:
+                print("[DEBUG] Production context enhanced with Research Intelligence System")
+                print("[DEBUG] Research domains defined for intelligent research selection")
+            
+            # Research Intelligence System will handle targeted research based on performance gaps
+            context["research_domains"] = [
+                "task_generation",
+                "claude_interaction", 
+                "multi_agent_coordination",
+                "outcome_learning",
+                "portfolio_management"
+            ]
+            
+            # Production environment gets access to research bridge methods
+            context["research_capabilities"] = [
+                "conduct_targeted_research",
+                "extract_actionable_insights", 
+                "evaluate_research_quality",
+                "generate_performance_research_query"
+            ]
+            
+            if debug:
+                print("[DEBUG] Production context gathering complete")
+            
+        except Exception as e:
+            print(f"Error in production context gathering: {e}")
+            if debug:
+                import traceback
+                print(f"[DEBUG] Traceback:\n{traceback.format_exc()}")
+            context["error"] = str(e)
+        
+        # Full enhancement for production
+        context = self.enhance_context_with_ai(context)
+        
+        # Save production context
+        self.save_context(context, "production_context.json")
+        
+        return context
+    
+    def enhance_context_with_ai(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        """Enhance context with AI analysis.
+        
+        Args:
+            context: Raw context data
+            
+        Returns:
+            Enhanced context with AI insights
+        """
+        try:
+            import json
+            from datetime import datetime, timezone
+            
+            # Create analysis prompt
+            analysis_prompt = f"""
+            Analyze this external context and provide strategic insights.
+            
+            Context Data:
+            {json.dumps(context, indent=2)}
+            
+            Provide analysis in the following areas:
+            1. Key trends and opportunities
+            2. Potential risks or concerns
+            3. Strategic recommendations
+            4. Technology adoption suggestions
+            5. Market positioning insights
+            
+            Return your analysis as a structured summary focusing on actionable insights.
+            """
+            
+            # Use synchronous method for context enhancement
+            response = self.generate_enhanced_response_sync(analysis_prompt)
+            
+            if response and 'content' in response:
+                context['ai_analysis'] = {
+                    'summary': response['content'],
+                    'analyzed_at': datetime.now(timezone.utc).isoformat(),
+                    'model_used': response.get('model', 'unknown')
+                }
+            else:
+                context['ai_analysis'] = {
+                    'summary': 'AI analysis unavailable',
+                    'analyzed_at': datetime.now(timezone.utc).isoformat(),
+                    'error': 'No response from AI'
+                }
+                
+        except Exception as e:
+            print(f"Error in AI context enhancement: {e}")
+            context['ai_analysis'] = {
+                'summary': 'AI analysis failed',
+                'analyzed_at': datetime.now(timezone.utc).isoformat(),
+                'error': str(e)
+            }
+        
+        return context
+    
+    def save_context(self, context: Dict[str, Any], output_path: str = "context.json") -> None:
+        """Save context to file.
+        
+        Args:
+            context: Context dictionary to save
+            output_path: File path to save context
+        """
+        try:
+            import json
+            import os
+            from datetime import datetime, timezone
+            
+            # Add metadata
+            context['saved_at'] = datetime.now(timezone.utc).isoformat()
+            context['file_path'] = output_path
+            
+            # Save to file
+            with open(output_path, 'w') as f:
+                json.dump(context, f, indent=2, sort_keys=True)
+            
+            debug = os.getenv('CONTEXT_DEBUG', 'false').lower() == 'true'
+            if debug:
+                print(f"[DEBUG] Context saved to {output_path}")
+                
+        except Exception as e:
+            print(f"Error saving context to {output_path}: {e}")
+    
+    async def select_repository_for_task(self, context: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        """Intelligently select which repository should receive the next task.
+        
+        Args:
+            context: System context with repository information
+            
+        Returns:
+            Selected repository info with name and reason, or None
+        """
+        # Get available repositories
+        projects = context.get('projects', context.get('active_projects', []))
+        
+        if not projects:
+            return None
+            
+        # Convert to list if dict
+        if isinstance(projects, dict):
+            project_list = list(projects.values())
+        else:
+            project_list = projects
+            
+        # Filter for eligible repositories
+        from repository_exclusion import should_process_repo
+        eligible_repos = []
+        for proj in project_list:
+            repo_name = proj.get('full_name', proj.get('name', ''))
+            if should_process_repo(repo_name) and repo_name:
+                eligible_repos.append(proj)
+                
+        if not eligible_repos:
+            return None
+            
+        # Use AI to select the best repository
+        prompt = f"""
+        Select which repository should receive the next development task.
+        
+        Available Repositories:
+        {json.dumps(eligible_repos, indent=2)}
+        
+        Consider:
+        1. Repository health scores (lower scores need more attention)
+        2. Open issues count (indicates active problems)
+        3. Recent activity (prefer active but not overloaded repos)
+        4. Task distribution (avoid overloading one repository)
+        5. Strategic importance
+        
+        Return your selection as JSON:
+        {{
+            "selected_repository": "owner/repo",
+            "reason": "Brief explanation of why this repo was selected",
+            "priority_score": 0-100,
+            "suggested_task_type": "FEATURE/BUG_FIX/ENHANCEMENT/etc"
+        }}
+        """
+        
+        response = self.generate_enhanced_response_sync(prompt)
+        selection = self.extract_json_from_response(response['content'] if isinstance(response, dict) else response)
+        
+        if selection and selection.get('selected_repository'):
+            # Verify the selection is valid
+            selected_name = selection['selected_repository']
+            for repo in eligible_repos:
+                if repo.get('full_name') == selected_name or repo.get('name') == selected_name:
+                    return {
+                        'repository': selected_name,
+                        'reason': selection.get('reason', 'Strategic selection'),
+                        'priority_score': selection.get('priority_score', 50),
+                        'suggested_task_type': selection.get('suggested_task_type', 'FEATURE'),
+                        'repository_data': repo
+                    }
+                    
+        # Fallback: select repository with lowest health score
+        if eligible_repos:
+            lowest_health = min(eligible_repos, key=lambda r: r.get('health_score', 100))
+            return {
+                'repository': lowest_health.get('full_name', lowest_health.get('name')),
+                'reason': 'Lowest health score - needs attention',
+                'priority_score': 80,
+                'suggested_task_type': 'ENHANCEMENT',
+                'repository_data': lowest_health
+            }
+            
+        return None
 
 
 # Simple alias for compatibility

@@ -10,10 +10,14 @@ from dataclasses import dataclass
 from enum import Enum
 import asyncio
 import json
+import os
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import numpy as np
 from datetime import datetime, timezone
 import logging
+import time
+from collections import defaultdict, deque
+from scripts.mcp_redis_integration import MCPRedisIntegration
 
 
 class AgentRole(Enum):
@@ -28,6 +32,11 @@ class AgentRole(Enum):
     LEARNER = "learner"            # ML model training
     REVIEWER = "reviewer"          # Code review specialist
     ORCHESTRATOR = "orchestrator"  # Swarm coordinator
+    PLANNER = "planner"            # Strategic planning and project management
+    CODER = "coder"                # Specialized code generation
+    QA_ENGINEER = "qa_engineer"    # Quality assurance and testing
+    SECURITY_ANALYST = "security_analyst"  # Security vulnerability analysis
+    DOCUMENTER = "documenter"      # Documentation and technical writing
 
 
 @dataclass
@@ -205,9 +214,26 @@ class RealSwarmIntelligence:
         self.swarm_performance_metrics = {
             'consensus_rate': 0.0,
             'decision_quality': 0.0,
-            'response_time': 0.0
+            'response_time': 0.0,
+            'throughput': 0.0,
+            'cache_hit_rate': 0.0
         }
         self.executor = ThreadPoolExecutor(max_workers=num_agents)
+        
+        # Enhanced processing features
+        self.task_queue = deque()
+        self.processing_batch_size = 5
+        self.agent_workload = defaultdict(int)
+        self.analysis_cache = {}  # Cache for similar task analyses
+        self.performance_history = deque(maxlen=100)
+        
+        # Intelligence integration
+        self.intelligence_hub = None
+        self.logger = logging.getLogger(f"{__name__}.RealSwarmIntelligence")
+        
+        # MCP-Redis integration
+        self.mcp_redis: Optional[MCPRedisIntegration] = None
+        self._use_mcp = os.getenv("USE_MCP_REDIS", "false").lower() == "true"
         
     def _create_real_agents(self, num_agents: int) -> List[RealSwarmAgent]:
         """Create diverse AI-powered agents with different models and personas."""
@@ -274,23 +300,67 @@ class RealSwarmIntelligence:
             
         return agents
     
+    # Include all enhancement methods
+    from scripts.swarm_enhancements import SwarmEnhancements
+    
+    # Mix in enhancement methods
+    _generate_task_cache_key = SwarmEnhancements._generate_task_cache_key
+    _check_analysis_cache = SwarmEnhancements._check_analysis_cache
+    _cache_analysis_result = SwarmEnhancements._cache_analysis_result
+    _select_optimal_agents = SwarmEnhancements._select_optimal_agents
+    _get_role_priority_for_task = SwarmEnhancements._get_role_priority_for_task
+    _calculate_agent_timeout = SwarmEnhancements._calculate_agent_timeout
+    _filter_high_quality_insights = SwarmEnhancements._filter_high_quality_insights
+    _get_relevant_insights_for_agent = SwarmEnhancements._get_relevant_insights_for_agent
+    _extract_weighted_insights = SwarmEnhancements._extract_weighted_insights
+    _detect_analysis_conflicts = SwarmEnhancements._detect_analysis_conflicts
+    _resolve_conflicts = SwarmEnhancements._resolve_conflicts
+    _get_agent_performance_context = SwarmEnhancements._get_agent_performance_context
+    _calculate_agent_weights = SwarmEnhancements._calculate_agent_weights
+    _calculate_consensus_quality = SwarmEnhancements._calculate_consensus_quality
+    _create_enhanced_fallback_consensus = SwarmEnhancements._create_enhanced_fallback_consensus
+    _phase_strategic_action_planning = SwarmEnhancements._phase_strategic_action_planning
+    _calculate_task_performance = SwarmEnhancements._calculate_task_performance
+    _update_enhanced_swarm_metrics = SwarmEnhancements._update_enhanced_swarm_metrics
+    set_intelligence_hub = SwarmEnhancements.set_intelligence_hub
+    
     async def process_task_swarm(self, task: Dict[str, Any]) -> Dict[str, Any]:
-        """Process a task using the full swarm intelligence."""
+        """Process a task using the full swarm intelligence with enhanced optimization."""
         start_time = datetime.now(timezone.utc)
         
-        # Phase 1: Individual Analysis - Each agent analyzes independently
-        individual_analyses = await self._phase_individual_analysis(task)
+        # Check cache for similar tasks first
+        cache_key = self._generate_task_cache_key(task)
+        cached_result = self._check_analysis_cache(cache_key)
+        if cached_result:
+            self.swarm_performance_metrics['cache_hit_rate'] += 1
+            self.logger.debug(f"Cache hit for task: {task.get('title', 'unknown')}")
+            return cached_result
         
-        # Phase 2: Cross-Pollination - Agents share insights
-        refined_analyses = await self._phase_cross_pollination(task, individual_analyses)
+        # Emit intelligence event
+        if self.intelligence_hub:
+            await self.intelligence_hub.emit_event(
+                event_type="swarm_analysis",
+                source_component="swarm_intelligence",
+                data={
+                    "task_id": task.get('id', 'unknown'),
+                    "task_type": task.get('type', 'unknown'),
+                    "phase": "start"
+                }
+            )
         
-        # Phase 3: Consensus Building - Synthesize collective intelligence
-        consensus = await self._phase_consensus_building(refined_analyses)
+        # Phase 1: Enhanced Individual Analysis - Parallel processing with load balancing
+        individual_analyses = await self._phase_enhanced_individual_analysis(task)
         
-        # Phase 4: Action Planning - Generate concrete recommendations
-        action_plan = await self._phase_action_planning(task, consensus)
+        # Phase 2: Intelligent Cross-Pollination - Optimized insight sharing
+        refined_analyses = await self._phase_intelligent_cross_pollination(task, individual_analyses)
         
-        # Calculate metrics
+        # Phase 3: Advanced Consensus Building - Weighted consensus with conflict resolution
+        consensus = await self._phase_advanced_consensus_building(refined_analyses)
+        
+        # Phase 4: Strategic Action Planning - Context-aware planning
+        action_plan = await self._phase_strategic_action_planning(task, consensus)
+        
+        # Calculate metrics and performance
         end_time = datetime.now(timezone.utc)
         duration = (end_time - start_time).total_seconds()
         
@@ -302,13 +372,90 @@ class RealSwarmIntelligence:
             'refined_analyses': refined_analyses,
             'consensus': consensus,
             'action_plan': action_plan,
-            'collective_review': self._generate_collective_review(consensus, action_plan)
+            'collective_review': self._generate_collective_review(consensus, action_plan),
+            'performance_metrics': self._calculate_task_performance(individual_analyses, duration),
+            'cache_used': cached_result is not None
         }
         
-        # Update metrics
-        self._update_swarm_metrics(result)
+        # Cache the result for future similar tasks
+        self._cache_analysis_result(cache_key, result)
+        
+        # Update swarm metrics and history
+        self._update_enhanced_swarm_metrics(result)
+        self.performance_history.append({
+            'timestamp': start_time,
+            'duration': duration,
+            'task_type': task.get('type', 'unknown'),
+            'agents_used': len(individual_analyses),
+            'consensus_quality': consensus.get('consensus_priority', 5)
+        })
+        
+        # Emit completion event
+        if self.intelligence_hub:
+            await self.intelligence_hub.emit_event(
+                event_type="swarm_analysis",
+                source_component="swarm_intelligence", 
+                data={
+                    "task_id": task.get('id', 'unknown'),
+                    "phase": "complete",
+                    "duration": duration,
+                    "consensus_priority": consensus.get('consensus_priority', 5)
+                }
+            )
         
         return result
+    
+    async def _phase_enhanced_individual_analysis(self, task: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Phase 1: Enhanced individual analysis with load balancing and optimization."""
+        start_time = time.time()
+        
+        # Select agents based on workload balancing and task type
+        selected_agents = self._select_optimal_agents(task)
+        
+        # Create async tasks for parallel analysis with timeout
+        async_tasks = []
+        for agent in selected_agents:
+            # Update agent workload
+            self.agent_workload[agent.id] += 1
+            
+            # Create task with timeout based on agent performance
+            timeout = self._calculate_agent_timeout(agent)
+            async_tasks.append(
+                asyncio.wait_for(agent.analyze_task(task), timeout=timeout)
+            )
+        
+        # Execute with exception handling
+        analyses = []
+        results = await asyncio.gather(*async_tasks, return_exceptions=True)
+        
+        for i, result in enumerate(results):
+            agent = selected_agents[i]
+            # Decrease workload after completion
+            self.agent_workload[agent.id] = max(0, self.agent_workload[agent.id] - 1)
+            
+            if isinstance(result, Exception):
+                self.logger.warning(f"Agent {agent.id} analysis failed: {result}")
+                # Create fallback analysis
+                fallback = {
+                    'agent_id': agent.id,
+                    'agent_role': agent.role.value,
+                    'error': str(result),
+                    'key_points': [],
+                    'recommendations': [],
+                    'priority': 5,
+                    'complexity': 'unknown',
+                    'confidence': 0.1
+                }
+                analyses.append(fallback)
+            else:
+                analyses.append(result)
+        
+        # Update performance metrics
+        duration = time.time() - start_time
+        self.swarm_performance_metrics['response_time'] = duration
+        
+        self.logger.info(f"Individual analysis completed: {len(analyses)} agents, {duration:.2f}s")
+        return analyses
     
     async def _phase_individual_analysis(self, task: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Phase 1: Each agent analyzes the task independently."""
@@ -323,6 +470,36 @@ class RealSwarmIntelligence:
         analyses = await asyncio.gather(*async_tasks)
         
         return analyses
+    
+    async def _phase_intelligent_cross_pollination(self, task: Dict[str, Any], 
+                                                 initial_analyses: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Phase 2: Intelligent cross-pollination with selective insight sharing."""
+        refined_analyses = []
+        
+        # Filter and rank insights for better cross-pollination
+        high_quality_insights = self._filter_high_quality_insights(initial_analyses)
+        
+        # Each agent gets curated insights based on their role
+        async_tasks = []
+        for i, agent in enumerate(self.agents):
+            if i < len(initial_analyses):
+                # Get relevant insights for this agent's role
+                relevant_insights = self._get_relevant_insights_for_agent(agent, high_quality_insights)
+                async_tasks.append(agent.analyze_task(task, relevant_insights))
+        
+        refined_analyses = await asyncio.gather(*async_tasks, return_exceptions=True)
+        
+        # Handle exceptions
+        processed_analyses = []
+        for i, result in enumerate(refined_analyses):
+            if isinstance(result, Exception):
+                # Fall back to initial analysis
+                if i < len(initial_analyses):
+                    processed_analyses.append(initial_analyses[i])
+            else:
+                processed_analyses.append(result)
+        
+        return processed_analyses
     
     async def _phase_cross_pollination(self, task: Dict[str, Any], 
                                       initial_analyses: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
@@ -339,6 +516,56 @@ class RealSwarmIntelligence:
         refined_analyses = await asyncio.gather(*async_tasks)
         
         return refined_analyses
+    
+    async def _phase_advanced_consensus_building(self, analyses: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """Phase 3: Advanced consensus building with weighted analysis and conflict resolution."""
+        # Extract themes with agent weighting based on confidence and role
+        weighted_insights = self._extract_weighted_insights(analyses)
+        
+        # Detect and resolve conflicts
+        conflicts = self._detect_analysis_conflicts(analyses)
+        resolved_conflicts = await self._resolve_conflicts(conflicts)
+        
+        # Use orchestrator with enhanced synthesis
+        orchestrator = next((a for a in self.agents if a.role == AgentRole.ORCHESTRATOR), None)
+        
+        if orchestrator and self.ai_brain:
+            synthesis_prompt = f"""
+            As the swarm orchestrator, create an advanced consensus from weighted agent analyses:
+            
+            Weighted Insights:
+            {json.dumps(weighted_insights, indent=2)}
+            
+            Resolved Conflicts:
+            {json.dumps(resolved_conflicts, indent=2)}
+            
+            Agent Performance Context:
+            {json.dumps(self._get_agent_performance_context(), indent=2)}
+            
+            Create a sophisticated consensus that:
+            1. Prioritizes insights by agent confidence and expertise
+            2. Integrates conflict resolutions
+            3. Provides strategic recommendations
+            4. Includes risk assessment
+            5. Estimates implementation complexity
+            6. Suggests success metrics
+            
+            Format as JSON with keys: key_insights, critical_challenges, 
+            strategic_recommendations, risk_assessment, implementation_plan,
+            success_metrics, consensus_priority, confidence_level
+            """
+            
+            response = await orchestrator._call_ai_model(synthesis_prompt)
+            consensus = orchestrator._parse_ai_response(response)
+            
+            # Enhance consensus with metadata
+            consensus['agent_weights'] = self._calculate_agent_weights(analyses)
+            consensus['consensus_quality'] = self._calculate_consensus_quality(analyses)
+        else:
+            # Enhanced fallback with weighted aggregation
+            consensus = self._create_enhanced_fallback_consensus(weighted_insights, analyses)
+        
+        return consensus
     
     async def _phase_consensus_building(self, analyses: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Phase 3: Build consensus from all analyses."""
@@ -512,3 +739,328 @@ class RealSwarmIntelligence:
             'performance_metrics': self.swarm_performance_metrics,
             'total_decisions': len(self.collective_decisions)
         }
+    
+    async def initialize(self):
+        """Initialize swarm components including MCP-Redis."""
+        if self._use_mcp:
+            try:
+                self.mcp_redis = MCPRedisIntegration()
+                await self.mcp_redis.initialize()
+                self.logger.info("MCP-Redis integration enabled for swarm intelligence")
+            except Exception as e:
+                self.logger.warning(f"Failed to initialize MCP-Redis: {e}")
+                self._use_mcp = False
+    
+    # MCP-Redis Enhanced Methods
+    async def analyze_swarm_dynamics(self) -> Dict[str, Any]:
+        """Analyze swarm dynamics and agent interactions using MCP-Redis."""
+        if not self._use_mcp or not self.mcp_redis:
+            return {"message": "MCP-Redis not available"}
+        
+        try:
+            # Gather agent performance data
+            agent_data = []
+            for agent in self.agents:
+                agent_data.append({
+                    'id': agent.id,
+                    'role': agent.role.value,
+                    'model': agent.model_name,
+                    'expertise': agent.expertise_areas,
+                    'performance_score': agent.performance_score,
+                    'task_count': len(agent.task_history)
+                })
+            
+            analysis = await self.mcp_redis.execute(f"""
+                Analyze swarm dynamics with {len(self.agents)} agents:
+                
+                Agent profiles:
+                {json.dumps(agent_data, indent=2)}
+                
+                Performance metrics:
+                - Consensus rate: {self.swarm_performance_metrics['consensus_rate']:.2%}
+                - Decision quality: {self.swarm_performance_metrics['decision_quality']:.2%}
+                - Average response time: {self.swarm_performance_metrics['response_time']:.2f}s
+                - Cache hit rate: {self.swarm_performance_metrics['cache_hit_rate']:.2%}
+                
+                Analyze:
+                - Agent collaboration effectiveness
+                - Role coverage and gaps
+                - Model diversity benefits
+                - Consensus patterns
+                - Performance bottlenecks
+                - Optimal agent composition
+                - Expertise utilization
+                
+                Provide insights on improving swarm performance.
+            """)
+            
+            return analysis if isinstance(analysis, dict) else {"analysis": analysis}
+            
+        except Exception as e:
+            self.logger.error(f"Error analyzing swarm dynamics: {e}")
+            return {"error": str(e)}
+    
+    async def optimize_agent_composition(self, task_profile: Dict[str, Any]) -> Dict[str, Any]:
+        """Optimize agent composition for specific task types using MCP-Redis."""
+        if not self._use_mcp or not self.mcp_redis:
+            return {"message": "MCP-Redis not available"}
+        
+        try:
+            optimization = await self.mcp_redis.execute(f"""
+                Optimize agent composition for task profile:
+                
+                Task characteristics:
+                {json.dumps(task_profile, indent=2)}
+                
+                Current agents:
+                - {len(self.agents)} total agents
+                - Roles: {[a.role.value for a in self.agents]}
+                - Models: {[a.model_name for a in self.agents]}
+                
+                Performance history:
+                - Recent consensus rates: {self.swarm_performance_metrics['consensus_rate']:.2%}
+                - Decision quality: {self.swarm_performance_metrics['decision_quality']:.2%}
+                
+                Recommend:
+                - Optimal number of agents
+                - Best role distribution
+                - Model selection strategy
+                - Expertise requirements
+                - Agent addition/removal suggestions
+                - Specialization adjustments
+                
+                Consider task complexity, time constraints, and quality requirements.
+            """)
+            
+            return optimization if isinstance(optimization, dict) else {"optimization": optimization}
+            
+        except Exception as e:
+            self.logger.error(f"Error optimizing agent composition: {e}")
+            return {"error": str(e)}
+    
+    async def predict_consensus_quality(self, task: Dict[str, Any]) -> Dict[str, Any]:
+        """Predict consensus quality before processing using MCP-Redis."""
+        if not self._use_mcp or not self.mcp_redis:
+            return {"confidence": 0.5, "method": "default"}
+        
+        try:
+            prediction = await self.mcp_redis.execute(f"""
+                Predict consensus quality for task:
+                
+                Task: {json.dumps(task, indent=2)}
+                
+                Available agents:
+                - Roles: {[a.role.value for a in self.agents]}
+                - Expertise coverage: {list(set(sum([a.expertise_areas for a in self.agents], [])))}
+                
+                Historical performance:
+                - Average consensus rate: {self.swarm_performance_metrics['consensus_rate']:.2%}
+                - Task type success rates: analyze from history
+                
+                Predict:
+                - Expected consensus quality (0-1)
+                - Confidence in prediction
+                - Potential challenges
+                - Key success factors
+                - Recommended pre-processing
+                
+                Base prediction on task complexity and agent capabilities.
+            """)
+            
+            return prediction if isinstance(prediction, dict) else {"prediction": prediction}
+            
+        except Exception as e:
+            self.logger.error(f"Error predicting consensus quality: {e}")
+            return {"confidence": 0.5, "error": str(e)}
+    
+    async def analyze_agent_conflicts(self, analyses: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """Deep analysis of agent conflicts using MCP-Redis."""
+        if not self._use_mcp or not self.mcp_redis:
+            return self._detect_analysis_conflicts(analyses)
+        
+        try:
+            # Prepare conflict data
+            conflict_data = []
+            for i, analysis1 in enumerate(analyses):
+                for j, analysis2 in enumerate(analyses[i+1:], i+1):
+                    if analysis1.get('priority', 5) != analysis2.get('priority', 5):
+                        conflict_data.append({
+                            'agents': [analysis1['agent_role'], analysis2['agent_role']],
+                            'priority_diff': abs(analysis1.get('priority', 5) - analysis2.get('priority', 5)),
+                            'recommendations': {
+                                analysis1['agent_role']: analysis1.get('recommendations', []),
+                                analysis2['agent_role']: analysis2.get('recommendations', [])
+                            }
+                        })
+            
+            conflict_analysis = await self.mcp_redis.execute(f"""
+                Analyze conflicts between agent analyses:
+                
+                Identified conflicts:
+                {json.dumps(conflict_data, indent=2)}
+                
+                Agent analyses summary:
+                {json.dumps([{
+                    'agent': a['agent_role'],
+                    'priority': a.get('priority', 5),
+                    'key_points': a.get('key_points', [])[:3]
+                } for a in analyses], indent=2)}
+                
+                Analyze:
+                - Root causes of disagreements
+                - Valid perspectives from each side
+                - Synthesis opportunities
+                - Resolution strategies
+                - Learning opportunities
+                - Future conflict prevention
+                
+                Provide balanced conflict resolution.
+            """)
+            
+            return conflict_analysis if isinstance(conflict_analysis, dict) else {"analysis": conflict_analysis}
+            
+        except Exception as e:
+            self.logger.error(f"Error analyzing conflicts: {e}")
+            return {"error": str(e)}
+    
+    async def generate_swarm_insights_report(self) -> Dict[str, Any]:
+        """Generate comprehensive swarm intelligence insights using MCP-Redis."""
+        if not self._use_mcp or not self.mcp_redis:
+            return {"message": "MCP-Redis not available"}
+        
+        try:
+            # Gather comprehensive swarm data
+            performance_summary = {
+                'total_tasks': len(self.collective_decisions),
+                'avg_agents_per_task': len(self.agents),
+                'consensus_rate': self.swarm_performance_metrics['consensus_rate'],
+                'decision_quality': self.swarm_performance_metrics['decision_quality'],
+                'avg_response_time': self.swarm_performance_metrics['response_time'],
+                'cache_efficiency': self.swarm_performance_metrics['cache_hit_rate']
+            }
+            
+            report = await self.mcp_redis.execute(f"""
+                Generate swarm intelligence insights report:
+                
+                Swarm composition:
+                - {len(self.agents)} specialized agents
+                - Roles: {[a.role.value for a in self.agents]}
+                - Models: {list(set(a.model_name for a in self.agents))}
+                
+                Performance summary:
+                {json.dumps(performance_summary, indent=2)}
+                
+                Agent utilization:
+                {json.dumps(dict(self.agent_workload), indent=2)}
+                
+                Generate insights on:
+                - Swarm effectiveness trends
+                - Agent collaboration patterns
+                - Decision quality factors
+                - Optimization opportunities
+                - Scaling recommendations
+                - Cost-benefit analysis
+                - Future improvements
+                
+                Format as executive summary with actionable recommendations.
+            """)
+            
+            return report if isinstance(report, dict) else {"report": report}
+            
+        except Exception as e:
+            self.logger.error(f"Error generating insights report: {e}")
+            return {"error": str(e)}
+    
+    async def intelligent_agent_selection(self, task: Dict[str, Any]) -> List[RealSwarmAgent]:
+        """Select optimal agents for a task using MCP-Redis intelligence."""
+        if not self._use_mcp or not self.mcp_redis:
+            return self._select_optimal_agents(task)
+        
+        try:
+            selection = await self.mcp_redis.execute(f"""
+                Select optimal agents for task:
+                
+                Task details:
+                - Type: {task.get('type', 'unknown')}
+                - Title: {task.get('title', 'untitled')}
+                - Requirements: {task.get('requirements', [])}
+                - Complexity: analyze from description
+                
+                Available agents:
+                {json.dumps([{
+                    'id': a.id,
+                    'role': a.role.value,
+                    'expertise': a.expertise_areas,
+                    'performance': a.performance_score,
+                    'workload': self.agent_workload.get(a.id, 0)
+                } for a in self.agents], indent=2)}
+                
+                Select agents based on:
+                - Expertise match
+                - Historical performance
+                - Current workload
+                - Synergy between agents
+                - Task requirements
+                
+                Return: list of agent IDs in priority order
+            """)
+            
+            # Extract agent IDs and return corresponding agents
+            if isinstance(selection, list):
+                selected_agents = []
+                for agent_id in selection:
+                    agent = next((a for a in self.agents if a.id == agent_id), None)
+                    if agent:
+                        selected_agents.append(agent)
+                return selected_agents if selected_agents else self._select_optimal_agents(task)
+            else:
+                return self._select_optimal_agents(task)
+                
+        except Exception as e:
+            self.logger.error(f"Error in intelligent agent selection: {e}")
+            return self._select_optimal_agents(task)
+    
+    async def learn_from_decisions(self, result: Dict[str, Any]) -> Dict[str, Any]:
+        """Learn from swarm decisions to improve future performance using MCP-Redis."""
+        if not self._use_mcp or not self.mcp_redis:
+            return {"message": "MCP-Redis not available"}
+        
+        try:
+            learning = await self.mcp_redis.execute(f"""
+                Learn from swarm decision outcome:
+                
+                Decision summary:
+                - Task type: {result.get('task_id', 'unknown')}
+                - Agents involved: {len(result.get('individual_analyses', []))}
+                - Consensus priority: {result.get('consensus', {}).get('consensus_priority', 5)}
+                - Decision quality: {result.get('collective_review', {}).get('confidence_level', 0)}
+                - Processing time: {result.get('duration_seconds', 0):.2f}s
+                
+                Performance metrics:
+                {json.dumps(result.get('performance_metrics', {}), indent=2)}
+                
+                Extract learnings:
+                - What worked well
+                - What could improve
+                - Agent performance insights
+                - Consensus patterns
+                - Optimization opportunities
+                - Parameter adjustments
+                - Training recommendations
+                
+                Provide specific improvements for next iteration.
+            """)
+            
+            # Store learnings for future reference
+            if isinstance(learning, dict) and 'improvements' in learning:
+                self.collective_decisions.append({
+                    'timestamp': datetime.now(timezone.utc),
+                    'result': result,
+                    'learnings': learning
+                })
+            
+            return learning if isinstance(learning, dict) else {"learning": learning}
+            
+        except Exception as e:
+            self.logger.error(f"Error learning from decisions: {e}")
+            return {"error": str(e)}

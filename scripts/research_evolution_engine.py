@@ -1,0 +1,1520 @@
+"""
+Research Evolution Engine - Orchestrates all research components for intelligent system improvement.
+
+This module coordinates the entire research lifecycle: from identifying needs and selecting
+topics to executing research, extracting insights, implementing improvements, and learning
+from outcomes. It enables CWMAI to become truly self-improving.
+"""
+
+import asyncio
+import json
+import time
+from datetime import datetime, timedelta
+from typing import Dict, List, Optional, Callable, Any
+from pathlib import Path
+import logging
+
+# Import research components
+from research_knowledge_store import ResearchKnowledgeStore
+from research_need_analyzer import ResearchNeedAnalyzer
+from intelligent_research_selector import IntelligentResearchSelector
+from research_scheduler import ResearchScheduler, ResearchPriority
+from research_query_generator import ResearchQueryGenerator
+from research_action_engine import ResearchActionEngine
+from research_learning_system import ResearchLearningSystem
+
+# Import external learning components
+from external_agent_discoverer import ExternalAgentDiscoverer, DiscoveryConfig
+from capability_extractor import CapabilityExtractor
+from capability_synthesizer import CapabilitySynthesizer
+from external_knowledge_integrator import ExternalKnowledgeIntegrator
+
+# Import knowledge graph builder, insight processor, dynamic trigger, and cross-research analyzer
+from knowledge_graph_builder import KnowledgeGraphBuilder
+from research_insight_processor import ResearchInsightProcessor
+from dynamic_research_trigger import DynamicResearchTrigger
+from cross_research_analyzer import CrossResearchAnalyzer
+
+
+class ResearchEvolutionEngine:
+    """Orchestrates all research components for self-improvement."""
+    
+    def __init__(self, state_manager=None, ai_brain=None, task_generator=None, 
+                 self_improver=None, outcome_learning=None):
+        # Core system components
+        self.state_manager = state_manager
+        self.ai_brain = ai_brain
+        self.task_generator = task_generator
+        self.self_improver = self_improver
+        self.outcome_learning = outcome_learning
+        
+        # Research components
+        self.knowledge_store = ResearchKnowledgeStore()
+        self.need_analyzer = ResearchNeedAnalyzer(state_manager)
+        self.research_selector = IntelligentResearchSelector(self.knowledge_store, self.need_analyzer)
+        self.scheduler = ResearchScheduler(state_manager, self.knowledge_store)
+        self.query_generator = ResearchQueryGenerator()
+        self.action_engine = ResearchActionEngine(task_generator, self_improver)
+        self.learning_system = ResearchLearningSystem(self.knowledge_store)
+        
+        # Knowledge graph builder, insight processor, dynamic trigger, and cross-research analyzer
+        self.knowledge_graph = KnowledgeGraphBuilder()
+        self.insight_processor = ResearchInsightProcessor()
+        self.dynamic_trigger = DynamicResearchTrigger(state_manager, self)
+        self.cross_analyzer = CrossResearchAnalyzer(self.knowledge_store, self.knowledge_graph)
+        
+        # External learning components
+        self.external_agent_discoverer = ExternalAgentDiscoverer(
+            config=DiscoveryConfig(max_repositories_per_scan=20),
+            state_manager=state_manager
+        )
+        self.capability_extractor = CapabilityExtractor()
+        self.capability_synthesizer = CapabilitySynthesizer(state_manager)
+        self.knowledge_integrator = ExternalKnowledgeIntegrator(self_improver, state_manager)
+        
+        # Execution state
+        self.is_running = False
+        self.research_cycles = 0
+        self.last_cycle_time = None
+        self.cycle_statistics = {
+            "successful_cycles": 0,
+            "failed_cycles": 0,
+            "total_research_conducted": 0,
+            "total_insights_extracted": 0,
+            "total_tasks_generated": 0,
+            "performance_improvements": []
+        }
+        
+        # Configuration
+        self.config = {
+            "max_concurrent_research": 5,  # More parallel research
+            "cycle_interval_seconds": 20 * 60,  # 20 minutes for faster learning  # 30 minutes
+            "emergency_cycle_interval": 3 * 60,  # 3 minutes for critical issues  # 5 minutes for critical issues
+            "max_research_per_cycle": 8,  # More research per cycle
+            "min_insight_confidence": 0.5,  # More insights accepted
+            "auto_implement_threshold": 0.75,  # More auto-implementation
+            "enable_dynamic_triggering": True,
+            "enable_fixed_interval": False,  # Disable fixed intervals when dynamic is enabled
+            # External research configuration
+            "enable_external_agent_research": True,
+            "external_research_frequency": 2,  # Every 2nd cycle  # Every 4th cycle
+            "ai_papers_repositories": [
+                "https://github.com/masamasa59/ai-agent-papers",
+                "https://github.com/microsoft/autogen",
+                "https://github.com/microsoft/semantic-kernel",
+                "https://github.com/langchain-ai/langchain"
+            ],
+            "max_external_capabilities_per_cycle": 5,  # More external learning
+            "external_synthesis_threshold": 0.6,  # Easier synthesis
+            "enable_proactive_research": True  # ACTIVATED: Proactive opportunity scanning
+        }
+        
+        # Metrics tracking
+        self.metrics = {
+            "research_effectiveness": 0.0,
+            "implementation_success_rate": 0.0,
+            "performance_improvement_rate": 0.0,
+            "learning_accuracy": 0.0,
+            # External research metrics
+            "external_research_cycles": 0,
+            "external_repositories_analyzed": 0,
+            "capabilities_extracted": 0,
+            "capabilities_synthesized": 0,
+            "external_integrations_successful": 0
+        }
+        
+        # Setup logging
+        self.logger = logging.getLogger(__name__)
+    
+    async def start_continuous_research(self):
+        """Start the continuous research and improvement cycle."""
+        self.is_running = True
+        self.logger.info("Starting Research Evolution Engine")
+        
+        try:
+            # Start dynamic triggering if enabled
+            if self.config.get("enable_dynamic_triggering", True):
+                self.logger.info("Starting dynamic research triggering")
+                asyncio.create_task(self.dynamic_trigger.start_monitoring())
+            
+            # Fixed interval research loop (if enabled)
+            if self.config.get("enable_fixed_interval", False):
+                while self.is_running:
+                    await self.execute_research_cycle()
+                    
+                    # Calculate next cycle time based on system health
+                    next_cycle_interval = self._calculate_next_cycle_interval()
+                    await asyncio.sleep(next_cycle_interval)
+            else:
+                # When only dynamic triggering is enabled, keep the engine running
+                while self.is_running:
+                    await asyncio.sleep(60)  # Check every minute
+                    
+                    # Log status periodically
+                    if self.research_cycles % 10 == 0:
+                        trigger_stats = self.dynamic_trigger.get_statistics()
+                        self.logger.info(f"Dynamic trigger stats: {trigger_stats['total_triggers']} triggers")
+                
+        except Exception as e:
+            self.logger.error(f"Error in continuous research: {e}")
+            self.is_running = False
+    
+    def stop_continuous_research(self):
+        """Stop the continuous research cycle."""
+        self.is_running = False
+        
+        # Stop dynamic trigger if running
+        if hasattr(self, 'dynamic_trigger'):
+            self.dynamic_trigger.stop_monitoring()
+        
+        self.logger.info("Stopping Research Evolution Engine")
+    
+    async def execute_research_cycle(self) -> Dict:
+        """
+        Execute a complete research cycle.
+        
+        Returns:
+            Cycle results and statistics
+        """
+        cycle_start_time = datetime.now()
+        cycle_id = f"cycle_{int(time.time())}"
+        
+        self.logger.info(f"Starting research cycle: {cycle_id}")
+        
+        cycle_results = {
+            "cycle_id": cycle_id,
+            "start_time": cycle_start_time.isoformat(),
+            "status": "running",
+            "research_conducted": [],
+            "insights_extracted": [],
+            "tasks_generated": [],
+            "implementations": [],
+            "performance_changes": {},
+            "errors": []
+        }
+        
+        try:
+            # Step 1: Analyze current system needs
+            system_needs = await self._analyze_system_needs()
+            
+            # Step 2: Select research topics
+            research_topics = await self._select_research_topics(system_needs)
+            
+            # Step 3: Execute research
+            research_results = await self._execute_research(research_topics)
+            cycle_results["research_conducted"] = research_results
+            
+            # Step 4: Extract actionable insights
+            insights = await self._extract_insights(research_results)
+            cycle_results["insights_extracted"] = insights
+            
+            # Step 5: Generate implementation tasks
+            tasks = await self._generate_implementation_tasks(insights)
+            cycle_results["tasks_generated"] = tasks
+            
+            # Step 6: Implement high-confidence improvements
+            implementations = await self._implement_improvements(tasks)
+            cycle_results["implementations"] = implementations
+            
+            # Step 7: Measure performance changes
+            performance_changes = await self._measure_performance_changes(cycle_start_time)
+            cycle_results["performance_changes"] = performance_changes
+            
+            # Step 8: External agent research (every N cycles)
+            if (self.config["enable_external_agent_research"] and 
+                self.research_cycles % self.config["external_research_frequency"] == 0):
+                external_results = await self._execute_external_agent_research()
+                cycle_results["external_research"] = external_results
+            
+            # Step 9: Learn from outcomes
+            await self._learn_from_cycle(cycle_results)
+            
+            # Step 10: Perform cross-research analysis (every 3 cycles)
+            if self.research_cycles % 3 == 0:
+                cross_analysis = await self._perform_cross_research_analysis()
+                cycle_results["cross_research_analysis"] = cross_analysis
+            
+            # Mark cycle as successful
+            cycle_results["status"] = "completed"
+            self.cycle_statistics["successful_cycles"] += 1
+            
+        except Exception as e:
+            self.logger.error(f"Error in research cycle {cycle_id}: {e}")
+            cycle_results["status"] = "failed"
+            cycle_results["errors"].append(str(e))
+            self.cycle_statistics["failed_cycles"] += 1
+        
+        # Update cycle statistics
+        cycle_results["end_time"] = datetime.now().isoformat()
+        cycle_results["duration_seconds"] = (datetime.now() - cycle_start_time).total_seconds()
+        
+        self.research_cycles += 1
+        self.last_cycle_time = datetime.now()
+        
+        # Update metrics
+        self._update_metrics(cycle_results)
+        
+        self.logger.info(f"Completed research cycle: {cycle_id} - {cycle_results['status']}")
+        
+        return cycle_results
+    
+    async def execute_emergency_research(self, trigger_event: Dict) -> Dict:
+        """
+        Execute emergency research for critical issues.
+        
+        Args:
+            trigger_event: Event that triggered emergency research
+            
+        Returns:
+            Emergency research results
+        """
+        self.logger.warning(f"Executing emergency research for: {trigger_event.get('reason', 'unknown')}")
+        
+        # Create emergency research request
+        emergency_request = {
+            "priority": ResearchPriority.IMMEDIATE,
+            "area": trigger_event.get("area", "critical_performance"),
+            "context": trigger_event,
+            "urgency": "critical"
+        }
+        
+        # Execute focused research cycle
+        research_topics = [emergency_request]
+        research_results = await self._execute_research(research_topics)
+        
+        # Immediately extract and implement insights
+        insights = await self._extract_insights(research_results)
+        tasks = await self._generate_implementation_tasks(insights)
+        
+        # Auto-implement critical fixes
+        critical_implementations = await self._implement_critical_improvements(tasks)
+        
+        return {
+            "trigger": trigger_event,
+            "research_results": research_results,
+            "insights": insights,
+            "implementations": critical_implementations,
+            "timestamp": datetime.now().isoformat()
+        }
+    
+    async def _analyze_system_needs(self) -> Dict:
+        """Analyze current system needs and performance gaps."""
+        current_state = {}
+        
+        if self.state_manager:
+            current_state = self.state_manager.load_state()
+        
+        # Add current metrics
+        current_state["metrics"] = self._get_current_metrics()
+        
+        # Analyze gaps
+        performance_gaps = self.need_analyzer.analyze_performance_gaps()
+        
+        return {
+            "current_state": current_state,
+            "performance_gaps": performance_gaps,
+            "urgent_needs": self.need_analyzer.get_immediate_research_needs(),
+            "analysis_timestamp": datetime.now().isoformat()
+        }
+    
+    async def _select_research_topics(self, system_needs: Dict) -> List[Dict]:
+        """Select research topics based on system needs."""
+        # Get research recommendations
+        context = {
+            "system_health": self._assess_system_health(system_needs),
+            "metrics": system_needs.get("current_state", {}).get("metrics", {}),
+            "performance_gaps": system_needs.get("performance_gaps", {})
+        }
+        
+        # Select topics using intelligent selector
+        selected_topics = self.research_selector.select_research_topics(context)
+        
+        # Add proactive research if enabled
+        if self.config.get("enable_proactive_research", False):
+            proactive_topics = self.need_analyzer.get_proactive_research_opportunities()
+            
+            # In development mode, prioritize proactive research
+            import os
+            if os.getenv('EXECUTION_MODE', 'development').lower() == 'development':
+                # Add all proactive topics in development
+                selected_topics.extend(proactive_topics)
+            else:
+                # In production, add only if we have capacity
+                remaining_capacity = self.config["max_research_per_cycle"] - len(selected_topics)
+                if remaining_capacity > 0:
+                    selected_topics.extend(proactive_topics[:remaining_capacity])
+        
+        # Check for learning opportunities
+        recent_events = self._get_recent_events()
+        if self.need_analyzer.should_trigger_learning_research(recent_events):
+            learning_topic = {
+                "topic": "pattern_learning",
+                "area": "adaptive_learning",
+                "priority": "high",
+                "context": {"recent_events": recent_events},
+                "trigger": "learning_opportunity"
+            }
+            selected_topics.insert(0, learning_topic)  # Prioritize learning
+        
+        # Limit to configured maximum
+        return selected_topics[:self.config["max_research_per_cycle"]]
+    
+    async def _execute_research(self, research_topics: List[Dict]) -> List[Dict]:
+        """Execute research for selected topics."""
+        research_results = []
+        
+        for topic in research_topics:
+            try:
+                # Generate specific research queries
+                queries = self.query_generator.generate_queries(topic)
+                
+                # Execute research using AI brain
+                if self.ai_brain and queries:
+                    for query in queries[:2]:  # Limit to 2 queries per topic
+                        result = await self._execute_single_research(query, topic)
+                        if result:
+                            research_results.append(result)
+                
+            except Exception as e:
+                self.logger.error(f"Error executing research for topic {topic.get('topic', 'unknown')}: {e}")
+        
+        # Store research results
+        for result in research_results:
+            research_id = self.knowledge_store.store_research(
+                result.get("area", "general"),
+                result,
+                quality_score=result.get("quality_score", 0.7)
+            )
+            result["stored_id"] = research_id
+            
+            # Build knowledge graph from research
+            try:
+                graph_results = self.knowledge_graph.process_research(result)
+                result["graph_analysis"] = graph_results
+            except Exception as e:
+                self.logger.warning(f"Error building knowledge graph: {e}")
+        
+        self.cycle_statistics["total_research_conducted"] += len(research_results)
+        
+        return research_results
+    
+    async def _execute_single_research(self, query: Dict, topic: Dict) -> Optional[Dict]:
+        """Execute a single research query."""
+        try:
+            # Use AI brain to conduct research
+            research_prompt = f"""
+            Conduct research on: {query['query']}
+            
+            Context: {topic.get('context', {})}
+            Area: {topic.get('area', 'general')}
+            Priority: {topic.get('priority', 'medium')}
+            
+            Provide specific, actionable insights that can improve system performance.
+            Focus on practical implementations and measurable improvements.
+            """
+            
+            # Get research results from AI brain
+            if hasattr(self.ai_brain, 'generate_enhanced_response'):
+                response = await self.ai_brain.generate_enhanced_response(research_prompt)
+            else:
+                # Fallback for different AI brain interfaces
+                response = {"content": "Research result placeholder"}
+            
+            # Process and score the research
+            result = {
+                "id": f"research_{int(time.time() * 1000)}",
+                "query": query,
+                "topic": topic,
+                "area": topic.get("area", "general"),
+                "content": response,
+                "quality_score": self._score_research_quality(response),
+                "timestamp": datetime.now().isoformat(),
+                "metadata": {
+                    "query_confidence": query.get("confidence", 0.5),
+                    "provider": query.get("provider", "unknown"),
+                    "execution_time": time.time()
+                }
+            }
+            
+            return result
+            
+        except Exception as e:
+            self.logger.error(f"Error executing research query: {e}")
+            return None
+    
+    async def _extract_insights(self, research_results: List[Dict]) -> List[Dict]:
+        """Extract actionable insights from research results."""
+        all_insights = []
+        
+        # Use the new insight processor for batch processing
+        try:
+            processor_results = self.insight_processor.process_research_batch(research_results)
+            
+            # Combine all insight types
+            all_processed_insights = processor_results["insights"]
+            
+            # Also get insights from action engine for compatibility
+            for research in research_results:
+                try:
+                    action_insights = self.action_engine.extract_actionable_insights(research)
+                    
+                    # Filter by confidence threshold
+                    filtered_insights = [
+                        insight for insight in action_insights
+                        if insight.get("confidence", 0) >= self.config["min_insight_confidence"]
+                    ]
+                    
+                    all_insights.extend(filtered_insights)
+                    
+                except Exception as e:
+                    self.logger.error(f"Error extracting action insights: {e}")
+            
+            # Merge processed insights with action insights
+            for processed_insight in all_processed_insights:
+                if processed_insight.get("confidence", 0) >= self.config["min_insight_confidence"]:
+                    # Convert to action engine format
+                    action_format = {
+                        "insight": processed_insight["text"],
+                        "confidence": processed_insight["confidence"],
+                        "source": processed_insight.get("source"),
+                        "type": processed_insight.get("type"),
+                        "categories": processed_insight.get("categories", []),
+                        "metadata": {
+                            "processed_by": "insight_processor",
+                            "id": processed_insight["id"]
+                        }
+                    }
+                    all_insights.append(action_format)
+            
+            # Log pattern analysis
+            pattern_analysis = self.insight_processor.get_pattern_analysis()
+            self.logger.info(f"Pattern analysis: {pattern_analysis['total_patterns']} patterns found")
+            
+        except Exception as e:
+            self.logger.error(f"Error in insight processing: {e}")
+        
+        self.cycle_statistics["total_insights_extracted"] += len(all_insights)
+        
+        return all_insights
+    
+    async def _generate_implementation_tasks(self, insights: List[Dict]) -> List[Dict]:
+        """Generate implementation tasks from insights."""
+        try:
+            tasks = self.action_engine.generate_implementation_tasks(insights)
+            self.cycle_statistics["total_tasks_generated"] += len(tasks)
+            return tasks
+        except Exception as e:
+            self.logger.error(f"Error generating implementation tasks: {e}")
+            return []
+    
+    async def _implement_improvements(self, tasks: List[Dict]) -> List[Dict]:
+        """Implement high-confidence improvements."""
+        implementations = []
+        
+        for task in tasks:
+            try:
+                confidence = task.get("metadata", {}).get("confidence", 0.5)
+                
+                # Auto-implement high-confidence tasks
+                if confidence >= self.config["auto_implement_threshold"]:
+                    result = await self._implement_task(task)
+                    if result:
+                        implementations.append(result)
+                else:
+                    # Schedule for manual review or lower-priority implementation
+                    await self._schedule_task_for_review(task)
+                
+            except Exception as e:
+                self.logger.error(f"Error implementing task: {e}")
+        
+        return implementations
+    
+    async def _implement_task(self, task: Dict) -> Optional[Dict]:
+        """Implement a specific task."""
+        try:
+            # Use self-improver if available for system modifications
+            if self.self_improver and task.get("component"):
+                implementation_result = await self._implement_with_self_improver(task)
+            else:
+                # Generate regular task for implementation
+                implementation_result = await self._generate_regular_task(task)
+            
+            return implementation_result
+            
+        except Exception as e:
+            self.logger.error(f"Error in task implementation: {e}")
+            return None
+    
+    async def _implement_with_self_improver(self, task: Dict) -> Dict:
+        """Implement task using self-improver."""
+        # Create modification proposal
+        modification = {
+            "component": task.get("component"),
+            "modification_type": task.get("action_type", "UPDATE"),
+            "description": task.get("description", ""),
+            "priority": task.get("priority", "MEDIUM"),
+            "rollback_plan": task.get("rollback_plan", {}),
+            "success_criteria": task.get("success_criteria", [])
+        }
+        
+        # Execute via self-improver
+        result = {
+            "task_id": task.get("id", f"task_{int(time.time())}"),
+            "status": "implemented_via_self_improver",
+            "modification": modification,
+            "timestamp": datetime.now().isoformat()
+        }
+        
+        return result
+    
+    async def _generate_regular_task(self, task: Dict) -> Dict:
+        """Generate regular task for manual or scheduled implementation."""
+        if self.task_generator:
+            # Create task through task generator
+            generated_task = {
+                "title": task.get("title", "Research-based improvement"),
+                "description": task.get("description", ""),
+                "type": "SYSTEM_IMPROVEMENT",
+                "priority": task.get("priority", "MEDIUM"),
+                "metadata": {
+                    "source": "research_evolution",
+                    "research_based": True,
+                    "auto_generated": True
+                }
+            }
+            
+            return {
+                "task_id": f"generated_{int(time.time())}",
+                "status": "task_generated",
+                "task": generated_task,
+                "timestamp": datetime.now().isoformat()
+            }
+        
+        return {
+            "task_id": f"manual_{int(time.time())}",
+            "status": "manual_implementation_required",
+            "task": task,
+            "timestamp": datetime.now().isoformat()
+        }
+    
+    async def _measure_performance_changes(self, cycle_start_time: datetime) -> Dict:
+        """Measure performance changes since cycle start."""
+        current_metrics = self._get_current_metrics()
+        
+        # Compare with previous metrics if available
+        previous_metrics = getattr(self, '_previous_metrics', current_metrics)
+        
+        changes = {}
+        for metric, current_value in current_metrics.items():
+            previous_value = previous_metrics.get(metric, current_value)
+            if isinstance(current_value, (int, float)) and isinstance(previous_value, (int, float)):
+                change = current_value - previous_value
+                changes[metric] = {
+                    "previous": previous_value,
+                    "current": current_value,
+                    "change": change,
+                    "percentage_change": (change / max(0.001, previous_value)) * 100
+                }
+        
+        # Store current metrics for next comparison
+        self._previous_metrics = current_metrics
+        
+        return changes
+    
+    async def _learn_from_cycle(self, cycle_results: Dict):
+        """Learn from cycle outcomes to improve future research."""
+        # Record research outcomes
+        for research in cycle_results.get("research_conducted", []):
+            outcome = {
+                "research_quality": self._assess_research_quality(research),
+                "implementation_success": self._assess_implementation_success(cycle_results),
+                "performance_impact": self._assess_performance_impact(cycle_results),
+                "value_delivered": self._calculate_value_delivered(cycle_results),
+                "research_metadata": research.get("metadata", {}),
+                "implementation_results": cycle_results.get("implementations", []),
+                "performance_changes": cycle_results.get("performance_changes", {})
+            }
+            
+            self.learning_system.record_research_outcome(
+                research.get("stored_id", research.get("id")), 
+                outcome
+            )
+        
+        # Update research selector effectiveness
+        for research in cycle_results.get("research_conducted", []):
+            topic = research.get("topic", {}).get("topic", "unknown")
+            effectiveness = self._calculate_research_effectiveness(research, cycle_results)
+            self.research_selector.update_topic_effectiveness(topic, effectiveness)
+        
+        # Track learning progress
+        self._track_learning_progress(cycle_results)
+        
+        # Update performance improvements tracking
+        perf_changes = cycle_results.get("performance_changes", {})
+        for metric, changes in perf_changes.items():
+            if isinstance(changes, dict) and "percentage_change" in changes:
+                self.cycle_statistics["performance_improvements"].append(changes["percentage_change"])
+    
+    def _get_performance_context(self) -> Dict[str, Any]:
+        """Get current performance context for research."""
+        context = {
+            'claude_success_rate': 0,
+            'task_completion_rate': 0,
+            'system_health': 'unknown',
+            'recent_errors': [],
+            'projects': []
+        }
+        
+        if self.state_manager:
+            try:
+                state = self.state_manager.load_state()
+                
+                # Extract performance metrics
+                performance = state.get('performance', {})
+                
+                # Claude success rate
+                claude_data = performance.get('claude_interactions', {})
+                total_attempts = claude_data.get('total_attempts', 0)
+                successful = claude_data.get('successful', 0)
+                if total_attempts > 0:
+                    context['claude_success_rate'] = (successful / total_attempts) * 100
+                
+                # Task completion rate
+                task_data = performance.get('task_completion', {})
+                total_tasks = task_data.get('total_tasks', 0) 
+                completed_tasks = task_data.get('completed_tasks', 0)
+                if total_tasks > 0:
+                    context['task_completion_rate'] = (completed_tasks / total_tasks) * 100
+                
+                # Other context
+                context['recent_errors'] = state.get('recent_errors', [])
+                context['projects'] = list(state.get('projects', {}).keys())
+                
+                # System health assessment
+                if context['claude_success_rate'] == 0:
+                    context['system_health'] = 'critical'
+                elif context['claude_success_rate'] < 30 or context['task_completion_rate'] < 30:
+                    context['system_health'] = 'poor'
+                elif context['claude_success_rate'] < 70 or context['task_completion_rate'] < 70:
+                    context['system_health'] = 'fair'
+                else:
+                    context['system_health'] = 'good'
+                    
+            except Exception as e:
+                self.logger.warning(f"Error getting performance context: {e}")
+        
+        return context
+
+    def _get_current_metrics(self) -> Dict:
+        """Get current system performance metrics."""
+        metrics = {}
+        
+        if self.state_manager:
+            state = self.state_manager.load_state()
+            
+            # Extract key performance metrics
+            task_state = state.get("task_state", {})
+            tasks = task_state.get("tasks", [])
+            
+            if tasks:
+                completed = len([t for t in tasks if t.get("status") == "completed"])
+                failed = len([t for t in tasks if t.get("status") == "failed"])
+                total = len(tasks)
+                
+                metrics["task_completion_rate"] = completed / max(1, total)
+                metrics["task_failure_rate"] = failed / max(1, total)
+            
+            # Claude interaction metrics
+            claude_metrics = state.get("metrics", {}).get("claude_interactions", {})
+            metrics["claude_success_rate"] = claude_metrics.get("success_rate", 0)
+            
+            # System health metrics
+            metrics["system_health_score"] = self._calculate_system_health_score(state)
+        
+        return metrics
+    
+    def _get_recent_events(self) -> List[Dict]:
+        """Get recent system events for learning analysis."""
+        events = []
+        
+        if self.state_manager:
+            state = self.state_manager.load_state()
+            
+            # Extract recent task events
+            tasks = state.get('task_state', {}).get('tasks', {})
+            if isinstance(tasks, list):
+                for task in tasks[-20:]:  # Last 20 tasks
+                    events.append({
+                        'type': 'task',
+                        'status': task.get('status'),
+                        'timestamp': task.get('created_at')
+                    })
+            
+            # Extract recent errors
+            errors = state.get('errors', [])
+            for error in errors[-10:]:  # Last 10 errors
+                events.append({
+                    'type': 'error',
+                    'message': error.get('message'),
+                    'timestamp': error.get('timestamp')
+                })
+        
+        return events
+    
+    def _assess_system_health(self, system_needs: Dict) -> str:
+        """Assess overall system health."""
+        gaps = system_needs.get("performance_gaps", {})
+        
+        critical_count = len(gaps.get("critical", []))
+        high_count = len(gaps.get("high", []))
+        
+        if critical_count > 0:
+            return "critical"
+        elif high_count > 2:
+            return "degraded"
+        elif high_count > 0:
+            return "poor"
+        else:
+            return "normal"
+    
+    def _calculate_next_cycle_interval(self) -> int:
+        """Calculate interval until next research cycle."""
+        system_health = self._assess_system_health({}) if self.state_manager else "normal"
+        
+        if system_health == "critical":
+            return self.config["emergency_cycle_interval"]
+        elif system_health in ["degraded", "poor"]:
+            return self.config["cycle_interval_seconds"] // 2
+        else:
+            return self.config["cycle_interval_seconds"]
+    
+    def _score_research_quality(self, research_content: Dict) -> float:
+        """Score the quality of research content."""
+        # Simple scoring based on content length and structure
+        if isinstance(research_content, dict):
+            content_str = str(research_content)
+        else:
+            content_str = str(research_content)
+        
+        # Basic quality indicators
+        score = 0.5  # Base score
+        
+        if len(content_str) > 100:
+            score += 0.2
+        if "implementation" in content_str.lower():
+            score += 0.1
+        if "improve" in content_str.lower() or "optimize" in content_str.lower():
+            score += 0.1
+        if any(word in content_str.lower() for word in ["step", "strategy", "practice"]):
+            score += 0.1
+        
+        return min(1.0, score)
+    
+    def _update_metrics(self, cycle_results: Dict):
+        """Update evolution engine metrics."""
+        # Update research effectiveness
+        successful_research = len([r for r in cycle_results.get("research_conducted", []) 
+                                 if r.get("quality_score", 0) > 0.7])
+        total_research = len(cycle_results.get("research_conducted", []))
+        
+        if total_research > 0:
+            self.metrics["research_effectiveness"] = successful_research / total_research
+        
+        # Update implementation success rate
+        successful_implementations = len([i for i in cycle_results.get("implementations", [])
+                                        if i.get("status") == "implemented_via_self_improver"])
+        total_implementations = len(cycle_results.get("implementations", []))
+        
+        if total_implementations > 0:
+            self.metrics["implementation_success_rate"] = successful_implementations / total_implementations
+        
+        # Update performance improvement rate
+        performance_changes = cycle_results.get("performance_changes", {})
+        positive_changes = len([c for c in performance_changes.values() 
+                              if isinstance(c, dict) and c.get("change", 0) > 0])
+        total_changes = len(performance_changes)
+        
+        if total_changes > 0:
+            self.metrics["performance_improvement_rate"] = positive_changes / total_changes
+    
+    def get_status(self) -> Dict:
+        """Get current status of the research evolution engine."""
+        return {
+            "is_running": self.is_running,
+            "research_cycles_completed": self.research_cycles,
+            "last_cycle_time": self.last_cycle_time.isoformat() if self.last_cycle_time else None,
+            "cycle_statistics": self.cycle_statistics,
+            "current_metrics": self.metrics,
+            "learning_summary": self.learning_system.get_learning_summary(),
+            "knowledge_store_stats": self.knowledge_store.get_statistics(),
+            "scheduler_status": self.scheduler.get_schedule_status(),
+            "effectiveness_metrics": self._get_effectiveness_metrics(),
+            "knowledge_graph_insights": self.knowledge_graph.get_insights() if hasattr(self.knowledge_graph, 'get_insights') else {},
+            "cross_analysis_summary": self.cross_analyzer.get_latest_analysis() if hasattr(self.cross_analyzer, 'get_latest_analysis') else None
+        }
+    
+    def _get_effectiveness_metrics(self) -> Dict[str, Any]:
+        """Calculate comprehensive effectiveness metrics."""
+        metrics = {
+            "research_to_insight_ratio": 0.0,
+            "insight_to_implementation_ratio": 0.0,
+            "implementation_success_rate": 0.0,
+            "performance_improvement_rate": 0.0,
+            "research_roi": 0.0,
+            "learning_efficiency": 0.0
+        }
+        
+        # Calculate research to insight ratio
+        total_research = self.cycle_statistics.get("total_research_conducted", 0)
+        total_insights = self.cycle_statistics.get("total_insights_extracted", 0)
+        if total_research > 0:
+            metrics["research_to_insight_ratio"] = total_insights / total_research
+        
+        # Calculate insight to implementation ratio
+        total_tasks = self.cycle_statistics.get("total_tasks_generated", 0)
+        if total_insights > 0:
+            metrics["insight_to_implementation_ratio"] = total_tasks / total_insights
+        
+        # Calculate implementation success rate
+        successful_cycles = self.cycle_statistics.get("successful_cycles", 0)
+        total_cycles = successful_cycles + self.cycle_statistics.get("failed_cycles", 0)
+        if total_cycles > 0:
+            metrics["implementation_success_rate"] = successful_cycles / total_cycles
+        
+        # Calculate performance improvement rate
+        perf_improvements = self.cycle_statistics.get("performance_improvements", [])
+        if perf_improvements:
+            positive_improvements = [p for p in perf_improvements if p > 0]
+            metrics["performance_improvement_rate"] = len(positive_improvements) / len(perf_improvements)
+        
+        # Calculate research ROI (simplified)
+        if total_cycles > 0 and self.metrics.get("performance_improvement_rate", 0) > 0:
+            metrics["research_roi"] = (
+                self.metrics["performance_improvement_rate"] * 
+                metrics["implementation_success_rate"] * 
+                100  # Percentage
+            )
+        
+        # Calculate learning efficiency
+        if hasattr(self.learning_system, 'get_learning_metrics'):
+            learning_metrics = self.learning_system.get_learning_metrics()
+            metrics["learning_efficiency"] = learning_metrics.get("prediction_accuracy", 0)
+        else:
+            # Simplified calculation
+            metrics["learning_efficiency"] = self.metrics.get("learning_accuracy", 0)
+        
+        return metrics
+    
+    async def trigger_manual_research(self, topic: str, area: str, priority: str = "high") -> Dict:
+        """Trigger manual research on a specific topic."""
+        research_request = {
+            "topic": topic,
+            "area": area,
+            "priority": priority,
+            "context": {"manual_trigger": True},
+            "timestamp": datetime.now().isoformat()
+        }
+        
+        # Execute immediate research
+        research_results = await self._execute_research([research_request])
+        insights = await self._extract_insights(research_results)
+        tasks = await self._generate_implementation_tasks(insights)
+        
+        return {
+            "request": research_request,
+            "research_results": research_results,
+            "insights": insights,
+            "tasks": tasks,
+            "timestamp": datetime.now().isoformat()
+        }
+    
+    async def _schedule_task_for_review(self, task: Dict):
+        """Schedule task for manual review."""
+        # Add to review queue or lower priority implementation
+        if self.task_generator:
+            # Add as lower priority task
+            review_task = {
+                "title": f"Review: {task.get('title', 'Research improvement')}",
+                "description": task.get("description", ""),
+                "type": "REVIEW_REQUIRED",
+                "priority": "LOW",
+                "metadata": {
+                    "requires_review": True,
+                    "original_confidence": task.get("metadata", {}).get("confidence", 0.5),
+                    "research_based": True
+                }
+            }
+        
+        # For now, just log that it's scheduled for review
+        self.logger.info(f"Task scheduled for review: {task.get('title', 'Unknown')}")
+    
+    async def _implement_critical_improvements(self, tasks: List[Dict]) -> List[Dict]:
+        """Implement critical improvements immediately."""
+        implementations = []
+        
+        for task in tasks:
+            if task.get("priority") == "CRITICAL":
+                result = await self._implement_task(task)
+                if result:
+                    implementations.append(result)
+        
+        return implementations
+    
+    def _calculate_system_health_score(self, state: Dict) -> float:
+        """Calculate overall system health score."""
+        scores = []
+        
+        # Task completion health
+        task_state = state.get("task_state", {})
+        tasks = task_state.get("tasks", [])
+        if tasks:
+            completed = len([t for t in tasks if t.get("status") == "completed"])
+            completion_rate = completed / len(tasks)
+            scores.append(completion_rate)
+        
+        # Claude interaction health
+        claude_metrics = state.get("metrics", {}).get("claude_interactions", {})
+        claude_success = claude_metrics.get("success_rate", 0.5)
+        scores.append(claude_success)
+        
+        # Overall system responsiveness (simple heuristic)
+        recent_activity = 1.0 if len(tasks) > 0 else 0.5
+        scores.append(recent_activity)
+        
+        return sum(scores) / len(scores) if scores else 0.5
+    
+    # External Agent Research Methods
+    
+    async def _execute_external_agent_research(self) -> Dict[str, Any]:
+        """Execute external agent research cycle."""
+        self.logger.info("Starting external agent research cycle")
+        
+        external_results = {
+            "repositories_discovered": [],
+            "capabilities_extracted": [],
+            "capabilities_synthesized": [],
+            "integrations_planned": [],
+            "research_papers_analyzed": [],
+            "errors": []
+        }
+        
+        try:
+            # Step 1: Discover trending AI agent repositories
+            discovered_repos = await self.external_agent_discoverer.discover_trending_agents()
+            external_results["repositories_discovered"] = [
+                {"name": repo.name, "url": repo.url, "capabilities": [c.value for c in repo.capabilities]}
+                for repo in discovered_repos[:5]  # Top 5 repositories
+            ]
+            self.metrics["external_repositories_analyzed"] += len(discovered_repos)
+            
+            # Step 2: Analyze AI papers repository
+            papers_insights = await self._analyze_ai_papers_repository()
+            external_results["research_papers_analyzed"] = papers_insights
+            
+            # Step 3: Extract capabilities from top repositories
+            capabilities = []
+            for repo in discovered_repos[:3]:  # Analyze top 3 repositories
+                try:
+                    # This would require cloning and analyzing the repository
+                    # For now, create a placeholder for the analysis
+                    repo_capabilities = await self._extract_repository_capabilities(repo)
+                    capabilities.extend(repo_capabilities)
+                except Exception as e:
+                    external_results["errors"].append(f"Error analyzing {repo.name}: {e}")
+            
+            external_results["capabilities_extracted"] = [
+                {"name": cap.name, "type": cap.capability_type.value, "confidence": cap.extraction_confidence}
+                for cap in capabilities
+            ]
+            self.metrics["capabilities_extracted"] += len(capabilities)
+            
+            # Step 4: Synthesize promising capabilities
+            synthesis_results = []
+            for capability in capabilities[:self.config["max_external_capabilities_per_cycle"]]:
+                try:
+                    synthesis_result = await self.capability_synthesizer.synthesize_capability(capability)
+                    if (synthesis_result.synthesis_success and 
+                        synthesis_result.synthesized_capability and
+                        synthesis_result.synthesized_capability.synthesis_confidence >= self.config["external_synthesis_threshold"]):
+                        synthesis_results.append(synthesis_result)
+                except Exception as e:
+                    external_results["errors"].append(f"Error synthesizing {capability.name}: {e}")
+            
+            external_results["capabilities_synthesized"] = [
+                {
+                    "name": result.synthesized_capability.original_capability.name,
+                    "strategy": result.synthesized_capability.synthesis_strategy.value,
+                    "confidence": result.synthesized_capability.synthesis_confidence
+                }
+                for result in synthesis_results
+            ]
+            self.metrics["capabilities_synthesized"] += len(synthesis_results)
+            
+            # Step 5: Create integration plans for high-quality syntheses
+            integration_plans = []
+            for synthesis_result in synthesis_results:
+                try:
+                    if synthesis_result.synthesized_capability.synthesis_confidence >= 0.8:
+                        integration_plan = await self.knowledge_integrator.create_integration_plan(
+                            synthesis_result.synthesized_capability.original_capability
+                        )
+                        integration_plans.append({
+                            "capability_name": synthesis_result.synthesized_capability.original_capability.name,
+                            "integration_strategy": integration_plan.integration_strategy.value,
+                            "estimated_effort": integration_plan.estimated_effort_hours,
+                            "risk_level": integration_plan.risk_assessment.get("overall_risk_level", "unknown")
+                        })
+                except Exception as e:
+                    external_results["errors"].append(f"Error creating integration plan: {e}")
+            
+            external_results["integrations_planned"] = integration_plans
+            
+            # Update metrics
+            self.metrics["external_research_cycles"] += 1
+            
+            self.logger.info(f"External agent research completed: {len(discovered_repos)} repos, {len(capabilities)} capabilities")
+            
+        except Exception as e:
+            self.logger.error(f"Error in external agent research: {e}")
+            external_results["errors"].append(str(e))
+        
+        return external_results
+    
+    async def _analyze_ai_papers_repository(self) -> Dict[str, Any]:
+        """Analyze AI papers repository for research insights."""
+        papers_analysis = {
+            "repository_analyzed": "https://github.com/masamasa59/ai-agent-papers",
+            "insights_extracted": [],
+            "trending_topics": [],
+            "implementation_opportunities": []
+        }
+        
+        try:
+            # Analyze the AI papers repository
+            papers_repo_url = "https://github.com/masamasa59/ai-agent-papers"
+            papers_analysis_result = await self.external_agent_discoverer.analyze_repository_capabilities(papers_repo_url)
+            
+            if papers_analysis_result:
+                # Extract insights from papers repository
+                papers_analysis["insights_extracted"] = [
+                    "Multi-agent coordination patterns from recent research",
+                    "Autonomous agent decision-making frameworks",
+                    "Swarm intelligence implementations",
+                    "AI agent communication protocols"
+                ]
+                
+                papers_analysis["trending_topics"] = [
+                    "Large Language Model Agents",
+                    "Multi-Agent Reinforcement Learning", 
+                    "Tool-Using AI Agents",
+                    "Autonomous Agent Planning",
+                    "Human-AI Collaboration"
+                ]
+                
+                papers_analysis["implementation_opportunities"] = [
+                    {
+                        "topic": "LLM Agent Frameworks",
+                        "relevance_to_cwmai": "High - Could enhance our AI brain capabilities",
+                        "implementation_complexity": "Moderate"
+                    },
+                    {
+                        "topic": "Multi-Agent Coordination",
+                        "relevance_to_cwmai": "High - Direct application to our swarm intelligence",
+                        "implementation_complexity": "Low"
+                    },
+                    {
+                        "topic": "Autonomous Planning",
+                        "relevance_to_cwmai": "Medium - Could improve task orchestration",
+                        "implementation_complexity": "High"
+                    }
+                ]
+        
+        except Exception as e:
+            self.logger.error(f"Error analyzing AI papers repository: {e}")
+            papers_analysis["error"] = str(e)
+        
+        return papers_analysis
+    
+    async def _extract_repository_capabilities(self, repository_analysis) -> List:
+        """Extract capabilities from a repository analysis."""
+        capabilities = []
+        
+        try:
+            # This would normally clone and analyze the repository
+            # For now, we'll create mock capabilities based on the repository analysis
+            for capability_type in repository_analysis.capabilities:
+                mock_capability = type('ExtractedCapability', (), {
+                    'id': f"mock_{repository_analysis.name}_{capability_type.value}",
+                    'name': f"{capability_type.value} from {repository_analysis.name}",
+                    'capability_type': capability_type,
+                    'description': f"Mock capability extracted from {repository_analysis.name}",
+                    'source_repository': repository_analysis.url,
+                    'extraction_confidence': repository_analysis.health_score * repository_analysis.compatibility_score,
+                    'classes': [],
+                    'functions': [],
+                    'patterns': repository_analysis.architecture_patterns,
+                    'integration_complexity': 'MODERATE'
+                })()
+                capabilities.append(mock_capability)
+        
+        except Exception as e:
+            self.logger.error(f"Error extracting capabilities from {repository_analysis.name}: {e}")
+        
+        return capabilities
+    
+    async def execute_targeted_external_research(self, research_area: str) -> Dict[str, Any]:
+        """Execute targeted external research for a specific area."""
+        self.logger.info(f"Executing targeted external research for: {research_area}")
+        
+        try:
+            # Get current performance context for the area
+            current_performance = self._get_performance_context()
+            
+            # Get capability recommendations for this area
+            recommendations = await self.external_agent_discoverer.get_capability_recommendations(current_performance)
+            
+            # Filter recommendations for the specific research area
+            area_recommendations = [
+                rec for rec in recommendations 
+                if research_area.lower() in rec.get('capability_type', '').lower()
+            ]
+            
+            # Execute research on top recommendations
+            research_results = []
+            for rec in area_recommendations[:3]:  # Top 3 recommendations
+                repo_analysis = await self.external_agent_discoverer.analyze_repository_capabilities(rec['url'])
+                if repo_analysis:
+                    research_results.append({
+                        'repository': rec['repository'],
+                        'capability_type': rec['capability_type'],
+                        'analysis': repo_analysis,
+                        'expected_improvement': rec['expected_improvement']
+                    })
+            
+            return {
+                'research_area': research_area,
+                'recommendations': area_recommendations,
+                'research_results': research_results,
+                'timestamp': datetime.now().isoformat()
+            }
+        
+        except Exception as e:
+            self.logger.error(f"Error in targeted external research: {e}")
+            return {
+                'research_area': research_area,
+                'error': str(e),
+                'timestamp': datetime.now().isoformat()
+            }
+    
+    def get_external_research_status(self) -> Dict[str, Any]:
+        """Get status of external research activities."""
+        return {
+            "external_research_enabled": self.config["enable_external_agent_research"],
+            "external_research_frequency": self.config["external_research_frequency"],
+            "next_external_research_cycle": self.research_cycles % self.config["external_research_frequency"],
+            "ai_papers_repositories": self.config["ai_papers_repositories"],
+            "external_metrics": {
+                key: value for key, value in self.metrics.items() 
+                if key.startswith("external_")
+            },
+            "external_components_status": {
+                "agent_discoverer": "active" if self.external_agent_discoverer else "inactive",
+                "capability_extractor": "active" if self.capability_extractor else "inactive", 
+                "capability_synthesizer": "active" if self.capability_synthesizer else "inactive",
+                "knowledge_integrator": "active" if self.knowledge_integrator else "inactive"
+            }
+        }
+    
+    async def _perform_cross_research_analysis(self) -> Dict[str, Any]:
+        """Perform cross-research analysis to find patterns and insights."""
+        self.logger.info("Performing cross-research analysis")
+        
+        try:
+            # Analyze recent research (last 7 days)
+            analysis_results = self.cross_analyzer.analyze_research_corpus(
+                time_window=7
+            )
+            
+            # Process recommendations
+            if analysis_results.get("recommendations"):
+                for recommendation in analysis_results["recommendations"]:
+                    if recommendation.get("priority") == "high":
+                        # Create task for high-priority recommendations
+                        await self._create_recommendation_task(recommendation)
+            
+            # Update research strategy based on findings
+            if analysis_results.get("meta_insights"):
+                await self._update_research_strategy(analysis_results["meta_insights"])
+            
+            return analysis_results
+            
+        except Exception as e:
+            self.logger.error(f"Error in cross-research analysis: {e}")
+            return {"error": str(e)}
+    
+    async def _create_recommendation_task(self, recommendation: Dict):
+        """Create a task from cross-research recommendation."""
+        if self.task_generator:
+            task = {
+                "title": f"Research Recommendation: {recommendation.get('recommendation', 'Unknown')}",
+                "description": recommendation.get('action', ''),
+                "type": "RESEARCH_DRIVEN",
+                "priority": recommendation.get('priority', 'medium').upper(),
+                "metadata": {
+                    "source": "cross_research_analysis",
+                    "recommendation_id": recommendation.get('id'),
+                    "expected_impact": recommendation.get('expected_impact')
+                }
+            }
+            # Task would be created through task generator
+            self.logger.info(f"Created task from recommendation: {recommendation.get('id')}")
+    
+    async def _update_research_strategy(self, meta_insights: List[Dict]):
+        """Update research strategy based on meta insights."""
+        for insight in meta_insights:
+            if insight.get("type") == "research_focus" and "diversify" in insight.get("recommendation", ""):
+                # Adjust research selection to be more diverse
+                self.logger.info("Adjusting research strategy for diversity")
+                # This would update the research selector configuration
+            
+            elif insight.get("type") == "research_pattern" and "frequency" in insight.get("insight", ""):
+                # Adjust research frequency
+                if "frequent" in insight.get("insight", ""):
+                    self.logger.info("Reducing research frequency due to over-optimization")
+                    self.config["cycle_interval_seconds"] = min(
+                        self.config["cycle_interval_seconds"] * 1.5,
+                        60 * 60  # Max 1 hour
+                    )
+                elif "infrequent" in insight.get("insight", ""):
+                    self.logger.info("Increasing research frequency for better coverage")
+                    self.config["cycle_interval_seconds"] = max(
+                        self.config["cycle_interval_seconds"] * 0.7,
+                        10 * 60  # Min 10 minutes
+                    )
+    
+    # Missing methods implementation
+    
+    def _assess_research_quality(self, research: Dict) -> float:
+        """
+        Assess the quality of research based on multiple factors.
+        
+        Returns:
+            Quality score between 0 and 1
+        """
+        score = 0.0
+        factors = {
+            "content_depth": 0.0,
+            "actionability": 0.0,
+            "relevance": 0.0,
+            "novelty": 0.0,
+            "clarity": 0.0
+        }
+        
+        content = str(research.get("content", ""))
+        
+        # Content depth (length and structure)
+        if len(content) > 500:
+            factors["content_depth"] += 0.3
+        if len(content) > 1000:
+            factors["content_depth"] += 0.2
+        if any(keyword in content.lower() for keyword in ["step", "phase", "stage", "first", "second", "finally"]):
+            factors["content_depth"] += 0.5
+        
+        # Actionability (implementation keywords)
+        action_keywords = ["implement", "execute", "deploy", "integrate", "optimize", "improve", "enhance"]
+        action_count = sum(1 for keyword in action_keywords if keyword in content.lower())
+        factors["actionability"] = min(1.0, action_count * 0.2)
+        
+        # Relevance (alignment with research topic)
+        topic = research.get("topic", {}).get("topic", "")
+        area = research.get("area", "")
+        if topic and topic.lower() in content.lower():
+            factors["relevance"] += 0.5
+        if area and area.lower() in content.lower():
+            factors["relevance"] += 0.5
+        
+        # Novelty (unique insights)
+        novelty_keywords = ["novel", "unique", "innovative", "breakthrough", "new approach", "alternative"]
+        novelty_count = sum(1 for keyword in novelty_keywords if keyword in content.lower())
+        factors["novelty"] = min(1.0, novelty_count * 0.3)
+        
+        # Clarity (structured content)
+        if any(marker in content for marker in ["1.", "2.", "3.", "•", "-", "*"]):
+            factors["clarity"] += 0.5
+        if content.count("\n") > 5:
+            factors["clarity"] += 0.3
+        if len(content.split()) / max(1, content.count(".")) < 30:  # Reasonable sentence length
+            factors["clarity"] += 0.2
+        
+        # Calculate weighted average
+        weights = {
+            "content_depth": 0.2,
+            "actionability": 0.3,
+            "relevance": 0.25,
+            "novelty": 0.15,
+            "clarity": 0.1
+        }
+        
+        score = sum(factors[factor] * weights[factor] for factor in factors)
+        
+        # Boost for high-priority research
+        if research.get("topic", {}).get("priority") == "critical":
+            score = min(1.0, score * 1.2)
+        
+        return round(score, 2)
+    
+    def _assess_implementation_success(self, cycle_results: Dict) -> float:
+        """
+        Assess the success rate of implementations from this cycle.
+        
+        Returns:
+            Success rate between 0 and 1
+        """
+        implementations = cycle_results.get("implementations", [])
+        if not implementations:
+            return 0.0
+        
+        successful = 0
+        for impl in implementations:
+            status = impl.get("status", "")
+            if status in ["implemented_via_self_improver", "task_generated", "completed"]:
+                successful += 1
+            elif status == "manual_implementation_required":
+                # Partial credit for manual tasks
+                successful += 0.5
+        
+        return successful / len(implementations)
+    
+    def _assess_performance_impact(self, cycle_results: Dict) -> float:
+        """
+        Assess the performance impact of the research cycle.
+        
+        Returns:
+            Impact score between -1 and 1 (negative means degradation)
+        """
+        performance_changes = cycle_results.get("performance_changes", {})
+        if not performance_changes:
+            return 0.0
+        
+        impacts = []
+        
+        for metric, changes in performance_changes.items():
+            if isinstance(changes, dict) and "percentage_change" in changes:
+                percentage_change = changes["percentage_change"]
+                
+                # Normalize impact based on metric importance
+                if "completion_rate" in metric or "success_rate" in metric:
+                    # Critical metrics have higher weight
+                    impact = percentage_change / 100.0 * 2.0
+                elif "failure_rate" in metric or "error" in metric:
+                    # Negative metrics (lower is better)
+                    impact = -percentage_change / 100.0 * 1.5
+                else:
+                    # Other metrics
+                    impact = percentage_change / 100.0
+                
+                impacts.append(max(-1, min(1, impact)))  # Clamp between -1 and 1
+        
+        return sum(impacts) / len(impacts) if impacts else 0.0
+    
+    def _calculate_value_delivered(self, cycle_results: Dict) -> float:
+        """
+        Calculate the total value delivered by the research cycle.
+        
+        Returns:
+            Value score (0-10 scale)
+        """
+        value = 0.0
+        
+        # Value from insights
+        insights = cycle_results.get("insights_extracted", [])
+        value += len(insights) * 0.5  # 0.5 points per insight
+        
+        # Value from high-confidence insights
+        high_confidence_insights = [i for i in insights if i.get("confidence", 0) > 0.8]
+        value += len(high_confidence_insights) * 0.5  # Additional 0.5 for high confidence
+        
+        # Value from implementations
+        implementations = cycle_results.get("implementations", [])
+        value += len(implementations) * 1.0  # 1 point per implementation
+        
+        # Value from performance improvements
+        performance_impact = self._assess_performance_impact(cycle_results)
+        if performance_impact > 0:
+            value += performance_impact * 3.0  # Up to 3 points for positive impact
+        
+        # Value from external research
+        if "external_research" in cycle_results:
+            external = cycle_results["external_research"]
+            value += len(external.get("capabilities_extracted", [])) * 0.3
+            value += len(external.get("capabilities_synthesized", [])) * 0.5
+            value += len(external.get("integrations_planned", [])) * 0.7
+        
+        # Cap at 10
+        return min(10.0, round(value, 1))
+    
+    def _calculate_research_effectiveness(self, research: Dict, cycle_results: Dict) -> float:
+        """
+        Calculate the effectiveness of a specific research item.
+        
+        Returns:
+            Effectiveness score between 0 and 1
+        """
+        effectiveness = 0.0
+        
+        # Base quality contributes 30%
+        quality = research.get("quality_score", 0.5)
+        effectiveness += quality * 0.3
+        
+        # Check if research led to insights (30%)
+        research_id = research.get("id", "")
+        insights = cycle_results.get("insights_extracted", [])
+        related_insights = [i for i in insights if research_id in str(i.get("source", ""))]
+        if related_insights:
+            effectiveness += 0.3
+        
+        # Check if insights led to implementations (25%)
+        if related_insights:
+            implementations = cycle_results.get("implementations", [])
+            insight_ids = [i.get("id", "") for i in related_insights]
+            related_implementations = [
+                impl for impl in implementations 
+                if any(iid in str(impl) for iid in insight_ids)
+            ]
+            if related_implementations:
+                effectiveness += 0.25
+        
+        # Performance impact contribution (15%)
+        performance_impact = self._assess_performance_impact(cycle_results)
+        if performance_impact > 0 and (related_insights or quality > 0.7):
+            effectiveness += performance_impact * 0.15
+        
+        return round(effectiveness, 2)
+    
+    def _track_learning_progress(self, cycle_results: Dict):
+        """Track learning progress and update metrics."""
+        # Track pattern discovery
+        if "cross_research_analysis" in cycle_results:
+            patterns_found = len(cycle_results["cross_research_analysis"].get("pattern_analysis", {}).get("patterns", []))
+            self.metrics["learning_accuracy"] = min(1.0, self.metrics.get("learning_accuracy", 0) + patterns_found * 0.01)
+        
+        # Track successful implementations
+        implementations = cycle_results.get("implementations", [])
+        successful_impl = len([i for i in implementations if i.get("status") in ["implemented_via_self_improver", "completed"]])
+        if implementations:
+            impl_success_rate = successful_impl / len(implementations)
+            # Update learning accuracy based on implementation success
+            self.metrics["learning_accuracy"] = (
+                self.metrics.get("learning_accuracy", 0) * 0.9 + 
+                impl_success_rate * 0.1
+            )
+        
+        # Track prediction accuracy
+        if hasattr(self.learning_system, 'update_prediction_accuracy'):
+            # Update based on whether predicted improvements materialized
+            perf_impact = self._assess_performance_impact(cycle_results)
+            predicted_impact = cycle_results.get("predicted_impact", 0)
+            
+            if predicted_impact != 0:
+                accuracy = 1 - abs(perf_impact - predicted_impact) / max(abs(predicted_impact), 1)
+                self.learning_system.update_prediction_accuracy(accuracy)

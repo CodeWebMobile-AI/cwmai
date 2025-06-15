@@ -29,6 +29,7 @@ from intelligent_task_generator import IntelligentTaskGenerator
 from dynamic_validator import DynamicTaskValidator
 from dynamic_swarm import DynamicSwarmIntelligence
 from project_creator import ProjectCreator
+from repository_exclusion import should_process_repo, RepositoryExclusion
 
 
 class DynamicGodModeController(GodModeController):
@@ -95,9 +96,14 @@ class DynamicGodModeController(GodModeController):
             from multi_repo_coordinator import MultiRepoCoordinator
             self.coordinator = MultiRepoCoordinator(github_token, max_concurrent=len(self.discovered_repositories))
             
-            # Add discovered repositories to coordinator
+            # Add discovered repositories to coordinator (excluding CWMAI)
             for project_id, project_data in self.discovered_repositories.items():
                 if project_data.get('clone_url'):
+                    repo_name = project_data.get('full_name', project_data.get('name', ''))
+                    if not should_process_repo(repo_name):
+                        self.logger.info(f"Skipping excluded repository: {repo_name}")
+                        continue
+                    
                     try:
                         self.coordinator.add_repository(project_data['clone_url'])
                         self.logger.info(f"Added repository {project_data['name']} to coordinator")
@@ -267,7 +273,7 @@ class DynamicGodModeController(GodModeController):
     
     async def _generate_intelligent_tasks(self, context: Dict[str, Any],
                                         swarm_analysis: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate tasks using intelligent task generator.
+        """Generate tasks using repository-first approach.
         
         Args:
             context: System context
@@ -276,7 +282,7 @@ class DynamicGodModeController(GodModeController):
         Returns:
             Generated tasks
         """
-        self.logger.info("Generating intelligent tasks")
+        self.logger.info("Generating intelligent tasks using repository-first approach")
         
         # Add swarm insights to context
         enhanced_context = context.copy()
@@ -285,13 +291,80 @@ class DynamicGodModeController(GodModeController):
             'collective_review', {}
         ).get('top_suggestions', [])
         
-        # Generate multiple diverse tasks
-        tasks = await self.task_generator.generate_multiple_tasks(
-            enhanced_context,
-            count=min(5, self.config.max_parallel_operations)
-        )
+        # Get available repositories
+        available_repos = self._get_available_repositories(enhanced_context)
         
-        self.logger.info(f"Generated {len(tasks)} intelligent tasks")
+        # If no repositories are available, generate NEW_PROJECT tasks
+        if not available_repos:
+            self.logger.info("No repositories available - generating NEW_PROJECT tasks")
+            return await self._generate_new_project_tasks(enhanced_context, min(2, self.config.max_parallel_operations))
+        
+        # Dynamically adjust task_count based on available repositories
+        max_tasks = min(3, self.config.max_parallel_operations)
+        task_count = min(max_tasks, len(available_repos))
+        
+        tasks = []
+        used_repositories = enhanced_context.get('selected_repositories', [])
+        
+        # Repository-first approach: select repos, analyze, then generate tasks
+        for i in range(task_count):
+            try:
+                # Filter out already used repositories
+                remaining_repos = []
+                for repo in available_repos:
+                    repo_name = repo.get('full_name', repo.get('name', ''))
+                    if repo_name not in used_repositories:
+                        remaining_repos.append(repo)
+                
+                # Return early if repositories are exhausted
+                if not remaining_repos:
+                    self.logger.info(f"All available repositories used. Generated {len(tasks)} tasks.")
+                    break
+                
+                # 1. Select repository intelligently
+                repo_selection = await self.ai_brain.select_repository_for_task({
+                    **enhanced_context,
+                    'active_projects': remaining_repos
+                })
+                
+                if not repo_selection:
+                    # Generate NEW_PROJECT task as fallback
+                    new_project_task = await self._generate_single_new_project_task(enhanced_context)
+                    if new_project_task:
+                        tasks.append(new_project_task)
+                    continue
+                
+                # 2. Analyze the selected repository
+                from repository_analyzer import RepositoryAnalyzer
+                analyzer = RepositoryAnalyzer()
+                repo_analysis = await analyzer.analyze_repository(repo_selection['repository'])
+                
+                # 3. Generate task specific to this repository
+                task = await self.task_generator.generate_task_for_repository(
+                    repo_selection['repository'],
+                    repo_analysis,
+                    enhanced_context
+                )
+                
+                tasks.append(task)
+                
+                # Update context to avoid selecting same repo repeatedly
+                if 'selected_repositories' not in enhanced_context:
+                    enhanced_context['selected_repositories'] = []
+                enhanced_context['selected_repositories'].append(repo_selection['repository'])
+                used_repositories.append(repo_selection['repository'])
+                
+            except Exception as e:
+                self.logger.warning(f"Error generating task {i+1}: {e}")
+                continue
+        
+        # If we couldn't generate enough tasks, add NEW_PROJECT tasks
+        if len(tasks) < task_count:
+            new_projects_needed = task_count - len(tasks)
+            new_project_tasks = await self._generate_new_project_tasks(enhanced_context, new_projects_needed)
+            tasks.extend(new_project_tasks)
+        
+        self.logger.info(f"Generated {len(tasks)} tasks ({len([t for t in tasks if t.get('repository')])} repository-specific, {len([t for t in tasks if t.get('type') == 'NEW_PROJECT'])} new projects)")
         
         return tasks
     
@@ -308,8 +381,12 @@ class DynamicGodModeController(GodModeController):
         """
         self.logger.info(f"Validating {len(tasks)} tasks")
         
+        # Add existing tasks to context for deduplication
+        validation_context = context.copy()
+        validation_context['existing_tasks'] = self._get_existing_tasks()
+        
         # Validate as batch for relationship checking
-        validations = await self.task_validator.validate_batch(tasks, context)
+        validations = await self.task_validator.validate_batch(tasks, validation_context)
         
         validated_tasks = []
         
@@ -524,10 +601,13 @@ class DynamicGodModeController(GodModeController):
             return super()._execute_operation({'task': task})
         else:
             # Create issue for manual implementation
+            # Note: For system improvements, create issue without target project
+            # to avoid self-reference loops
             issue = self.task_manager.create_task(
                 task_type=TaskType.REFACTOR,  # Use refactor for improvements
                 title=task.get('title', 'AI System Improvement'),
-                description=task.get('description', '')
+                description=task.get('description', ''),
+                target_project=task.get('target_project')  # Let task manager handle None properly
             )
             
             return {
@@ -676,6 +756,84 @@ class DynamicGodModeController(GodModeController):
         
         self.state_manager.save_state_locally(state)
     
+    def _get_available_repositories(self, context: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Get list of available repositories for task generation.
+        
+        Args:
+            context: System context
+            
+        Returns:
+            List of available repositories
+        """
+        projects = context.get('active_projects', [])
+        
+        # Convert dict to list if needed
+        if isinstance(projects, dict):
+            projects = list(projects.values())
+        
+        # Filter for eligible repositories
+        from repository_exclusion import should_process_repo
+        eligible_repos = []
+        for proj in projects:
+            repo_name = proj.get('full_name', proj.get('name', ''))
+            if should_process_repo(repo_name) and repo_name:
+                eligible_repos.append(proj)
+        
+        return eligible_repos
+    
+    async def _generate_new_project_tasks(self, context: Dict[str, Any], 
+                                         count: int) -> List[Dict[str, Any]]:
+        """Generate NEW_PROJECT tasks when no repositories exist.
+        
+        Args:
+            context: System context
+            count: Number of tasks to generate
+            
+        Returns:
+            List of NEW_PROJECT tasks
+        """
+        tasks = []
+        for i in range(count):
+            task = await self._generate_single_new_project_task(context)
+            if task:
+                tasks.append(task)
+        return tasks
+    
+    async def _generate_single_new_project_task(self, context: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        """Generate a single NEW_PROJECT task.
+        
+        Args:
+            context: System context
+            
+        Returns:
+            NEW_PROJECT task or None
+        """
+        try:
+            # Use the task generator's built-in method for NEW_PROJECT tasks
+            task = await self.task_generator._generate_new_project_task(context)
+            return task
+        except Exception as e:
+            self.logger.warning(f"Failed to generate NEW_PROJECT task: {e}")
+        
+        return None
+    
+    def _get_existing_tasks(self) -> List[Dict[str, Any]]:
+        """Get list of existing tasks from task state.
+        
+        Returns:
+            List of existing tasks
+        """
+        try:
+            task_state_path = 'task_state.json'
+            if os.path.exists(task_state_path):
+                with open(task_state_path, 'r') as f:
+                    task_state = json.load(f)
+                    return task_state.get('tasks', [])
+        except Exception as e:
+            self.logger.warning(f"Could not load existing tasks: {e}")
+        
+        return []
+    
     def _get_active_projects(self) -> List[Dict[str, Any]]:
         """Get list of active projects including discovered repositories.
         
@@ -684,9 +842,15 @@ class DynamicGodModeController(GodModeController):
         """
         projects = []
         
-        # Add discovered repositories from organization
+        # Add discovered repositories from organization (excluding CWMAI)
         for project_id, project_data in self.discovered_repositories.items():
             if project_data.get('status') == 'active':
+                repo_name = project_data.get('full_name', project_data.get('name', project_id))
+                
+                # Skip excluded repositories
+                if not should_process_repo(repo_name):
+                    continue
+                
                 projects.append({
                     'name': project_data.get('name', project_id),
                     'full_name': project_data.get('full_name', project_id),

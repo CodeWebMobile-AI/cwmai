@@ -50,8 +50,21 @@ fetch_secret() {
     
     print_status $BLUE "🔐 Fetching $secret_name..."
     
-    # Try to get the secret value
+    # Try to get the secret value from organization
     local secret_value
+    if secret_value=$(gh secret list --org "CodeWebMobile-AI" --json name,visibility | jq -r ".[] | select(.name==\"$secret_name\") | .name" 2>/dev/null); then
+        if [[ "$secret_value" == "$secret_name" ]]; then
+            print_status $GREEN "✅ $secret_name: Found in organization"
+            
+            # Note: GitHub CLI cannot retrieve secret values for security reasons
+            # We can only confirm the secret exists
+            print_status $YELLOW "⚠️  Cannot retrieve secret value via CLI (GitHub security restriction)"
+            print_status $BLUE "💡 The secret exists and will be available in Codespaces automatically"
+            return 0
+        fi
+    fi
+    
+    # Also check repository secrets as fallback
     if secret_value=$(gh secret list --repo "$REPO_NAME" --json name,visibility | jq -r ".[] | select(.name==\"$secret_name\") | .name" 2>/dev/null); then
         if [[ "$secret_value" == "$secret_name" ]]; then
             print_status $GREEN "✅ $secret_name: Found in repository"
@@ -123,9 +136,10 @@ show_setup_instructions() {
     print_status $BLUE "📋 Setup Instructions"
     echo ""
     echo "For Codespaces (Recommended):"
-    echo "1. Go to your GitHub repository: https://github.com/$REPO_NAME"
-    echo "2. Settings → Secrets and variables → Codespaces"
-    echo "3. Add the following secrets:"
+    echo "1. Go to your GitHub organization or repository"
+    echo "   Organization: https://github.com/organizations/CodeWebMobile-AI/settings/secrets/codespaces"
+    echo "   Repository: https://github.com/$REPO_NAME/settings/secrets/codespaces"
+    echo "2. Add the following secrets:"
     echo "   • ANTHROPIC_API_KEY (required)"
     echo "   • CLAUDE_PAT (required)"
     echo "   • OPENAI_API_KEY (optional)"

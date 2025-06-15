@@ -1,0 +1,44 @@
+{
+  "charter": {
+    "constraints": [
+      "maintain_quality",
+      "ensure_security"
+    ],
+    "primary_goal": "innovation",
+    "secondary_goal": "community_engagement"
+  },
+  "external_context": {
+    "last_updated": "2025-06-08T23:22:27.230792+00:00",
+    "market_trends": [],
+    "security_alerts": [],
+    "technology_updates": []
+  },
+  "last_updated": "2025-06-13T09:11:20.159594+00:00",
+  "metrics": {
+    "cpu_usage": 22.8,
+    "health_score": 100.0,
+    "last_updated": "2025-06-13T09:08:26.468978+00:00",
+    "memory_usage": 43.9,
+    "resource_efficiency": 0.688
+  },
+  "projects": {},
+  "repository_discovery": {
+    "discovery_source": "github_organization",
+    "last_discovery": "2025-06-09T11:15:55.714561+00:00",
+    "organization": "CodeWebMobile-AI",
+    "repositories_found": 0,
+    "last_cleanup": "2025-06-13T09:11:20.159621+00:00"
+  },
+  "system_performance": {
+    "failed_actions": 0,
+    "learning_metrics": {
+      "decision_accuracy": 0.0,
+      "goal_achievement": 0.0,
+      "resource_efficiency": 0.0
+    },
+    "successful_actions": 0,
+    "total_cycles": 0
+  },
+  "task_queue": [],
+  "version": "1.0.0"
+}

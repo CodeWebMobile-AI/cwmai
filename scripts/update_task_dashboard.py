@@ -15,6 +15,7 @@ import matplotlib
 matplotlib.use('Agg')  # Use non-interactive backend
 import io
 import base64
+from repository_exclusion import should_process_repo, filter_excluded_repos
 
 
 class TaskDashboardUpdater:

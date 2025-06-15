@@ -1,0 +1,1656 @@
+Warning: Duplicate exclusion entry for cwmai.git
+Repository exclusion configuration valid: 5 repositories excluded
+Warning: Duplicate exclusion entry for cwmai.git
+Repository exclusion configuration valid: 5 repositories excluded
+
+    ╔═══════════════════════════════════════════════════════════════╗
+    ║                 CONTINUOUS 24/7 AI SYSTEM                    ║
+    ║                                                               ║
+    ║  🚀 Never-stopping intelligent worker                        ║
+    ║  ⚡ Parallel processing with smart work discovery            ║
+    ║  🔄 Event-driven continuous operation                        ║
+    ║  📊 Real-time performance monitoring                         ║
+    ║                                                               ║
+    ║  Press Ctrl+C to shutdown gracefully                         ║
+    ╚═══════════════════════════════════════════════════════════════╝
+    
+2025-06-14 11:53:50,408 - __main__ - INFO - ================================================================================
+2025-06-14 11:53:50,409 - __main__ - INFO - 🚀 STARTING CONTINUOUS 24/7 AI SYSTEM
+2025-06-14 11:53:50,409 - __main__ - INFO - Mode: development
+2025-06-14 11:53:50,410 - __main__ - INFO - Workers: 10
+2025-06-14 11:53:50,410 - __main__ - INFO - Parallel: True
+2025-06-14 11:53:50,410 - __main__ - INFO - Research: False
+2025-06-14 11:53:50,410 - __main__ - INFO - Round-Robin AI: False
+2025-06-14 11:53:50,411 - __main__ - INFO - Worker Monitor: True
+2025-06-14 11:53:50,411 - __main__ - INFO - Started at: 2025-06-14 11:53:50.411583+00:00
+2025-06-14 11:53:50,418 - continuous_orchestrator - INFO - ✓ Using Redis lock-free state manager
+2025-06-14 11:53:50,419 - continuous_orchestrator - INFO - ✓ Using Redis-enabled state manager
+Discovering repositories in CodeWebMobile-AI organization...
+Skipping excluded repository: CodeWebMobile-AI/.github
+Skipping excluded repository: CodeWebMobile-AI/cwmai
+✓ Discovered repository: project-analytics-dashboard
+✓ Discovered repository: business-analytics-dashboard
+✓ Discovered repository: summarize-ai-mobile
+✓ Discovered repository: brand-guardian-ai
+✓ Discovered repository: reputation-ai
+✓ Discovered repository: eco-track-ai
+✓ Discovered repository: ai-powered-inventory-sync
+✓ Discovered repository: community-connect-platform
+Successfully discovered 8 repositories
+2025-06-14 11:54:00,089 - RedisEnabledStateManager - INFO - save_state_locally called from:
+2025-06-14 11:54:00,092 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/run_continuous_ai.py", line 551, in <module>
+    main()
+2025-06-14 11:54:00,092 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/run_continuous_ai.py", line 542, in main
+    asyncio.run(run_continuous_system(args))
+2025-06-14 11:54:00,093 - RedisEnabledStateManager - DEBUG -   File "/home/vscode/.local/lib/python3.11/site-packages/nest_asyncio.py", line 30, in run
+    return loop.run_until_complete(task)
+2025-06-14 11:54:00,093 - RedisEnabledStateManager - DEBUG -   File "/home/vscode/.local/lib/python3.11/site-packages/nest_asyncio.py", line 92, in run_until_complete
+    self._run_once()
+2025-06-14 11:54:00,093 - RedisEnabledStateManager - DEBUG -   File "/home/vscode/.local/lib/python3.11/site-packages/nest_asyncio.py", line 133, in _run_once
+    handle._run()
+2025-06-14 11:54:00,093 - RedisEnabledStateManager - DEBUG -   File "/usr/local/lib/python3.11/asyncio/events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+2025-06-14 11:54:00,093 - RedisEnabledStateManager - DEBUG -   File "/usr/local/lib/python3.11/asyncio/tasks.py", line 277, in __step
+    result = coro.send(None)
+2025-06-14 11:54:00,093 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/run_continuous_ai.py", line 378, in run_continuous_system
+    success = await runner.start()
+2025-06-14 11:54:00,094 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/run_continuous_ai.py", line 115, in start
+    self.orchestrator = ContinuousOrchestrator(
+2025-06-14 11:54:00,094 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/continuous_orchestrator.py", line 90, in __init__
+    self.system_state = self.state_manager.load_state_with_repository_discovery()
+2025-06-14 11:54:00,094 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/state_manager.py", line 303, in load_state_with_repository_discovery
+    self.save_state_locally(state)
+2025-06-14 11:54:00,094 - RedisEnabledStateManager - INFO - Saving state with 8 repositories: ['ai-powered-inventory-sync', 'brand-guardian-ai', 'business-analytics-dashboard', 'community-connect-platform', 'eco-track-ai', 'project-analytics-dashboard', 'reputation-ai', 'summarize-ai-mobile']
+✓ Integrated 8 repositories into system state
+2025-06-14 11:54:00,096 - scripts.http_ai_client.HTTPAIClient - INFO - HTTPAIClient initialized with 4 available providers
+2025-06-14 11:54:00,096 - scripts.http_ai_client.HTTPAIClient - DEBUG - Provider anthropic: AVAILABLE
+2025-06-14 11:54:00,096 - scripts.http_ai_client.HTTPAIClient - DEBUG - Provider openai: AVAILABLE
+2025-06-14 11:54:00,096 - scripts.http_ai_client.HTTPAIClient - DEBUG - Provider gemini: AVAILABLE
+2025-06-14 11:54:00,096 - scripts.http_ai_client.HTTPAIClient - DEBUG - Provider deepseek: AVAILABLE
+2025-06-14 11:54:00,096 - scripts.http_ai_client.HTTPAIClient - INFO - ✓ AI response cache enabled (type: redis)
+2025-06-14 11:54:00,097 - continuous_orchestrator - INFO - ✓ Using Redis-based work queue
+🔧 TaskManager initialization:
+   - GitHub token exists: True
+   - Repository name: None (no default)
+   - GitHub client created: True
+   - Repository object created: False
+✓ AI content generator initialized successfully
+✓ Decomposition system initialized successfully
+2025-06-14 11:54:00,099 - continuous_orchestrator - INFO - ✓ AI content generator initialized for enhanced work generation
+2025-06-14 11:54:00,100 - continuous_orchestrator - INFO - ✓ Using Redis-based task persistence
+2025-06-14 11:54:00,101 - continuous_orchestrator - INFO - 🔬 Research Evolution Engine DISABLED by configuration
+2025-06-14 11:54:00,101 - __main__ - INFO - 📊 Worker monitoring started
+2025-06-14 11:54:00,101 - continuous_orchestrator - INFO - Starting 24/7 Continuous AI Orchestrator
+2025-06-14 11:54:00,101 - continuous_orchestrator - INFO - Initializing orchestrator components...
+2025-06-14 11:54:00,102 - repository_cleanup_manager - INFO - Starting automatic repository cleanup check...
+2025-06-14 11:54:00,103 - repository_cleanup_manager - INFO - No deleted repositories detected. System is clean.
+2025-06-14 11:54:00,103 - scripts.redis_integration.redis_client - INFO - Connecting to Redis (standalone) at localhost:6379
+2025-06-14 11:54:00,104 - scripts.redis_integration.redis_connection_pool - INFO - Connection pool manager started
+2025-06-14 11:54:00,104 - scripts.redis_integration.redis_connection_pool - INFO - Creating Redis connection: cfaa4ec2-acb0-4ef8-9bea-9998a5c3e84f
+2025-06-14 11:54:00,104 - scripts.redis_integration.redis_connection_pool - INFO - Created connection pool with limit: 5000
+2025-06-14 11:54:00,114 - WorkerMonitor - INFO - Worker Status Monitor initialized
+2025-06-14 11:54:00,114 - WorkerMonitor - INFO - Initializing monitoring components...
+2025-06-14 11:54:00,119 - scripts.redis_integration.redis_connection_pool - INFO - Redis connection established: cfaa4ec2-acb0-4ef8-9bea-9998a5c3e84f (active: 1)
+2025-06-14 11:54:00,119 - scripts.redis_integration.redis_client - INFO - Redis health monitoring started
+2025-06-14 11:54:00,120 - scripts.redis_integration.redis_client - INFO - Redis connection established (ID: cfaa4ec2-acb0-4ef8-9bea-9998a5c3e84f, pooled: True)
+2025-06-14 11:54:00,120 - WorkerMonitor - INFO - Created singleton Redis client
+2025-06-14 11:54:00,124 - scripts.redis_lockfree_state_manager - INFO - Lock-free state manager initialized
+2025-06-14 11:54:00,125 - continuous_orchestrator - INFO - ✓ Redis lock-free state manager initialized
+2025-06-14 11:54:00,125 - scripts.redis_integration.redis_pubsub_manager - INFO - Redis Pub/Sub manager started (ID: 5c061ae1-ea8e-4abc-8bc2-0de39f3739ed)
+2025-06-14 11:54:00,125 - scripts.redis_integration.redis_connection_pool - INFO - Creating Redis connection: shared_pubsub
+2025-06-14 11:54:00,126 - scripts.redis_integration.redis_connection_pool - INFO - Redis connection established: shared_pubsub (active: 2)
+2025-06-14 11:54:00,126 - scripts.redis_integration.redis_connection_pool - DEBUG - Created shared Pub/Sub connection
+2025-06-14 11:54:00,127 - scripts.redis_integration.redis_pubsub_manager - INFO - Subscribed to channel: state_changes:cwmai_orchestrator
+2025-06-14 11:54:00,129 - scripts.redis_integration.redis_state_manager - INFO - State manager started for component cwmai_orchestrator
+2025-06-14 11:54:00,130 - scripts.redis_integration.redis_state_manager - INFO - State change listener started
+2025-06-14 11:54:00,142 - scripts.redis_integration.redis_client - DEBUG - Ignoring transient error for circuit breaker: ResponseError: BUSYGROUP Consumer Group name already exists
+2025-06-14 11:54:00,144 - scripts.redis_integration.redis_client - DEBUG - Consumer group cwmai_workers already exists for stream cwmai:work_queue:critical
+2025-06-14 11:54:00,144 - scripts.redis_work_queue - DEBUG - Created consumer group for cwmai:work_queue:critical
+2025-06-14 11:54:00,153 - scripts.redis_integration.redis_client - DEBUG - Consumer group cwmai_workers already exists for stream cwmai:work_queue:high
+2025-06-14 11:54:00,154 - scripts.redis_work_queue - DEBUG - Created consumer group for cwmai:work_queue:high
+2025-06-14 11:54:00,155 - scripts.redis_state_adapter - INFO - Pushing local state to Redis (newer than Redis)
+2025-06-14 11:54:00,159 - scripts.redis_integration.redis_client - DEBUG - Consumer group cwmai_workers already exists for stream cwmai:work_queue:medium
+2025-06-14 11:54:00,161 - scripts.redis_work_queue - DEBUG - Created consumer group for cwmai:work_queue:medium
+2025-06-14 11:54:00,166 - scripts.redis_integration.redis_client - DEBUG - Consumer group cwmai_workers already exists for stream cwmai:work_queue:low
+2025-06-14 11:54:00,168 - scripts.redis_work_queue - DEBUG - Created consumer group for cwmai:work_queue:low
+2025-06-14 11:54:00,172 - scripts.redis_integration.redis_client - DEBUG - Consumer group cwmai_workers already exists for stream cwmai:work_queue:background
+2025-06-14 11:54:00,174 - scripts.redis_work_queue - DEBUG - Created consumer group for cwmai:work_queue:background
+2025-06-14 11:54:00,175 - scripts.redis_work_queue - INFO - Redis work queue initialized
+2025-06-14 11:54:00,176 - WorkerMonitor - INFO - Redis components initialized successfully
+2025-06-14 11:54:00,178 - WorkerMonitor - INFO - Worker coordinator created (without Pub/Sub)
+2025-06-14 11:54:00,179 - __main__ - INFO - Worker monitor initialized with Redis connections
+2025-06-14 11:54:00,181 - scripts.redis_integration.redis_pubsub_manager - DEBUG - Published message to state_changes:cwmai_orchestrator (subscribers: 1)
+2025-06-14 11:54:00,181 - WorkerMonitor - INFO - Found 0 active workers
+2025-06-14 11:54:00,183 - scripts.redis_state_adapter - INFO - Redis state adapter initialized for component cwmai_orchestrator
+2025-06-14 11:54:00,184 - continuous_orchestrator - INFO - ✓ Redis state manager initialized
+2025-06-14 11:54:00,185 - redis_integration.redis_client - INFO - Connecting to Redis (standalone) at localhost:6379
+2025-06-14 11:54:00,186 - redis_integration.redis_client - INFO - Redis health monitoring started
+2025-06-14 11:54:00,190 - redis_integration.redis_client - INFO - Redis connection established (ID: d1a90321-923e-4f8d-854a-bf2b411bd9d8, pooled: True)
+2025-06-14 11:54:00,191 - redis_integration.redis_pubsub_manager - INFO - Redis Pub/Sub manager started (ID: 9c0b6fa6-d1f8-4e5b-9d34-03a9db291dfe)
+2025-06-14 11:54:00,197 - redis_integration.redis_pubsub_manager - INFO - Subscribed to channel: cwmai:workers:global
+2025-06-14 11:54:00,198 - redis_integration.redis_pubsub_manager - INFO - Subscribed to pattern: cwmai:workers:*
+2025-06-14 11:54:00,198 - redis_worker_coordinator - INFO - Worker coordinator initialized for orchestrator
+2025-06-14 11:54:00,200 - continuous_orchestrator - INFO - ✓ Redis worker coordination enabled
+2025-06-14 11:54:00,205 - redis_integration.redis_locks_manager - INFO - Redis Locks manager started (instance: 03d512f0-02d1-49f5-9033-fb5934bfff6c)
+2025-06-14 11:54:00,206 - continuous_orchestrator - INFO - ✓ Redis distributed locks enabled
+2025-06-14 11:54:00,212 - redis_event_analytics.RedisEventAnalytics - INFO - Initializing Redis Event Analytics: analytics_5bdc70ce
+2025-06-14 11:54:00,214 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Initializing Redis Intelligence Hub: intelligence_hub_cb59bb3b
+2025-06-14 11:54:00,216 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Initialized stream: intelligence:workers:intelligence_hub_cb59bb3b
+2025-06-14 11:54:00,217 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Initialized stream: intelligence:tasks:intelligence_hub_cb59bb3b
+2025-06-14 11:54:00,218 - __main__ - INFO - 📊 Worker Status: 0/0 active, 0 idle | Queue: 0 tasks | Completed: 0
+2025-06-14 11:54:00,219 - WorkerMonitor - INFO - ================================================================================
+2025-06-14 11:54:00,219 - WorkerMonitor - INFO - WORKER STATUS UPDATE - 2025-06-14T11:54:00.180839+00:00
+2025-06-14 11:54:00,219 - WorkerMonitor - INFO - ================================================================================
+2025-06-14 11:54:00,219 - WorkerMonitor - INFO - System Health:
+2025-06-14 11:54:00,219 - WorkerMonitor - INFO -   Overall: 0.0%
+2025-06-14 11:54:00,219 - WorkerMonitor - INFO -   Worker Health: 0.0%
+2025-06-14 11:54:00,219 - WorkerMonitor - INFO -   Queue Health: 0.0%
+2025-06-14 11:54:00,219 - WorkerMonitor - INFO -   Active Workers: 0/0
+2025-06-14 11:54:00,219 - WorkerMonitor - INFO -   Idle Workers: 0/0
+2025-06-14 11:54:00,219 - WorkerMonitor - INFO - 
+Queue Status:
+2025-06-14 11:54:00,219 - WorkerMonitor - INFO -   Total Queued: 0
+2025-06-14 11:54:00,219 - WorkerMonitor - INFO -   No items in queue
+2025-06-14 11:54:00,220 - WorkerMonitor - INFO - 
+Worker Details:
+2025-06-14 11:54:00,220 - WorkerMonitor - INFO -   No workers currently active
+2025-06-14 11:54:00,220 - WorkerMonitor - INFO - 
+Active Tasks: None
+2025-06-14 11:54:00,220 - WorkerMonitor - INFO - 
+================================================================================
+
+2025-06-14 11:54:00,220 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Initialized stream: intelligence:ai:intelligence_hub_cb59bb3b
+2025-06-14 11:54:00,221 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Initialized stream: intelligence:performance:intelligence_hub_cb59bb3b
+2025-06-14 11:54:00,222 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Initialized stream: intelligence:coordination:intelligence_hub_cb59bb3b
+2025-06-14 11:54:00,223 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Initialized stream: intelligence:analytics:intelligence_hub_cb59bb3b
+2025-06-14 11:54:00,224 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Started consumer for worker_events: intelligence_hub_cb59bb3b_worker_events
+2025-06-14 11:54:00,224 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Started consumer for task_events: intelligence_hub_cb59bb3b_task_events
+2025-06-14 11:54:00,225 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Started consumer for ai_events: intelligence_hub_cb59bb3b_ai_events
+2025-06-14 11:54:00,225 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Started consumer for performance_events: intelligence_hub_cb59bb3b_performance_events
+2025-06-14 11:54:00,226 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Started consumer for coordination_events: intelligence_hub_cb59bb3b_coordination_events
+2025-06-14 11:54:00,226 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Started consumer for analytics_events: intelligence_hub_cb59bb3b_analytics_events
+2025-06-14 11:54:00,227 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Analytics processors started
+2025-06-14 11:54:00,235 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Skipping initialization message in task_events
+2025-06-14 11:54:00,235 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Skipping initialization message in worker_events
+2025-06-14 11:54:00,236 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Intelligence Hub intelligence_hub_cb59bb3b initialized successfully
+2025-06-14 11:54:00,236 - scripts.redis_event_sourcing.RedisEventStore - INFO - Initializing Redis Event Store: event_store_9c7dc83b
+2025-06-14 11:54:00,241 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Skipping initialization message in performance_events
+2025-06-14 11:54:00,241 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Skipping initialization message in coordination_events
+2025-06-14 11:54:00,242 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Skipping initialization message in analytics_events
+2025-06-14 11:54:00,244 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Skipping initialization message in ai_events
+2025-06-14 11:54:00,245 - scripts.redis_event_sourcing.RedisEventStore - DEBUG - Loaded event sequence: 0
+2025-06-14 11:54:00,245 - scripts.redis_event_sourcing.RedisEventStore - INFO - Event Store event_store_9c7dc83b initialized successfully
+2025-06-14 11:54:00,245 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for worker_registration
+2025-06-14 11:54:00,246 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for worker_heartbeat
+2025-06-14 11:54:00,246 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for worker_shutdown
+2025-06-14 11:54:00,246 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for task_assignment
+2025-06-14 11:54:00,246 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for task_progress
+2025-06-14 11:54:00,246 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for task_completion
+2025-06-14 11:54:00,247 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for task_failure
+2025-06-14 11:54:00,247 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for ai_request
+2025-06-14 11:54:00,247 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for ai_response
+2025-06-14 11:54:00,247 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for performance_metric
+2025-06-14 11:54:00,247 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for error_event
+2025-06-14 11:54:00,247 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for intelligence_update
+2025-06-14 11:54:00,247 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for capability_discovery
+2025-06-14 11:54:00,247 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for coordination_event
+2025-06-14 11:54:00,248 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for analytics_insight
+2025-06-14 11:54:00,248 - redis_event_analytics.RedisEventAnalytics - INFO - Built-in analytics initialized
+2025-06-14 11:54:00,249 - redis_event_analytics.RedisEventAnalytics - INFO - Started 6 analytics tasks
+2025-06-14 11:54:00,251 - redis_event_analytics.RedisEventAnalytics - INFO - Event Analytics analytics_5bdc70ce initialized successfully
+2025-06-14 11:54:00,251 - continuous_orchestrator - INFO - ✓ Redis event analytics enabled
+2025-06-14 11:54:00,255 - redis_integration.redis_client - DEBUG - Ignoring transient error for circuit breaker: ResponseError: BUSYGROUP Consumer Group name already exists
+2025-06-14 11:54:00,256 - redis_integration.redis_client - DEBUG - Consumer group event_processors already exists for stream streams:cwmai:events:stream
+2025-06-14 11:54:00,256 - redis_event_stream_processor - INFO - Event stream processor initialized
+2025-06-14 11:54:00,256 - continuous_orchestrator - INFO - ✓ Redis event stream processing enabled
+2025-06-14 11:54:00,257 - continuous_orchestrator - INFO - ✓ Redis performance analytics enabled
+2025-06-14 11:54:00,262 - redis_distributed_workflows.RedisWorkflowEngine - INFO - Initializing Redis Workflow Engine: workflow_engine_b5ca5ef3
+2025-06-14 11:54:00,263 - redis_integration.redis_streams_manager - INFO - Started consumer processor_1 for group event_processors on stream cwmai:events:stream
+2025-06-14 11:54:00,268 - redis_event_analytics.RedisEventAnalytics - WARNING - System health is critical: 30.0
+2025-06-14 11:54:00,269 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Published event 426755f8-71cd-4827-adef-9690dcc4a919 to intelligence:analytics:intelligence_hub_cb59bb3b: 1749902040266-0
+2025-06-14 11:54:00,269 - redis_event_analytics.RedisEventAnalytics - INFO - Published insight: system_stability_concern - System stability below threshold: 30%
+2025-06-14 11:54:00,270 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Processed event 426755f8-71cd-4827-adef-9690dcc4a919 in 3.27ms
+2025-06-14 11:54:00,271 - redis_distributed_workflows.RedisWorkflowEngine - INFO - Workflow processors started
+2025-06-14 11:54:00,272 - redis_distributed_workflows.RedisWorkflowEngine - INFO - Workflow Engine workflow_engine_b5ca5ef3 initialized successfully
+2025-06-14 11:54:00,272 - continuous_orchestrator - INFO - ✓ Redis workflow orchestration enabled
+🔧 TaskManager initialization:
+   - GitHub token exists: True
+   - Repository name: None (no default)
+   - GitHub client created: True
+   - Repository object created: False
+✓ AI content generator initialized successfully
+✓ Decomposition system initialized successfully
+2025-06-14 11:54:00,273 - continuous_orchestrator - INFO - GitHub Issue Queue initialized
+2025-06-14 11:54:00,273 - continuous_orchestrator - INFO - GitHub issue processor started
+2025-06-14 11:54:00,273 - continuous_orchestrator - INFO - ✓ GitHub issue queue processor started
+2025-06-14 11:54:00,296 - scripts.task_persistence - INFO - 📋 No previous completed tasks found - starting fresh
+2025-06-14 11:54:00,296 - continuous_orchestrator - INFO - ✓ Work finder initialized
+2025-06-14 11:54:00,302 - resource_manager - INFO - State manager connected to resource manager
+2025-06-14 11:54:00,303 - resource_manager - INFO - Resource manager monitoring started
+2025-06-14 11:54:00,303 - continuous_orchestrator - INFO - ✓ Resource manager initialized and monitoring started
+2025-06-14 11:54:00,308 - continuous_orchestrator - INFO - ✓ Task coordinator initialized
+2025-06-14 11:54:00,308 - continuous_orchestrator - INFO - Valid repositories: {'project-analytics-dashboard', 'community-connect-platform', 'business-analytics-dashboard', 'ai-powered-inventory-sync', 'eco-track-ai', 'reputation-ai', 'summarize-ai-mobile', 'brand-guardian-ai'}
+2025-06-14 11:54:00,309 - continuous_orchestrator - INFO - Restored 0 work items from state (skipped 0 for deleted repos)
+2025-06-14 11:54:00,309 - continuous_orchestrator - INFO - All components initialized
+2025-06-14 11:54:00,310 - continuous_orchestrator - INFO - Starting 10 workers...
+2025-06-14 11:54:00,310 - continuous_orchestrator - INFO - ✓ Started worker_1 (specialization: system_tasks)
+2025-06-14 11:54:00,310 - continuous_orchestrator - INFO - ✓ Started worker_2 (specialization: general)
+2025-06-14 11:54:00,311 - continuous_orchestrator - INFO - ✓ Started worker_4 (specialization: ai-powered-inventory-sync)
+2025-06-14 11:54:00,311 - continuous_orchestrator - INFO - ✓ Started worker_5 (specialization: brand-guardian-ai)
+2025-06-14 11:54:00,311 - continuous_orchestrator - INFO - ✓ Started worker_6 (specialization: business-analytics-dashboard)
+2025-06-14 11:54:00,311 - continuous_orchestrator - INFO - ✓ Started worker_7 (specialization: community-connect-platform)
+2025-06-14 11:54:00,311 - continuous_orchestrator - INFO - ✓ Started worker_8 (specialization: eco-track-ai)
+2025-06-14 11:54:00,312 - continuous_orchestrator - INFO - ✓ Started worker_9 (specialization: project-analytics-dashboard)
+2025-06-14 11:54:00,312 - continuous_orchestrator - INFO - All 10 workers started
+2025-06-14 11:54:00,312 - continuous_orchestrator - INFO - Starting main orchestration loop
+2025-06-14 11:54:00,313 - continuous_orchestrator - INFO - Starting GitHub issue queue processor
+2025-06-14 11:54:01,320 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/resource_manager.py", line 670, in _metric_update_loop
+    await self.update_resource_metrics()
+2025-06-14 11:54:01,324 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/resource_manager.py", line 713, in update_resource_metrics
+    self.state_manager.update_state(metrics_update)
+2025-06-14 11:54:01,324 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/redis_state_adapter.py", line 354, in update_state
+    super().update_state(updates)
+2025-06-14 11:54:01,324 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/state_manager.py", line 344, in update_state
+    self.save_state()
+2025-06-14 11:54:01,324 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/redis_state_adapter.py", line 363, in save_state
+    super().save_state()
+2025-06-14 11:54:01,324 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/state_manager.py", line 320, in save_state
+    self.save_state_locally(self.state)
+2025-06-14 11:54:01,330 - resource_manager - DEBUG - Updated resource metrics - Efficiency: 0.613, CPU: 37.7%, Memory: 40.1%
+2025-06-14 11:54:01,331 - continuous_orchestrator - INFO - Worker worker_1 started (specialization: system_tasks)
+2025-06-14 11:54:01,331 - continuous_orchestrator - INFO - Worker worker_2 started (specialization: general)
+2025-06-14 11:54:01,337 - continuous_orchestrator - INFO - Worker worker_4 started (specialization: ai-powered-inventory-sync)
+2025-06-14 11:54:01,338 - continuous_orchestrator - INFO - Worker worker_5 started (specialization: brand-guardian-ai)
+2025-06-14 11:54:01,341 - continuous_orchestrator - INFO - Worker worker_6 started (specialization: business-analytics-dashboard)
+2025-06-14 11:54:01,343 - continuous_orchestrator - INFO - Worker worker_7 started (specialization: community-connect-platform)
+2025-06-14 11:54:01,344 - continuous_orchestrator - INFO - Worker worker_8 started (specialization: eco-track-ai)
+2025-06-14 11:54:01,345 - continuous_orchestrator - INFO - Worker worker_9 started (specialization: project-analytics-dashboard)
+2025-06-14 11:54:01,347 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Published event a1c114f8-90c3-4b3b-b84d-bb4e72c9018b to intelligence:coordination:intelligence_hub_cb59bb3b: 1749902040269-0
+2025-06-14 11:54:01,350 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Processed event a1c114f8-90c3-4b3b-b84d-bb4e72c9018b in 1080.79ms
+2025-06-14 11:54:01,370 - redis_integration.redis_streams_manager - DEBUG - Produced message 1749902041369-2 to stream cwmai:events:stream
+2025-06-14 11:54:01,377 - continuous_orchestrator - DEBUG - Worker worker_1 registered with Redis
+2025-06-14 11:54:01,378 - redis_integration.redis_streams_manager - DEBUG - Produced message 1749902041377-0 to stream cwmai:patterns:stream
+2025-06-14 11:54:01,378 - redis_event_stream_processor - INFO - Pattern detected: anomaly (severity: medium) - Unusual event distribution detected
+2025-06-14 11:54:01,393 - redis_integration.redis_streams_manager - DEBUG - Processed message 1749902041364-0 in 0.020s
+2025-06-14 11:54:01,408 - continuous_orchestrator - DEBUG - Looking for work for worker_1 (specialization: system_tasks)
+2025-06-14 11:54:01,411 - redis_integration.redis_streams_manager - DEBUG - Processed message 1749902041364-1 in 0.009s
+2025-06-14 11:54:01,416 - redis_integration.redis_streams_manager - DEBUG - Processed message 1749902041364-2 in 0.004s
+2025-06-14 11:54:01,417 - continuous_orchestrator - DEBUG - Looking for work for worker_10 (specialization: general)
+2025-06-14 11:54:01,417 - scripts.redis_work_queue - DEBUG - Checking CRITICAL stream: cwmai:work_queue:critical
+2025-06-14 11:54:01,417 - continuous_orchestrator - DEBUG - Looking for work for worker_9 (specialization: project-analytics-dashboard)
+2025-06-14 11:54:01,418 - continuous_orchestrator - DEBUG - Looking for work for worker_8 (specialization: eco-track-ai)
+2025-06-14 11:54:01,418 - continuous_orchestrator - DEBUG - Looking for work for worker_4 (specialization: ai-powered-inventory-sync)
+2025-06-14 11:54:01,418 - continuous_orchestrator - DEBUG - Looking for work for worker_5 (specialization: brand-guardian-ai)
+2025-06-14 11:54:01,419 - continuous_orchestrator - DEBUG - Looking for work for worker_6 (specialization: business-analytics-dashboard)
+2025-06-14 11:54:01,419 - continuous_orchestrator - DEBUG - Looking for work for worker_7 (specialization: community-connect-platform)
+2025-06-14 11:54:01,421 - scripts.redis_work_queue - DEBUG - Found 0 pending messages in CRITICAL
+2025-06-14 11:54:01,423 - redis_integration.redis_streams_manager - DEBUG - Processed message 1749902041364-3 in 0.007s
+2025-06-14 11:54:01,425 - redis_integration.redis_streams_manager - DEBUG - Processed message 1749902041364-4 in 0.001s
+2025-06-14 11:54:01,426 - intelligent_work_finder - INFO - Discovering work (max: 30, current load: 0)
+2025-06-14 11:54:01,427 - intelligent_work_finder - DEBUG - Repository discovery: 8 total, 8 after exclusions, 8 valid
+2025-06-14 11:54:01,427 - scripts.project_lifecycle_analyzer - INFO - Analyzing lifecycle stage for ai-powered-inventory-sync
+2025-06-14 11:54:01,427 - scripts.http_ai_client.HTTPAIClient - INFO - [req_0] Starting AI request - Model preference: auto, Prompt length: 982
+2025-06-14 11:54:01,428 - AIAPILogger - INFO - AI API Logger initialized (file_logging=True, sensitive_data=True)
+2025-06-14 11:54:01,428 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 6d541e793587cc02
+2025-06-14 11:54:01,428 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_0] Auto-selecting Google Gemini
+2025-06-14 11:54:01,428 - AIAPILogger - INFO - [req_0] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 982
+2025-06-14 11:54:01,428 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_0] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:54:02,907 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_0] Gemini HTTP response: 200 in 1.48s
+2025-06-14 11:54:02,907 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_0] Gemini content extracted: 909 characters
+2025-06-14 11:54:02,908 - scripts.http_ai_client.HTTPAIClient - INFO - [req_0] Request completed successfully in 1.48s - Provider: gemini
+2025-06-14 11:54:02,909 - AIAPILogger - INFO - [req_0] AI Request COMPLETE - Time: 1.48s, Length: 909, Cost: $0.0000
+2025-06-14 11:54:02,910 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 4246bc2780a218ae (TTL: 0.000946s)
+2025-06-14 11:54:02,910 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_0] Response cached successfully
+2025-06-14 11:54:02,910 - AIAPILogger - DEBUG - [req_0] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:54:02,911 - scripts.http_ai_client.HTTPAIClient - INFO - [req_1] Starting AI request - Model preference: auto, Prompt length: 732
+2025-06-14 11:54:02,912 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 8f28b3b25f2c3fe1
+2025-06-14 11:54:02,913 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_1] Auto-selecting Google Gemini
+2025-06-14 11:54:02,913 - AIAPILogger - INFO - [req_1] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 732
+2025-06-14 11:54:02,913 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_1] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:54:06,588 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_1] Gemini HTTP response: 200 in 3.67s
+2025-06-14 11:54:06,589 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_1] Gemini content extracted: 2374 characters
+2025-06-14 11:54:06,590 - scripts.http_ai_client.HTTPAIClient - INFO - [req_1] Request completed successfully in 3.68s - Provider: gemini
+2025-06-14 11:54:06,591 - AIAPILogger - INFO - [req_1] AI Request COMPLETE - Time: 3.68s, Length: 2374, Cost: $0.0000
+2025-06-14 11:54:06,591 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 832af599a80d0fb2 (TTL: 0.001553s)
+2025-06-14 11:54:06,592 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_1] Response cached successfully
+2025-06-14 11:54:06,593 - AIAPILogger - DEBUG - [req_1] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:54:06,594 - intelligent_work_finder - ERROR - Error in repository work discovery: cannot access local variable 'recent_activity' where it is not associated with a value
+2025-06-14 11:54:06,595 - intelligent_work_finder - DEBUG - Traceback (most recent call last):
+  File "/workspaces/cwmai/scripts/intelligent_work_finder.py", line 129, in discover_work
+    repo_work = await self._discover_repository_work()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/cwmai/scripts/intelligent_work_finder.py", line 301, in _discover_repository_work
+    recent_commits = recent_activity.get('recent_commits', 0)
+                     ^^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'recent_activity' where it is not associated with a value
+
+2025-06-14 11:54:06,596 - scripts.portfolio_intelligence - INFO - 🔬 Analyzing portfolio intelligence...
+2025-06-14 11:54:06,597 - scripts.http_ai_client.HTTPAIClient - INFO - [req_2] Starting AI request - Model preference: auto, Prompt length: 1621
+2025-06-14 11:54:06,597 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 034c44b29f655e1c
+2025-06-14 11:54:06,598 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_2] Auto-selecting Google Gemini
+2025-06-14 11:54:06,598 - AIAPILogger - INFO - [req_2] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1621
+2025-06-14 11:54:06,599 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_2] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:54:09,381 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_2] Gemini HTTP response: 200 in 2.78s
+2025-06-14 11:54:09,381 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_2] Gemini content extracted: 1638 characters
+2025-06-14 11:54:09,382 - scripts.http_ai_client.HTTPAIClient - INFO - [req_2] Request completed successfully in 2.79s - Provider: gemini
+2025-06-14 11:54:09,382 - AIAPILogger - INFO - [req_2] AI Request COMPLETE - Time: 2.79s, Length: 1638, Cost: $0.0000
+2025-06-14 11:54:09,382 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: e83bb0fcbeb3489f (TTL: 0.00163s)
+2025-06-14 11:54:09,383 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_2] Response cached successfully
+2025-06-14 11:54:09,383 - AIAPILogger - DEBUG - [req_2] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:54:09,383 - scripts.http_ai_client.HTTPAIClient - INFO - [req_3] Starting AI request - Model preference: auto, Prompt length: 1601
+2025-06-14 11:54:09,383 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 9e091bc93aca6df0
+2025-06-14 11:54:09,383 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_3] Auto-selecting Google Gemini
+2025-06-14 11:54:09,384 - AIAPILogger - INFO - [req_3] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1601
+2025-06-14 11:54:09,384 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_3] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:54:12,145 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_3] Gemini HTTP response: 200 in 2.76s
+2025-06-14 11:54:12,145 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_3] Gemini content extracted: 1922 characters
+2025-06-14 11:54:12,145 - scripts.http_ai_client.HTTPAIClient - INFO - [req_3] Request completed successfully in 2.76s - Provider: gemini
+2025-06-14 11:54:12,146 - AIAPILogger - INFO - [req_3] AI Request COMPLETE - Time: 2.76s, Length: 1922, Cost: $0.0000
+2025-06-14 11:54:12,146 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 30e004292e3ef4be (TTL: 0.001762s)
+2025-06-14 11:54:12,146 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_3] Response cached successfully
+2025-06-14 11:54:12,147 - AIAPILogger - DEBUG - [req_3] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:54:12,147 - scripts.http_ai_client.HTTPAIClient - INFO - [req_4] Starting AI request - Model preference: auto, Prompt length: 1485
+2025-06-14 11:54:12,147 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: c938d3007c0822c0
+2025-06-14 11:54:12,147 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_4] Auto-selecting Google Gemini
+2025-06-14 11:54:12,148 - AIAPILogger - INFO - [req_4] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1485
+2025-06-14 11:54:12,148 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_4] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:54:15,107 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_4] Gemini HTTP response: 200 in 2.96s
+2025-06-14 11:54:15,107 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_4] Gemini content extracted: 2028 characters
+2025-06-14 11:54:15,108 - scripts.http_ai_client.HTTPAIClient - INFO - [req_4] Request completed successfully in 2.96s - Provider: gemini
+2025-06-14 11:54:15,108 - AIAPILogger - INFO - [req_4] AI Request COMPLETE - Time: 2.96s, Length: 2028, Cost: $0.0000
+2025-06-14 11:54:15,109 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 426cdce574381fbb (TTL: 0.001757s)
+2025-06-14 11:54:15,109 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_4] Response cached successfully
+2025-06-14 11:54:15,109 - AIAPILogger - DEBUG - [req_4] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:54:15,110 - scripts.http_ai_client.HTTPAIClient - INFO - [req_5] Starting AI request - Model preference: auto, Prompt length: 1600
+2025-06-14 11:54:15,110 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 1b7d8fa1aa9b9d76
+2025-06-14 11:54:15,110 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_5] Auto-selecting Google Gemini
+2025-06-14 11:54:15,110 - AIAPILogger - INFO - [req_5] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1600
+2025-06-14 11:54:15,111 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_5] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:54:17,790 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_5] Gemini HTTP response: 200 in 2.68s
+2025-06-14 11:54:17,792 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_5] Gemini content extracted: 1781 characters
+2025-06-14 11:54:17,793 - scripts.http_ai_client.HTTPAIClient - INFO - [req_5] Request completed successfully in 2.68s - Provider: gemini
+2025-06-14 11:54:17,793 - AIAPILogger - INFO - [req_5] AI Request COMPLETE - Time: 2.68s, Length: 1781, Cost: $0.0000
+2025-06-14 11:54:17,794 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 465444c4b4aea22f (TTL: 0.00169s)
+2025-06-14 11:54:17,794 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_5] Response cached successfully
+2025-06-14 11:54:17,795 - AIAPILogger - DEBUG - [req_5] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:54:17,796 - scripts.http_ai_client.HTTPAIClient - INFO - [req_6] Starting AI request - Model preference: auto, Prompt length: 1567
+2025-06-14 11:54:17,796 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 0ce8061889b49be7
+2025-06-14 11:54:17,796 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_6] Auto-selecting Google Gemini
+2025-06-14 11:54:17,797 - AIAPILogger - INFO - [req_6] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1567
+2025-06-14 11:54:17,797 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_6] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:54:20,623 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_6] Gemini HTTP response: 200 in 2.83s
+2025-06-14 11:54:20,624 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_6] Gemini content extracted: 2067 characters
+2025-06-14 11:54:20,624 - scripts.http_ai_client.HTTPAIClient - INFO - [req_6] Request completed successfully in 2.83s - Provider: gemini
+2025-06-14 11:54:20,625 - AIAPILogger - INFO - [req_6] AI Request COMPLETE - Time: 2.83s, Length: 2067, Cost: $0.0000
+2025-06-14 11:54:20,625 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 51b861492d8a2f29 (TTL: 0.001817s)
+2025-06-14 11:54:20,625 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_6] Response cached successfully
+2025-06-14 11:54:20,626 - AIAPILogger - DEBUG - [req_6] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:54:20,626 - scripts.redis_work_queue - DEBUG - Messages to process: 0
+2025-06-14 11:54:20,627 - scripts.redis_work_queue - DEBUG - Checking HIGH stream: cwmai:work_queue:high
+2025-06-14 11:54:20,669 - redis_integration.redis_streams_manager - DEBUG - Processed message 1749902041364-5 in 19.244s
+2025-06-14 11:54:20,670 - scripts.http_ai_client.HTTPAIClient - INFO - [req_7] Starting AI request - Model preference: auto, Prompt length: 1476
+2025-06-14 11:54:20,670 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: d05ace97e83abf4e
+2025-06-14 11:54:20,670 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_7] Auto-selecting Google Gemini
+2025-06-14 11:54:20,670 - AIAPILogger - INFO - [req_7] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1476
+2025-06-14 11:54:20,671 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_7] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:54:23,103 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_7] Gemini HTTP response: 200 in 2.43s
+2025-06-14 11:54:23,104 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_7] Gemini content extracted: 1661 characters
+2025-06-14 11:54:23,104 - scripts.http_ai_client.HTTPAIClient - INFO - [req_7] Request completed successfully in 2.43s - Provider: gemini
+2025-06-14 11:54:23,105 - AIAPILogger - INFO - [req_7] AI Request COMPLETE - Time: 2.43s, Length: 1661, Cost: $0.0000
+2025-06-14 11:54:23,106 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: a40a75702a99ccdc (TTL: 0.001569s)
+2025-06-14 11:54:23,106 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_7] Response cached successfully
+2025-06-14 11:54:23,107 - AIAPILogger - DEBUG - [req_7] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:54:23,108 - scripts.http_ai_client.HTTPAIClient - INFO - [req_8] Starting AI request - Model preference: auto, Prompt length: 1572
+2025-06-14 11:54:23,108 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: ad050b9642e32e3a
+2025-06-14 11:54:23,108 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_8] Auto-selecting Google Gemini
+2025-06-14 11:54:23,108 - AIAPILogger - INFO - [req_8] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1572
+2025-06-14 11:54:23,109 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_8] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:54:26,451 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_8] Gemini HTTP response: 200 in 3.34s
+2025-06-14 11:54:26,451 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_8] Gemini content extracted: 2405 characters
+2025-06-14 11:54:26,452 - scripts.http_ai_client.HTTPAIClient - INFO - [req_8] Request completed successfully in 3.34s - Provider: gemini
+2025-06-14 11:54:26,452 - AIAPILogger - INFO - [req_8] AI Request COMPLETE - Time: 3.34s, Length: 2405, Cost: $0.0000
+2025-06-14 11:54:26,453 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 1ec4895e15094db6 (TTL: 0.001988s)
+2025-06-14 11:54:26,454 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_8] Response cached successfully
+2025-06-14 11:54:26,454 - AIAPILogger - DEBUG - [req_8] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:54:26,455 - scripts.http_ai_client.HTTPAIClient - INFO - [req_9] Starting AI request - Model preference: auto, Prompt length: 1552
+2025-06-14 11:54:26,455 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: f61eaa5132949417
+2025-06-14 11:54:26,455 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_9] Auto-selecting Google Gemini
+2025-06-14 11:54:26,455 - AIAPILogger - INFO - [req_9] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1552
+2025-06-14 11:54:26,456 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_9] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:54:29,753 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_9] Gemini HTTP response: 200 in 3.29s
+2025-06-14 11:54:29,755 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_9] Gemini content extracted: 2208 characters
+2025-06-14 11:54:29,756 - scripts.http_ai_client.HTTPAIClient - INFO - [req_9] Request completed successfully in 3.30s - Provider: gemini
+2025-06-14 11:54:29,756 - AIAPILogger - INFO - [req_9] AI Request COMPLETE - Time: 3.30s, Length: 2208, Cost: $0.0000
+2025-06-14 11:54:29,757 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 75fe67fee773ef11 (TTL: 0.00188s)
+2025-06-14 11:54:29,758 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_9] Response cached successfully
+2025-06-14 11:54:29,758 - AIAPILogger - DEBUG - [req_9] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:54:29,762 - scripts.http_ai_client.HTTPAIClient - INFO - [req_10] Starting AI request - Model preference: auto, Prompt length: 3668
+2025-06-14 11:54:29,763 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 1dce3924295ae0e6
+2025-06-14 11:54:29,764 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_10] Auto-selecting Google Gemini
+2025-06-14 11:54:29,765 - AIAPILogger - INFO - [req_10] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 3668
+2025-06-14 11:54:29,765 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_10] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:54:34,773 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_10] Gemini HTTP response: 200 in 5.01s
+2025-06-14 11:54:34,777 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_10] Gemini content extracted: 4146 characters
+2025-06-14 11:54:34,778 - scripts.http_ai_client.HTTPAIClient - INFO - [req_10] Request completed successfully in 5.02s - Provider: gemini
+2025-06-14 11:54:34,780 - AIAPILogger - INFO - [req_10] AI Request COMPLETE - Time: 5.02s, Length: 4146, Cost: $0.0000
+2025-06-14 11:54:34,783 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: fd2d3d37deac1941 (TTL: 0.003907s)
+2025-06-14 11:54:34,783 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_10] Response cached successfully
+2025-06-14 11:54:34,784 - AIAPILogger - DEBUG - [req_10] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:54:34,785 - scripts.http_ai_client.HTTPAIClient - INFO - [req_11] Starting AI request - Model preference: auto, Prompt length: 1361
+2025-06-14 11:54:34,785 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: ec6c51eaeff4d9b6
+2025-06-14 11:54:34,786 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_11] Auto-selecting Google Gemini
+2025-06-14 11:54:34,786 - AIAPILogger - INFO - [req_11] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1361
+2025-06-14 11:54:34,786 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_11] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:54:38,523 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_11] Gemini HTTP response: 200 in 3.74s
+2025-06-14 11:54:38,523 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_11] Gemini content extracted: 2817 characters
+2025-06-14 11:54:38,524 - scripts.http_ai_client.HTTPAIClient - INFO - [req_11] Request completed successfully in 3.74s - Provider: gemini
+2025-06-14 11:54:38,525 - AIAPILogger - INFO - [req_11] AI Request COMPLETE - Time: 3.74s, Length: 2817, Cost: $0.0000
+2025-06-14 11:54:38,525 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: b09e67138920eb9e (TTL: 0.002089s)
+2025-06-14 11:54:38,526 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_11] Response cached successfully
+2025-06-14 11:54:38,526 - AIAPILogger - DEBUG - [req_11] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:54:38,526 - scripts.market_research_engine - INFO - 🚀 Generating project opportunities...
+2025-06-14 11:54:38,526 - scripts.market_research_engine - INFO - 🔍 Discovering market trends...
+2025-06-14 11:54:38,527 - scripts.http_ai_client.HTTPAIClient - INFO - [req_12] Starting AI request - Model preference: auto, Prompt length: 972
+2025-06-14 11:54:38,527 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 4607c3aa5f81b4e3
+2025-06-14 11:54:38,527 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_12] Auto-selecting Google Gemini
+2025-06-14 11:54:38,528 - AIAPILogger - INFO - [req_12] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 972
+2025-06-14 11:54:38,528 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_12] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:54:47,366 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_12] Gemini HTTP response: 200 in 8.84s
+2025-06-14 11:54:47,367 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_12] Gemini content extracted: 6427 characters
+2025-06-14 11:54:47,367 - scripts.http_ai_client.HTTPAIClient - INFO - [req_12] Request completed successfully in 8.84s - Provider: gemini
+2025-06-14 11:54:47,368 - AIAPILogger - INFO - [req_12] AI Request COMPLETE - Time: 8.84s, Length: 6427, Cost: $0.0000
+2025-06-14 11:54:47,369 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 96c8b1c080928794 (TTL: 0.0037s)
+2025-06-14 11:54:47,369 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_12] Response cached successfully
+2025-06-14 11:54:47,370 - AIAPILogger - DEBUG - [req_12] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:54:47,370 - scripts.http_ai_client.HTTPAIClient - INFO - [req_13] Starting AI request - Model preference: auto, Prompt length: 572
+2025-06-14 11:54:47,371 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 787b6da952baea87
+2025-06-14 11:54:47,371 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_13] Auto-selecting Google Gemini
+2025-06-14 11:54:47,371 - AIAPILogger - INFO - [req_13] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 572
+2025-06-14 11:54:47,372 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_13] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:54:57,563 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_13] Gemini HTTP response: 200 in 10.19s
+2025-06-14 11:54:57,565 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_13] Gemini content extracted: 8443 characters
+2025-06-14 11:54:57,565 - scripts.http_ai_client.HTTPAIClient - INFO - [req_13] Request completed successfully in 10.19s - Provider: gemini
+2025-06-14 11:54:57,566 - AIAPILogger - INFO - [req_13] AI Request COMPLETE - Time: 10.19s, Length: 8443, Cost: $0.0000
+2025-06-14 11:54:57,566 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: d775eb25c7cb26b6 (TTL: 0.004508s)
+2025-06-14 11:54:57,566 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_13] Response cached successfully
+2025-06-14 11:54:57,567 - AIAPILogger - DEBUG - [req_13] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:54:57,567 - scripts.http_ai_client.HTTPAIClient - INFO - [req_14] Starting AI request - Model preference: auto, Prompt length: 654
+2025-06-14 11:54:57,567 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 7ea7043169068b98
+2025-06-14 11:54:57,567 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_14] Auto-selecting Google Gemini
+2025-06-14 11:54:57,568 - AIAPILogger - INFO - [req_14] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 654
+2025-06-14 11:54:57,568 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_14] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:55:04,175 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_14] Gemini HTTP response: 200 in 6.61s
+2025-06-14 11:55:04,181 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_14] Gemini content extracted: 6236 characters
+2025-06-14 11:55:04,183 - scripts.http_ai_client.HTTPAIClient - INFO - [req_14] Request completed successfully in 6.62s - Provider: gemini
+2025-06-14 11:55:04,183 - AIAPILogger - INFO - [req_14] AI Request COMPLETE - Time: 6.62s, Length: 6236, Cost: $0.0000
+2025-06-14 11:55:04,185 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 79af463bdc20445d (TTL: 0.003445s)
+2025-06-14 11:55:04,186 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_14] Response cached successfully
+2025-06-14 11:55:04,186 - AIAPILogger - DEBUG - [req_14] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:55:04,189 - scripts.http_ai_client.HTTPAIClient - INFO - [req_15] Starting AI request - Model preference: auto, Prompt length: 550
+2025-06-14 11:55:04,192 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 5fa32e72504db1ce
+2025-06-14 11:55:04,192 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_15] Auto-selecting Google Gemini
+2025-06-14 11:55:04,193 - AIAPILogger - INFO - [req_15] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 550
+2025-06-14 11:55:04,193 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_15] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:55:11,273 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_15] Gemini HTTP response: 200 in 7.08s
+2025-06-14 11:55:11,273 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_15] Gemini content extracted: 5912 characters
+2025-06-14 11:55:11,274 - scripts.http_ai_client.HTTPAIClient - INFO - [req_15] Request completed successfully in 7.08s - Provider: gemini
+2025-06-14 11:55:11,274 - AIAPILogger - INFO - [req_15] AI Request COMPLETE - Time: 7.08s, Length: 5912, Cost: $0.0000
+2025-06-14 11:55:11,274 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 1d61f4e087707d3e (TTL: 0.003231s)
+2025-06-14 11:55:11,275 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_15] Response cached successfully
+2025-06-14 11:55:11,275 - AIAPILogger - DEBUG - [req_15] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:55:11,275 - scripts.http_ai_client.HTTPAIClient - INFO - [req_16] Starting AI request - Model preference: auto, Prompt length: 936
+2025-06-14 11:55:11,276 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 9c642bbdbcd1ea84
+2025-06-14 11:55:11,276 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_16] Auto-selecting Google Gemini
+2025-06-14 11:55:11,276 - AIAPILogger - INFO - [req_16] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 936
+2025-06-14 11:55:11,276 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_16] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:55:12,765 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_16] Gemini HTTP response: 200 in 1.49s
+2025-06-14 11:55:12,765 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_16] Gemini content extracted: 794 characters
+2025-06-14 11:55:12,765 - scripts.http_ai_client.HTTPAIClient - INFO - [req_16] Request completed successfully in 1.49s - Provider: gemini
+2025-06-14 11:55:12,766 - AIAPILogger - INFO - [req_16] AI Request COMPLETE - Time: 1.49s, Length: 794, Cost: $0.0000
+2025-06-14 11:55:12,766 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: bf693467ff3fcfd8 (TTL: 0.000865s)
+2025-06-14 11:55:12,766 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_16] Response cached successfully
+2025-06-14 11:55:12,767 - AIAPILogger - DEBUG - [req_16] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:55:12,767 - scripts.http_ai_client.HTTPAIClient - INFO - [req_17] Starting AI request - Model preference: auto, Prompt length: 916
+2025-06-14 11:55:12,767 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 73ce07ed77494a34
+2025-06-14 11:55:12,767 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_17] Auto-selecting Google Gemini
+2025-06-14 11:55:12,768 - AIAPILogger - INFO - [req_17] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 916
+2025-06-14 11:55:12,768 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_17] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:55:14,159 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_17] Gemini HTTP response: 200 in 1.39s
+2025-06-14 11:55:14,159 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_17] Gemini content extracted: 772 characters
+2025-06-14 11:55:14,160 - scripts.http_ai_client.HTTPAIClient - INFO - [req_17] Request completed successfully in 1.39s - Provider: gemini
+2025-06-14 11:55:14,160 - AIAPILogger - INFO - [req_17] AI Request COMPLETE - Time: 1.39s, Length: 772, Cost: $0.0000
+2025-06-14 11:55:14,161 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: cfdd01cfd9b8f72e (TTL: 0.000844s)
+2025-06-14 11:55:14,161 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_17] Response cached successfully
+2025-06-14 11:55:14,161 - AIAPILogger - DEBUG - [req_17] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:55:14,161 - scripts.http_ai_client.HTTPAIClient - INFO - [req_18] Starting AI request - Model preference: auto, Prompt length: 798
+2025-06-14 11:55:14,162 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: d6e147edef9c0108
+2025-06-14 11:55:14,162 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_18] Auto-selecting Google Gemini
+2025-06-14 11:55:14,162 - AIAPILogger - INFO - [req_18] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 798
+2025-06-14 11:55:14,163 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_18] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:55:15,212 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_18] Gemini HTTP response: 200 in 1.05s
+2025-06-14 11:55:15,213 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_18] Gemini content extracted: 480 characters
+2025-06-14 11:55:15,213 - scripts.http_ai_client.HTTPAIClient - INFO - [req_18] Request completed successfully in 1.05s - Provider: gemini
+2025-06-14 11:55:15,213 - AIAPILogger - INFO - [req_18] AI Request COMPLETE - Time: 1.05s, Length: 480, Cost: $0.0000
+2025-06-14 11:55:15,214 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 55065b6b8f996dff (TTL: 0.000639s)
+2025-06-14 11:55:15,214 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_18] Response cached successfully
+2025-06-14 11:55:15,214 - AIAPILogger - DEBUG - [req_18] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:55:15,214 - scripts.http_ai_client.HTTPAIClient - INFO - [req_19] Starting AI request - Model preference: auto, Prompt length: 915
+2025-06-14 11:55:15,215 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 9e780105fbac098c
+2025-06-14 11:55:15,215 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_19] Auto-selecting Google Gemini
+2025-06-14 11:55:15,215 - AIAPILogger - INFO - [req_19] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 915
+2025-06-14 11:55:15,216 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_19] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:55:16,386 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_19] Gemini HTTP response: 200 in 1.17s
+2025-06-14 11:55:16,386 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_19] Gemini content extracted: 873 characters
+2025-06-14 11:55:16,387 - scripts.http_ai_client.HTTPAIClient - INFO - [req_19] Request completed successfully in 1.17s - Provider: gemini
+2025-06-14 11:55:16,388 - AIAPILogger - INFO - [req_19] AI Request COMPLETE - Time: 1.17s, Length: 873, Cost: $0.0000
+2025-06-14 11:55:16,389 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: b5dd6bb134fede8d (TTL: 0.000894s)
+2025-06-14 11:55:16,389 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_19] Response cached successfully
+2025-06-14 11:55:16,390 - AIAPILogger - DEBUG - [req_19] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:55:16,390 - scripts.http_ai_client.HTTPAIClient - INFO - [req_20] Starting AI request - Model preference: auto, Prompt length: 882
+2025-06-14 11:55:16,390 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 116df4d5e99c072a
+2025-06-14 11:55:16,390 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_20] Auto-selecting Google Gemini
+2025-06-14 11:55:16,391 - AIAPILogger - INFO - [req_20] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 882
+2025-06-14 11:55:16,391 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_20] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:55:18,778 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_20] Gemini HTTP response: 200 in 2.39s
+2025-06-14 11:55:18,785 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_20] Gemini content extracted: 1347 characters
+2025-06-14 11:55:18,786 - scripts.http_ai_client.HTTPAIClient - INFO - [req_20] Request completed successfully in 2.40s - Provider: gemini
+2025-06-14 11:55:18,787 - AIAPILogger - INFO - [req_20] AI Request COMPLETE - Time: 2.40s, Length: 1347, Cost: $0.0000
+2025-06-14 11:55:18,788 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: a0ee8b6bea31eb74 (TTL: 0.001115s)
+2025-06-14 11:55:18,788 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_20] Response cached successfully
+2025-06-14 11:55:18,791 - AIAPILogger - DEBUG - [req_20] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:55:18,791 - scripts.http_ai_client.HTTPAIClient - INFO - [req_21] Starting AI request - Model preference: auto, Prompt length: 790
+2025-06-14 11:55:18,793 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 7dbe608d8c8fa41d
+2025-06-14 11:55:18,795 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_21] Auto-selecting Google Gemini
+2025-06-14 11:55:18,796 - AIAPILogger - INFO - [req_21] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 790
+2025-06-14 11:55:18,796 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_21] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:55:20,191 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_21] Gemini HTTP response: 200 in 1.39s
+2025-06-14 11:55:20,192 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_21] Gemini content extracted: 839 characters
+2025-06-14 11:55:20,192 - scripts.http_ai_client.HTTPAIClient - INFO - [req_21] Request completed successfully in 1.40s - Provider: gemini
+2025-06-14 11:55:20,193 - AIAPILogger - INFO - [req_21] AI Request COMPLETE - Time: 1.40s, Length: 839, Cost: $0.0000
+2025-06-14 11:55:20,193 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 2d3e8f1382293c29 (TTL: 0.000815s)
+2025-06-14 11:55:20,193 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_21] Response cached successfully
+2025-06-14 11:55:20,194 - AIAPILogger - DEBUG - [req_21] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:55:20,194 - intelligent_work_finder - ERROR - Error in intelligent portfolio analysis: 'NoneType' object has no attribute 'lower'
+2025-06-14 11:55:20,194 - scripts.http_ai_client.HTTPAIClient - INFO - [req_22] Starting AI request - Model preference: auto, Prompt length: 1482
+2025-06-14 11:55:20,194 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 48d1be7f8a1e932c
+2025-06-14 11:55:20,194 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_22] Auto-selecting Google Gemini
+2025-06-14 11:55:20,195 - AIAPILogger - INFO - [req_22] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1482
+2025-06-14 11:55:20,195 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_22] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:55:27,030 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_22] Gemini HTTP response: 200 in 6.84s
+2025-06-14 11:55:27,030 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_22] Gemini content extracted: 5202 characters
+2025-06-14 11:55:27,031 - scripts.http_ai_client.HTTPAIClient - INFO - [req_22] Request completed successfully in 6.84s - Provider: gemini
+2025-06-14 11:55:27,032 - AIAPILogger - INFO - [req_22] AI Request COMPLETE - Time: 6.84s, Length: 5202, Cost: $0.0000
+2025-06-14 11:55:27,032 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: b166d18061033122 (TTL: 0.003342s)
+2025-06-14 11:55:27,032 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_22] Response cached successfully
+2025-06-14 11:55:27,032 - AIAPILogger - DEBUG - [req_22] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:55:27,033 - intelligent_work_finder - INFO - Discovered 9 work items:
+2025-06-14 11:55:27,033 - intelligent_work_finder - INFO -   - RESEARCH: Research software architecture best practices (priority: MEDIUM)
+2025-06-14 11:55:27,034 - intelligent_work_finder - INFO -   - NEW_PROJECT: Create shared component library (priority: MEDIUM)
+2025-06-14 11:55:27,034 - intelligent_work_finder - INFO -   - NEW_PROJECT: SyncFlow (priority: MEDIUM)
+2025-06-14 11:55:27,034 - intelligent_work_finder - INFO -   - NEW_PROJECT: SkillLeap (priority: MEDIUM)
+2025-06-14 11:55:27,034 - intelligent_work_finder - INFO -   - MAINTENANCE: Verify system backup integrity (priority: LOW)
+2025-06-14 11:55:27,034 - intelligent_work_finder - INFO -   - MONITORING: Generate performance metrics report (priority: LOW)
+2025-06-14 11:55:27,034 - intelligent_work_finder - INFO -   - RESEARCH: Analyze competitor project structures (priority: LOW)
+2025-06-14 11:55:27,034 - intelligent_work_finder - INFO -   - MAINTENANCE: Clean up old log files (priority: BACKGROUND)
+2025-06-14 11:55:27,035 - intelligent_work_finder - INFO -   - RESEARCH: Research emerging AI development trends (priority: BACKGROUND)
+2025-06-14 11:55:27,035 - intelligent_work_finder - INFO - 📋 Work discovery summary: 3 RESEARCH, 3 NEW_PROJECT, 2 MAINTENANCE, 1 MONITORING
+2025-06-14 11:55:27,035 - continuous_orchestrator - WARNING - Insufficient work discovered (9), using enhanced generator
+2025-06-14 11:55:27,035 - continuous_orchestrator - WARNING - Generating 21 emergency work items
+2025-06-14 11:55:27,035 - scripts.http_ai_client.HTTPAIClient - INFO - [req_23] Starting AI request - Model preference: auto, Prompt length: 822
+2025-06-14 11:55:27,036 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 47243368703cd2e1
+2025-06-14 11:55:27,036 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_23] Auto-selecting Google Gemini
+2025-06-14 11:55:27,036 - AIAPILogger - INFO - [req_23] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 822
+2025-06-14 11:55:27,036 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_23] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:55:30,528 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_23] Gemini HTTP response: 200 in 3.49s
+2025-06-14 11:55:30,529 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_23] Gemini content extracted: 2587 characters
+2025-06-14 11:55:30,529 - scripts.http_ai_client.HTTPAIClient - INFO - [req_23] Request completed successfully in 3.49s - Provider: gemini
+2025-06-14 11:55:30,529 - AIAPILogger - INFO - [req_23] AI Request COMPLETE - Time: 3.49s, Length: 2587, Cost: $0.0000
+2025-06-14 11:55:30,530 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: cce22ffaf2077abd (TTL: 0.001704s)
+2025-06-14 11:55:30,530 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_23] Response cached successfully
+2025-06-14 11:55:30,530 - AIAPILogger - DEBUG - [req_23] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:55:30,531 - continuous_orchestrator - DEBUG - Generated AI-powered work item: Implement Role-Based Access Control (RBAC) for Dashboard Views & Data
+2025-06-14 11:55:30,531 - scripts.http_ai_client.HTTPAIClient - INFO - [req_24] Starting AI request - Model preference: auto, Prompt length: 772
+2025-06-14 11:55:30,531 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: fee54d1e90127b42
+2025-06-14 11:55:30,531 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_24] Auto-selecting Google Gemini
+2025-06-14 11:55:30,532 - AIAPILogger - INFO - [req_24] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 772
+2025-06-14 11:55:30,532 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_24] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:55:35,688 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_24] Gemini HTTP response: 200 in 5.16s
+2025-06-14 11:55:35,688 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_24] Gemini content extracted: 3607 characters
+2025-06-14 11:55:35,689 - scripts.http_ai_client.HTTPAIClient - INFO - [req_24] Request completed successfully in 5.16s - Provider: gemini
+2025-06-14 11:55:35,689 - AIAPILogger - INFO - [req_24] AI Request COMPLETE - Time: 5.16s, Length: 3607, Cost: $0.0000
+2025-06-14 11:55:35,690 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 2440f95dd9bb0aae (TTL: 0.00219s)
+2025-06-14 11:55:35,690 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_24] Response cached successfully
+2025-06-14 11:55:35,690 - AIAPILogger - DEBUG - [req_24] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:55:35,691 - continuous_orchestrator - DEBUG - Generated AI-powered work item: Optimize React Component Re-renders in Eco-Track Dashboard
+2025-06-14 11:55:35,691 - scripts.http_ai_client.HTTPAIClient - INFO - [req_25] Starting AI request - Model preference: auto, Prompt length: 754
+2025-06-14 11:55:35,692 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: a4b9b16142f0e97d
+2025-06-14 11:55:35,692 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_25] Auto-selecting Google Gemini
+2025-06-14 11:55:35,692 - AIAPILogger - INFO - [req_25] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 754
+2025-06-14 11:55:35,692 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_25] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:55:40,272 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_25] Gemini HTTP response: 200 in 4.58s
+2025-06-14 11:55:40,272 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_25] Gemini content extracted: 3437 characters
+2025-06-14 11:55:40,273 - scripts.http_ai_client.HTTPAIClient - INFO - [req_25] Request completed successfully in 4.58s - Provider: gemini
+2025-06-14 11:55:40,273 - AIAPILogger - INFO - [req_25] AI Request COMPLETE - Time: 4.58s, Length: 3437, Cost: $0.0000
+2025-06-14 11:55:40,274 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: a799b062277ab1b8 (TTL: 0.002096s)
+2025-06-14 11:55:40,274 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_25] Response cached successfully
+2025-06-14 11:55:40,274 - AIAPILogger - DEBUG - [req_25] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:55:40,274 - scripts.ai_task_content_generator - WARNING - Failed to parse AI response: Invalid \escape: line 3 column 1219 (char 1285)
+2025-06-14 11:55:40,275 - continuous_orchestrator - DEBUG - Generated AI-powered work item: Security audit for eco-track-ai
+2025-06-14 11:55:40,275 - scripts.http_ai_client.HTTPAIClient - INFO - [req_26] Starting AI request - Model preference: auto, Prompt length: 822
+2025-06-14 11:55:40,275 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 47243368703cd2e1
+2025-06-14 11:55:40,275 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_26] Auto-selecting Google Gemini
+2025-06-14 11:55:40,276 - AIAPILogger - INFO - [req_26] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 822
+2025-06-14 11:55:40,276 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_26] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:55:43,727 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_26] Gemini HTTP response: 200 in 3.45s
+2025-06-14 11:55:43,727 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_26] Gemini content extracted: 2703 characters
+2025-06-14 11:55:43,728 - scripts.http_ai_client.HTTPAIClient - INFO - [req_26] Request completed successfully in 3.45s - Provider: gemini
+2025-06-14 11:55:43,729 - AIAPILogger - INFO - [req_26] AI Request COMPLETE - Time: 3.45s, Length: 2703, Cost: $0.0000
+2025-06-14 11:55:43,729 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: cce22ffaf2077abd (TTL: 0.001762s)
+2025-06-14 11:55:43,730 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_26] Response cached successfully
+2025-06-14 11:55:43,731 - AIAPILogger - DEBUG - [req_26] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:55:43,732 - continuous_orchestrator - DEBUG - Generated AI-powered work item: Implement Data Export Functionality for Dashboard Visualizations
+2025-06-14 11:55:43,732 - scripts.http_ai_client.HTTPAIClient - INFO - [req_27] Starting AI request - Model preference: auto, Prompt length: 715
+2025-06-14 11:55:43,733 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: fc9b1df676d36bc7
+2025-06-14 11:55:43,734 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_27] Auto-selecting Google Gemini
+2025-06-14 11:55:43,734 - AIAPILogger - INFO - [req_27] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 715
+2025-06-14 11:55:43,735 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_27] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:55:47,067 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_27] Gemini HTTP response: 200 in 3.33s
+2025-06-14 11:55:47,068 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_27] Gemini content extracted: 2378 characters
+2025-06-14 11:55:47,069 - scripts.http_ai_client.HTTPAIClient - INFO - [req_27] Request completed successfully in 3.34s - Provider: gemini
+2025-06-14 11:55:47,069 - AIAPILogger - INFO - [req_27] AI Request COMPLETE - Time: 3.34s, Length: 2378, Cost: $0.0000
+2025-06-14 11:55:47,070 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: cc0e176ad9ec64ce (TTL: 0.001546s)
+2025-06-14 11:55:47,070 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_27] Response cached successfully
+2025-06-14 11:55:47,070 - AIAPILogger - DEBUG - [req_27] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:55:47,071 - continuous_orchestrator - DEBUG - Generated AI-powered work item: Implement Input Sanitization for Dashboard Query Parameters
+2025-06-14 11:55:47,071 - scripts.http_ai_client.HTTPAIClient - INFO - [req_28] Starting AI request - Model preference: auto, Prompt length: 772
+2025-06-14 11:55:47,071 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: fee54d1e90127b42
+2025-06-14 11:55:47,071 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_28] Auto-selecting Google Gemini
+2025-06-14 11:55:47,072 - AIAPILogger - INFO - [req_28] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 772
+2025-06-14 11:55:47,072 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_28] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:55:50,994 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_28] Gemini HTTP response: 200 in 3.92s
+2025-06-14 11:55:50,994 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_28] Gemini content extracted: 2857 characters
+2025-06-14 11:55:50,995 - scripts.http_ai_client.HTTPAIClient - INFO - [req_28] Request completed successfully in 3.92s - Provider: gemini
+2025-06-14 11:55:50,995 - AIAPILogger - INFO - [req_28] AI Request COMPLETE - Time: 3.92s, Length: 2857, Cost: $0.0000
+2025-06-14 11:55:50,996 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 2440f95dd9bb0aae (TTL: 0.001815s)
+2025-06-14 11:55:50,996 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_28] Response cached successfully
+2025-06-14 11:55:50,996 - AIAPILogger - DEBUG - [req_28] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:55:50,997 - continuous_orchestrator - DEBUG - Generated AI-powered work item: Optimize React Component Rendering Speed for Dashboard Feed
+2025-06-14 11:55:50,997 - scripts.http_ai_client.HTTPAIClient - INFO - [req_29] Starting AI request - Model preference: auto, Prompt length: 767
+2025-06-14 11:55:50,997 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 55a55c6d43587d4f
+2025-06-14 11:55:50,997 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_29] Auto-selecting Google Gemini
+2025-06-14 11:55:50,998 - AIAPILogger - INFO - [req_29] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 767
+2025-06-14 11:55:50,998 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_29] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:55:54,196 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_29] Gemini HTTP response: 200 in 3.20s
+2025-06-14 11:55:54,196 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_29] Gemini content extracted: 2308 characters
+2025-06-14 11:55:54,197 - scripts.http_ai_client.HTTPAIClient - INFO - [req_29] Request completed successfully in 3.20s - Provider: gemini
+2025-06-14 11:55:54,198 - AIAPILogger - INFO - [req_29] AI Request COMPLETE - Time: 3.20s, Length: 2308, Cost: $0.0000
+2025-06-14 11:55:54,199 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 56887bfae1a2e17b (TTL: 0.001538s)
+2025-06-14 11:55:54,199 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_29] Response cached successfully
+2025-06-14 11:55:54,200 - AIAPILogger - DEBUG - [req_29] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:55:54,201 - continuous_orchestrator - DEBUG - Generated AI-powered work item: Implement CSRF Protection in Laravel API Endpoints
+2025-06-14 11:55:54,201 - scripts.http_ai_client.HTTPAIClient - INFO - [req_30] Starting AI request - Model preference: auto, Prompt length: 714
+2025-06-14 11:55:54,202 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: f62e055c651faf5f
+2025-06-14 11:55:54,202 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_30] Auto-selecting Google Gemini
+2025-06-14 11:55:54,203 - AIAPILogger - INFO - [req_30] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 714
+2025-06-14 11:55:54,204 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_30] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:55:59,044 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_30] Gemini HTTP response: 200 in 4.84s
+2025-06-14 11:55:59,045 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_30] Gemini content extracted: 3867 characters
+2025-06-14 11:55:59,045 - scripts.http_ai_client.HTTPAIClient - INFO - [req_30] Request completed successfully in 4.84s - Provider: gemini
+2025-06-14 11:55:59,046 - AIAPILogger - INFO - [req_30] AI Request COMPLETE - Time: 4.84s, Length: 3867, Cost: $0.0000
+2025-06-14 11:55:59,046 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 15e2c83c03265801 (TTL: 0.002291s)
+2025-06-14 11:55:59,046 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_30] Response cached successfully
+2025-06-14 11:55:59,047 - AIAPILogger - DEBUG - [req_30] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:55:59,047 - continuous_orchestrator - DEBUG - Generated AI-powered work item: Implement Input Sanitization and Output Encoding for Dashboard Queries
+2025-06-14 11:55:59,047 - scripts.http_ai_client.HTTPAIClient - INFO - [req_31] Starting AI request - Model preference: auto, Prompt length: 714
+2025-06-14 11:55:59,047 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_31] Auto-selecting Google Gemini
+2025-06-14 11:55:59,048 - AIAPILogger - INFO - [req_31] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 714
+2025-06-14 11:55:59,048 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_31] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:56:02,523 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_31] Gemini HTTP response: 200 in 3.48s
+2025-06-14 11:56:02,524 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_31] Gemini content extracted: 2338 characters
+2025-06-14 11:56:02,524 - scripts.http_ai_client.HTTPAIClient - INFO - [req_31] Request completed successfully in 3.48s - Provider: gemini
+2025-06-14 11:56:02,525 - AIAPILogger - INFO - [req_31] AI Request COMPLETE - Time: 3.48s, Length: 2338, Cost: $0.0000
+2025-06-14 11:56:02,525 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 15e2c83c03265801 (TTL: 0.001526s)
+2025-06-14 11:56:02,526 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_31] Response cached successfully
+2025-06-14 11:56:02,526 - AIAPILogger - DEBUG - [req_31] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:56:02,526 - continuous_orchestrator - DEBUG - Generated AI-powered work item: Implement CSRF Protection on All Forms in Dashboard
+2025-06-14 11:56:02,527 - scripts.http_ai_client.HTTPAIClient - INFO - [req_32] Starting AI request - Model preference: auto, Prompt length: 706
+2025-06-14 11:56:02,527 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: fe6e5925ebd4b53a
+2025-06-14 11:56:02,527 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_32] Auto-selecting Google Gemini
+2025-06-14 11:56:02,527 - AIAPILogger - INFO - [req_32] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 706
+2025-06-14 11:56:02,528 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_32] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:56:07,010 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_32] Gemini HTTP response: 200 in 4.48s
+2025-06-14 11:56:07,010 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_32] Gemini content extracted: 3505 characters
+2025-06-14 11:56:07,011 - scripts.http_ai_client.HTTPAIClient - INFO - [req_32] Request completed successfully in 4.48s - Provider: gemini
+2025-06-14 11:56:07,011 - AIAPILogger - INFO - [req_32] AI Request COMPLETE - Time: 4.48s, Length: 3505, Cost: $0.0000
+2025-06-14 11:56:07,011 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 101306673bc9e8d4 (TTL: 0.002106s)
+2025-06-14 11:56:07,012 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_32] Response cached successfully
+2025-06-14 11:56:07,012 - AIAPILogger - DEBUG - [req_32] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:56:07,012 - continuous_orchestrator - DEBUG - Generated AI-powered work item: Implement Secure Data Handling in Summarize-AI Mobile
+2025-06-14 11:56:07,013 - scripts.http_ai_client.HTTPAIClient - INFO - [req_33] Starting AI request - Model preference: auto, Prompt length: 768
+2025-06-14 11:56:07,013 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 69ce01e06614e579
+2025-06-14 11:56:07,013 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_33] Auto-selecting Google Gemini
+2025-06-14 11:56:07,014 - AIAPILogger - INFO - [req_33] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 768
+2025-06-14 11:56:07,014 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_33] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:56:11,539 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_33] Gemini HTTP response: 200 in 4.52s
+2025-06-14 11:56:11,539 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_33] Gemini content extracted: 3114 characters
+2025-06-14 11:56:11,539 - scripts.http_ai_client.HTTPAIClient - INFO - [req_33] Request completed successfully in 4.53s - Provider: gemini
+2025-06-14 11:56:11,540 - AIAPILogger - INFO - [req_33] AI Request COMPLETE - Time: 4.53s, Length: 3114, Cost: $0.0000
+2025-06-14 11:56:11,540 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 72b1e9cfb3af5b76 (TTL: 0.001941s)
+2025-06-14 11:56:11,541 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_33] Response cached successfully
+2025-06-14 11:56:11,541 - AIAPILogger - DEBUG - [req_33] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:56:11,541 - continuous_orchestrator - DEBUG - Generated AI-powered work item: Implement CSRF Protection Across Laravel & React Forms
+2025-06-14 11:56:11,542 - scripts.http_ai_client.HTTPAIClient - INFO - [req_34] Starting AI request - Model preference: auto, Prompt length: 732
+2025-06-14 11:56:11,542 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 9a4874a338e23e89
+2025-06-14 11:56:11,542 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_34] Auto-selecting Google Gemini
+2025-06-14 11:56:11,542 - AIAPILogger - INFO - [req_34] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 732
+2025-06-14 11:56:11,542 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_34] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:56:15,751 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_34] Gemini HTTP response: 200 in 4.21s
+2025-06-14 11:56:15,751 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_34] Gemini content extracted: 2934 characters
+2025-06-14 11:56:15,751 - scripts.http_ai_client.HTTPAIClient - INFO - [req_34] Request completed successfully in 4.21s - Provider: gemini
+2025-06-14 11:56:15,752 - AIAPILogger - INFO - [req_34] AI Request COMPLETE - Time: 4.21s, Length: 2934, Cost: $0.0000
+2025-06-14 11:56:15,752 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: fe2016873ca9d55d (TTL: 0.001833s)
+2025-06-14 11:56:15,753 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_34] Response cached successfully
+2025-06-14 11:56:15,753 - AIAPILogger - DEBUG - [req_34] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:56:15,753 - continuous_orchestrator - DEBUG - Generated AI-powered work item: Optimize Data Fetching for Key Performance Indicator (KPI) Tiles
+2025-06-14 11:56:15,754 - scripts.http_ai_client.HTTPAIClient - INFO - [req_35] Starting AI request - Model preference: auto, Prompt length: 957
+2025-06-14 11:56:15,754 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 4f10e39d354377bb
+2025-06-14 11:56:15,754 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_35] Auto-selecting Google Gemini
+2025-06-14 11:56:15,754 - AIAPILogger - INFO - [req_35] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 957
+2025-06-14 11:56:15,754 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_35] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:56:20,403 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_35] Gemini HTTP response: 200 in 4.65s
+2025-06-14 11:56:20,404 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_35] Gemini content extracted: 3506 characters
+2025-06-14 11:56:20,405 - scripts.http_ai_client.HTTPAIClient - INFO - [req_35] Request completed successfully in 4.65s - Provider: gemini
+2025-06-14 11:56:20,405 - AIAPILogger - INFO - [req_35] AI Request COMPLETE - Time: 4.65s, Length: 3506, Cost: $0.0000
+2025-06-14 11:56:20,405 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 5fdf2b3bfbf5830b (TTL: 0.002231s)
+2025-06-14 11:56:20,406 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_35] Response cached successfully
+2025-06-14 11:56:20,406 - AIAPILogger - DEBUG - [req_35] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:56:20,407 - continuous_orchestrator - DEBUG - Generated AI-powered work item: Skill-Based Recommendation Engine for Resource Sharing
+2025-06-14 11:56:20,407 - continuous_orchestrator - DEBUG - AI generation failed, falling back to template: object of type 'int' has no len()
+2025-06-14 11:56:20,408 - scripts.http_ai_client.HTTPAIClient - INFO - [req_36] Starting AI request - Model preference: auto, Prompt length: 754
+2025-06-14 11:56:20,408 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: a4b9b16142f0e97d
+2025-06-14 11:56:20,408 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_36] Auto-selecting Google Gemini
+2025-06-14 11:56:20,409 - AIAPILogger - INFO - [req_36] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 754
+2025-06-14 11:56:20,409 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_36] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:56:22,612 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_36] Gemini HTTP response: 200 in 2.20s
+2025-06-14 11:56:22,613 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_36] Gemini content extracted: 1546 characters
+2025-06-14 11:56:22,613 - scripts.http_ai_client.HTTPAIClient - INFO - [req_36] Request completed successfully in 2.21s - Provider: gemini
+2025-06-14 11:56:22,614 - AIAPILogger - INFO - [req_36] AI Request COMPLETE - Time: 2.21s, Length: 1546, Cost: $0.0000
+2025-06-14 11:56:22,614 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: a799b062277ab1b8 (TTL: 0.00115s)
+2025-06-14 11:56:22,614 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_36] Response cached successfully
+2025-06-14 11:56:22,615 - AIAPILogger - DEBUG - [req_36] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:56:22,615 - continuous_orchestrator - DEBUG - Generated AI-powered work item: Implement CSRF Protection for Laravel API & React Forms
+2025-06-14 11:56:22,615 - scripts.http_ai_client.HTTPAIClient - INFO - [req_37] Starting AI request - Model preference: auto, Prompt length: 715
+2025-06-14 11:56:22,616 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: fc9b1df676d36bc7
+2025-06-14 11:56:22,616 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_37] Auto-selecting Google Gemini
+2025-06-14 11:56:22,616 - AIAPILogger - INFO - [req_37] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 715
+2025-06-14 11:56:22,616 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_37] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:56:25,582 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_37] Gemini HTTP response: 200 in 2.97s
+2025-06-14 11:56:25,583 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_37] Gemini content extracted: 2331 characters
+2025-06-14 11:56:25,583 - scripts.http_ai_client.HTTPAIClient - INFO - [req_37] Request completed successfully in 2.97s - Provider: gemini
+2025-06-14 11:56:25,584 - AIAPILogger - INFO - [req_37] AI Request COMPLETE - Time: 2.97s, Length: 2331, Cost: $0.0000
+2025-06-14 11:56:25,584 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: cc0e176ad9ec64ce (TTL: 0.001523s)
+2025-06-14 11:56:25,584 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_37] Response cached successfully
+2025-06-14 11:56:25,585 - AIAPILogger - DEBUG - [req_37] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:56:25,585 - scripts.ai_task_content_generator - WARNING - Failed to parse AI response: Invalid \escape: line 3 column 842 (char 922)
+2025-06-14 11:56:25,585 - continuous_orchestrator - DEBUG - Generated AI-powered work item: Security audit for business-analytics-dashboard
+2025-06-14 11:56:25,585 - scripts.http_ai_client.HTTPAIClient - INFO - [req_38] Starting AI request - Model preference: auto, Prompt length: 715
+2025-06-14 11:56:25,586 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_38] Auto-selecting Google Gemini
+2025-06-14 11:56:25,586 - AIAPILogger - INFO - [req_38] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 715
+2025-06-14 11:56:25,586 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_38] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:56:29,618 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_38] Gemini HTTP response: 200 in 4.03s
+2025-06-14 11:56:29,618 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_38] Gemini content extracted: 3141 characters
+2025-06-14 11:56:29,619 - scripts.http_ai_client.HTTPAIClient - INFO - [req_38] Request completed successfully in 4.03s - Provider: gemini
+2025-06-14 11:56:29,619 - AIAPILogger - INFO - [req_38] AI Request COMPLETE - Time: 4.03s, Length: 3141, Cost: $0.0000
+2025-06-14 11:56:29,620 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: cc0e176ad9ec64ce (TTL: 0.001928s)
+2025-06-14 11:56:29,620 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_38] Response cached successfully
+2025-06-14 11:56:29,620 - AIAPILogger - DEBUG - [req_38] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:56:29,621 - continuous_orchestrator - DEBUG - Generated AI-powered work item: Implement Input Validation and Sanitization for Dashboard Parameters
+2025-06-14 11:56:29,621 - scripts.http_ai_client.HTTPAIClient - INFO - [req_39] Starting AI request - Model preference: auto, Prompt length: 957
+2025-06-14 11:56:29,621 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 4f10e39d354377bb
+2025-06-14 11:56:29,621 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_39] Auto-selecting Google Gemini
+2025-06-14 11:56:29,621 - AIAPILogger - INFO - [req_39] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 957
+2025-06-14 11:56:29,622 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_39] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:56:33,730 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_39] Gemini HTTP response: 200 in 4.11s
+2025-06-14 11:56:33,730 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_39] Gemini content extracted: 3085 characters
+2025-06-14 11:56:33,731 - scripts.http_ai_client.HTTPAIClient - INFO - [req_39] Request completed successfully in 4.11s - Provider: gemini
+2025-06-14 11:56:33,731 - AIAPILogger - INFO - [req_39] AI Request COMPLETE - Time: 4.11s, Length: 3085, Cost: $0.0000
+2025-06-14 11:56:33,731 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 5fdf2b3bfbf5830b (TTL: 0.002021s)
+2025-06-14 11:56:33,732 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_39] Response cached successfully
+2025-06-14 11:56:33,732 - AIAPILogger - DEBUG - [req_39] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:56:33,733 - continuous_orchestrator - DEBUG - Generated AI-powered work item: Skill-Based Resource Requests & Offers with Availability Scheduling
+2025-06-14 11:56:33,733 - scripts.http_ai_client.HTTPAIClient - INFO - [req_40] Starting AI request - Model preference: auto, Prompt length: 911
+2025-06-14 11:56:33,733 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: f1b175cb92b06d93
+2025-06-14 11:56:33,733 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_40] Auto-selecting Google Gemini
+2025-06-14 11:56:33,734 - AIAPILogger - INFO - [req_40] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 911
+2025-06-14 11:56:33,734 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_40] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:56:37,316 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_40] Gemini HTTP response: 200 in 3.58s
+2025-06-14 11:56:37,316 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_40] Gemini content extracted: 3029 characters
+2025-06-14 11:56:37,317 - scripts.http_ai_client.HTTPAIClient - INFO - [req_40] Request completed successfully in 3.58s - Provider: gemini
+2025-06-14 11:56:37,317 - AIAPILogger - INFO - [req_40] AI Request COMPLETE - Time: 3.58s, Length: 3029, Cost: $0.0000
+2025-06-14 11:56:37,318 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 6443956c7d9fef1d (TTL: 0.00197s)
+2025-06-14 11:56:37,318 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_40] Response cached successfully
+2025-06-14 11:56:37,318 - AIAPILogger - DEBUG - [req_40] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:56:37,319 - continuous_orchestrator - DEBUG - Generated AI-powered work item: Sentiment-Based Response Suggestion for Reviews
+2025-06-14 11:56:37,319 - scripts.http_ai_client.HTTPAIClient - INFO - [req_41] Starting AI request - Model preference: auto, Prompt length: 718
+2025-06-14 11:56:37,319 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: ac6c2db61efbe2b2
+2025-06-14 11:56:37,319 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_41] Auto-selecting Google Gemini
+2025-06-14 11:56:37,320 - AIAPILogger - INFO - [req_41] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 718
+2025-06-14 11:56:37,320 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_41] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:56:41,607 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_41] Gemini HTTP response: 200 in 4.29s
+2025-06-14 11:56:41,607 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_41] Gemini content extracted: 3170 characters
+2025-06-14 11:56:41,608 - scripts.http_ai_client.HTTPAIClient - INFO - [req_41] Request completed successfully in 4.29s - Provider: gemini
+2025-06-14 11:56:41,608 - AIAPILogger - INFO - [req_41] AI Request COMPLETE - Time: 4.29s, Length: 3170, Cost: $0.0000
+2025-06-14 11:56:41,609 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 769bec08343f57d7 (TTL: 0.001944s)
+2025-06-14 11:56:41,609 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_41] Response cached successfully
+2025-06-14 11:56:41,610 - AIAPILogger - DEBUG - [req_41] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:56:41,610 - continuous_orchestrator - DEBUG - Generated AI-powered work item: Optimize Text Preprocessing for Faster Reputation Analysis
+2025-06-14 11:56:41,610 - continuous_orchestrator - DEBUG - AI generation failed, falling back to template: object of type 'int' has no len()
+2025-06-14 11:56:41,610 - scripts.http_ai_client.HTTPAIClient - INFO - [req_42] Starting AI request - Model preference: auto, Prompt length: 958
+2025-06-14 11:56:41,610 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 750e8c67b4c55f6b
+2025-06-14 11:56:41,611 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_42] Auto-selecting Google Gemini
+2025-06-14 11:56:41,611 - AIAPILogger - INFO - [req_42] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 958
+2025-06-14 11:56:41,611 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_42] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:56:46,233 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_42] Gemini HTTP response: 200 in 4.62s
+2025-06-14 11:56:46,233 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_42] Gemini content extracted: 3473 characters
+2025-06-14 11:56:46,234 - scripts.http_ai_client.HTTPAIClient - INFO - [req_42] Request completed successfully in 4.62s - Provider: gemini
+2025-06-14 11:56:46,234 - AIAPILogger - INFO - [req_42] AI Request COMPLETE - Time: 4.62s, Length: 3473, Cost: $0.0000
+2025-06-14 11:56:46,234 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: c948efab16cb0393 (TTL: 0.002216s)
+2025-06-14 11:56:46,235 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_42] Response cached successfully
+2025-06-14 11:56:46,235 - AIAPILogger - DEBUG - [req_42] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:56:46,236 - continuous_orchestrator - DEBUG - Generated AI-powered work item: Real-time Brand Consistency Score Dashboard
+2025-06-14 11:56:46,236 - scripts.http_ai_client.HTTPAIClient - INFO - [req_43] Starting AI request - Model preference: auto, Prompt length: 714
+2025-06-14 11:56:46,236 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: f62e055c651faf5f
+2025-06-14 11:56:46,236 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_43] Auto-selecting Google Gemini
+2025-06-14 11:56:46,236 - AIAPILogger - INFO - [req_43] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 714
+2025-06-14 11:56:46,237 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_43] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:56:50,502 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_43] Gemini HTTP response: 200 in 4.27s
+2025-06-14 11:56:50,503 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_43] Gemini content extracted: 3535 characters
+2025-06-14 11:56:50,503 - scripts.http_ai_client.HTTPAIClient - INFO - [req_43] Request completed successfully in 4.27s - Provider: gemini
+2025-06-14 11:56:50,504 - AIAPILogger - INFO - [req_43] AI Request COMPLETE - Time: 4.27s, Length: 3535, Cost: $0.0000
+2025-06-14 11:56:50,504 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 15e2c83c03265801 (TTL: 0.002125s)
+2025-06-14 11:56:50,504 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_43] Response cached successfully
+2025-06-14 11:56:50,504 - AIAPILogger - DEBUG - [req_43] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:56:50,505 - continuous_orchestrator - DEBUG - Generated AI-powered work item: Implement Input Sanitization and Validation for Dashboard Queries
+2025-06-14 11:56:50,505 - continuous_orchestrator - INFO - Generated 21 work items
+2025-06-14 11:56:50,505 - continuous_orchestrator - WARNING - ⚠️ Generated 21 emergency work items
+2025-06-14 11:56:50,506 - scripts.redis_work_queue - DEBUG - Processing priority: TaskPriority.MEDIUM, type: <enum 'TaskPriority'>, name: MEDIUM, value: 3
+2025-06-14 11:56:50,507 - scripts.redis_work_queue - DEBUG - Found 0 pending messages in HIGH
+2025-06-14 11:56:50,509 - WorkerMonitor - INFO - Found 10 active workers
+2025-06-14 11:56:50,509 - scripts.redis_integration.redis_client - DEBUG - Ignoring transient error for circuit breaker: ResponseError: BUSYGROUP Consumer Group name already exists
+2025-06-14 11:56:50,509 - scripts.redis_integration.redis_client - DEBUG - Consumer group processors_workflow_engine_b5ca5ef3 already exists for stream streams:tasks:workflow_engine_b5ca5ef3
+2025-06-14 11:56:51,511 - RedisEnabledStateManager - INFO - save_state_locally called from:
+2025-06-14 11:56:51,512 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/run_continuous_ai.py", line 551, in <module>
+    main()
+2025-06-14 11:56:51,512 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/run_continuous_ai.py", line 542, in main
+    asyncio.run(run_continuous_system(args))
+2025-06-14 11:56:51,512 - RedisEnabledStateManager - DEBUG -   File "/home/vscode/.local/lib/python3.11/site-packages/nest_asyncio.py", line 30, in run
+    return loop.run_until_complete(task)
+2025-06-14 11:56:51,513 - RedisEnabledStateManager - DEBUG -   File "/home/vscode/.local/lib/python3.11/site-packages/nest_asyncio.py", line 92, in run_until_complete
+    self._run_once()
+2025-06-14 11:56:51,513 - RedisEnabledStateManager - DEBUG -   File "/home/vscode/.local/lib/python3.11/site-packages/nest_asyncio.py", line 133, in _run_once
+    handle._run()
+2025-06-14 11:56:51,513 - RedisEnabledStateManager - DEBUG -   File "/usr/local/lib/python3.11/asyncio/events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+2025-06-14 11:56:51,513 - RedisEnabledStateManager - DEBUG -   File "/usr/local/lib/python3.11/asyncio/tasks.py", line 360, in __wakeup
+    self.__step()
+2025-06-14 11:56:51,514 - RedisEnabledStateManager - DEBUG -   File "/usr/local/lib/python3.11/asyncio/tasks.py", line 277, in __step
+    result = coro.send(None)
+2025-06-14 11:56:51,514 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/resource_manager.py", line 670, in _metric_update_loop
+    await self.update_resource_metrics()
+2025-06-14 11:56:51,514 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/resource_manager.py", line 713, in update_resource_metrics
+    self.state_manager.update_state(metrics_update)
+2025-06-14 11:56:51,514 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/redis_state_adapter.py", line 354, in update_state
+    super().update_state(updates)
+2025-06-14 11:56:51,515 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/state_manager.py", line 344, in update_state
+    self.save_state()
+2025-06-14 11:56:51,515 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/redis_state_adapter.py", line 363, in save_state
+    super().save_state()
+2025-06-14 11:56:51,515 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/state_manager.py", line 320, in save_state
+    self.save_state_locally(self.state)
+2025-06-14 11:56:51,515 - RedisEnabledStateManager - INFO - Saving state with 8 repositories: ['ai-powered-inventory-sync', 'brand-guardian-ai', 'business-analytics-dashboard', 'community-connect-platform', 'eco-track-ai', 'project-analytics-dashboard', 'reputation-ai', 'summarize-ai-mobile']
+2025-06-14 11:56:51,516 - resource_manager - DEBUG - Updated resource metrics - Efficiency: 0.643, CPU: 21.0%, Memory: 40.5%
+2025-06-14 11:56:51,516 - scripts.redis_integration.redis_connection_pool - DEBUG - Connection pool status - Active: 3, Limit: 5000, Connections: 3, PubSubs: 0
+2025-06-14 11:56:51,520 - redis_integration.redis_streams_manager - ERROR - Message 1749902041364-6 processing timeout
+2025-06-14 11:56:51,521 - redis_event_analytics.RedisEventAnalytics - WARNING - System health is critical: 20.0
+2025-06-14 11:56:51,523 - scripts.redis_work_queue - INFO - Successfully added 4/4 items to MEDIUM stream
+2025-06-14 11:56:51,524 - scripts.redis_work_queue - INFO - Flushed 4 MEDIUM items to Redis stream: cwmai:work_queue:medium
+2025-06-14 11:56:51,524 - scripts.redis_work_queue - DEBUG - Processing priority: TaskPriority.LOW, type: <enum 'TaskPriority'>, name: LOW, value: 4
+2025-06-14 11:56:51,526 - scripts.redis_work_queue - INFO - Successfully added 3/3 items to LOW stream
+2025-06-14 11:56:51,526 - scripts.redis_work_queue - INFO - Flushed 3 LOW items to Redis stream: cwmai:work_queue:low
+2025-06-14 11:56:51,526 - scripts.redis_work_queue - DEBUG - Processing priority: TaskPriority.BACKGROUND, type: <enum 'TaskPriority'>, name: BACKGROUND, value: 5
+2025-06-14 11:56:51,528 - scripts.redis_work_queue - INFO - Successfully added 2/2 items to BACKGROUND stream
+2025-06-14 11:56:51,528 - scripts.redis_work_queue - INFO - Flushed 2 BACKGROUND items to Redis stream: cwmai:work_queue:background
+2025-06-14 11:56:51,529 - scripts.redis_work_queue - DEBUG - Processing priority: TaskPriority.HIGH, type: <enum 'TaskPriority'>, name: HIGH, value: 2
+2025-06-14 11:56:51,530 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Published event 0f0a45bd-11fc-467f-956e-4e8f25906bfc to intelligence:coordination:intelligence_hub_cb59bb3b: 1749902211524-0
+2025-06-14 11:56:51,532 - scripts.redis_work_queue - DEBUG - Messages to process: 1
+2025-06-14 11:56:51,533 - scripts.redis_work_queue - DEBUG - Processing 1 message groups
+2025-06-14 11:56:51,533 - scripts.redis_work_queue - DEBUG - Stream cwmai:work_queue:high: 1 messages
+2025-06-14 11:56:51,533 - scripts.redis_work_queue - DEBUG - Worker worker_4 cannot handle gen_f04e14f9
+2025-06-14 11:56:51,533 - scripts.redis_work_queue - DEBUG - Worker worker_2 is general, can handle gen_62d253e1
+2025-06-14 11:56:51,534 - scripts.redis_work_queue - DEBUG - Worker worker_5 cannot handle gen_c4375342
+2025-06-14 11:56:51,534 - scripts.redis_work_queue - DEBUG - Worker worker_6 cannot handle gen_7522a73b
+2025-06-14 11:56:51,535 - scripts.redis_work_queue - DEBUG - Worker worker_8 matches repository eco-track-ai
+2025-06-14 11:56:51,535 - scripts.redis_work_queue - DEBUG - Worker worker_10 is general, can handle gen_36be8b2f
+2025-06-14 11:56:51,536 - scripts.redis_work_queue - DEBUG - Worker worker_9 cannot handle gen_a77a0e5e
+2025-06-14 11:56:51,536 - scripts.redis_work_queue - DEBUG - Worker worker_1 is system_tasks, can handle gen_ae810514: False
+2025-06-14 11:56:51,536 - scripts.redis_work_queue - DEBUG - Worker worker_7 cannot handle gen_23007e5b
+2025-06-14 11:56:51,537 - scripts.redis_work_queue - DEBUG - Worker worker_3 is general, can handle gen_d5f792b9
+2025-06-14 11:56:51,537 - scripts.redis_work_queue - INFO - Successfully added 21/21 items to HIGH stream
+2025-06-14 11:56:51,537 - scripts.redis_work_queue - INFO - Flushed 21 HIGH items to Redis stream: cwmai:work_queue:high
+2025-06-14 11:56:51,537 - continuous_orchestrator - INFO - Total work items added to queue: 30
+2025-06-14 11:56:51,538 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Processed event 0f0a45bd-11fc-467f-956e-4e8f25906bfc in 12.86ms
+2025-06-14 11:56:51,540 - scripts.redis_work_queue - INFO - Worker worker_2 claimed task gen_62d253e1
+2025-06-14 11:56:51,540 - continuous_orchestrator - DEBUG - Found specialized work for worker_2
+2025-06-14 11:56:51,541 - continuous_orchestrator - INFO - Worker worker_2 executing: Implement CSRF Protection on All Forms in Dashboard
+2025-06-14 11:56:51,541 - scripts.redis_work_queue - INFO - Worker worker_8 claimed task gen_969a06f4
+2025-06-14 11:56:51,541 - continuous_orchestrator - INFO - Worker worker_8 executing: Optimize React Component Rendering Speed for Dashboard Feed
+2025-06-14 11:56:51,542 - scripts.redis_work_queue - INFO - Worker worker_10 claimed task gen_36be8b2f
+2025-06-14 11:56:51,542 - continuous_orchestrator - INFO - Worker worker_10 executing: Implement Input Sanitization for Dashboard Query Parameters
+2025-06-14 11:56:51,543 - redis_integration.redis_streams_manager - DEBUG - Produced message 1749902211540-0 to stream cwmai:events:stream
+2025-06-14 11:56:51,543 - scripts.redis_work_queue - INFO - Worker worker_3 claimed task gen_d5f792b9
+2025-06-14 11:56:51,543 - continuous_orchestrator - INFO - Worker worker_3 executing: Implement Role-Based Access Control (RBAC) for Dashboard Views & Data
+2025-06-14 11:56:51,546 - scripts.redis_work_queue - DEBUG - Worker worker_6 cannot handle gen_7522a73b, re-queued for others
+2025-06-14 11:56:51,546 - scripts.redis_work_queue - DEBUG - Checking MEDIUM stream: cwmai:work_queue:medium
+2025-06-14 11:56:51,546 - scripts.redis_work_queue - DEBUG - Worker worker_5 cannot handle gen_c4375342, re-queued for others
+2025-06-14 11:56:51,546 - scripts.redis_work_queue - DEBUG - Worker worker_4 cannot handle gen_f04e14f9, re-queued for others
+2025-06-14 11:56:51,547 - scripts.redis_work_queue - DEBUG - Worker worker_1 cannot handle gen_ae810514, re-queued for others
+2025-06-14 11:56:51,547 - scripts.redis_work_queue - DEBUG - Worker worker_7 cannot handle gen_23007e5b, re-queued for others
+2025-06-14 11:56:51,548 - scripts.redis_work_queue - DEBUG - Worker worker_9 cannot handle gen_a77a0e5e, re-queued for others
+2025-06-14 11:56:51,549 - scripts.redis_work_queue - DEBUG - Found 0 pending messages in MEDIUM
+2025-06-14 11:56:51,552 - scripts.redis_work_queue - DEBUG - Stream cwmai:work_queue:medium: 1 messages
+2025-06-14 11:56:51,552 - scripts.redis_work_queue - DEBUG - Worker worker_6 cannot handle work_1749902127_5073cdf4
+2025-06-14 11:56:51,553 - scripts.redis_work_queue - DEBUG - Worker worker_5 cannot handle work_1749902127_b21a1a39
+2025-06-14 11:56:51,553 - scripts.redis_work_queue - DEBUG - Worker worker_4 cannot handle work_1749902127_b34bcf43
+2025-06-14 11:56:51,554 - scripts.redis_work_queue - DEBUG - Worker worker_1 is system_tasks, can handle work_1749902127_73ad8f9e: True
+2025-06-14 11:56:51,554 - scripts.redis_integration.redis_pubsub_manager - DEBUG - Published message to state_changes:cwmai_orchestrator (subscribers: 1)
+2025-06-14 11:56:51,556 - redis_integration.redis_pubsub_manager - DEBUG - Published message to cwmai:workers:global (subscribers: 2)
+2025-06-14 11:56:51,556 - continuous_orchestrator - INFO - 🔍 _perform_work called for: Implement Input Sanitization for Dashboard Query Parameters (type: SECURITY)
+2025-06-14 11:56:51,556 - redis_task_persistence - INFO - Redis task persistence initialized
+2025-06-14 11:56:51,557 - continuous_orchestrator - INFO - 🔍 _perform_work called for: Optimize React Component Rendering Speed for Dashboard Feed (type: OPTIMIZATION)
+2025-06-14 11:56:51,557 - continuous_orchestrator - INFO - 🔍 _perform_work called for: Implement CSRF Protection on All Forms in Dashboard (type: SECURITY)
+2025-06-14 11:56:51,557 - scripts.redis_work_queue - INFO - Worker worker_1 claimed task work_1749902127_73ad8f9e
+2025-06-14 11:56:51,557 - continuous_orchestrator - INFO - Worker worker_1 executing: SkillLeap
+2025-06-14 11:56:51,558 - scripts.redis_state_adapter - DEBUG - Synced local state to Redis
+2025-06-14 11:56:51,559 - continuous_orchestrator - INFO - 🔍 _perform_work called for: Implement Role-Based Access Control (RBAC) for Dashboard Views & Data (type: FEATURE)
+2025-06-14 11:56:51,560 - scripts.redis_work_queue - DEBUG - Worker worker_6 cannot handle work_1749902127_5073cdf4, re-queued for others
+2025-06-14 11:56:51,560 - scripts.redis_work_queue - DEBUG - Checking LOW stream: cwmai:work_queue:low
+2025-06-14 11:56:51,560 - scripts.redis_work_queue - DEBUG - Worker worker_5 cannot handle work_1749902127_b21a1a39, re-queued for others
+2025-06-14 11:56:51,560 - scripts.redis_work_queue - DEBUG - Worker worker_4 cannot handle work_1749902127_b34bcf43, re-queued for others
+2025-06-14 11:56:51,562 - scripts.redis_work_queue - DEBUG - Found 0 pending messages in LOW
+2025-06-14 11:56:51,564 - scripts.redis_work_queue - DEBUG - Stream cwmai:work_queue:low: 1 messages
+2025-06-14 11:56:51,565 - scripts.redis_work_queue - DEBUG - Worker worker_6 cannot handle work_1749902127_a722cfdc
+2025-06-14 11:56:51,565 - scripts.redis_work_queue - DEBUG - Worker worker_5 cannot handle work_1749902127_2194fecd
+2025-06-14 11:56:51,566 - scripts.redis_work_queue - DEBUG - Worker worker_4 cannot handle work_1749902127_ec625748
+2025-06-14 11:56:51,568 - continuous_orchestrator - INFO - 📋 Routing task type: SECURITY
+2025-06-14 11:56:51,569 - continuous_orchestrator - INFO - 📑 Available task handlers: ['SYSTEM_IMPROVEMENT', 'NEW_PROJECT', 'FEATURE', 'BUG_FIX', 'DOCUMENTATION', 'RESEARCH', 'TESTING', 'MAINTENANCE', 'MONITORING', 'INTEGRATION', 'REFACTORING', 'OPTIMIZATION']
+2025-06-14 11:56:51,569 - continuous_orchestrator - INFO - 🔎 Looking for handler for task type: 'SECURITY'
+2025-06-14 11:56:51,569 - continuous_orchestrator - INFO - ✅ Handler found: None
+2025-06-14 11:56:51,569 - continuous_orchestrator - WARNING - ⚠️  No specific handler for task type: 'SECURITY', falling back to GitHub integration
+2025-06-14 11:56:51,569 - scripts.github_issue_creator - DEBUG - 🔍 Checking GitHub integration:
+2025-06-14 11:56:51,570 - scripts.github_issue_creator - DEBUG -    - GITHUB_TOKEN exists: True
+2025-06-14 11:56:51,570 - scripts.github_issue_creator - DEBUG -    - CLAUDE_PAT exists: True
+2025-06-14 11:56:51,570 - scripts.github_issue_creator - DEBUG -    - Combined token exists: True
+2025-06-14 11:56:51,570 - scripts.github_issue_creator - DEBUG -    - GITHUB_REPOSITORY: CodeWebMobile-AI/cwmai
+2025-06-14 11:56:51,570 - scripts.github_issue_creator - DEBUG -    - Result: True
+2025-06-14 11:56:51,570 - continuous_orchestrator - INFO - 🔐 GitHub integration check: can_create_issues = True
+2025-06-14 11:56:51,570 - continuous_orchestrator - INFO - 🔍 GitHub creator instance: <scripts.github_issue_creator.GitHubIssueCreator object at 0x7b47a41ca1d0>
+2025-06-14 11:56:51,570 - continuous_orchestrator - INFO - 🔍 GitHub creator class: <class 'scripts.github_issue_creator.GitHubIssueCreator'>
+2025-06-14 11:56:51,571 - continuous_orchestrator - INFO - ✅ GitHub integration IS available - will create real issue
+2025-06-14 11:56:51,571 - scripts.github_issue_creator - INFO - Creating GitHub issue for: Implement Input Sanitization for Dashboard Query Parameters
+2025-06-14 11:56:51,573 - scripts.github_issue_creator - WARNING - Error checking for existing issue: name 'repo_full_name' is not defined
+2025-06-14 11:56:51,582 - asyncio - DEBUG - Using selector: EpollSelector
+2025-06-14 11:56:51,583 - scripts.redis_distributed_locks.RedisDistributedLockManager - INFO - Initializing Redis Distributed Lock Manager: lock_mgr_34451b91
+2025-06-14 11:56:51,583 - scripts.redis_distributed_locks.RedisDistributedLockManager - DEBUG - Redis client initialized: <class 'scripts.redis_integration.redis_client.RedisClient'>
+2025-06-14 11:56:51,584 - scripts.redis_integration.redis_client - DEBUG - Ignoring transient error for circuit breaker: RuntimeError: Task <Task pending name='Task-740' coro=<RedisDistributedLockManager.initialize() running at /workspaces/cwmai/scripts/redis_distributed_locks.py:411>> got Future <Future pending> attached to a different loop
+2025-06-14 11:56:52,586 - scripts.redis_lockfree_state_manager - INFO - Lock-free state manager initialized
+2025-06-14 11:56:52,587 - scripts.redis_distributed_locks.DeadlockDetector - INFO - Deadlock detection started
+2025-06-14 11:56:52,587 - scripts.redis_distributed_locks.RedisDistributedLockManager - INFO - Started 0 management tasks
+2025-06-14 11:56:52,588 - scripts.redis_integration.redis_client - DEBUG - Ignoring transient error for circuit breaker: RuntimeError: Task <Task pending name='Task-745' coro=<DeadlockDetector._detection_loop() running at /workspaces/cwmai/scripts/redis_distributed_locks.py:211>> got Future <Future pending> attached to a different loop
+2025-06-14 11:56:52,588 - scripts.redis_distributed_locks.RedisDistributedLockManager - INFO - Lock Manager lock_mgr_34451b91 initialized successfully
+2025-06-14 11:56:52,588 - scripts.redis_distributed_locks.RedisDistributedLockManager - DEBUG - Lock acquisition request: task_creation:5c529922b43872f87f49bb7caa307900 by task_manager_118644
+2025-06-14 11:56:52,589 - scripts.redis_distributed_locks.RedisDistributedLockManager - DEBUG - Acquired exclusive lock: task_creation:5c529922b43872f87f49bb7caa307900
+Task TASK-1749902212589-ead353b6 marked for potential decomposition analysis
+2025-06-14 11:56:52,591 - scripts.redis_distributed_locks.RedisDistributedLockManager - WARNING - Lock task_creation:5c529922b43872f87f49bb7caa307900 not found in active locks
+🎯 create_github_issue called for task: Implement Input Sanitization for Dashboard Query Parameters
+   - Task type: feature
+   - Repository: business-analytics-dashboard
+   - GitHub instance: <github.MainClass.Github object at 0x7b47a3bd88d0>
+   - Repo instance: None
+✅ Successfully got repository: CodeWebMobile-AI/business-analytics-dashboard
+Searching for duplicates of: Implement Input Sanitization for Dashboard Query Parameters
+Searching with query: repo:CodeWebMobile-AI/business-analytics-dashboard is:issue state:open "Implement Input Sanitization for Dashboard Query Parameters"
+Searching with query: repo:CodeWebMobile-AI/business-analytics-dashboard is:issue "Task ID: TASK-1749902212589-ead353b6"
+Searching with query: repo:CodeWebMobile-AI/business-analytics-dashboard is:issue state:open input sanitization dashboard query parameters
+Searching with query: repo:CodeWebMobile-AI/business-analytics-dashboard is:issue state:closed closed:>2025-05-15 "Implement Input Sanitization for Dashboard Query Parameters"
+No duplicates found after checking 2 issues
+Created GitHub issue #3 for TASK-1749902212589-ead353b6
+2025-06-14 11:56:54,362 - scripts.github_issue_creator - INFO - ✅ Created GitHub issue #3 for: Implement Input Sanitization for Dashboard Query Parameters
+2025-06-14 11:56:54,363 - continuous_orchestrator - INFO - 📋 Routing task type: OPTIMIZATION
+2025-06-14 11:56:54,363 - continuous_orchestrator - INFO - 🔎 Looking for handler for task type: 'OPTIMIZATION'
+2025-06-14 11:56:54,363 - continuous_orchestrator - INFO - ✅ Handler found: _execute_optimization_task
+2025-06-14 11:56:54,363 - continuous_orchestrator - INFO - 🚀 Using specific handler: _execute_optimization_task for task type: OPTIMIZATION
+2025-06-14 11:56:54,363 - continuous_orchestrator - INFO - ⚡ Executing optimization task: Optimize React Component Rendering Speed for Dashboard Feed
+2025-06-14 11:56:54,364 - continuous_orchestrator - INFO - 📋 Queueing GitHub issue for task: Optimize React Component Rendering Speed for Dashboard Feed
+2025-06-14 11:56:54,365 - scripts.github_issue_creator - INFO - Creating GitHub issue for: Implement CSRF Protection on All Forms in Dashboard
+2025-06-14 11:56:54,365 - scripts.github_issue_creator - DEBUG - Rate limiting: waiting 7.2s before creating issue
+2025-06-14 11:56:54,366 - continuous_orchestrator - INFO - 🔍 _perform_work called for: SkillLeap (type: NEW_PROJECT)
+2025-06-14 11:56:54,369 - redis_task_persistence - ERROR - ❌ Error recording completed task: Event loop is closed
+2025-06-14 11:56:54,369 - continuous_orchestrator - INFO - Worker worker_10 completed: Implement Input Sanitization for Dashboard Query Parameters in 2.81s
+2025-06-14 11:56:54,371 - scripts.redis_work_queue - DEBUG - Worker worker_4 cannot handle work_1749902127_ec625748, re-queued for others
+2025-06-14 11:56:54,371 - scripts.redis_work_queue - DEBUG - Checking BACKGROUND stream: cwmai:work_queue:background
+2025-06-14 11:56:54,371 - scripts.redis_work_queue - DEBUG - Worker worker_5 cannot handle work_1749902127_2194fecd, re-queued for others
+2025-06-14 11:56:54,371 - scripts.redis_work_queue - DEBUG - Worker worker_6 cannot handle work_1749902127_a722cfdc, re-queued for others
+2025-06-14 11:56:54,373 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/resource_manager.py", line 624, in _update_efficiency_metrics
+    self.state_manager.save_state()
+2025-06-14 11:56:54,377 - resource_manager - INFO - Updated efficiency metrics: 61.8% (success: 100.0%, workers: 0.0%)
+2025-06-14 11:56:54,380 - scripts.github_issue_creator - INFO - Creating GitHub issue for: Optimize React Component Rendering Speed for Dashboard Feed
+2025-06-14 11:56:54,384 - scripts.redis_distributed_locks.RedisDistributedLockManager - INFO - Initializing Redis Distributed Lock Manager: lock_mgr_bc2ce326
+2025-06-14 11:56:55,387 - scripts.redis_distributed_locks.RedisDistributedLockManager - INFO - Lock Manager lock_mgr_bc2ce326 initialized successfully
+2025-06-14 11:56:55,387 - scripts.redis_distributed_locks.RedisDistributedLockManager - DEBUG - Lock acquisition request: task_creation:cd513903bb12f66204fd015e099f6314 by task_manager_118644
+2025-06-14 11:56:55,388 - scripts.redis_distributed_locks.RedisDistributedLockManager - DEBUG - Acquired exclusive lock: task_creation:cd513903bb12f66204fd015e099f6314
+Task TASK-1749902215388-419f842f marked for potential decomposition analysis
+2025-06-14 11:56:55,390 - scripts.redis_distributed_locks.RedisDistributedLockManager - WARNING - Lock task_creation:cd513903bb12f66204fd015e099f6314 not found in active locks
+🎯 create_github_issue called for task: Optimize React Component Rendering Speed for Dashboard Feed
+   - Task type: feature
+   - Repository: eco-track-ai
+   - GitHub instance: <github.MainClass.Github object at 0x7b47a3b527d0>
+   - Repo instance: None
+✅ Successfully got repository: CodeWebMobile-AI/eco-track-ai
+Searching for duplicates of: Optimize React Component Rendering Speed for Dashboard Feed
+Searching with query: repo:CodeWebMobile-AI/eco-track-ai is:issue state:open "Optimize React Component Rendering Speed for Dashboard Feed"
+2025-06-14 11:56:55,701 - scripts.redis_integration.redis_client - WARNING - Circuit breaker detected failure #1: RuntimeError: Event loop is closed
+2025-06-14 11:56:55,701 - scripts.redis_integration.redis_client - WARNING - Circuit breaker failure #1: RuntimeError: Event loop is closed
+2025-06-14 11:56:55,701 - scripts.redis_distributed_locks.DeadlockDetector - ERROR - Error building wait graph: coroutine ignored GeneratorExit
+2025-06-14 11:56:55,702 - asyncio - ERROR - Task was destroyed but it is pending!
+task: <Task pending name='Task-777' coro=<DeadlockDetector._detection_loop() done, defined at /workspaces/cwmai/scripts/redis_distributed_locks.py:207> wait_for=<Future finished result=None>>
+Searching with query: repo:CodeWebMobile-AI/eco-track-ai is:issue "Task ID: TASK-1749902215388-419f842f"
+Searching with query: repo:CodeWebMobile-AI/eco-track-ai is:issue state:open optimize react component rendering speed
+Searching with query: repo:CodeWebMobile-AI/eco-track-ai is:issue state:closed closed:>2025-05-15 "Optimize React Component Rendering Speed for Dashboard Feed"
+No duplicates found after checking 7 issues
+Created GitHub issue #8 for TASK-1749902215388-419f842f
+2025-06-14 11:56:57,227 - scripts.github_issue_creator - INFO - ✅ Created GitHub issue #8 for: Optimize React Component Rendering Speed for Dashboard Feed
+2025-06-14 11:56:57,227 - continuous_orchestrator - INFO - ✅ Created GitHub issue for: Optimize React Component Rendering Speed for Dashboard Feed
+2025-06-14 11:56:57,227 - continuous_orchestrator - INFO - Updated task task_1749902214_gen_969a06f4 with GitHub issue #8
+2025-06-14 11:56:57,228 - continuous_orchestrator - INFO - Queued GitHub issue creation for: Optimize React Component Rendering Speed for Dashboard Feed
+2025-06-14 11:56:57,229 - scripts.redis_integration.redis_client - DEBUG - Ignoring transient error for circuit breaker: ResponseError: BUSYGROUP Consumer Group name already exists
+2025-06-14 11:56:57,229 - scripts.redis_integration.redis_client - DEBUG - Consumer group processors_workflow_engine_b5ca5ef3 already exists for stream streams:tasks:workflow_engine_b5ca5ef3
+2025-06-14 11:56:57,229 - scripts.redis_integration.redis_client - DEBUG - Operation succeeded, failure count: 1
+2025-06-14 11:56:57,231 - redis_integration.redis_streams_manager - INFO - Retrying message 1749902041364-6 (attempt 2)
+2025-06-14 11:56:57,232 - continuous_orchestrator - INFO - 📋 Routing task type: FEATURE
+2025-06-14 11:56:54,363 - continuous_orchestrator - INFO - 📑 Available task handlers: ['SYSTEM_IMPROVEMENT', 'NEW_PROJECT', 'FEATURE', 'BUG_FIX', 'DOCUMENTATION', 'RESEARCH', 'TESTING', 'MAINTENANCE', 'MONITORING', 'INTEGRATION', 'REFACTORING', 'OPTIMIZATION'] [×3]
+2025-06-14 11:56:57,233 - continuous_orchestrator - INFO - 🔎 Looking for handler for task type: 'FEATURE'
+2025-06-14 11:56:57,233 - continuous_orchestrator - INFO - ✅ Handler found: _execute_feature_task
+2025-06-14 11:56:57,233 - continuous_orchestrator - INFO - 🚀 Using specific handler: _execute_feature_task for task type: FEATURE
+🔧 TaskManager initialization:
+   - GitHub token exists: True
+   - Repository name: business-analytics-dashboard
+   - Warning: Could not access repository business-analytics-dashboard: 404 {"message": "Not Found", "documentation_url": "https://docs.github.com/rest", "status": "404"}
+   - GitHub client created: True
+   - Repository object created: False
+2025-06-14 11:56:57,353 - scripts.http_ai_client.HTTPAIClient - INFO - HTTPAIClient initialized with 4 available providers
+2025-06-14 11:56:57,353 - scripts.http_ai_client.HTTPAIClient - DEBUG - Provider anthropic: AVAILABLE
+2025-06-14 11:56:57,354 - scripts.http_ai_client.HTTPAIClient - DEBUG - Provider openai: AVAILABLE
+2025-06-14 11:56:57,354 - scripts.http_ai_client.HTTPAIClient - DEBUG - Provider gemini: AVAILABLE
+2025-06-14 11:56:57,354 - scripts.http_ai_client.HTTPAIClient - DEBUG - Provider deepseek: AVAILABLE
+2025-06-14 11:56:57,354 - scripts.http_ai_client.HTTPAIClient - INFO - ✓ AI response cache enabled (type: redis)
+✓ AI content generator initialized successfully
+✓ Decomposition system initialized successfully
+2025-06-14 11:56:52,590 - asyncio - DEBUG - Using selector: EpollSelector [×4]
+2025-06-14 11:56:57,355 - scripts.redis_distributed_locks.RedisDistributedLockManager - INFO - Initializing Redis Distributed Lock Manager: lock_mgr_71e0bf3e
+2025-06-14 11:56:54,384 - scripts.redis_distributed_locks.RedisDistributedLockManager - DEBUG - Redis client initialized: <class 'scripts.redis_integration.redis_client.RedisClient'> [×2]
+2025-06-14 11:56:54,384 - scripts.redis_integration.redis_client - DEBUG - Ignoring transient error for circuit breaker: RuntimeError: Task <Task pending name='Task-772' coro=<RedisDistributedLockManager.initialize() running at /workspaces/cwmai/scripts/redis_distributed_locks.py:411>> got Future <Future pending> attached to a different loop [×2]
+2025-06-14 11:56:55,386 - scripts.redis_lockfree_state_manager - INFO - Lock-free state manager initialized [×2]
+2025-06-14 11:56:55,386 - scripts.redis_distributed_locks.DeadlockDetector - INFO - Deadlock detection started [×2]
+2025-06-14 11:56:55,386 - scripts.redis_distributed_locks.RedisDistributedLockManager - INFO - Started 0 management tasks [×2]
+2025-06-14 11:56:58,366 - scripts.redis_integration.redis_client - DEBUG - Ignoring transient error for circuit breaker: RuntimeError: Task <Task pending name='Task-801' coro=<DeadlockDetector._detection_loop() running at /workspaces/cwmai/scripts/redis_distributed_locks.py:211>> got Future <Future pending> attached to a different loop
+2025-06-14 11:56:58,367 - scripts.redis_distributed_locks.RedisDistributedLockManager - INFO - Lock Manager lock_mgr_71e0bf3e initialized successfully
+2025-06-14 11:56:58,368 - scripts.redis_distributed_locks.RedisDistributedLockManager - DEBUG - Lock acquisition request: task_creation:f7719508b5f7f9d92d9ca696b5f4619f by task_manager_118644
+2025-06-14 11:56:58,370 - scripts.redis_distributed_locks.RedisDistributedLockManager - DEBUG - Acquired exclusive lock: task_creation:f7719508b5f7f9d92d9ca696b5f4619f
+Task TASK-1749902218372-680cf5fb marked for potential decomposition analysis
+2025-06-14 11:56:58,375 - scripts.redis_distributed_locks.RedisDistributedLockManager - WARNING - Lock task_creation:f7719508b5f7f9d92d9ca696b5f4619f not found in active locks
+🎯 create_github_issue called for task: Implement Role-Based Access Control (RBAC) for Dashboard Views & Data
+   - Task type: feature
+   - Repository: business-analytics-dashboard
+   - GitHub instance: <github.MainClass.Github object at 0x7b47a10ecf50>
+   - Repo instance: None
+✅ Successfully got repository: CodeWebMobile-AI/business-analytics-dashboard
+Searching for duplicates of: Implement Role-Based Access Control (RBAC) for Dashboard Views & Data
+Searching with query: repo:CodeWebMobile-AI/business-analytics-dashboard is:issue state:open "Implement Role-Based Access Control (RBAC) for Dashboard Views & Data"
+2025-06-14 11:56:58,659 - asyncio - ERROR - Task was destroyed but it is pending!
+task: <Task pending name='Task-801' coro=<DeadlockDetector._detection_loop() done, defined at /workspaces/cwmai/scripts/redis_distributed_locks.py:207> wait_for=<Future pending cb=[Task.__wakeup()]>>
+Searching with query: repo:CodeWebMobile-AI/business-analytics-dashboard is:issue "Task ID: TASK-1749902218372-680cf5fb"
+Searching with query: repo:CodeWebMobile-AI/business-analytics-dashboard is:issue state:open role-based access control (rbac) dashboard
+Searching with query: repo:CodeWebMobile-AI/business-analytics-dashboard is:issue state:closed closed:>2025-05-15 "Implement Role-Based Access Control (RBAC) for Dashboard Views & Data"
+No duplicates found after checking 3 issues
+Created GitHub issue #4 for TASK-1749902218372-680cf5fb
+2025-06-14 11:57:00,142 - continuous_orchestrator - INFO - Worker worker_3 completed: Implement Role-Based Access Control (RBAC) for Dashboard Views & Data in 8.58s
+2025-06-14 11:57:00,144 - scripts.redis_work_queue - DEBUG - Found 0 pending messages in BACKGROUND
+2025-06-14 11:57:00,146 - redis_task_persistence - INFO - ✅ Recorded completed task in Redis: Optimize React Component Rendering Speed for Dashboard Feed
+2025-06-14 11:57:00,147 - continuous_orchestrator - INFO - ✅ Task completed and GitHub issue queued: Optimize React Component Rendering Speed for Dashboard Feed
+2025-06-14 11:57:00,147 - continuous_orchestrator - INFO - Worker worker_8 completed: Optimize React Component Rendering Speed for Dashboard Feed in 8.59s
+2025-06-14 11:57:00,150 - redis_integration.redis_streams_manager - DEBUG - Produced message 1749902220148-0 to stream cwmai:patterns:stream
+2025-06-14 11:57:00,150 - redis_event_stream_processor - INFO - Pattern detected: anomaly (severity: medium) - Unusual event distribution detected
+2025-06-14 11:57:00,150 - continuous_orchestrator - ERROR - Failed to update worker worker_3 status after completion: Event loop is closed
+2025-06-14 11:57:00,151 - asyncio - ERROR - Unclosed Pipeline client
+client: Pipeline<ConnectionPool<Connection<host=localhost,port=6379,db=0>>>
+2025-06-14 11:57:00,151 - scripts.redis_work_queue - DEBUG - Worker worker_7 cannot handle work_1749902127_a722cfdc, re-queued for others
+2025-06-14 11:57:00,151 - scripts.redis_work_queue - DEBUG - Checking BACKGROUND stream: cwmai:work_queue:background
+2025-06-14 11:57:00,152 - scripts.redis_work_queue - DEBUG - Messages to process: 1
+2025-06-14 11:57:00,152 - scripts.redis_work_queue - DEBUG - Processing 1 message groups
+2025-06-14 11:57:00,152 - scripts.redis_work_queue - DEBUG - Stream cwmai:work_queue:background: 1 messages
+2025-06-14 11:57:00,152 - scripts.redis_work_queue - DEBUG - Worker worker_4 cannot handle work_1749902127_f749c35e
+2025-06-14 11:57:00,153 - scripts.redis_work_queue - DEBUG - Worker worker_5 cannot handle work_1749902127_67486719
+2025-06-14 11:57:00,153 - continuous_orchestrator - INFO - 📋 Routing task type: NEW_PROJECT
+2025-06-14 11:57:00,153 - continuous_orchestrator - INFO - 🔎 Looking for handler for task type: 'NEW_PROJECT'
+2025-06-14 11:57:00,154 - continuous_orchestrator - INFO - ✅ Handler found: _execute_new_project_task
+2025-06-14 11:57:00,154 - continuous_orchestrator - INFO - 🚀 Using specific handler: _execute_new_project_task for task type: NEW_PROJECT
+2025-06-14 11:57:00,154 - continuous_orchestrator - INFO - 📂 Executing new project task: SkillLeap
+2025-06-14 11:57:00,166 - asyncio - ERROR - Task was destroyed but it is pending!
+task: <Task pending name='Task-745' coro=<DeadlockDetector._detection_loop() running at /workspaces/cwmai/scripts/redis_distributed_locks.py:211> wait_for=<Future pending cb=[Task.__wakeup()]>>
+🔧 TaskManager initialization:
+   - GitHub token exists: True
+   - Repository name: None (no default)
+   - GitHub client created: True
+   - Repository object created: False
+✓ AI content generator initialized successfully
+✓ Decomposition system initialized successfully
+2025-06-14 11:57:00,207 - continuous_orchestrator - INFO - 🚀 Creating new project from Laravel React starter kit
+2025-06-14 11:57:00,207 - scripts.project_creator - INFO - Creating project for task: SkillLeap
+2025-06-14 11:57:00,207 - scripts.http_ai_client.HTTPAIClient - INFO - [req_44] Starting AI request - Model preference: gemini, Prompt length: 1640
+2025-06-14 11:57:00,207 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 5c3e46b6630e5aa9
+2025-06-14 11:57:00,207 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_44] Routing to Google Gemini
+2025-06-14 11:57:00,208 - AIAPILogger - INFO - [req_44] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1640
+2025-06-14 11:57:00,208 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_44] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:57:09,980 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_44] Gemini HTTP response: 200 in 9.77s
+2025-06-14 11:57:09,980 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_44] Gemini content extracted: 7735 characters
+2025-06-14 11:57:09,981 - scripts.http_ai_client.HTTPAIClient - INFO - [req_44] Request completed successfully in 9.77s - Provider: gemini
+2025-06-14 11:57:09,981 - AIAPILogger - INFO - [req_44] AI Request COMPLETE - Time: 9.77s, Length: 7735, Cost: $0.0000
+2025-06-14 11:57:09,981 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: e6acfca85dfdf3b3 (TTL: 0.004687s)
+2025-06-14 11:57:09,982 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_44] Response cached successfully
+2025-06-14 11:57:09,982 - AIAPILogger - DEBUG - [req_44] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:57:09,982 - scripts.http_ai_client.HTTPAIClient - INFO - [req_45] Starting AI request - Model preference: auto, Prompt length: 10354
+2025-06-14 11:57:09,982 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 8837c0382fb87c6a
+2025-06-14 11:57:09,983 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_45] Auto-selecting Google Gemini
+2025-06-14 11:57:09,983 - AIAPILogger - INFO - [req_45] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 10354
+2025-06-14 11:57:09,983 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_45] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:57:15,937 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_45] Gemini HTTP response: 200 in 5.95s
+2025-06-14 11:57:15,938 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_45] Gemini content extracted: 4270 characters
+2025-06-14 11:57:15,938 - scripts.http_ai_client.HTTPAIClient - INFO - [req_45] Request completed successfully in 5.96s - Provider: gemini
+2025-06-14 11:57:15,939 - AIAPILogger - INFO - [req_45] AI Request COMPLETE - Time: 5.96s, Length: 4270, Cost: $0.0000
+2025-06-14 11:57:15,939 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: e0226b2ee0af8e4c (TTL: 0.007312s)
+2025-06-14 11:57:15,939 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_45] Response cached successfully
+2025-06-14 11:57:15,940 - AIAPILogger - DEBUG - [req_45] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:57:16,754 - scripts.project_creator - INFO - Forking laravel/react-starter-kit to CodeWebMobile-AI/mindleap-ai
+2025-06-14 11:57:17,479 - scripts.project_creator - INFO - Using temporary directory: /tmp/starter_kit_idjb3d82
+2025-06-14 11:57:17,479 - scripts.project_creator - INFO - Cloning starter kit from https://github.com/laravel/react-starter-kit.git
+Initialized empty Git repository in /tmp/starter_kit_idjb3d82/.git/
+[main (root-commit) 99a31e3] Initial commit from react-starter-kit starter kit
+ 161 files changed, 16239 insertions(+)
+ create mode 100644 .editorconfig
+ create mode 100644 .env.example
+ create mode 100644 .gitattributes
+ create mode 100644 .github/workflows/lint.yml
+ create mode 100644 .github/workflows/tests.yml
+ create mode 100644 .gitignore
+ create mode 100644 .prettierignore
+ create mode 100644 .prettierrc
+ create mode 100644 README.md
+ create mode 100644 app/Http/Controllers/Auth/AuthenticatedSessionController.php
+ create mode 100644 app/Http/Controllers/Auth/ConfirmablePasswordController.php
+ create mode 100644 app/Http/Controllers/Auth/EmailVerificationNotificationController.php
+ create mode 100644 app/Http/Controllers/Auth/EmailVerificationPromptController.php
+ create mode 100644 app/Http/Controllers/Auth/NewPasswordController.php
+ create mode 100644 app/Http/Controllers/Auth/PasswordResetLinkController.php
+ create mode 100644 app/Http/Controllers/Auth/RegisteredUserController.php
+ create mode 100644 app/Http/Controllers/Auth/VerifyEmailController.php
+ create mode 100644 app/Http/Controllers/Controller.php
+ create mode 100644 app/Http/Controllers/Settings/PasswordController.php
+ create mode 100644 app/Http/Controllers/Settings/ProfileController.php
+ create mode 100644 app/Http/Middleware/HandleAppearance.php
+ create mode 100644 app/Http/Middleware/HandleInertiaRequests.php
+ create mode 100644 app/Http/Requests/Auth/LoginRequest.php
+ create mode 100644 app/Http/Requests/Settings/ProfileUpdateRequest.php
+ create mode 100644 app/Models/User.php
+ create mode 100644 app/Providers/AppServiceProvider.php
+ create mode 100755 artisan
+ create mode 100644 bootstrap/app.php
+ create mode 100644 bootstrap/cache/.gitignore
+ create mode 100644 bootstrap/providers.php
+ create mode 100644 components.json
+ create mode 100644 composer.json
+ create mode 100644 config/app.php
+ create mode 100644 config/auth.php
+ create mode 100644 config/cache.php
+ create mode 100644 config/database.php
+ create mode 100644 config/filesystems.php
+ create mode 100644 config/inertia.php
+ create mode 100644 config/logging.php
+ create mode 100644 config/mail.php
+ create mode 100644 config/queue.php
+ create mode 100644 config/services.php
+ create mode 100644 config/session.php
+ create mode 100644 database/.gitignore
+ create mode 100644 database/factories/UserFactory.php
+ create mode 100644 database/migrations/0001_01_01_000000_create_users_table.php
+ create mode 100644 database/migrations/0001_01_01_000001_create_cache_table.php
+ create mode 100644 database/migrations/0001_01_01_000002_create_jobs_table.php
+ create mode 100644 database/seeders/DatabaseSeeder.php
+ create mode 100644 eslint.config.js
+ create mode 100644 package-lock.json
+ create mode 100644 package.json
+ create mode 100644 phpunit.xml
+ create mode 100644 public/.htaccess
+ create mode 100644 public/apple-touch-icon.png
+ create mode 100644 public/favicon.ico
+ create mode 100644 public/favicon.svg
+ create mode 100644 public/index.php
+ create mode 100644 public/logo.svg
+ create mode 100644 public/robots.txt
+ create mode 100644 resources/css/app.css
+ create mode 100644 resources/js/app.tsx
+ create mode 100644 resources/js/components/app-content.tsx
+ create mode 100644 resources/js/components/app-header.tsx
+ create mode 100644 resources/js/components/app-logo-icon.tsx
+ create mode 100644 resources/js/components/app-logo.tsx
+ create mode 100644 resources/js/components/app-shell.tsx
+ create mode 100644 resources/js/components/app-sidebar-header.tsx
+ create mode 100644 resources/js/components/app-sidebar.tsx
+ create mode 100644 resources/js/components/appearance-dropdown.tsx
+ create mode 100644 resources/js/components/appearance-tabs.tsx
+ create mode 100644 resources/js/components/breadcrumbs.tsx
+ create mode 100644 resources/js/components/delete-user.tsx
+ create mode 100644 resources/js/components/heading-small.tsx
+ create mode 100644 resources/js/components/heading.tsx
+ create mode 100644 resources/js/components/icon.tsx
+ create mode 100644 resources/js/components/input-error.tsx
+ create mode 100644 resources/js/components/nav-footer.tsx
+ create mode 100644 resources/js/components/nav-main.tsx
+ create mode 100644 resources/js/components/nav-user.tsx
+ create mode 100644 resources/js/components/text-link.tsx
+ create mode 100644 resources/js/components/ui/alert.tsx
+ create mode 100644 resources/js/components/ui/avatar.tsx
+ create mode 100644 resources/js/components/ui/badge.tsx
+ create mode 100644 resources/js/components/ui/breadcrumb.tsx
+ create mode 100644 resources/js/components/ui/button.tsx
+ create mode 100644 resources/js/components/ui/card.tsx
+ create mode 100644 resources/js/components/ui/checkbox.tsx
+ create mode 100644 resources/js/components/ui/collapsible.tsx
+ create mode 100644 resources/js/components/ui/dialog.tsx
+ create mode 100644 resources/js/components/ui/dropdown-menu.tsx
+ create mode 100644 resources/js/components/ui/icon.tsx
+ create mode 100644 resources/js/components/ui/input.tsx
+ create mode 100644 resources/js/components/ui/label.tsx
+ create mode 100644 resources/js/components/ui/navigation-menu.tsx
+ create mode 100644 resources/js/components/ui/placeholder-pattern.tsx
+ create mode 100644 resources/js/components/ui/select.tsx
+ create mode 100644 resources/js/components/ui/separator.tsx
+ create mode 100644 resources/js/components/ui/sheet.tsx
+ create mode 100644 resources/js/components/ui/sidebar.tsx
+ create mode 100644 resources/js/components/ui/skeleton.tsx
+ create mode 100644 resources/js/components/ui/toggle-group.tsx
+ create mode 100644 resources/js/components/ui/toggle.tsx
+ create mode 100644 resources/js/components/ui/tooltip.tsx
+ create mode 100644 resources/js/components/user-info.tsx
+ create mode 100644 resources/js/components/user-menu-content.tsx
+ create mode 100644 resources/js/hooks/use-appearance.tsx
+ create mode 100644 resources/js/hooks/use-initials.tsx
+ create mode 100644 resources/js/hooks/use-mobile-navigation.ts
+ create mode 100644 resources/js/hooks/use-mobile.tsx
+ create mode 100644 resources/js/layouts/app-layout.tsx
+ create mode 100644 resources/js/layouts/app/app-header-layout.tsx
+ create mode 100644 resources/js/layouts/app/app-sidebar-layout.tsx
+ create mode 100644 resources/js/layouts/auth-layout.tsx
+ create mode 100644 resources/js/layouts/auth/auth-card-layout.tsx
+ create mode 100644 resources/js/layouts/auth/auth-simple-layout.tsx
+ create mode 100644 resources/js/layouts/auth/auth-split-layout.tsx
+ create mode 100644 resources/js/layouts/settings/layout.tsx
+ create mode 100644 resources/js/lib/utils.ts
+ create mode 100644 resources/js/pages/auth/confirm-password.tsx
+ create mode 100644 resources/js/pages/auth/forgot-password.tsx
+ create mode 100644 resources/js/pages/auth/login.tsx
+ create mode 100644 resources/js/pages/auth/register.tsx
+ create mode 100644 resources/js/pages/auth/reset-password.tsx
+ create mode 100644 resources/js/pages/auth/verify-email.tsx
+ create mode 100644 resources/js/pages/dashboard.tsx
+ create mode 100644 resources/js/pages/settings/appearance.tsx
+ create mode 100644 resources/js/pages/settings/password.tsx
+ create mode 100644 resources/js/pages/settings/profile.tsx
+ create mode 100644 resources/js/pages/welcome.tsx
+ create mode 100644 resources/js/ssr.tsx
+ create mode 100644 resources/js/types/global.d.ts
+ create mode 100644 resources/js/types/index.d.ts
+ create mode 100644 resources/js/types/vite-env.d.ts
+ create mode 100644 resources/views/app.blade.php
+ create mode 100644 routes/auth.php
+ create mode 100644 routes/console.php
+ create mode 100644 routes/settings.php
+ create mode 100644 routes/web.php
+ create mode 100644 storage/app/.gitignore
+ create mode 100644 storage/app/private/.gitignore
+ create mode 100644 storage/app/public/.gitignore
+ create mode 100644 storage/framework/.gitignore
+ create mode 100644 storage/framework/cache/.gitignore
+ create mode 100644 storage/framework/cache/data/.gitignore
+ create mode 100644 storage/framework/sessions/.gitignore
+ create mode 100644 storage/framework/testing/.gitignore
+ create mode 100644 storage/framework/views/.gitignore
+ create mode 100644 storage/logs/.gitignore
+ create mode 100644 tests/Feature/Auth/AuthenticationTest.php
+ create mode 100644 tests/Feature/Auth/EmailVerificationTest.php
+ create mode 100644 tests/Feature/Auth/PasswordConfirmationTest.php
+ create mode 100644 tests/Feature/Auth/PasswordResetTest.php
+ create mode 100644 tests/Feature/Auth/RegistrationTest.php
+ create mode 100644 tests/Feature/DashboardTest.php
+ create mode 100644 tests/Feature/Settings/PasswordUpdateTest.php
+ create mode 100644 tests/Feature/Settings/ProfileUpdateTest.php
+ create mode 100644 tests/TestCase.php
+ create mode 100644 tests/Unit/ExampleTest.php
+ create mode 100644 tsconfig.json
+ create mode 100644 vite.config.ts
+2025-06-14 11:57:18,028 - scripts.project_creator - INFO - Setting remote origin to CodeWebMobile-AI/mindleap-ai
+2025-06-14 11:57:18,031 - scripts.project_creator - INFO - Pushing to CodeWebMobile-AI/mindleap-ai
+2025-06-14 11:57:18,849 - scripts.project_creator - INFO - Successfully pushed starter kit contents to new repository
+2025-06-14 11:57:18,849 - scripts.project_creator - INFO - Waiting for GitHub to process the push...
+2025-06-14 11:57:18,850 - scripts.redis_integration.redis_client - DEBUG - Operation succeeded, failure count: 2
+2025-06-14 11:57:18,850 - scripts.redis_work_queue - DEBUG - Worker worker_9 cannot handle work_1749902127_2194fecd, re-queued for others
+2025-06-14 11:57:18,850 - scripts.redis_work_queue - DEBUG - Checking BACKGROUND stream: cwmai:work_queue:background
+2025-06-14 11:57:18,851 - scripts.redis_integration.redis_client - DEBUG - Ignoring transient error for circuit breaker: ResponseError: BUSYGROUP Consumer Group name already exists
+2025-06-14 11:57:18,851 - scripts.redis_integration.redis_client - DEBUG - Consumer group processors_workflow_engine_b5ca5ef3 already exists for stream streams:tasks:workflow_engine_b5ca5ef3
+2025-06-14 11:57:18,853 - redis_event_analytics.RedisEventAnalytics - WARNING - System health is critical: 20.0
+2025-06-14 11:57:18,853 - scripts.redis_work_queue - DEBUG - Messages to process: 0
+2025-06-14 11:57:18,853 - continuous_orchestrator - DEBUG - Worker worker_6 idle for 197.442065s, looking for any work
+2025-06-14 11:57:18,853 - scripts.redis_work_queue - DEBUG - Checking CRITICAL stream: cwmai:work_queue:critical
+2025-06-14 11:57:18,854 - scripts.github_issue_creator - WARNING - Error checking for existing issue: name 'repo_full_name' is not defined
+2025-06-14 11:57:18,855 - asyncio - DEBUG - Using selector: EpollSelector
+2025-06-14 11:57:18,855 - scripts.redis_distributed_locks.RedisDistributedLockManager - INFO - Initializing Redis Distributed Lock Manager: lock_mgr_83e92191
+2025-06-14 11:57:18,856 - scripts.redis_distributed_locks.RedisDistributedLockManager - DEBUG - Redis client initialized: <class 'scripts.redis_integration.redis_client.RedisClient'>
+2025-06-14 11:57:18,857 - scripts.redis_lockfree_state_manager - INFO - Lock-free state manager initialized
+2025-06-14 11:57:18,857 - scripts.redis_distributed_locks.DeadlockDetector - INFO - Deadlock detection started
+2025-06-14 11:57:18,857 - scripts.redis_distributed_locks.RedisDistributedLockManager - INFO - Started 0 management tasks
+2025-06-14 11:57:18,858 - scripts.redis_integration.redis_client - DEBUG - Ignoring transient error for circuit breaker: RuntimeError: Task <Task pending name='Task-846' coro=<DeadlockDetector._detection_loop() running at /workspaces/cwmai/scripts/redis_distributed_locks.py:211>> got Future <Future pending> attached to a different loop
+2025-06-14 11:57:18,859 - scripts.redis_distributed_locks.RedisDistributedLockManager - INFO - Lock Manager lock_mgr_83e92191 initialized successfully
+2025-06-14 11:57:18,859 - scripts.redis_distributed_locks.RedisDistributedLockManager - DEBUG - Lock acquisition request: task_creation:8e46643836f485900a930f18a6d7dbf1 by task_manager_118644
+2025-06-14 11:57:18,860 - scripts.redis_distributed_locks.RedisDistributedLockManager - DEBUG - Acquired exclusive lock: task_creation:8e46643836f485900a930f18a6d7dbf1
+Task TASK-1749902238861-8ac64d4a marked for potential decomposition analysis
+2025-06-14 11:57:18,862 - scripts.redis_distributed_locks.RedisDistributedLockManager - WARNING - Lock task_creation:8e46643836f485900a930f18a6d7dbf1 not found in active locks
+🎯 create_github_issue called for task: Implement CSRF Protection on All Forms in Dashboard
+   - Task type: feature
+   - Repository: project-analytics-dashboard
+   - GitHub instance: <github.MainClass.Github object at 0x7b47a3bd88d0>
+   - Repo instance: None
+✅ Successfully got repository: CodeWebMobile-AI/project-analytics-dashboard
+Searching for duplicates of: Implement CSRF Protection on All Forms in Dashboard
+Searching with query: repo:CodeWebMobile-AI/project-analytics-dashboard is:issue state:open "Implement CSRF Protection on All Forms in Dashboard"
+Searching with query: repo:CodeWebMobile-AI/project-analytics-dashboard is:issue "Task ID: TASK-1749902238861-8ac64d4a"
+Searching with query: repo:CodeWebMobile-AI/project-analytics-dashboard is:issue state:open csrf protection forms dashboard
+Searching with query: repo:CodeWebMobile-AI/project-analytics-dashboard is:issue state:closed closed:>2025-05-15 "Implement CSRF Protection on All Forms in Dashboard"
+No duplicates found after checking 3 issues
+Created GitHub issue #4 for TASK-1749902238861-8ac64d4a
+2025-06-14 11:57:20,774 - scripts.github_issue_creator - INFO - ✅ Created GitHub issue #4 for: Implement CSRF Protection on All Forms in Dashboard
+2025-06-14 11:57:20,776 - redis_integration.redis_pubsub_manager - DEBUG - Published message to cwmai:workers:global (subscribers: 2)
+2025-06-14 11:57:20,777 - scripts.redis_work_queue - DEBUG - Found 1 pending messages in BACKGROUND
+2025-06-14 11:57:20,777 - scripts.redis_work_queue - DEBUG - Claiming 1 pending messages from BACKGROUND
+2025-06-14 11:57:20,779 - redis_integration.redis_streams_manager - DEBUG - Processed message 1749902041369-0 in 23.548s
+2025-06-14 11:57:20,781 - scripts.redis_work_queue - DEBUG - Found 0 pending messages in CRITICAL
+2025-06-14 11:57:20,782 - redis_task_persistence - ERROR - ❌ Error recording completed task: Event loop is closed
+2025-06-14 11:57:21,305 - RedisEnabledStateManager - INFO - save_state_locally called from:
+2025-06-14 11:57:21,306 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/run_continuous_ai.py", line 551, in <module>
+    main()
+2025-06-14 11:57:21,306 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/run_continuous_ai.py", line 542, in main
+    asyncio.run(run_continuous_system(args))
+2025-06-14 11:57:21,307 - RedisEnabledStateManager - DEBUG -   File "/home/vscode/.local/lib/python3.11/site-packages/nest_asyncio.py", line 30, in run
+    return loop.run_until_complete(task)
+2025-06-14 11:57:21,307 - RedisEnabledStateManager - DEBUG -   File "/home/vscode/.local/lib/python3.11/site-packages/nest_asyncio.py", line 92, in run_until_complete
+    self._run_once()
+2025-06-14 11:57:21,307 - RedisEnabledStateManager - DEBUG -   File "/home/vscode/.local/lib/python3.11/site-packages/nest_asyncio.py", line 133, in _run_once
+    handle._run()
+2025-06-14 11:57:21,307 - RedisEnabledStateManager - DEBUG -   File "/usr/local/lib/python3.11/asyncio/events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+2025-06-14 11:57:21,307 - RedisEnabledStateManager - DEBUG -   File "/usr/local/lib/python3.11/asyncio/tasks.py", line 279, in __step
+    result = coro.throw(exc)
+2025-06-14 11:57:21,307 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/continuous_orchestrator.py", line 555, in _worker_loop
+    await self._execute_work(worker, work_item)
+2025-06-14 11:57:21,308 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/continuous_orchestrator.py", line 738, in _execute_work
+    self.resource_manager.record_task_completion(completion_time, success=True)
+2025-06-14 11:57:21,308 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/resource_manager.py", line 660, in record_task_completion
+    state = self.state_manager.load_state()
+2025-06-14 11:57:21,308 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/state_manager.py", line 370, in load_state
+    self.save_state_locally(state)
+2025-06-14 11:57:21,308 - RedisEnabledStateManager - INFO - Saving state with 0 repositories: []
+2025-06-14 11:57:21,309 - continuous_orchestrator - INFO - Worker worker_2 completed: Implement CSRF Protection on All Forms in Dashboard in 29.22s
+2025-06-14 11:57:21,311 - RedisEnabledStateManager - DEBUG -   File "/usr/local/lib/python3.11/asyncio/tasks.py", line 277, in __step
+    result = coro.send(None)
+2025-06-14 11:57:21,312 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/resource_manager.py", line 624, in _update_efficiency_metrics
+    self.state_manager.save_state()
+2025-06-14 11:57:21,312 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/redis_state_adapter.py", line 363, in save_state
+    super().save_state()
+2025-06-14 11:57:21,312 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/state_manager.py", line 320, in save_state
+    self.save_state_locally(self.state)
+2025-06-14 11:57:21,313 - resource_manager - INFO - Updated efficiency metrics: 61.8% (success: 100.0%, workers: 0.0%)
+2025-06-14 11:57:21,314 - redis_distributed_workflows.RedisWorkflowEngine - INFO - Registered workflow: feature_dev_gen_d5f792b9
+2025-06-14 11:57:21,315 - continuous_orchestrator - ERROR - Error creating feature workflow: RedisWorkflowEngine.start_workflow() got an unexpected keyword argument 'initial_context'
+2025-06-14 11:57:21,316 - continuous_orchestrator - INFO - Generated 2 traditional follow-up tasks for Implement Role-Based Access Control (RBAC) for Dashboard Views & Data
+2025-06-14 11:57:21,316 - continuous_orchestrator - DEBUG - Looking for work for worker_3 (specialization: general)
+2025-06-14 11:57:21,316 - scripts.redis_work_queue - DEBUG - Processing priority: TaskPriority.HIGH, type: <enum 'TaskPriority'>, name: HIGH, value: 2
+2025-06-14 11:57:21,317 - scripts.redis_work_queue - DEBUG - No messages claimed
+2025-06-14 11:57:21,317 - scripts.redis_work_queue - DEBUG - Worker worker_4 cannot handle work_1749902127_f749c35e, re-queued for others
+2025-06-14 11:57:21,317 - continuous_orchestrator - DEBUG - Worker worker_4 idle for 199.906195s, looking for any work
+2025-06-14 11:57:21,318 - scripts.redis_work_queue - DEBUG - Worker worker_5 cannot handle work_1749902127_67486719, re-queued for others
+2025-06-14 11:57:21,319 - continuous_orchestrator - DEBUG - Worker worker_5 idle for 199.907905s, looking for any work
+2025-06-14 11:57:21,321 - scripts.redis_work_queue - DEBUG - Processing 1 message groups
+2025-06-14 11:57:21,321 - scripts.redis_work_queue - DEBUG - Stream cwmai:work_queue:background: 1 messages
+2025-06-14 11:57:21,321 - scripts.redis_work_queue - DEBUG - Worker worker_9 cannot handle work_1749902127_f749c35e
+2025-06-14 11:57:21,323 - redis_integration.redis_streams_manager - DEBUG - Produced message 1749902241320-0 to stream cwmai:patterns:stream
+2025-06-14 11:57:21,323 - redis_event_stream_processor - INFO - Pattern detected: anomaly (severity: medium) - Unusual event distribution detected
+2025-06-14 11:57:21,326 - scripts.redis_work_queue - INFO - Successfully added 1/1 items to HIGH stream
+2025-06-14 11:57:21,326 - scripts.redis_work_queue - INFO - Flushed 1 HIGH items to Redis stream: cwmai:work_queue:high
+2025-06-14 11:57:21,326 - scripts.redis_work_queue - DEBUG - Processing priority: TaskPriority.MEDIUM, type: <enum 'TaskPriority'>, name: MEDIUM, value: 3
+2025-06-14 11:57:21,327 - scripts.redis_work_queue - DEBUG - Worker worker_7 cannot handle work_1749902127_67486719
+2025-06-14 11:57:21,331 - continuous_orchestrator - DEBUG - Looking for work for worker_8 (specialization: eco-track-ai)
+2025-06-14 11:57:21,332 - redis_integration.redis_streams_manager - DEBUG - Processed message 1749902041369-1 in 0.553s
+2025-06-14 11:57:21,334 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Published event d2c7f2b3-34d5-4131-9abc-81fc0c9e8e66 to intelligence:coordination:intelligence_hub_cb59bb3b: 1749902240779-0
+2025-06-14 11:57:21,334 - scripts.redis_work_queue - INFO - Successfully added 1/1 items to MEDIUM stream
+2025-06-14 11:57:21,335 - scripts.redis_work_queue - INFO - Flushed 1 MEDIUM items to Redis stream: cwmai:work_queue:medium
+2025-06-14 11:57:21,337 - continuous_orchestrator - DEBUG - Worker worker_9 idle for 199.926397s, looking for any work
+2025-06-14 11:57:21,341 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Processed event d2c7f2b3-34d5-4131-9abc-81fc0c9e8e66 in 559.81ms
+2025-06-14 11:57:21,343 - continuous_orchestrator - DEBUG - Worker worker_7 idle for 199.931677s, looking for any work
+2025-06-14 11:57:21,350 - redis_integration.redis_streams_manager - DEBUG - Processed message 1749902041369-2 in 0.017s
+2025-06-14 11:57:21,354 - intelligent_work_finder - INFO - Discovering work (max: 30, current load: 1)
+2025-06-14 11:57:21,354 - intelligent_work_finder - DEBUG - Repository discovery: 8 total, 8 after exclusions, 8 valid
+2025-06-14 11:57:21,354 - scripts.project_lifecycle_analyzer - INFO - Analyzing lifecycle stage for ai-powered-inventory-sync
+2025-06-14 11:57:21,355 - scripts.http_ai_client.HTTPAIClient - INFO - [req_46] Starting AI request - Model preference: auto, Prompt length: 1018
+2025-06-14 11:57:21,356 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 5017743e1251e402
+2025-06-14 11:57:21,356 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_46] Auto-selecting Google Gemini
+2025-06-14 11:57:21,356 - AIAPILogger - INFO - [req_46] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1018
+2025-06-14 11:57:21,357 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_46] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:57:23,143 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_46] Gemini HTTP response: 200 in 1.79s
+2025-06-14 11:57:23,145 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_46] Gemini content extracted: 1117 characters
+2025-06-14 11:57:23,146 - scripts.http_ai_client.HTTPAIClient - INFO - [req_46] Request completed successfully in 1.79s - Provider: gemini
+2025-06-14 11:57:23,147 - AIAPILogger - INFO - [req_46] AI Request COMPLETE - Time: 1.79s, Length: 1117, Cost: $0.0000
+2025-06-14 11:57:23,149 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 791156f4e23c76fa (TTL: 0.001067s)
+2025-06-14 11:57:23,151 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_46] Response cached successfully
+2025-06-14 11:57:23,156 - AIAPILogger - DEBUG - [req_46] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:57:23,165 - scripts.http_ai_client.HTTPAIClient - INFO - [req_47] Starting AI request - Model preference: auto, Prompt length: 732
+2025-06-14 11:57:23,166 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 8f28b3b25f2c3fe1
+2025-06-14 11:57:23,167 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_47] Auto-selecting Google Gemini
+2025-06-14 11:57:23,167 - AIAPILogger - INFO - [req_47] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 732
+2025-06-14 11:57:23,168 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_47] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:57:26,909 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_47] Gemini HTTP response: 200 in 3.74s
+2025-06-14 11:57:26,910 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_47] Gemini content extracted: 2487 characters
+2025-06-14 11:57:26,910 - scripts.http_ai_client.HTTPAIClient - INFO - [req_47] Request completed successfully in 3.75s - Provider: gemini
+2025-06-14 11:57:26,910 - AIAPILogger - INFO - [req_47] AI Request COMPLETE - Time: 3.75s, Length: 2487, Cost: $0.0000
+2025-06-14 11:57:26,911 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 832af599a80d0fb2 (TTL: 0.00161s)
+2025-06-14 11:57:26,911 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_47] Response cached successfully
+2025-06-14 11:57:26,911 - AIAPILogger - DEBUG - [req_47] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:57:26,912 - intelligent_work_finder - ERROR - Error in repository work discovery: cannot access local variable 'recent_activity' where it is not associated with a value
+2025-06-14 11:57:26,912 - intelligent_work_finder - DEBUG - Traceback (most recent call last):
+  File "/workspaces/cwmai/scripts/intelligent_work_finder.py", line 129, in discover_work
+    repo_work = await self._discover_repository_work()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/cwmai/scripts/intelligent_work_finder.py", line 301, in _discover_repository_work
+    recent_commits = recent_activity.get('recent_commits', 0)
+                     ^^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'recent_activity' where it is not associated with a value
+
+2025-06-14 11:57:26,913 - scripts.portfolio_intelligence - INFO - 🔬 Analyzing portfolio intelligence...
+2025-06-14 11:57:26,913 - scripts.http_ai_client.HTTPAIClient - INFO - [req_48] Starting AI request - Model preference: auto, Prompt length: 3668
+2025-06-14 11:57:26,913 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 1dce3924295ae0e6
+2025-06-14 11:57:26,914 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_48] Auto-selecting Google Gemini
+2025-06-14 11:57:26,914 - AIAPILogger - INFO - [req_48] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 3668
+2025-06-14 11:57:26,914 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_48] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:57:26,916 - asyncio - ERROR - Task was destroyed but it is pending!
+task: <Task pending name='Task-846' coro=<DeadlockDetector._detection_loop() done, defined at /workspaces/cwmai/scripts/redis_distributed_locks.py:207> wait_for=<Future pending cb=[Task.__wakeup()]>>
+2025-06-14 11:57:31,352 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_48] Gemini HTTP response: 200 in 4.44s
+2025-06-14 11:57:31,354 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_48] Gemini content extracted: 3312 characters
+2025-06-14 11:57:31,355 - scripts.http_ai_client.HTTPAIClient - INFO - [req_48] Request completed successfully in 4.44s - Provider: gemini
+2025-06-14 11:57:31,358 - AIAPILogger - INFO - [req_48] AI Request COMPLETE - Time: 4.44s, Length: 3312, Cost: $0.0000
+2025-06-14 11:57:31,359 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: fd2d3d37deac1941 (TTL: 0.00349s)
+2025-06-14 11:57:31,361 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_48] Response cached successfully
+2025-06-14 11:57:31,362 - AIAPILogger - DEBUG - [req_48] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:57:31,363 - scripts.http_ai_client.HTTPAIClient - INFO - [req_49] Starting AI request - Model preference: auto, Prompt length: 1361
+2025-06-14 11:57:31,364 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: ec6c51eaeff4d9b6
+2025-06-14 11:57:31,364 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_49] Auto-selecting Google Gemini
+2025-06-14 11:57:31,365 - AIAPILogger - INFO - [req_49] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1361
+2025-06-14 11:57:31,367 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_49] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:57:35,778 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_49] Gemini HTTP response: 200 in 4.41s
+2025-06-14 11:57:35,779 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_49] Gemini content extracted: 3682 characters
+2025-06-14 11:57:35,780 - scripts.http_ai_client.HTTPAIClient - INFO - [req_49] Request completed successfully in 4.42s - Provider: gemini
+2025-06-14 11:57:35,780 - AIAPILogger - INFO - [req_49] AI Request COMPLETE - Time: 4.42s, Length: 3682, Cost: $0.0000
+2025-06-14 11:57:35,781 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: b09e67138920eb9e (TTL: 0.002522s)
+2025-06-14 11:57:35,781 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_49] Response cached successfully
+2025-06-14 11:57:35,781 - AIAPILogger - DEBUG - [req_49] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:57:35,782 - scripts.market_research_engine - INFO - 🚀 Generating project opportunities...
+2025-06-14 11:57:35,782 - scripts.market_research_engine - INFO - 🔍 Discovering market trends...
+2025-06-14 11:57:35,782 - scripts.market_research_engine - INFO - Using cached market trends
+2025-06-14 11:57:35,782 - scripts.http_ai_client.HTTPAIClient - INFO - [req_50] Starting AI request - Model preference: auto, Prompt length: 936
+2025-06-14 11:57:35,783 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 9c642bbdbcd1ea84
+2025-06-14 11:57:35,783 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_50] Auto-selecting Google Gemini
+2025-06-14 11:57:35,783 - AIAPILogger - INFO - [req_50] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 936
+2025-06-14 11:57:35,783 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_50] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:57:37,156 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_50] Gemini HTTP response: 200 in 1.37s
+2025-06-14 11:57:37,156 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_50] Gemini content extracted: 924 characters
+2025-06-14 11:57:37,157 - scripts.http_ai_client.HTTPAIClient - INFO - [req_50] Request completed successfully in 1.37s - Provider: gemini
+2025-06-14 11:57:37,157 - AIAPILogger - INFO - [req_50] AI Request COMPLETE - Time: 1.37s, Length: 924, Cost: $0.0000
+2025-06-14 11:57:37,157 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: bf693467ff3fcfd8 (TTL: 0.00093s)
+2025-06-14 11:57:37,158 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_50] Response cached successfully
+2025-06-14 11:57:37,158 - AIAPILogger - DEBUG - [req_50] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:57:37,158 - scripts.market_research_engine - ERROR - Error parsing JSON: Invalid control character at: line 5 column 89 (char 223)
+2025-06-14 11:57:37,159 - scripts.http_ai_client.HTTPAIClient - INFO - [req_51] Starting AI request - Model preference: auto, Prompt length: 916
+2025-06-14 11:57:37,159 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 73ce07ed77494a34
+2025-06-14 11:57:37,159 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_51] Auto-selecting Google Gemini
+2025-06-14 11:57:37,159 - AIAPILogger - INFO - [req_51] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 916
+2025-06-14 11:57:37,160 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_51] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:57:38,549 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_51] Gemini HTTP response: 200 in 1.39s
+2025-06-14 11:57:38,549 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_51] Gemini content extracted: 872 characters
+2025-06-14 11:57:38,549 - scripts.http_ai_client.HTTPAIClient - INFO - [req_51] Request completed successfully in 1.39s - Provider: gemini
+2025-06-14 11:57:38,550 - AIAPILogger - INFO - [req_51] AI Request COMPLETE - Time: 1.39s, Length: 872, Cost: $0.0000
+2025-06-14 11:57:38,550 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: cfdd01cfd9b8f72e (TTL: 0.000894s)
+2025-06-14 11:57:38,551 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_51] Response cached successfully
+2025-06-14 11:57:38,551 - AIAPILogger - DEBUG - [req_51] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:57:38,551 - scripts.http_ai_client.HTTPAIClient - INFO - [req_52] Starting AI request - Model preference: auto, Prompt length: 798
+2025-06-14 11:57:38,551 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: d6e147edef9c0108
+2025-06-14 11:57:38,552 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_52] Auto-selecting Google Gemini
+2025-06-14 11:57:38,552 - AIAPILogger - INFO - [req_52] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 798
+2025-06-14 11:57:38,552 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_52] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:57:39,635 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_52] Gemini HTTP response: 200 in 1.08s
+2025-06-14 11:57:39,637 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_52] Gemini content extracted: 603 characters
+2025-06-14 11:57:39,641 - scripts.http_ai_client.HTTPAIClient - INFO - [req_52] Request completed successfully in 1.09s - Provider: gemini
+2025-06-14 11:57:39,645 - AIAPILogger - INFO - [req_52] AI Request COMPLETE - Time: 1.09s, Length: 603, Cost: $0.0000
+2025-06-14 11:57:39,646 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 55065b6b8f996dff (TTL: 0.000701s)
+2025-06-14 11:57:39,646 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_52] Response cached successfully
+2025-06-14 11:57:39,646 - AIAPILogger - DEBUG - [req_52] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:57:39,648 - scripts.http_ai_client.HTTPAIClient - INFO - [req_53] Starting AI request - Model preference: auto, Prompt length: 915
+2025-06-14 11:57:39,649 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 9e780105fbac098c
+2025-06-14 11:57:39,649 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_53] Auto-selecting Google Gemini
+2025-06-14 11:57:39,654 - AIAPILogger - INFO - [req_53] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 915
+2025-06-14 11:57:39,654 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_53] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:57:40,965 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_53] Gemini HTTP response: 200 in 1.31s
+2025-06-14 11:57:40,966 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_53] Gemini content extracted: 866 characters
+2025-06-14 11:57:40,966 - scripts.http_ai_client.HTTPAIClient - INFO - [req_53] Request completed successfully in 1.32s - Provider: gemini
+2025-06-14 11:57:40,967 - AIAPILogger - INFO - [req_53] AI Request COMPLETE - Time: 1.32s, Length: 866, Cost: $0.0000
+2025-06-14 11:57:40,967 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: b5dd6bb134fede8d (TTL: 0.000891s)
+2025-06-14 11:57:40,967 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_53] Response cached successfully
+2025-06-14 11:57:40,967 - AIAPILogger - DEBUG - [req_53] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:57:40,968 - scripts.http_ai_client.HTTPAIClient - INFO - [req_54] Starting AI request - Model preference: auto, Prompt length: 882
+2025-06-14 11:57:40,968 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 116df4d5e99c072a
+2025-06-14 11:57:40,969 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_54] Auto-selecting Google Gemini
+2025-06-14 11:57:40,969 - AIAPILogger - INFO - [req_54] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 882
+2025-06-14 11:57:40,970 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_54] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:57:42,051 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_54] Gemini HTTP response: 200 in 1.08s
+2025-06-14 11:57:42,051 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_54] Gemini content extracted: 437 characters
+2025-06-14 11:57:42,051 - scripts.http_ai_client.HTTPAIClient - INFO - [req_54] Request completed successfully in 1.08s - Provider: gemini
+2025-06-14 11:57:42,052 - AIAPILogger - INFO - [req_54] AI Request COMPLETE - Time: 1.08s, Length: 437, Cost: $0.0000
+2025-06-14 11:57:42,052 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: a0ee8b6bea31eb74 (TTL: 0.00066s)
+2025-06-14 11:57:42,052 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_54] Response cached successfully
+2025-06-14 11:57:42,053 - AIAPILogger - DEBUG - [req_54] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:57:42,053 - scripts.http_ai_client.HTTPAIClient - INFO - [req_55] Starting AI request - Model preference: auto, Prompt length: 790
+2025-06-14 11:57:42,053 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 7dbe608d8c8fa41d
+2025-06-14 11:57:42,053 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_55] Auto-selecting Google Gemini
+2025-06-14 11:57:42,054 - AIAPILogger - INFO - [req_55] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 790
+2025-06-14 11:57:42,054 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_55] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:57:43,402 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_55] Gemini HTTP response: 200 in 1.35s
+2025-06-14 11:57:43,404 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_55] Gemini content extracted: 779 characters
+2025-06-14 11:57:43,405 - scripts.http_ai_client.HTTPAIClient - INFO - [req_55] Request completed successfully in 1.35s - Provider: gemini
+2025-06-14 11:57:43,406 - AIAPILogger - INFO - [req_55] AI Request COMPLETE - Time: 1.35s, Length: 779, Cost: $0.0000
+2025-06-14 11:57:43,407 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 2d3e8f1382293c29 (TTL: 0.000785s)
+2025-06-14 11:57:43,407 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_55] Response cached successfully
+2025-06-14 11:57:43,408 - AIAPILogger - DEBUG - [req_55] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:57:43,408 - intelligent_work_finder - ERROR - Error in intelligent portfolio analysis: 'NoneType' object has no attribute 'lower'
+2025-06-14 11:57:43,408 - scripts.http_ai_client.HTTPAIClient - INFO - [req_56] Starting AI request - Model preference: auto, Prompt length: 1482
+2025-06-14 11:57:43,409 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: 48d1be7f8a1e932c
+2025-06-14 11:57:43,409 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_56] Auto-selecting Google Gemini
+2025-06-14 11:57:43,410 - AIAPILogger - INFO - [req_56] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1482
+2025-06-14 11:57:43,410 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_56] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:57:48,795 - __main__ - INFO - Received signal 15
+2025-06-14 11:57:50,229 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_56] Gemini HTTP response: 200 in 6.82s
+2025-06-14 11:57:50,229 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_56] Gemini content extracted: 5273 characters
+2025-06-14 11:57:50,230 - scripts.http_ai_client.HTTPAIClient - INFO - [req_56] Request completed successfully in 6.82s - Provider: gemini
+2025-06-14 11:57:50,230 - AIAPILogger - INFO - [req_56] AI Request COMPLETE - Time: 6.82s, Length: 5273, Cost: $0.0000
+2025-06-14 11:57:50,231 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: b166d18061033122 (TTL: 0.003377s)
+2025-06-14 11:57:50,231 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_56] Response cached successfully
+2025-06-14 11:57:50,231 - AIAPILogger - DEBUG - [req_56] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:57:50,232 - intelligent_work_finder - INFO - Discovered 8 work items:
+2025-06-14 11:57:50,232 - intelligent_work_finder - INFO -   - RESEARCH: Research software architecture best practices (priority: MEDIUM)
+2025-06-14 11:57:50,232 - intelligent_work_finder - INFO -   - NEW_PROJECT: Create shared component library (priority: MEDIUM)
+2025-06-14 11:57:50,232 - intelligent_work_finder - INFO -   - NEW_PROJECT: BoxBloom (priority: MEDIUM)
+2025-06-14 11:57:50,232 - intelligent_work_finder - INFO -   - NEW_PROJECT: LearnLeap (priority: MEDIUM)
+2025-06-14 11:57:50,233 - intelligent_work_finder - INFO -   - MONITORING: Generate performance metrics report (priority: LOW)
+2025-06-14 11:57:50,233 - intelligent_work_finder - INFO -   - RESEARCH: Analyze competitor project structures (priority: LOW)
+2025-06-14 11:57:50,233 - intelligent_work_finder - INFO -   - MAINTENANCE: Clean up old log files (priority: BACKGROUND)
+2025-06-14 11:57:50,233 - intelligent_work_finder - INFO -   - RESEARCH: Research emerging AI development trends (priority: BACKGROUND)
+2025-06-14 11:57:50,233 - intelligent_work_finder - INFO - 📋 Work discovery summary: 3 RESEARCH, 3 NEW_PROJECT, 1 MONITORING, 1 MAINTENANCE
+2025-06-14 11:57:50,234 - continuous_orchestrator - WARNING - Insufficient work discovered (8), using enhanced generator
+2025-06-14 11:57:50,234 - continuous_orchestrator - WARNING - Generating 22 emergency work items
+2025-06-14 11:57:50,234 - continuous_orchestrator - DEBUG - AI generation failed, falling back to template: object of type 'int' has no len()
+2025-06-14 11:57:50,234 - scripts.http_ai_client.HTTPAIClient - INFO - [req_57] Starting AI request - Model preference: auto, Prompt length: 715
+2025-06-14 11:57:50,234 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: fc9b1df676d36bc7
+2025-06-14 11:57:50,234 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_57] Auto-selecting Google Gemini
+2025-06-14 11:57:50,235 - AIAPILogger - INFO - [req_57] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 715
+2025-06-14 11:57:50,235 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_57] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:57:54,980 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_57] Gemini HTTP response: 200 in 4.75s
+2025-06-14 11:57:54,981 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_57] Gemini content extracted: 3457 characters
+2025-06-14 11:57:54,981 - scripts.http_ai_client.HTTPAIClient - INFO - [req_57] Request completed successfully in 4.75s - Provider: gemini
+2025-06-14 11:57:54,982 - AIAPILogger - INFO - [req_57] AI Request COMPLETE - Time: 4.75s, Length: 3457, Cost: $0.0000
+2025-06-14 11:57:54,982 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: cc0e176ad9ec64ce (TTL: 0.002086s)
+2025-06-14 11:57:54,982 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_57] Response cached successfully
+2025-06-14 11:57:54,982 - AIAPILogger - DEBUG - [req_57] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:57:54,983 - scripts.ai_task_content_generator - WARNING - Failed to parse AI response: Invalid control character at: line 3 column 3141 (char 3218)
+2025-06-14 11:57:54,983 - continuous_orchestrator - DEBUG - Generated AI-powered work item: Security audit for business-analytics-dashboard
+2025-06-14 11:57:54,983 - scripts.http_ai_client.HTTPAIClient - INFO - [req_58] Starting AI request - Model preference: auto, Prompt length: 911
+2025-06-14 11:57:54,984 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: f1b175cb92b06d93
+2025-06-14 11:57:54,984 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_58] Auto-selecting Google Gemini
+2025-06-14 11:57:54,984 - AIAPILogger - INFO - [req_58] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 911
+2025-06-14 11:57:54,985 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_58] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ
+2025-06-14 11:57:58,650 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_58] Gemini HTTP response: 200 in 3.66s
+2025-06-14 11:57:58,650 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_58] Gemini content extracted: 2922 characters
+2025-06-14 11:57:58,651 - scripts.http_ai_client.HTTPAIClient - INFO - [req_58] Request completed successfully in 3.67s - Provider: gemini
+2025-06-14 11:57:58,651 - AIAPILogger - INFO - [req_58] AI Request COMPLETE - Time: 3.67s, Length: 2922, Cost: $0.0000
+2025-06-14 11:57:58,651 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache stored: 6443956c7d9fef1d (TTL: 0.001917s)
+2025-06-14 11:57:58,652 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_58] Response cached successfully
+2025-06-14 11:57:58,652 - AIAPILogger - DEBUG - [req_58] Cache cache_store - Provider: gemini, Model: gemini-2.0-flash
+2025-06-14 11:57:58,652 - continuous_orchestrator - DEBUG - Generated AI-powered work item: Sentiment Trend Analysis Dashboard: Track Sentiment Over Time
+2025-06-14 11:57:58,653 - scripts.http_ai_client.HTTPAIClient - INFO - [req_59] Starting AI request - Model preference: auto, Prompt length: 978
+2025-06-14 11:57:58,653 - redis_ai_response_cache.RedisAIResponseCache - DEBUG - Cache MISS: dae20becb7ee0e39
+2025-06-14 11:57:58,653 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_59] Auto-selecting Google Gemini
+2025-06-14 11:57:58,653 - AIAPILogger - INFO - [req_59] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 978
+2025-06-14 11:57:58,654 - scripts.http_ai_client.HTTPAIClient - DEBUG - [req_59] Gemini request URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=AIzaSyCMq5WI2H06Qw3BYAsyR8P6CwW586mypfQ

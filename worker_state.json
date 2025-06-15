@@ -1,0 +1,5 @@
+{
+    "worker_1": "idle",
+    "worker_2": "running",
+    "worker_3": "error"
+}

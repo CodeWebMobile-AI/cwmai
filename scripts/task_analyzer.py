@@ -61,6 +61,13 @@ class TaskAnalyzer:
         print("Analyzing open issues...")
         open_issues = self.repo.get_issues(state="open")
         for issue in open_issues:
+            # Check if issue has ai-managed label
+            label_names = [label.name for label in issue.labels]
+            if 'ai-managed' not in label_names:
+                # Log skipped issues for transparency
+                print(f"Skipping issue #{issue.number}: '{issue.title}' (created by: {issue.user.login}) - no ai-managed label")
+                continue
+                
             analysis["summary"]["open_issues"] += 1
             analysis["summary"]["total_issues"] += 1
             
@@ -139,6 +146,13 @@ class TaskAnalyzer:
         Returns:
             True if @claude is mentioned
         """
+        # First check if issue has ai-managed label
+        if hasattr(item, 'labels'):
+            label_names = [label.name for label in item.labels]
+            if 'ai-managed' not in label_names:
+                # Skip issues without ai-managed label
+                return False
+        
         # Check body
         if item.body and "@claude" in item.body.lower():
             return True

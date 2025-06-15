@@ -1,0 +1,293 @@
+Warning: Duplicate exclusion entry for cwmai.git
+Repository exclusion configuration valid: 5 repositories excluded
+Warning: Duplicate exclusion entry for cwmai.git
+Repository exclusion configuration valid: 5 repositories excluded
+
+    ╔═══════════════════════════════════════════════════════════════╗
+    ║                 CONTINUOUS 24/7 AI SYSTEM                    ║
+    ║                                                               ║
+    ║  🚀 Never-stopping intelligent worker                        ║
+    ║  ⚡ Parallel processing with smart work discovery            ║
+    ║  🔄 Event-driven continuous operation                        ║
+    ║  📊 Real-time performance monitoring                         ║
+    ║                                                               ║
+    ║  Press Ctrl+C to shutdown gracefully                         ║
+    ╚═══════════════════════════════════════════════════════════════╝
+    
+2025-06-14 11:51:49,543 - __main__ - INFO - ================================================================================
+2025-06-14 11:51:49,547 - __main__ - INFO - 🚀 STARTING CONTINUOUS 24/7 AI SYSTEM
+2025-06-14 11:51:49,548 - __main__ - INFO - Mode: development
+2025-06-14 11:51:49,549 - __main__ - INFO - Workers: 10
+2025-06-14 11:51:49,550 - __main__ - INFO - Parallel: True
+2025-06-14 11:51:49,550 - __main__ - INFO - Research: False
+2025-06-14 11:51:49,551 - __main__ - INFO - Round-Robin AI: False
+2025-06-14 11:51:49,551 - __main__ - INFO - Worker Monitor: True
+2025-06-14 11:51:49,552 - __main__ - INFO - Started at: 2025-06-14 11:51:49.552385+00:00
+2025-06-14 11:51:49,561 - continuous_orchestrator - INFO - ✓ Using Redis lock-free state manager
+2025-06-14 11:51:49,570 - continuous_orchestrator - INFO - ✓ Using Redis-enabled state manager
+2025-06-14 11:51:50,063 - RedisEnabledStateManager - INFO - save_state_locally called from:
+2025-06-14 11:51:50,065 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/run_continuous_ai.py", line 551, in <module>
+    main()
+2025-06-14 11:51:50,066 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/run_continuous_ai.py", line 542, in main
+    asyncio.run(run_continuous_system(args))
+2025-06-14 11:51:50,066 - RedisEnabledStateManager - DEBUG -   File "/home/vscode/.local/lib/python3.11/site-packages/nest_asyncio.py", line 30, in run
+    return loop.run_until_complete(task)
+2025-06-14 11:51:50,066 - RedisEnabledStateManager - DEBUG -   File "/home/vscode/.local/lib/python3.11/site-packages/nest_asyncio.py", line 92, in run_until_complete
+    self._run_once()
+2025-06-14 11:51:50,066 - RedisEnabledStateManager - DEBUG -   File "/home/vscode/.local/lib/python3.11/site-packages/nest_asyncio.py", line 133, in _run_once
+    handle._run()
+2025-06-14 11:51:50,066 - RedisEnabledStateManager - DEBUG -   File "/usr/local/lib/python3.11/asyncio/events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+2025-06-14 11:51:50,066 - RedisEnabledStateManager - DEBUG -   File "/usr/local/lib/python3.11/asyncio/tasks.py", line 277, in __step
+    result = coro.send(None)
+2025-06-14 11:51:50,067 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/run_continuous_ai.py", line 378, in run_continuous_system
+    success = await runner.start()
+2025-06-14 11:51:50,067 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/run_continuous_ai.py", line 115, in start
+    self.orchestrator = ContinuousOrchestrator(
+2025-06-14 11:51:50,067 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/continuous_orchestrator.py", line 90, in __init__
+    self.system_state = self.state_manager.load_state_with_repository_discovery()
+2025-06-14 11:51:50,067 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/state_manager.py", line 257, in load_state_with_repository_discovery
+    state = self.load_state()
+2025-06-14 11:51:50,067 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/state_manager.py", line 370, in load_state
+    self.save_state_locally(state)
+2025-06-14 11:51:50,067 - RedisEnabledStateManager - INFO - Saving state with 0 repositories: []
+Discovering repositories in CodeWebMobile-AI organization...
+Skipping excluded repository: CodeWebMobile-AI/.github
+Skipping excluded repository: CodeWebMobile-AI/cwmai
+✓ Discovered repository: project-analytics-dashboard
+✓ Discovered repository: business-analytics-dashboard
+✓ Discovered repository: summarize-ai-mobile
+✓ Discovered repository: brand-guardian-ai
+✓ Discovered repository: reputation-ai
+✓ Discovered repository: eco-track-ai
+✓ Discovered repository: ai-powered-inventory-sync
+✓ Discovered repository: community-connect-platform
+Successfully discovered 8 repositories
+2025-06-14 11:52:00,002 - RedisEnabledStateManager - INFO - save_state_locally called from:
+2025-06-14 11:52:00,005 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/run_continuous_ai.py", line 551, in <module>
+    main()
+2025-06-14 11:52:00,005 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/run_continuous_ai.py", line 542, in main
+    asyncio.run(run_continuous_system(args))
+2025-06-14 11:52:00,005 - RedisEnabledStateManager - DEBUG -   File "/home/vscode/.local/lib/python3.11/site-packages/nest_asyncio.py", line 30, in run
+    return loop.run_until_complete(task)
+2025-06-14 11:52:00,005 - RedisEnabledStateManager - DEBUG -   File "/home/vscode/.local/lib/python3.11/site-packages/nest_asyncio.py", line 92, in run_until_complete
+    self._run_once()
+2025-06-14 11:52:00,005 - RedisEnabledStateManager - DEBUG -   File "/home/vscode/.local/lib/python3.11/site-packages/nest_asyncio.py", line 133, in _run_once
+    handle._run()
+2025-06-14 11:52:00,005 - RedisEnabledStateManager - DEBUG -   File "/usr/local/lib/python3.11/asyncio/events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+2025-06-14 11:52:00,005 - RedisEnabledStateManager - DEBUG -   File "/usr/local/lib/python3.11/asyncio/tasks.py", line 277, in __step
+    result = coro.send(None)
+2025-06-14 11:52:00,006 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/run_continuous_ai.py", line 378, in run_continuous_system
+    success = await runner.start()
+2025-06-14 11:52:00,006 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/run_continuous_ai.py", line 115, in start
+    self.orchestrator = ContinuousOrchestrator(
+2025-06-14 11:52:00,006 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/continuous_orchestrator.py", line 90, in __init__
+    self.system_state = self.state_manager.load_state_with_repository_discovery()
+2025-06-14 11:52:00,006 - RedisEnabledStateManager - DEBUG -   File "/workspaces/cwmai/scripts/state_manager.py", line 303, in load_state_with_repository_discovery
+    self.save_state_locally(state)
+2025-06-14 11:52:00,006 - RedisEnabledStateManager - INFO - Saving state with 8 repositories: ['project-analytics-dashboard', 'business-analytics-dashboard', 'summarize-ai-mobile', 'brand-guardian-ai', 'reputation-ai', 'eco-track-ai', 'ai-powered-inventory-sync', 'community-connect-platform']
+✓ Integrated 8 repositories into system state
+2025-06-14 11:52:00,009 - scripts.http_ai_client.HTTPAIClient - INFO - HTTPAIClient initialized with 4 available providers
+2025-06-14 11:52:00,009 - scripts.http_ai_client.HTTPAIClient - DEBUG - Provider anthropic: AVAILABLE
+2025-06-14 11:52:00,010 - scripts.http_ai_client.HTTPAIClient - DEBUG - Provider openai: AVAILABLE
+2025-06-14 11:52:00,010 - scripts.http_ai_client.HTTPAIClient - DEBUG - Provider gemini: AVAILABLE
+2025-06-14 11:52:00,011 - scripts.http_ai_client.HTTPAIClient - DEBUG - Provider deepseek: AVAILABLE
+2025-06-14 11:52:00,011 - scripts.http_ai_client.HTTPAIClient - INFO - ✓ AI response cache enabled (type: redis)
+2025-06-14 11:52:00,015 - continuous_orchestrator - INFO - ✓ Using Redis-based work queue
+🔧 TaskManager initialization:
+   - GitHub token exists: True
+   - Repository name: None (no default)
+   - GitHub client created: True
+   - Repository object created: False
+✓ AI content generator initialized successfully
+✓ Decomposition system initialized successfully
+2025-06-14 11:52:00,016 - continuous_orchestrator - INFO - ✓ AI content generator initialized for enhanced work generation
+2025-06-14 11:52:00,020 - continuous_orchestrator - INFO - ✓ Using Redis-based task persistence
+2025-06-14 11:52:00,020 - continuous_orchestrator - INFO - 🔬 Research Evolution Engine DISABLED by configuration
+2025-06-14 11:52:00,020 - __main__ - INFO - 📊 Worker monitoring started
+2025-06-14 11:52:00,021 - continuous_orchestrator - INFO - Starting 24/7 Continuous AI Orchestrator
+2025-06-14 11:52:00,021 - continuous_orchestrator - INFO - Initializing orchestrator components...
+2025-06-14 11:52:00,023 - repository_cleanup_manager - INFO - Starting automatic repository cleanup check...
+2025-06-14 11:52:00,023 - repository_cleanup_manager - INFO - No deleted repositories detected. System is clean.
+2025-06-14 11:52:00,024 - scripts.redis_integration.redis_client - INFO - Connecting to Redis (standalone) at localhost:6379
+2025-06-14 11:52:00,024 - scripts.redis_integration.redis_connection_pool - INFO - Connection pool manager started
+2025-06-14 11:52:00,024 - scripts.redis_integration.redis_connection_pool - INFO - Creating Redis connection: 603ebdfb-8e4a-4577-8837-efb5a3c45a07
+2025-06-14 11:52:00,024 - scripts.redis_integration.redis_connection_pool - INFO - Created connection pool with limit: 5000
+2025-06-14 11:52:00,037 - WorkerMonitor - INFO - Worker Status Monitor initialized
+2025-06-14 11:52:00,037 - WorkerMonitor - INFO - Initializing monitoring components...
+2025-06-14 11:52:00,039 - scripts.redis_integration.redis_connection_pool - INFO - Redis connection established: 603ebdfb-8e4a-4577-8837-efb5a3c45a07 (active: 1)
+2025-06-14 11:52:00,039 - scripts.redis_integration.redis_client - INFO - Redis health monitoring started
+2025-06-14 11:52:00,039 - scripts.redis_integration.redis_client - INFO - Redis connection established (ID: 603ebdfb-8e4a-4577-8837-efb5a3c45a07, pooled: True)
+2025-06-14 11:52:00,040 - WorkerMonitor - INFO - Created singleton Redis client
+2025-06-14 11:52:00,041 - scripts.redis_lockfree_state_manager - INFO - Lock-free state manager initialized
+2025-06-14 11:52:00,041 - continuous_orchestrator - INFO - ✓ Redis lock-free state manager initialized
+2025-06-14 11:52:00,041 - scripts.redis_integration.redis_pubsub_manager - INFO - Redis Pub/Sub manager started (ID: de63cef9-c05f-4909-8b20-482c48d2b5d0)
+2025-06-14 11:52:00,041 - scripts.redis_integration.redis_connection_pool - INFO - Creating Redis connection: shared_pubsub
+2025-06-14 11:52:00,042 - scripts.redis_integration.redis_connection_pool - INFO - Redis connection established: shared_pubsub (active: 2)
+2025-06-14 11:52:00,043 - scripts.redis_integration.redis_connection_pool - DEBUG - Created shared Pub/Sub connection
+2025-06-14 11:52:00,043 - scripts.redis_integration.redis_pubsub_manager - INFO - Subscribed to channel: state_changes:cwmai_orchestrator
+2025-06-14 11:52:00,044 - scripts.redis_integration.redis_state_manager - INFO - State manager started for component cwmai_orchestrator
+2025-06-14 11:52:00,044 - scripts.redis_integration.redis_state_manager - INFO - State change listener started
+2025-06-14 11:52:00,045 - scripts.redis_integration.redis_client - DEBUG - Ignoring transient error for circuit breaker: ResponseError: no such key
+2025-06-14 11:52:00,046 - scripts.redis_work_queue - DEBUG - Created consumer group for cwmai:work_queue:critical
+2025-06-14 11:52:00,046 - scripts.redis_work_queue - DEBUG - Created consumer group for cwmai:work_queue:high
+2025-06-14 11:52:00,047 - scripts.redis_state_adapter - INFO - No state in Redis, pushing local state
+2025-06-14 11:52:00,048 - scripts.redis_work_queue - DEBUG - Created consumer group for cwmai:work_queue:medium
+2025-06-14 11:52:00,049 - scripts.redis_work_queue - DEBUG - Created consumer group for cwmai:work_queue:low
+2025-06-14 11:52:00,050 - scripts.redis_work_queue - DEBUG - Created consumer group for cwmai:work_queue:background
+2025-06-14 11:52:00,050 - scripts.redis_work_queue - INFO - Redis work queue initialized
+2025-06-14 11:52:00,051 - WorkerMonitor - INFO - Redis components initialized successfully
+2025-06-14 11:52:00,051 - WorkerMonitor - INFO - Worker coordinator created (without Pub/Sub)
+2025-06-14 11:52:00,051 - __main__ - INFO - Worker monitor initialized with Redis connections
+2025-06-14 11:52:00,052 - scripts.redis_integration.redis_pubsub_manager - DEBUG - Published message to state_changes:cwmai_orchestrator (subscribers: 1)
+2025-06-14 11:52:00,052 - WorkerMonitor - INFO - Found 0 active workers
+2025-06-14 11:52:00,052 - scripts.redis_state_adapter - INFO - Redis state adapter initialized for component cwmai_orchestrator
+2025-06-14 11:52:00,052 - continuous_orchestrator - INFO - ✓ Redis state manager initialized
+2025-06-14 11:52:00,052 - redis_integration.redis_client - INFO - Connecting to Redis (standalone) at localhost:6379
+2025-06-14 11:52:00,054 - redis_integration.redis_client - INFO - Redis health monitoring started
+2025-06-14 11:52:00,054 - redis_integration.redis_client - INFO - Redis connection established (ID: 7fe35193-6d84-4e2d-b489-37358a185f4f, pooled: True)
+2025-06-14 11:52:00,054 - redis_integration.redis_pubsub_manager - INFO - Redis Pub/Sub manager started (ID: 1dde19a6-c3c9-429c-8968-6dad8f06c313)
+2025-06-14 11:52:00,055 - redis_integration.redis_pubsub_manager - INFO - Subscribed to channel: cwmai:workers:global
+2025-06-14 11:52:00,056 - redis_integration.redis_pubsub_manager - INFO - Subscribed to pattern: cwmai:workers:*
+2025-06-14 11:52:00,056 - redis_worker_coordinator - INFO - Worker coordinator initialized for orchestrator
+2025-06-14 11:52:00,056 - continuous_orchestrator - INFO - ✓ Redis worker coordination enabled
+2025-06-14 11:52:00,057 - redis_integration.redis_locks_manager - INFO - Redis Locks manager started (instance: 26558570-3419-4922-8452-f0d017434c67)
+2025-06-14 11:52:00,057 - continuous_orchestrator - INFO - ✓ Redis distributed locks enabled
+2025-06-14 11:52:00,080 - redis_event_analytics.RedisEventAnalytics - INFO - Initializing Redis Event Analytics: analytics_a043d68d
+2025-06-14 11:52:00,081 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Initializing Redis Intelligence Hub: intelligence_hub_505268df
+2025-06-14 11:52:00,082 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Initialized stream: intelligence:workers:intelligence_hub_505268df
+2025-06-14 11:52:00,083 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Initialized stream: intelligence:tasks:intelligence_hub_505268df
+2025-06-14 11:52:00,084 - __main__ - INFO - 📊 Worker Status: 0/0 active, 0 idle | Queue: 0 tasks | Completed: 0
+2025-06-14 11:52:00,084 - WorkerMonitor - INFO - ================================================================================
+2025-06-14 11:52:00,085 - WorkerMonitor - INFO - WORKER STATUS UPDATE - 2025-06-14T11:52:00.051795+00:00
+2025-06-14 11:52:00,085 - WorkerMonitor - INFO - ================================================================================
+2025-06-14 11:52:00,085 - WorkerMonitor - INFO - System Health:
+2025-06-14 11:52:00,085 - WorkerMonitor - INFO -   Overall: 0.0%
+2025-06-14 11:52:00,085 - WorkerMonitor - INFO -   Worker Health: 0.0%
+2025-06-14 11:52:00,085 - WorkerMonitor - INFO -   Queue Health: 0.0%
+2025-06-14 11:52:00,085 - WorkerMonitor - INFO -   Active Workers: 0/0
+2025-06-14 11:52:00,085 - WorkerMonitor - INFO -   Idle Workers: 0/0
+2025-06-14 11:52:00,085 - WorkerMonitor - INFO - 
+Queue Status:
+2025-06-14 11:52:00,085 - WorkerMonitor - INFO -   Total Queued: 0
+2025-06-14 11:52:00,085 - WorkerMonitor - INFO -   No items in queue
+2025-06-14 11:52:00,085 - WorkerMonitor - INFO - 
+Worker Details:
+2025-06-14 11:52:00,085 - WorkerMonitor - INFO -   No workers currently active
+2025-06-14 11:52:00,086 - WorkerMonitor - INFO - 
+Active Tasks: None
+2025-06-14 11:52:00,086 - WorkerMonitor - INFO - 
+================================================================================
+
+2025-06-14 11:52:00,086 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Initialized stream: intelligence:ai:intelligence_hub_505268df
+2025-06-14 11:52:00,087 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Initialized stream: intelligence:performance:intelligence_hub_505268df
+2025-06-14 11:52:00,088 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Initialized stream: intelligence:coordination:intelligence_hub_505268df
+2025-06-14 11:52:00,089 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Initialized stream: intelligence:analytics:intelligence_hub_505268df
+2025-06-14 11:52:00,089 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Started consumer for worker_events: intelligence_hub_505268df_worker_events
+2025-06-14 11:52:00,090 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Started consumer for task_events: intelligence_hub_505268df_task_events
+2025-06-14 11:52:00,090 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Started consumer for ai_events: intelligence_hub_505268df_ai_events
+2025-06-14 11:52:00,090 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Started consumer for performance_events: intelligence_hub_505268df_performance_events
+2025-06-14 11:52:00,090 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Started consumer for coordination_events: intelligence_hub_505268df_coordination_events
+2025-06-14 11:52:00,091 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Started consumer for analytics_events: intelligence_hub_505268df_analytics_events
+2025-06-14 11:52:00,091 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Analytics processors started
+2025-06-14 11:52:00,095 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Skipping initialization message in worker_events
+2025-06-14 11:52:00,095 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Skipping initialization message in task_events
+2025-06-14 11:52:00,096 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Intelligence Hub intelligence_hub_505268df initialized successfully
+2025-06-14 11:52:00,096 - scripts.redis_event_sourcing.RedisEventStore - INFO - Initializing Redis Event Store: event_store_14eb61b7
+2025-06-14 11:52:00,099 - scripts.redis_event_sourcing.RedisEventStore - DEBUG - Loaded event sequence: 0
+2025-06-14 11:52:00,100 - scripts.redis_event_sourcing.RedisEventStore - INFO - Event Store event_store_14eb61b7 initialized successfully
+2025-06-14 11:52:00,100 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for worker_registration
+2025-06-14 11:52:00,100 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for worker_heartbeat
+2025-06-14 11:52:00,101 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for worker_shutdown
+2025-06-14 11:52:00,101 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for task_assignment
+2025-06-14 11:52:00,101 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for task_progress
+2025-06-14 11:52:00,101 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for task_completion
+2025-06-14 11:52:00,101 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for task_failure
+2025-06-14 11:52:00,101 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for ai_request
+2025-06-14 11:52:00,102 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for ai_response
+2025-06-14 11:52:00,102 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for performance_metric
+2025-06-14 11:52:00,102 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for error_event
+2025-06-14 11:52:00,102 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for intelligence_update
+2025-06-14 11:52:00,102 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for capability_discovery
+2025-06-14 11:52:00,102 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for coordination_event
+2025-06-14 11:52:00,103 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for analytics_insight
+2025-06-14 11:52:00,103 - redis_event_analytics.RedisEventAnalytics - INFO - Built-in analytics initialized
+2025-06-14 11:52:00,103 - redis_event_analytics.RedisEventAnalytics - INFO - Started 6 analytics tasks
+2025-06-14 11:52:00,104 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Skipping initialization message in analytics_events
+2025-06-14 11:52:00,104 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Skipping initialization message in coordination_events
+2025-06-14 11:52:00,104 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Skipping initialization message in performance_events
+2025-06-14 11:52:00,104 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Skipping initialization message in ai_events
+2025-06-14 11:52:00,106 - redis_event_analytics.RedisEventAnalytics - INFO - Event Analytics analytics_a043d68d initialized successfully
+2025-06-14 11:52:00,106 - continuous_orchestrator - INFO - ✓ Redis event analytics enabled
+2025-06-14 11:52:00,113 - redis_integration.redis_streams_manager - INFO - Created consumer group event_processors for stream cwmai:events:stream
+2025-06-14 11:52:00,113 - redis_event_stream_processor - INFO - Event stream processor initialized
+2025-06-14 11:52:00,114 - continuous_orchestrator - INFO - ✓ Redis event stream processing enabled
+2025-06-14 11:52:00,114 - continuous_orchestrator - INFO - ✓ Redis performance analytics enabled
+2025-06-14 11:52:00,122 - redis_distributed_workflows.RedisWorkflowEngine - INFO - Initializing Redis Workflow Engine: workflow_engine_46f08e29
+2025-06-14 11:52:00,123 - redis_integration.redis_streams_manager - INFO - Started consumer processor_1 for group event_processors on stream cwmai:events:stream
+2025-06-14 11:52:00,126 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Published event 5cfd7d55-596e-41b7-95a0-b21168d4f632 to intelligence:analytics:intelligence_hub_505268df: 1749901920125-0
+2025-06-14 11:52:00,127 - redis_event_analytics.RedisEventAnalytics - INFO - Published insight: system_stability_concern - System stability below threshold: 30%
+2025-06-14 11:52:00,127 - scripts.redis_intelligence_hub.RedisIntelligenceHub - DEBUG - Processed event 5cfd7d55-596e-41b7-95a0-b21168d4f632 in 2.28ms
+2025-06-14 11:52:00,128 - redis_distributed_workflows.RedisWorkflowEngine - INFO - Workflow processors started
+2025-06-14 11:52:00,130 - redis_distributed_workflows.RedisWorkflowEngine - INFO - Workflow Engine workflow_engine_46f08e29 initialized successfully
+2025-06-14 11:52:00,130 - continuous_orchestrator - INFO - ✓ Redis workflow orchestration enabled
+🔧 TaskManager initialization:
+   - GitHub token exists: True
+   - Repository name: None (no default)
+   - GitHub client created: True
+   - Repository object created: False
+✓ AI content generator initialized successfully
+✓ Decomposition system initialized successfully
+2025-06-14 11:52:00,131 - continuous_orchestrator - INFO - GitHub Issue Queue initialized
+2025-06-14 11:52:00,131 - continuous_orchestrator - INFO - GitHub issue processor started
+2025-06-14 11:52:00,132 - continuous_orchestrator - INFO - ✓ GitHub issue queue processor started
+2025-06-14 11:52:00,135 - continuous_orchestrator - ERROR - Error in orchestrator: expected an indented block after 'if' statement on line 278 (intelligent_work_finder.py, line 280)
+2025-06-14 11:52:00,136 - continuous_orchestrator - ERROR - Traceback (most recent call last):
+  File "/workspaces/cwmai/scripts/continuous_orchestrator.py", line 204, in start
+    await self._initialize_components()
+  File "/workspaces/cwmai/scripts/continuous_orchestrator.py", line 384, in _initialize_components
+    from intelligent_work_finder import IntelligentWorkFinder
+  File "/workspaces/cwmai/scripts/intelligent_work_finder.py", line 280
+    health_score = repo_data.get('health_score', 100)
+    ^^^^^^^^^^^^
+IndentationError: expected an indented block after 'if' statement on line 278
+
+2025-06-14 11:52:00,136 - continuous_orchestrator - INFO - Stopping continuous orchestrator...
+2025-06-14 11:52:00,136 - continuous_orchestrator - INFO - GitHub issue processor stopped
+2025-06-14 11:52:00,137 - continuous_orchestrator - INFO - GitHub issue queue processor stopped
+2025-06-14 11:52:00,138 - __main__ - ERROR - Fatal error in continuous AI system: 'RedisClient' object has no attribute 'close'
+2025-06-14 11:52:00,139 - __main__ - ERROR - Traceback (most recent call last):
+  File "/workspaces/cwmai/run_continuous_ai.py", line 128, in start
+    await self.orchestrator.start()
+  File "/workspaces/cwmai/scripts/continuous_orchestrator.py", line 216, in start
+    await self.stop()
+  File "/workspaces/cwmai/scripts/continuous_orchestrator.py", line 255, in stop
+    await self.redis_state_manager.close()
+  File "/workspaces/cwmai/scripts/redis_lockfree_state_manager.py", line 70, in close
+    await self.redis_client.close()
+          ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'RedisClient' object has no attribute 'close'
+
+2025-06-14 11:52:00,171 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-1' coro=<run_continuous_system() done, defined at /workspaces/cwmai/run_continuous_ai.py:336> exception=SystemExit(1)>
+Traceback (most recent call last):
+  File "/workspaces/cwmai/run_continuous_ai.py", line 542, in main
+    asyncio.run(run_continuous_system(args))
+  File "/home/vscode/.local/lib/python3.11/site-packages/nest_asyncio.py", line 30, in run
+    return loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/nest_asyncio.py", line 92, in run_until_complete
+    self._run_once()
+  File "/home/vscode/.local/lib/python3.11/site-packages/nest_asyncio.py", line 133, in _run_once
+    handle._run()
+  File "/usr/local/lib/python3.11/asyncio/events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "/usr/local/lib/python3.11/asyncio/tasks.py", line 360, in __wakeup
+    self.__step()
+  File "/usr/local/lib/python3.11/asyncio/tasks.py", line 277, in __step
+    result = coro.send(None)
+             ^^^^^^^^^^^^^^^
+  File "/workspaces/cwmai/run_continuous_ai.py", line 381, in run_continuous_system
+    sys.exit(1)
+SystemExit: 1

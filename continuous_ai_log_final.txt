@@ -1,0 +1,859 @@
+Warning: Duplicate exclusion entry for cwmai.git
+Repository exclusion configuration valid: 5 repositories excluded
+Warning: Duplicate exclusion entry for cwmai.git
+Repository exclusion configuration valid: 5 repositories excluded
+
+    ╔═══════════════════════════════════════════════════════════════╗
+    ║                 CONTINUOUS 24/7 AI SYSTEM                    ║
+    ║                                                               ║
+    ║  🚀 Never-stopping intelligent worker                        ║
+    ║  ⚡ Parallel processing with smart work discovery            ║
+    ║  🔄 Event-driven continuous operation                        ║
+    ║  📊 Real-time performance monitoring                         ║
+    ║                                                               ║
+    ║  Press Ctrl+C to shutdown gracefully                         ║
+    ╚═══════════════════════════════════════════════════════════════╝
+    
+2025-06-14 12:11:02,800 - __main__ - INFO - ================================================================================
+2025-06-14 12:11:02,801 - __main__ - INFO - 🚀 STARTING CONTINUOUS 24/7 AI SYSTEM
+2025-06-14 12:11:02,802 - __main__ - INFO - Mode: development
+2025-06-14 12:11:02,802 - __main__ - INFO - Workers: 5
+2025-06-14 12:11:02,802 - __main__ - INFO - Parallel: True
+2025-06-14 12:11:02,802 - __main__ - INFO - Research: False
+2025-06-14 12:11:02,803 - __main__ - INFO - Round-Robin AI: False
+2025-06-14 12:11:02,803 - __main__ - INFO - Worker Monitor: True
+2025-06-14 12:11:02,803 - __main__ - INFO - Started at: 2025-06-14 12:11:02.803325+00:00
+2025-06-14 12:11:02,806 - continuous_orchestrator - INFO - ✓ Using Redis lock-free state manager
+2025-06-14 12:11:02,808 - continuous_orchestrator - INFO - ✓ Using Redis-enabled state manager
+2025-06-14 12:11:03,302 - RedisEnabledStateManager - INFO - save_state_locally called from:
+2025-06-14 12:11:03,304 - RedisEnabledStateManager - INFO - Saving state with 0 repositories: []
+Discovering repositories in CodeWebMobile-AI organization...
+Skipping excluded repository: CodeWebMobile-AI/.github
+Skipping excluded repository: CodeWebMobile-AI/cwmai
+✓ Discovered repository: project-analytics-dashboard
+✓ Discovered repository: business-analytics-dashboard
+✓ Discovered repository: summarize-ai-mobile
+✓ Discovered repository: brand-guardian-ai
+✓ Discovered repository: reputation-ai
+✓ Discovered repository: eco-track-ai
+✓ Discovered repository: ai-powered-inventory-sync
+✓ Discovered repository: community-connect-platform
+✓ Discovered repository: mindleap-ai
+✓ Discovered repository: vid-gen-ai
+Successfully discovered 10 repositories
+2025-06-14 12:11:15,690 - RedisEnabledStateManager - INFO - save_state_locally called from:
+2025-06-14 12:11:15,691 - RedisEnabledStateManager - INFO - Saving state with 10 repositories: ['project-analytics-dashboard', 'business-analytics-dashboard', 'summarize-ai-mobile', 'brand-guardian-ai', 'reputation-ai', 'eco-track-ai', 'ai-powered-inventory-sync', 'community-connect-platform', 'mindleap-ai', 'vid-gen-ai']
+✓ Integrated 10 repositories into system state
+2025-06-14 12:11:15,693 - scripts.http_ai_client.HTTPAIClient - INFO - HTTPAIClient initialized with 4 available providers
+2025-06-14 12:11:15,693 - scripts.http_ai_client.HTTPAIClient - INFO - ✓ AI response cache enabled (type: redis)
+2025-06-14 12:11:15,700 - continuous_orchestrator - INFO - ✓ Using Redis-based work queue
+🔧 TaskManager initialization:
+   - GitHub token exists: True
+   - Repository name: None (no default)
+   - GitHub client created: True
+   - Repository object created: False
+✓ AI content generator initialized successfully
+✓ Decomposition system initialized successfully
+2025-06-14 12:11:15,701 - continuous_orchestrator - INFO - ✓ AI content generator initialized for enhanced work generation
+2025-06-14 12:11:15,707 - continuous_orchestrator - INFO - ✓ Using Redis-based task persistence
+2025-06-14 12:11:15,707 - continuous_orchestrator - INFO - 🔬 Research Evolution Engine DISABLED by configuration
+2025-06-14 12:11:15,707 - __main__ - INFO - 📊 Worker monitoring started
+2025-06-14 12:11:15,708 - continuous_orchestrator - INFO - Starting 24/7 Continuous AI Orchestrator
+2025-06-14 12:11:15,708 - continuous_orchestrator - INFO - Initializing orchestrator components...
+2025-06-14 12:11:15,710 - repository_cleanup_manager - INFO - Starting automatic repository cleanup check...
+2025-06-14 12:11:15,711 - repository_cleanup_manager - INFO - No deleted repositories detected. System is clean.
+2025-06-14 12:11:15,711 - scripts.redis_integration.redis_client - INFO - Connecting to Redis (standalone) at localhost:6379
+2025-06-14 12:11:15,711 - scripts.redis_integration.redis_connection_pool - INFO - Connection pool manager started
+2025-06-14 12:11:15,711 - scripts.redis_integration.redis_connection_pool - INFO - Creating Redis connection: 0b568455-1c7f-4360-a86d-35cb598f91c2
+2025-06-14 12:11:15,712 - scripts.redis_integration.redis_connection_pool - INFO - Created connection pool with limit: 5000
+2025-06-14 12:11:15,723 - WorkerMonitor - INFO - Worker Status Monitor initialized
+2025-06-14 12:11:15,723 - WorkerMonitor - INFO - Initializing monitoring components...
+2025-06-14 12:11:15,724 - scripts.redis_integration.redis_connection_pool - INFO - Redis connection established: 0b568455-1c7f-4360-a86d-35cb598f91c2 (active: 1)
+2025-06-14 12:11:15,725 - scripts.redis_integration.redis_client - INFO - Redis health monitoring started
+2025-06-14 12:11:15,725 - scripts.redis_integration.redis_client - INFO - Redis connection established (ID: 0b568455-1c7f-4360-a86d-35cb598f91c2, pooled: True)
+2025-06-14 12:11:15,725 - WorkerMonitor - INFO - Created singleton Redis client
+2025-06-14 12:11:15,727 - scripts.redis_lockfree_state_manager - INFO - Lock-free state manager initialized
+2025-06-14 12:11:15,727 - continuous_orchestrator - INFO - ✓ Redis lock-free state manager initialized
+2025-06-14 12:11:15,727 - scripts.redis_integration.redis_pubsub_manager - INFO - Redis Pub/Sub manager started (ID: aa674279-e582-485a-838e-84b2a985de62)
+2025-06-14 12:11:15,728 - scripts.redis_integration.redis_connection_pool - INFO - Creating Redis connection: shared_pubsub
+2025-06-14 12:11:15,729 - scripts.redis_integration.redis_connection_pool - INFO - Redis connection established: shared_pubsub (active: 2)
+2025-06-14 12:11:15,730 - scripts.redis_integration.redis_pubsub_manager - INFO - Subscribed to channel: state_changes:cwmai_orchestrator
+2025-06-14 12:11:15,731 - scripts.redis_integration.redis_state_manager - INFO - State manager started for component cwmai_orchestrator
+2025-06-14 12:11:15,731 - scripts.redis_integration.redis_state_manager - INFO - State change listener started
+2025-06-14 12:11:15,735 - scripts.redis_state_adapter - INFO - No state in Redis, pushing local state
+2025-06-14 12:11:15,738 - scripts.redis_state_adapter - INFO - Redis state adapter initialized for component cwmai_orchestrator
+2025-06-14 12:11:15,738 - continuous_orchestrator - INFO - ✓ Redis state manager initialized
+2025-06-14 12:11:15,739 - redis_integration.redis_client - INFO - Connecting to Redis (standalone) at localhost:6379
+2025-06-14 12:11:15,739 - scripts.redis_work_queue - INFO - Redis work queue initialized
+2025-06-14 12:11:15,740 - WorkerMonitor - INFO - Redis components initialized successfully
+2025-06-14 12:11:15,740 - WorkerMonitor - INFO - Worker coordinator created (without Pub/Sub)
+2025-06-14 12:11:15,740 - __main__ - INFO - Worker monitor initialized with Redis connections
+2025-06-14 12:11:15,740 - redis_integration.redis_client - INFO - Redis health monitoring started
+2025-06-14 12:11:15,741 - redis_integration.redis_client - INFO - Redis connection established (ID: 907e6fa3-a88f-4ece-8b68-7467a72a5b8c, pooled: True)
+2025-06-14 12:11:15,742 - redis_integration.redis_pubsub_manager - INFO - Redis Pub/Sub manager started (ID: 55fafbc7-bb4b-4cb5-890c-02ab26c76024)
+2025-06-14 12:11:15,742 - WorkerMonitor - INFO - Found 0 active workers
+2025-06-14 12:11:15,743 - redis_integration.redis_pubsub_manager - INFO - Subscribed to channel: cwmai:workers:global
+2025-06-14 12:11:15,743 - redis_integration.redis_pubsub_manager - INFO - Subscribed to pattern: cwmai:workers:*
+2025-06-14 12:11:15,744 - redis_worker_coordinator - INFO - Worker coordinator initialized for orchestrator
+2025-06-14 12:11:15,744 - continuous_orchestrator - INFO - ✓ Redis worker coordination enabled
+2025-06-14 12:11:15,745 - redis_integration.redis_locks_manager - INFO - Redis Locks manager started (instance: a0ecde14-9fce-442e-85c5-0688f3b95825)
+2025-06-14 12:11:15,745 - continuous_orchestrator - INFO - ✓ Redis distributed locks enabled
+2025-06-14 12:11:15,769 - redis_event_analytics.RedisEventAnalytics - INFO - Initializing Redis Event Analytics: analytics_3746472a
+2025-06-14 12:11:15,770 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Initializing Redis Intelligence Hub: intelligence_hub_57816a13
+2025-06-14 12:11:15,774 - __main__ - INFO - 📊 Worker Status: 0/0 active, 0 idle | Queue: 0 tasks | Completed: 0
+2025-06-14 12:11:15,774 - WorkerMonitor - INFO - ================================================================================
+2025-06-14 12:11:15,774 - WorkerMonitor - INFO - WORKER STATUS UPDATE - 2025-06-14T12:11:15.740563+00:00
+2025-06-14 12:11:15,775 - WorkerMonitor - INFO - ================================================================================
+2025-06-14 12:11:15,775 - WorkerMonitor - INFO - System Health:
+2025-06-14 12:11:15,775 - WorkerMonitor - INFO -   Overall: 0.0%
+2025-06-14 12:11:15,775 - WorkerMonitor - INFO -   Worker Health: 0.0%
+2025-06-14 12:11:15,775 - WorkerMonitor - INFO -   Queue Health: 0.0%
+2025-06-14 12:11:15,775 - WorkerMonitor - INFO -   Active Workers: 0/0
+2025-06-14 12:11:15,775 - WorkerMonitor - INFO -   Idle Workers: 0/0
+2025-06-14 12:11:15,775 - WorkerMonitor - INFO - 
+Queue Status:
+2025-06-14 12:11:15,775 - WorkerMonitor - INFO -   Total Queued: 0
+2025-06-14 12:11:15,775 - WorkerMonitor - INFO -   No items in queue
+2025-06-14 12:11:15,775 - WorkerMonitor - INFO - 
+Worker Details:
+2025-06-14 12:11:15,775 - WorkerMonitor - INFO -   No workers currently active
+2025-06-14 12:11:15,775 - WorkerMonitor - INFO - 
+Active Tasks: None
+2025-06-14 12:11:15,775 - WorkerMonitor - INFO - 
+================================================================================
+
+2025-06-14 12:11:15,777 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Analytics processors started
+2025-06-14 12:11:15,781 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Intelligence Hub intelligence_hub_57816a13 initialized successfully
+2025-06-14 12:11:15,781 - scripts.redis_event_sourcing.RedisEventStore - INFO - Initializing Redis Event Store: event_store_b4b2325b
+2025-06-14 12:11:15,784 - scripts.redis_event_sourcing.RedisEventStore - INFO - Event Store event_store_b4b2325b initialized successfully
+2025-06-14 12:11:15,785 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for worker_registration
+2025-06-14 12:11:15,785 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for worker_heartbeat
+2025-06-14 12:11:15,785 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for worker_shutdown
+2025-06-14 12:11:15,785 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for task_assignment
+2025-06-14 12:11:15,785 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for task_progress
+2025-06-14 12:11:15,786 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for task_completion
+2025-06-14 12:11:15,786 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for task_failure
+2025-06-14 12:11:15,786 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for ai_request
+2025-06-14 12:11:15,786 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for ai_response
+2025-06-14 12:11:15,787 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for performance_metric
+2025-06-14 12:11:15,787 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for error_event
+2025-06-14 12:11:15,787 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for intelligence_update
+2025-06-14 12:11:15,787 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for capability_discovery
+2025-06-14 12:11:15,787 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for coordination_event
+2025-06-14 12:11:15,787 - scripts.redis_intelligence_hub.RedisIntelligenceHub - INFO - Registered processor for analytics_insight
+2025-06-14 12:11:15,788 - redis_event_analytics.RedisEventAnalytics - INFO - Built-in analytics initialized
+2025-06-14 12:11:15,788 - redis_event_analytics.RedisEventAnalytics - INFO - Started 6 analytics tasks
+2025-06-14 12:11:15,790 - redis_event_analytics.RedisEventAnalytics - INFO - Event Analytics analytics_3746472a initialized successfully
+2025-06-14 12:11:15,790 - continuous_orchestrator - INFO - ✓ Redis event analytics enabled
+2025-06-14 12:11:15,795 - redis_integration.redis_streams_manager - INFO - Created consumer group event_processors for stream cwmai:events:stream
+2025-06-14 12:11:15,795 - redis_event_stream_processor - INFO - Event stream processor initialized
+2025-06-14 12:11:15,796 - continuous_orchestrator - INFO - ✓ Redis event stream processing enabled
+2025-06-14 12:11:15,796 - continuous_orchestrator - INFO - ✓ Redis performance analytics enabled
+2025-06-14 12:11:15,806 - redis_distributed_workflows.RedisWorkflowEngine - INFO - Initializing Redis Workflow Engine: workflow_engine_98e4917a
+2025-06-14 12:11:15,807 - redis_integration.redis_streams_manager - INFO - Started consumer processor_1 for group event_processors on stream cwmai:events:stream
+2025-06-14 12:11:15,809 - redis_event_analytics.RedisEventAnalytics - WARNING - System health is critical: 30.0
+2025-06-14 12:11:15,811 - redis_event_analytics.RedisEventAnalytics - INFO - Published insight: system_stability_concern - System stability below threshold: 30%
+2025-06-14 12:11:15,812 - redis_distributed_workflows.RedisWorkflowEngine - INFO - Workflow processors started
+2025-06-14 12:11:15,813 - redis_distributed_workflows.RedisWorkflowEngine - INFO - Workflow Engine workflow_engine_98e4917a initialized successfully
+2025-06-14 12:11:15,813 - continuous_orchestrator - INFO - ✓ Redis workflow orchestration enabled
+🔧 TaskManager initialization:
+   - GitHub token exists: True
+   - Repository name: None (no default)
+   - GitHub client created: True
+   - Repository object created: False
+✓ AI content generator initialized successfully
+✓ Decomposition system initialized successfully
+2025-06-14 12:11:15,814 - continuous_orchestrator - INFO - GitHub Issue Queue initialized
+2025-06-14 12:11:15,814 - continuous_orchestrator - INFO - GitHub issue processor started
+2025-06-14 12:11:15,814 - continuous_orchestrator - INFO - ✓ GitHub issue queue processor started
+2025-06-14 12:11:15,846 - scripts.task_persistence - INFO - 📋 No previous completed tasks found - starting fresh
+2025-06-14 12:11:15,847 - continuous_orchestrator - INFO - ✓ Work finder initialized
+2025-06-14 12:11:15,853 - resource_manager - INFO - State manager connected to resource manager
+2025-06-14 12:11:15,854 - resource_manager - INFO - Resource manager monitoring started
+2025-06-14 12:11:15,854 - continuous_orchestrator - INFO - ✓ Resource manager initialized and monitoring started
+2025-06-14 12:11:15,861 - continuous_orchestrator - INFO - ✓ Task coordinator initialized
+2025-06-14 12:11:15,861 - continuous_orchestrator - INFO - No previous state found - starting fresh
+2025-06-14 12:11:15,861 - continuous_orchestrator - INFO - All components initialized
+2025-06-14 12:11:15,862 - continuous_orchestrator - INFO - Starting 5 workers...
+2025-06-14 12:11:15,862 - continuous_orchestrator - INFO - ✓ Started worker_1 (specialization: system_tasks)
+2025-06-14 12:11:15,862 - continuous_orchestrator - INFO - ✓ Started worker_2 (specialization: project-analytics-dashboard)
+2025-06-14 12:11:15,862 - continuous_orchestrator - INFO - ✓ Started worker_3 (specialization: business-analytics-dashboard)
+2025-06-14 12:11:15,863 - continuous_orchestrator - INFO - ✓ Started worker_4 (specialization: summarize-ai-mobile)
+2025-06-14 12:11:15,863 - continuous_orchestrator - INFO - ✓ Started worker_5 (specialization: general)
+2025-06-14 12:11:15,863 - continuous_orchestrator - INFO - All 5 workers started
+2025-06-14 12:11:15,863 - continuous_orchestrator - INFO - Starting main orchestration loop
+2025-06-14 12:11:15,864 - continuous_orchestrator - INFO - Starting GitHub issue queue processor
+2025-06-14 12:11:16,865 - RedisEnabledStateManager - INFO - Saving state with 10 repositories: ['ai-powered-inventory-sync', 'brand-guardian-ai', 'business-analytics-dashboard', 'community-connect-platform', 'eco-track-ai', 'mindleap-ai', 'project-analytics-dashboard', 'reputation-ai', 'summarize-ai-mobile', 'vid-gen-ai']
+2025-06-14 12:11:16,867 - continuous_orchestrator - INFO - Worker worker_1 started (specialization: system_tasks)
+2025-06-14 12:11:16,867 - continuous_orchestrator - INFO - Worker worker_2 started (specialization: project-analytics-dashboard)
+2025-06-14 12:11:16,868 - continuous_orchestrator - INFO - Worker worker_3 started (specialization: business-analytics-dashboard)
+2025-06-14 12:11:16,869 - continuous_orchestrator - INFO - Worker worker_4 started (specialization: summarize-ai-mobile)
+2025-06-14 12:11:16,869 - continuous_orchestrator - INFO - Worker worker_5 started (specialization: general)
+2025-06-14 12:11:16,877 - redis_event_stream_processor - INFO - Pattern detected: anomaly (severity: medium) - Unusual event distribution detected
+2025-06-14 12:11:16,890 - intelligent_work_finder - INFO - Discovering work (max: 15, current load: 0)
+2025-06-14 12:11:16,890 - scripts.project_lifecycle_analyzer - INFO - Analyzing lifecycle stage for project-analytics-dashboard
+2025-06-14 12:11:16,891 - scripts.http_ai_client.HTTPAIClient - INFO - [req_0] Starting AI request - Model preference: auto, Prompt length: 982
+2025-06-14 12:11:16,891 - AIAPILogger - INFO - AI API Logger initialized (file_logging=True, sensitive_data=True)
+2025-06-14 12:11:16,892 - AIAPILogger - INFO - [req_0] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 982
+2025-06-14 12:11:18,493 - scripts.http_ai_client.HTTPAIClient - INFO - [req_0] Request completed successfully in 1.60s - Provider: gemini
+2025-06-14 12:11:18,494 - AIAPILogger - INFO - [req_0] AI Request COMPLETE - Time: 1.60s, Length: 1180, Cost: $0.0000
+2025-06-14 12:11:18,495 - scripts.http_ai_client.HTTPAIClient - INFO - [req_1] Starting AI request - Model preference: auto, Prompt length: 733
+2025-06-14 12:11:18,496 - AIAPILogger - INFO - [req_1] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 733
+2025-06-14 12:11:21,577 - scripts.http_ai_client.HTTPAIClient - INFO - [req_1] Request completed successfully in 3.08s - Provider: gemini
+2025-06-14 12:11:21,577 - AIAPILogger - INFO - [req_1] AI Request COMPLETE - Time: 3.08s, Length: 2532, Cost: $0.0000
+2025-06-14 12:11:21,578 - intelligent_work_finder - ERROR - Error in repository work discovery: cannot access local variable 'recent_activity' where it is not associated with a value
+2025-06-14 12:11:21,579 - scripts.portfolio_intelligence - INFO - 🔬 Analyzing portfolio intelligence...
+2025-06-14 12:11:21,579 - scripts.http_ai_client.HTTPAIClient - INFO - [req_2] Starting AI request - Model preference: auto, Prompt length: 1476
+2025-06-14 12:11:21,580 - AIAPILogger - INFO - [req_2] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1476
+2025-06-14 12:11:24,199 - scripts.http_ai_client.HTTPAIClient - INFO - [req_2] Request completed successfully in 2.62s - Provider: gemini
+2025-06-14 12:11:24,200 - AIAPILogger - INFO - [req_2] AI Request COMPLETE - Time: 2.62s, Length: 1763, Cost: $0.0000
+2025-06-14 12:11:24,200 - scripts.http_ai_client.HTTPAIClient - INFO - [req_3] Starting AI request - Model preference: auto, Prompt length: 1485
+2025-06-14 12:11:24,201 - AIAPILogger - INFO - [req_3] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1485
+2025-06-14 12:11:26,914 - scripts.http_ai_client.HTTPAIClient - INFO - [req_3] Request completed successfully in 2.71s - Provider: gemini
+2025-06-14 12:11:26,914 - AIAPILogger - INFO - [req_3] AI Request COMPLETE - Time: 2.71s, Length: 1965, Cost: $0.0000
+2025-06-14 12:11:26,915 - scripts.http_ai_client.HTTPAIClient - INFO - [req_4] Starting AI request - Model preference: auto, Prompt length: 1552
+2025-06-14 12:11:26,915 - AIAPILogger - INFO - [req_4] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1552
+2025-06-14 12:11:30,066 - scripts.http_ai_client.HTTPAIClient - INFO - [req_4] Request completed successfully in 3.15s - Provider: gemini
+2025-06-14 12:11:30,066 - AIAPILogger - INFO - [req_4] AI Request COMPLETE - Time: 3.15s, Length: 2169, Cost: $0.0000
+2025-06-14 12:11:30,067 - scripts.http_ai_client.HTTPAIClient - INFO - [req_5] Starting AI request - Model preference: auto, Prompt length: 1601
+2025-06-14 12:11:30,067 - AIAPILogger - INFO - [req_5] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1601
+2025-06-14 12:11:33,517 - scripts.http_ai_client.HTTPAIClient - INFO - [req_5] Request completed successfully in 3.45s - Provider: gemini
+2025-06-14 12:11:33,519 - AIAPILogger - INFO - [req_5] AI Request COMPLETE - Time: 3.45s, Length: 2331, Cost: $0.0000
+2025-06-14 12:11:33,521 - scripts.http_ai_client.HTTPAIClient - INFO - [req_6] Starting AI request - Model preference: auto, Prompt length: 1572
+2025-06-14 12:11:33,523 - AIAPILogger - INFO - [req_6] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1572
+2025-06-14 12:11:36,754 - scripts.http_ai_client.HTTPAIClient - INFO - [req_6] Request completed successfully in 3.23s - Provider: gemini
+2025-06-14 12:11:36,754 - AIAPILogger - INFO - [req_6] AI Request COMPLETE - Time: 3.23s, Length: 2342, Cost: $0.0000
+2025-06-14 12:11:36,756 - scripts.http_ai_client.HTTPAIClient - INFO - [req_7] Starting AI request - Model preference: auto, Prompt length: 1567
+2025-06-14 12:11:36,757 - AIAPILogger - INFO - [req_7] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1567
+2025-06-14 12:11:39,443 - scripts.http_ai_client.HTTPAIClient - INFO - [req_7] Request completed successfully in 2.69s - Provider: gemini
+2025-06-14 12:11:39,443 - AIAPILogger - INFO - [req_7] AI Request COMPLETE - Time: 2.69s, Length: 1945, Cost: $0.0000
+2025-06-14 12:11:39,444 - scripts.http_ai_client.HTTPAIClient - INFO - [req_8] Starting AI request - Model preference: auto, Prompt length: 1621
+2025-06-14 12:11:39,445 - AIAPILogger - INFO - [req_8] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1621
+2025-06-14 12:11:42,453 - scripts.http_ai_client.HTTPAIClient - INFO - [req_8] Request completed successfully in 3.01s - Provider: gemini
+2025-06-14 12:11:42,454 - AIAPILogger - INFO - [req_8] AI Request COMPLETE - Time: 3.01s, Length: 2027, Cost: $0.0000
+2025-06-14 12:11:42,455 - scripts.http_ai_client.HTTPAIClient - INFO - [req_9] Starting AI request - Model preference: auto, Prompt length: 1600
+2025-06-14 12:11:42,455 - AIAPILogger - INFO - [req_9] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1600
+2025-06-14 12:11:45,139 - scripts.http_ai_client.HTTPAIClient - INFO - [req_9] Request completed successfully in 2.68s - Provider: gemini
+2025-06-14 12:11:45,139 - AIAPILogger - INFO - [req_9] AI Request COMPLETE - Time: 2.68s, Length: 1707, Cost: $0.0000
+2025-06-14 12:11:45,140 - scripts.http_ai_client.HTTPAIClient - INFO - [req_10] Starting AI request - Model preference: auto, Prompt length: 1582
+2025-06-14 12:11:45,140 - AIAPILogger - INFO - [req_10] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1582
+2025-06-14 12:11:48,336 - scripts.http_ai_client.HTTPAIClient - INFO - [req_10] Request completed successfully in 3.20s - Provider: gemini
+2025-06-14 12:11:48,336 - AIAPILogger - INFO - [req_10] AI Request COMPLETE - Time: 3.20s, Length: 2395, Cost: $0.0000
+2025-06-14 12:11:48,338 - scripts.http_ai_client.HTTPAIClient - INFO - [req_11] Starting AI request - Model preference: auto, Prompt length: 1546
+2025-06-14 12:11:48,338 - AIAPILogger - INFO - [req_11] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1546
+2025-06-14 12:11:51,849 - scripts.http_ai_client.HTTPAIClient - INFO - [req_11] Request completed successfully in 3.51s - Provider: gemini
+2025-06-14 12:11:51,850 - AIAPILogger - INFO - [req_11] AI Request COMPLETE - Time: 3.51s, Length: 2291, Cost: $0.0000
+2025-06-14 12:11:51,852 - scripts.http_ai_client.HTTPAIClient - INFO - [req_12] Starting AI request - Model preference: auto, Prompt length: 4478
+2025-06-14 12:11:51,853 - AIAPILogger - INFO - [req_12] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 4478
+2025-06-14 12:11:56,612 - scripts.http_ai_client.HTTPAIClient - INFO - [req_12] Request completed successfully in 4.76s - Provider: gemini
+2025-06-14 12:11:56,613 - AIAPILogger - INFO - [req_12] AI Request COMPLETE - Time: 4.76s, Length: 3797, Cost: $0.0000
+2025-06-14 12:11:56,613 - scripts.http_ai_client.HTTPAIClient - INFO - [req_13] Starting AI request - Model preference: auto, Prompt length: 1329
+2025-06-14 12:11:56,614 - AIAPILogger - INFO - [req_13] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1329
+2025-06-14 12:12:00,913 - scripts.http_ai_client.HTTPAIClient - INFO - [req_13] Request completed successfully in 4.30s - Provider: gemini
+2025-06-14 12:12:00,914 - AIAPILogger - INFO - [req_13] AI Request COMPLETE - Time: 4.30s, Length: 3421, Cost: $0.0000
+2025-06-14 12:12:00,915 - scripts.market_research_engine - INFO - 🚀 Generating project opportunities...
+2025-06-14 12:12:00,915 - scripts.market_research_engine - INFO - 🔍 Discovering market trends...
+2025-06-14 12:12:00,915 - scripts.http_ai_client.HTTPAIClient - INFO - [req_14] Starting AI request - Model preference: auto, Prompt length: 972
+2025-06-14 12:12:00,916 - AIAPILogger - INFO - [req_14] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 972
+2025-06-14 12:12:08,358 - scripts.http_ai_client.HTTPAIClient - INFO - [req_14] Request completed successfully in 7.44s - Provider: gemini
+2025-06-14 12:12:08,359 - AIAPILogger - INFO - [req_14] AI Request COMPLETE - Time: 7.44s, Length: 5143, Cost: $0.0000
+2025-06-14 12:12:08,360 - scripts.http_ai_client.HTTPAIClient - INFO - [req_15] Starting AI request - Model preference: auto, Prompt length: 572
+2025-06-14 12:12:08,361 - AIAPILogger - INFO - [req_15] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 572
+2025-06-14 12:12:19,943 - scripts.http_ai_client.HTTPAIClient - INFO - [req_15] Request completed successfully in 11.58s - Provider: gemini
+2025-06-14 12:12:19,944 - AIAPILogger - INFO - [req_15] AI Request COMPLETE - Time: 11.58s, Length: 8764, Cost: $0.0000
+2025-06-14 12:12:19,945 - scripts.http_ai_client.HTTPAIClient - INFO - [req_16] Starting AI request - Model preference: auto, Prompt length: 654
+2025-06-14 12:12:19,945 - AIAPILogger - INFO - [req_16] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 654
+2025-06-14 12:12:26,790 - scripts.http_ai_client.HTTPAIClient - INFO - [req_16] Request completed successfully in 6.84s - Provider: gemini
+2025-06-14 12:12:26,790 - AIAPILogger - INFO - [req_16] AI Request COMPLETE - Time: 6.84s, Length: 6258, Cost: $0.0000
+2025-06-14 12:12:26,791 - scripts.http_ai_client.HTTPAIClient - INFO - [req_17] Starting AI request - Model preference: auto, Prompt length: 550
+2025-06-14 12:12:26,792 - AIAPILogger - INFO - [req_17] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 550
+2025-06-14 12:12:35,957 - scripts.http_ai_client.HTTPAIClient - INFO - [req_17] Request completed successfully in 9.17s - Provider: gemini
+2025-06-14 12:12:35,958 - AIAPILogger - INFO - [req_17] AI Request COMPLETE - Time: 9.17s, Length: 7051, Cost: $0.0000
+2025-06-14 12:12:35,960 - scripts.http_ai_client.HTTPAIClient - INFO - [req_18] Starting AI request - Model preference: auto, Prompt length: 790
+2025-06-14 12:12:35,960 - AIAPILogger - INFO - [req_18] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 790
+2025-06-14 12:12:37,060 - scripts.http_ai_client.HTTPAIClient - INFO - [req_18] Request completed successfully in 1.10s - Provider: gemini
+2025-06-14 12:12:37,060 - AIAPILogger - INFO - [req_18] AI Request COMPLETE - Time: 1.10s, Length: 607, Cost: $0.0000
+2025-06-14 12:12:37,061 - scripts.http_ai_client.HTTPAIClient - INFO - [req_19] Starting AI request - Model preference: auto, Prompt length: 798
+2025-06-14 12:12:37,061 - AIAPILogger - INFO - [req_19] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 798
+2025-06-14 12:12:38,176 - scripts.http_ai_client.HTTPAIClient - INFO - [req_19] Request completed successfully in 1.12s - Provider: gemini
+2025-06-14 12:12:38,176 - AIAPILogger - INFO - [req_19] AI Request COMPLETE - Time: 1.12s, Length: 693, Cost: $0.0000
+2025-06-14 12:12:38,177 - scripts.http_ai_client.HTTPAIClient - INFO - [req_20] Starting AI request - Model preference: auto, Prompt length: 866
+2025-06-14 12:12:38,177 - AIAPILogger - INFO - [req_20] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 866
+2025-06-14 12:12:39,031 - scripts.http_ai_client.HTTPAIClient - INFO - [req_20] Request completed successfully in 0.85s - Provider: gemini
+2025-06-14 12:12:39,031 - AIAPILogger - INFO - [req_20] AI Request COMPLETE - Time: 0.85s, Length: 491, Cost: $0.0000
+2025-06-14 12:12:39,032 - scripts.http_ai_client.HTTPAIClient - INFO - [req_21] Starting AI request - Model preference: auto, Prompt length: 916
+2025-06-14 12:12:39,032 - AIAPILogger - INFO - [req_21] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 916
+2025-06-14 12:12:40,319 - scripts.http_ai_client.HTTPAIClient - INFO - [req_21] Request completed successfully in 1.29s - Provider: gemini
+2025-06-14 12:12:40,319 - AIAPILogger - INFO - [req_21] AI Request COMPLETE - Time: 1.29s, Length: 810, Cost: $0.0000
+2025-06-14 12:12:40,319 - scripts.http_ai_client.HTTPAIClient - INFO - [req_22] Starting AI request - Model preference: auto, Prompt length: 887
+2025-06-14 12:12:40,320 - AIAPILogger - INFO - [req_22] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 887
+2025-06-14 12:12:41,457 - scripts.http_ai_client.HTTPAIClient - INFO - [req_22] Request completed successfully in 1.14s - Provider: gemini
+2025-06-14 12:12:41,458 - AIAPILogger - INFO - [req_22] AI Request COMPLETE - Time: 1.14s, Length: 648, Cost: $0.0000
+2025-06-14 12:12:41,458 - scripts.http_ai_client.HTTPAIClient - INFO - [req_23] Starting AI request - Model preference: auto, Prompt length: 882
+2025-06-14 12:12:41,459 - AIAPILogger - INFO - [req_23] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 882
+2025-06-14 12:12:42,586 - scripts.http_ai_client.HTTPAIClient - INFO - [req_23] Request completed successfully in 1.13s - Provider: gemini
+2025-06-14 12:12:42,586 - AIAPILogger - INFO - [req_23] AI Request COMPLETE - Time: 1.13s, Length: 795, Cost: $0.0000
+2025-06-14 12:12:42,587 - scripts.http_ai_client.HTTPAIClient - INFO - [req_24] Starting AI request - Model preference: auto, Prompt length: 936
+2025-06-14 12:12:42,588 - AIAPILogger - INFO - [req_24] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 936
+2025-06-14 12:12:47,917 - scripts.http_ai_client.HTTPAIClient - INFO - [req_24] Request completed successfully in 5.33s - Provider: gemini
+2025-06-14 12:12:47,917 - AIAPILogger - INFO - [req_24] AI Request COMPLETE - Time: 5.33s, Length: 726, Cost: $0.0000
+2025-06-14 12:12:47,918 - scripts.http_ai_client.HTTPAIClient - INFO - [req_25] Starting AI request - Model preference: auto, Prompt length: 915
+2025-06-14 12:12:47,919 - AIAPILogger - INFO - [req_25] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 915
+2025-06-14 12:12:49,350 - scripts.http_ai_client.HTTPAIClient - INFO - [req_25] Request completed successfully in 1.43s - Provider: gemini
+2025-06-14 12:12:49,351 - AIAPILogger - INFO - [req_25] AI Request COMPLETE - Time: 1.43s, Length: 912, Cost: $0.0000
+2025-06-14 12:12:49,351 - scripts.http_ai_client.HTTPAIClient - INFO - [req_26] Starting AI request - Model preference: auto, Prompt length: 897
+2025-06-14 12:12:49,351 - AIAPILogger - INFO - [req_26] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 897
+2025-06-14 12:12:50,987 - scripts.http_ai_client.HTTPAIClient - INFO - [req_26] Request completed successfully in 1.64s - Provider: gemini
+2025-06-14 12:12:50,987 - AIAPILogger - INFO - [req_26] AI Request COMPLETE - Time: 1.64s, Length: 772, Cost: $0.0000
+2025-06-14 12:12:50,988 - scripts.http_ai_client.HTTPAIClient - INFO - [req_27] Starting AI request - Model preference: auto, Prompt length: 861
+2025-06-14 12:12:50,989 - AIAPILogger - INFO - [req_27] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 861
+2025-06-14 12:12:52,939 - scripts.http_ai_client.HTTPAIClient - INFO - [req_27] Request completed successfully in 1.95s - Provider: gemini
+2025-06-14 12:12:52,940 - AIAPILogger - INFO - [req_27] AI Request COMPLETE - Time: 1.95s, Length: 890, Cost: $0.0000
+2025-06-14 12:12:52,940 - scripts.http_ai_client.HTTPAIClient - INFO - [req_28] Starting AI request - Model preference: auto, Prompt length: 2110
+2025-06-14 12:12:52,941 - AIAPILogger - INFO - [req_28] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 2110
+2025-06-14 12:12:56,341 - scripts.http_ai_client.HTTPAIClient - INFO - [req_28] Request completed successfully in 3.40s - Provider: gemini
+2025-06-14 12:12:56,342 - AIAPILogger - INFO - [req_28] AI Request COMPLETE - Time: 3.40s, Length: 2406, Cost: $0.0000
+2025-06-14 12:12:56,342 - scripts.http_ai_client.HTTPAIClient - INFO - [req_29] Starting AI request - Model preference: auto, Prompt length: 2035
+2025-06-14 12:12:56,343 - AIAPILogger - INFO - [req_29] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 2035
+2025-06-14 12:13:00,173 - scripts.http_ai_client.HTTPAIClient - INFO - [req_29] Request completed successfully in 3.83s - Provider: gemini
+2025-06-14 12:13:00,174 - AIAPILogger - INFO - [req_29] AI Request COMPLETE - Time: 3.83s, Length: 2736, Cost: $0.0000
+2025-06-14 12:13:00,175 - scripts.http_ai_client.HTTPAIClient - INFO - [req_30] Starting AI request - Model preference: auto, Prompt length: 2152
+2025-06-14 12:13:00,176 - AIAPILogger - INFO - [req_30] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 2152
+2025-06-14 12:13:04,877 - scripts.http_ai_client.HTTPAIClient - INFO - [req_30] Request completed successfully in 4.70s - Provider: gemini
+2025-06-14 12:13:04,877 - AIAPILogger - INFO - [req_30] AI Request COMPLETE - Time: 4.70s, Length: 3301, Cost: $0.0000
+2025-06-14 12:13:04,878 - intelligent_work_finder - INFO - 📊 Portfolio analysis complete: 3 opportunities found
+2025-06-14 12:13:04,879 - intelligent_work_finder - INFO - Discovered 10 work items:
+2025-06-14 12:13:04,879 - intelligent_work_finder - INFO -   - NEW_PROJECT: EdgeWise AI (priority: HIGH)
+2025-06-14 12:13:04,879 - intelligent_work_finder - INFO -   - RESEARCH: Research software architecture best practices (priority: MEDIUM)
+2025-06-14 12:13:04,879 - intelligent_work_finder - INFO -   - NEW_PROJECT: Create shared component library (priority: MEDIUM)
+2025-06-14 12:13:04,879 - intelligent_work_finder - INFO -   - NEW_PROJECT: CodeWhisperer (priority: MEDIUM)
+2025-06-14 12:13:04,879 - intelligent_work_finder - INFO -   - NEW_PROJECT: HydraVerse (priority: MEDIUM)
+2025-06-14 12:13:04,880 - intelligent_work_finder - INFO -   - MAINTENANCE: Verify system backup integrity (priority: LOW)
+2025-06-14 12:13:04,880 - intelligent_work_finder - INFO -   - MONITORING: Generate performance metrics report (priority: LOW)
+2025-06-14 12:13:04,880 - intelligent_work_finder - INFO -   - RESEARCH: Analyze competitor project structures (priority: LOW)
+2025-06-14 12:13:04,880 - intelligent_work_finder - INFO -   - MAINTENANCE: Clean up old log files (priority: BACKGROUND)
+2025-06-14 12:13:04,880 - intelligent_work_finder - INFO -   - RESEARCH: Research emerging AI development trends (priority: BACKGROUND)
+2025-06-14 12:13:04,880 - intelligent_work_finder - INFO - 📋 Work discovery summary: 4 NEW_PROJECT, 3 RESEARCH, 2 MAINTENANCE, 1 MONITORING
+2025-06-14 12:13:05,885 - RedisEnabledStateManager - INFO - save_state_locally called from:
+2025-06-14 12:13:05,885 - RedisEnabledStateManager - INFO - Saving state with 10 repositories: ['ai-powered-inventory-sync', 'brand-guardian-ai', 'business-analytics-dashboard', 'community-connect-platform', 'eco-track-ai', 'mindleap-ai', 'project-analytics-dashboard', 'reputation-ai', 'summarize-ai-mobile', 'vid-gen-ai']
+2025-06-14 12:13:05,890 - WorkerMonitor - INFO - Found 5 active workers
+2025-06-14 12:13:05,967 - redis_event_analytics.RedisEventAnalytics - WARNING - System health is critical: 20.0
+2025-06-14 12:13:05,969 - scripts.redis_work_queue - INFO - Successfully added 1/1 items to HIGH stream
+2025-06-14 12:13:05,969 - scripts.redis_work_queue - INFO - Flushed 1 HIGH items to Redis stream: cwmai:work_queue:high
+2025-06-14 12:13:05,972 - scripts.redis_work_queue - INFO - Successfully added 4/4 items to MEDIUM stream
+2025-06-14 12:13:05,973 - scripts.redis_work_queue - INFO - Flushed 4 MEDIUM items to Redis stream: cwmai:work_queue:medium
+2025-06-14 12:13:05,975 - scripts.redis_work_queue - INFO - Successfully added 3/3 items to LOW stream
+2025-06-14 12:13:05,975 - scripts.redis_work_queue - INFO - Flushed 3 LOW items to Redis stream: cwmai:work_queue:low
+2025-06-14 12:13:05,977 - scripts.redis_work_queue - INFO - Successfully added 2/2 items to BACKGROUND stream
+2025-06-14 12:13:05,978 - scripts.redis_work_queue - INFO - Flushed 2 BACKGROUND items to Redis stream: cwmai:work_queue:background
+2025-06-14 12:13:05,978 - continuous_orchestrator - INFO - Total work items added to queue: 10
+2025-06-14 12:13:05,983 - redis_event_stream_processor - INFO - Pattern detected: anomaly (severity: medium) - Unusual event distribution detected
+2025-06-14 12:13:05,988 - scripts.redis_work_queue - INFO - Worker worker_5 claimed task work_1749903184_1b22f2c0
+2025-06-14 12:13:05,988 - continuous_orchestrator - INFO - Worker worker_5 executing: EdgeWise AI
+2025-06-14 12:13:05,993 - continuous_orchestrator - INFO - 🔍 _perform_work called for: EdgeWise AI (type: NEW_PROJECT)
+2025-06-14 12:13:05,993 - redis_task_persistence - INFO - Redis task persistence initialized
+2025-06-14 12:13:05,996 - continuous_orchestrator - INFO - 📋 Routing task type: NEW_PROJECT
+2025-06-14 12:13:05,996 - continuous_orchestrator - INFO - 📑 Available task handlers: ['SYSTEM_IMPROVEMENT', 'NEW_PROJECT', 'FEATURE', 'BUG_FIX', 'DOCUMENTATION', 'RESEARCH', 'TESTING', 'MAINTENANCE', 'MONITORING', 'INTEGRATION', 'REFACTORING', 'OPTIMIZATION']
+2025-06-14 12:13:05,996 - continuous_orchestrator - INFO - 🔎 Looking for handler for task type: 'NEW_PROJECT'
+2025-06-14 12:13:05,996 - continuous_orchestrator - INFO - ✅ Handler found: _execute_new_project_task
+2025-06-14 12:13:05,996 - continuous_orchestrator - INFO - 🚀 Using specific handler: _execute_new_project_task for task type: NEW_PROJECT
+2025-06-14 12:13:05,997 - continuous_orchestrator - INFO - 📂 Executing new project task: EdgeWise AI
+🔧 TaskManager initialization:
+   - GitHub token exists: True
+   - Repository name: None (no default)
+   - GitHub client created: True
+   - Repository object created: False
+2025-06-14 12:13:06,048 - scripts.http_ai_client.HTTPAIClient - INFO - HTTPAIClient initialized with 4 available providers
+2025-06-14 12:13:06,048 - scripts.http_ai_client.HTTPAIClient - INFO - ✓ AI response cache enabled (type: redis)
+✓ AI content generator initialized successfully
+✓ Decomposition system initialized successfully
+2025-06-14 12:13:06,048 - continuous_orchestrator - INFO - 🚀 Creating new project from Laravel React starter kit
+2025-06-14 12:13:06,048 - scripts.project_creator - INFO - Creating project for task: EdgeWise AI
+2025-06-14 12:13:06,049 - scripts.http_ai_client.HTTPAIClient - INFO - [req_31] Starting AI request - Model preference: gemini, Prompt length: 1640
+2025-06-14 12:13:06,049 - AIAPILogger - INFO - [req_31] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1640
+2025-06-14 12:13:15,146 - scripts.http_ai_client.HTTPAIClient - INFO - [req_31] Request completed successfully in 9.10s - Provider: gemini
+2025-06-14 12:13:15,147 - AIAPILogger - INFO - [req_31] AI Request COMPLETE - Time: 9.10s, Length: 8078, Cost: $0.0000
+2025-06-14 12:13:15,148 - scripts.http_ai_client.HTTPAIClient - INFO - [req_32] Starting AI request - Model preference: auto, Prompt length: 10514
+2025-06-14 12:13:15,148 - AIAPILogger - INFO - [req_32] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 10514
+2025-06-14 12:13:20,208 - scripts.http_ai_client.HTTPAIClient - INFO - [req_32] Request completed successfully in 5.06s - Provider: gemini
+2025-06-14 12:13:20,208 - AIAPILogger - INFO - [req_32] AI Request COMPLETE - Time: 5.06s, Length: 3701, Cost: $0.0000
+2025-06-14 12:13:21,069 - scripts.project_creator - INFO - Forking laravel/react-starter-kit to CodeWebMobile-AI/hydra-health-ai
+2025-06-14 12:13:21,852 - scripts.project_creator - INFO - Using temporary directory: /tmp/starter_kit_sazbvow9
+2025-06-14 12:13:21,852 - scripts.project_creator - INFO - Cloning starter kit from https://github.com/laravel/react-starter-kit.git
+Initialized empty Git repository in /tmp/starter_kit_sazbvow9/.git/
+[main (root-commit) ed5fb0c] Initial commit from react-starter-kit starter kit
+ 161 files changed, 16239 insertions(+)
+ create mode 100644 .editorconfig
+ create mode 100644 .env.example
+ create mode 100644 .gitattributes
+ create mode 100644 .github/workflows/lint.yml
+ create mode 100644 .github/workflows/tests.yml
+ create mode 100644 .gitignore
+ create mode 100644 .prettierignore
+ create mode 100644 .prettierrc
+ create mode 100644 README.md
+ create mode 100644 app/Http/Controllers/Auth/AuthenticatedSessionController.php
+ create mode 100644 app/Http/Controllers/Auth/ConfirmablePasswordController.php
+ create mode 100644 app/Http/Controllers/Auth/EmailVerificationNotificationController.php
+ create mode 100644 app/Http/Controllers/Auth/EmailVerificationPromptController.php
+ create mode 100644 app/Http/Controllers/Auth/NewPasswordController.php
+ create mode 100644 app/Http/Controllers/Auth/PasswordResetLinkController.php
+ create mode 100644 app/Http/Controllers/Auth/RegisteredUserController.php
+ create mode 100644 app/Http/Controllers/Auth/VerifyEmailController.php
+ create mode 100644 app/Http/Controllers/Controller.php
+ create mode 100644 app/Http/Controllers/Settings/PasswordController.php
+ create mode 100644 app/Http/Controllers/Settings/ProfileController.php
+ create mode 100644 app/Http/Middleware/HandleAppearance.php
+ create mode 100644 app/Http/Middleware/HandleInertiaRequests.php
+ create mode 100644 app/Http/Requests/Auth/LoginRequest.php
+ create mode 100644 app/Http/Requests/Settings/ProfileUpdateRequest.php
+ create mode 100644 app/Models/User.php
+ create mode 100644 app/Providers/AppServiceProvider.php
+ create mode 100755 artisan
+ create mode 100644 bootstrap/app.php
+ create mode 100644 bootstrap/cache/.gitignore
+ create mode 100644 bootstrap/providers.php
+ create mode 100644 components.json
+ create mode 100644 composer.json
+ create mode 100644 config/app.php
+ create mode 100644 config/auth.php
+ create mode 100644 config/cache.php
+ create mode 100644 config/database.php
+ create mode 100644 config/filesystems.php
+ create mode 100644 config/inertia.php
+ create mode 100644 config/logging.php
+ create mode 100644 config/mail.php
+ create mode 100644 config/queue.php
+ create mode 100644 config/services.php
+ create mode 100644 config/session.php
+ create mode 100644 database/.gitignore
+ create mode 100644 database/factories/UserFactory.php
+ create mode 100644 database/migrations/0001_01_01_000000_create_users_table.php
+ create mode 100644 database/migrations/0001_01_01_000001_create_cache_table.php
+ create mode 100644 database/migrations/0001_01_01_000002_create_jobs_table.php
+ create mode 100644 database/seeders/DatabaseSeeder.php
+ create mode 100644 eslint.config.js
+ create mode 100644 package-lock.json
+ create mode 100644 package.json
+ create mode 100644 phpunit.xml
+ create mode 100644 public/.htaccess
+ create mode 100644 public/apple-touch-icon.png
+ create mode 100644 public/favicon.ico
+ create mode 100644 public/favicon.svg
+ create mode 100644 public/index.php
+ create mode 100644 public/logo.svg
+ create mode 100644 public/robots.txt
+ create mode 100644 resources/css/app.css
+ create mode 100644 resources/js/app.tsx
+ create mode 100644 resources/js/components/app-content.tsx
+ create mode 100644 resources/js/components/app-header.tsx
+ create mode 100644 resources/js/components/app-logo-icon.tsx
+ create mode 100644 resources/js/components/app-logo.tsx
+ create mode 100644 resources/js/components/app-shell.tsx
+ create mode 100644 resources/js/components/app-sidebar-header.tsx
+ create mode 100644 resources/js/components/app-sidebar.tsx
+ create mode 100644 resources/js/components/appearance-dropdown.tsx
+ create mode 100644 resources/js/components/appearance-tabs.tsx
+ create mode 100644 resources/js/components/breadcrumbs.tsx
+ create mode 100644 resources/js/components/delete-user.tsx
+ create mode 100644 resources/js/components/heading-small.tsx
+ create mode 100644 resources/js/components/heading.tsx
+ create mode 100644 resources/js/components/icon.tsx
+ create mode 100644 resources/js/components/input-error.tsx
+ create mode 100644 resources/js/components/nav-footer.tsx
+ create mode 100644 resources/js/components/nav-main.tsx
+ create mode 100644 resources/js/components/nav-user.tsx
+ create mode 100644 resources/js/components/text-link.tsx
+ create mode 100644 resources/js/components/ui/alert.tsx
+ create mode 100644 resources/js/components/ui/avatar.tsx
+ create mode 100644 resources/js/components/ui/badge.tsx
+ create mode 100644 resources/js/components/ui/breadcrumb.tsx
+ create mode 100644 resources/js/components/ui/button.tsx
+ create mode 100644 resources/js/components/ui/card.tsx
+ create mode 100644 resources/js/components/ui/checkbox.tsx
+ create mode 100644 resources/js/components/ui/collapsible.tsx
+ create mode 100644 resources/js/components/ui/dialog.tsx
+ create mode 100644 resources/js/components/ui/dropdown-menu.tsx
+ create mode 100644 resources/js/components/ui/icon.tsx
+ create mode 100644 resources/js/components/ui/input.tsx
+ create mode 100644 resources/js/components/ui/label.tsx
+ create mode 100644 resources/js/components/ui/navigation-menu.tsx
+ create mode 100644 resources/js/components/ui/placeholder-pattern.tsx
+ create mode 100644 resources/js/components/ui/select.tsx
+ create mode 100644 resources/js/components/ui/separator.tsx
+ create mode 100644 resources/js/components/ui/sheet.tsx
+ create mode 100644 resources/js/components/ui/sidebar.tsx
+ create mode 100644 resources/js/components/ui/skeleton.tsx
+ create mode 100644 resources/js/components/ui/toggle-group.tsx
+ create mode 100644 resources/js/components/ui/toggle.tsx
+ create mode 100644 resources/js/components/ui/tooltip.tsx
+ create mode 100644 resources/js/components/user-info.tsx
+ create mode 100644 resources/js/components/user-menu-content.tsx
+ create mode 100644 resources/js/hooks/use-appearance.tsx
+ create mode 100644 resources/js/hooks/use-initials.tsx
+ create mode 100644 resources/js/hooks/use-mobile-navigation.ts
+ create mode 100644 resources/js/hooks/use-mobile.tsx
+ create mode 100644 resources/js/layouts/app-layout.tsx
+ create mode 100644 resources/js/layouts/app/app-header-layout.tsx
+ create mode 100644 resources/js/layouts/app/app-sidebar-layout.tsx
+ create mode 100644 resources/js/layouts/auth-layout.tsx
+ create mode 100644 resources/js/layouts/auth/auth-card-layout.tsx
+ create mode 100644 resources/js/layouts/auth/auth-simple-layout.tsx
+ create mode 100644 resources/js/layouts/auth/auth-split-layout.tsx
+ create mode 100644 resources/js/layouts/settings/layout.tsx
+ create mode 100644 resources/js/lib/utils.ts
+ create mode 100644 resources/js/pages/auth/confirm-password.tsx
+ create mode 100644 resources/js/pages/auth/forgot-password.tsx
+ create mode 100644 resources/js/pages/auth/login.tsx
+ create mode 100644 resources/js/pages/auth/register.tsx
+ create mode 100644 resources/js/pages/auth/reset-password.tsx
+ create mode 100644 resources/js/pages/auth/verify-email.tsx
+ create mode 100644 resources/js/pages/dashboard.tsx
+ create mode 100644 resources/js/pages/settings/appearance.tsx
+ create mode 100644 resources/js/pages/settings/password.tsx
+ create mode 100644 resources/js/pages/settings/profile.tsx
+ create mode 100644 resources/js/pages/welcome.tsx
+ create mode 100644 resources/js/ssr.tsx
+ create mode 100644 resources/js/types/global.d.ts
+ create mode 100644 resources/js/types/index.d.ts
+ create mode 100644 resources/js/types/vite-env.d.ts
+ create mode 100644 resources/views/app.blade.php
+ create mode 100644 routes/auth.php
+ create mode 100644 routes/console.php
+ create mode 100644 routes/settings.php
+ create mode 100644 routes/web.php
+ create mode 100644 storage/app/.gitignore
+ create mode 100644 storage/app/private/.gitignore
+ create mode 100644 storage/app/public/.gitignore
+ create mode 100644 storage/framework/.gitignore
+ create mode 100644 storage/framework/cache/.gitignore
+ create mode 100644 storage/framework/cache/data/.gitignore
+ create mode 100644 storage/framework/sessions/.gitignore
+ create mode 100644 storage/framework/testing/.gitignore
+ create mode 100644 storage/framework/views/.gitignore
+ create mode 100644 storage/logs/.gitignore
+ create mode 100644 tests/Feature/Auth/AuthenticationTest.php
+ create mode 100644 tests/Feature/Auth/EmailVerificationTest.php
+ create mode 100644 tests/Feature/Auth/PasswordConfirmationTest.php
+ create mode 100644 tests/Feature/Auth/PasswordResetTest.php
+ create mode 100644 tests/Feature/Auth/RegistrationTest.php
+ create mode 100644 tests/Feature/DashboardTest.php
+ create mode 100644 tests/Feature/Settings/PasswordUpdateTest.php
+ create mode 100644 tests/Feature/Settings/ProfileUpdateTest.php
+ create mode 100644 tests/TestCase.php
+ create mode 100644 tests/Unit/ExampleTest.php
+ create mode 100644 tsconfig.json
+ create mode 100644 vite.config.ts
+2025-06-14 12:13:22,378 - scripts.project_creator - INFO - Setting remote origin to CodeWebMobile-AI/hydra-health-ai
+2025-06-14 12:13:22,380 - scripts.project_creator - INFO - Pushing to CodeWebMobile-AI/hydra-health-ai
+2025-06-14 12:13:23,344 - scripts.project_creator - INFO - Successfully pushed starter kit contents to new repository
+2025-06-14 12:13:23,344 - scripts.project_creator - INFO - Waiting for GitHub to process the push...
+2025-06-14 12:13:23,349 - redis_event_analytics.RedisEventAnalytics - WARNING - System health is critical: 20.0
+2025-06-14 12:13:23,350 - scripts.redis_work_queue - INFO - Worker worker_1 claimed task work_1749903184_9610d4ac
+2025-06-14 12:13:23,351 - continuous_orchestrator - INFO - Worker worker_1 executing: HydraVerse
+2025-06-14 12:13:23,355 - continuous_orchestrator - INFO - 🔍 _perform_work called for: HydraVerse (type: NEW_PROJECT)
+2025-06-14 12:13:23,358 - intelligent_work_finder - INFO - Discovering work (max: 15, current load: 2)
+2025-06-14 12:13:23,358 - scripts.project_lifecycle_analyzer - INFO - Analyzing lifecycle stage for project-analytics-dashboard
+2025-06-14 12:13:23,359 - scripts.http_ai_client.HTTPAIClient - INFO - [req_33] Starting AI request - Model preference: auto, Prompt length: 1018
+2025-06-14 12:13:23,359 - AIAPILogger - INFO - [req_33] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1018
+2025-06-14 12:13:24,739 - scripts.http_ai_client.HTTPAIClient - INFO - [req_33] Request completed successfully in 1.38s - Provider: gemini
+2025-06-14 12:13:24,741 - AIAPILogger - INFO - [req_33] AI Request COMPLETE - Time: 1.38s, Length: 849, Cost: $0.0000
+2025-06-14 12:13:24,741 - scripts.http_ai_client.HTTPAIClient - INFO - [req_34] Starting AI request - Model preference: auto, Prompt length: 733
+2025-06-14 12:13:24,742 - AIAPILogger - INFO - [req_34] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 733
+2025-06-14 12:13:27,362 - scripts.http_ai_client.HTTPAIClient - INFO - [req_34] Request completed successfully in 2.62s - Provider: gemini
+2025-06-14 12:13:27,364 - AIAPILogger - INFO - [req_34] AI Request COMPLETE - Time: 2.62s, Length: 2024, Cost: $0.0000
+2025-06-14 12:13:27,365 - intelligent_work_finder - ERROR - Error in repository work discovery: cannot access local variable 'recent_activity' where it is not associated with a value
+2025-06-14 12:13:27,366 - scripts.portfolio_intelligence - INFO - 🔬 Analyzing portfolio intelligence...
+2025-06-14 12:13:27,368 - scripts.http_ai_client.HTTPAIClient - INFO - [req_35] Starting AI request - Model preference: auto, Prompt length: 4478
+2025-06-14 12:13:27,368 - AIAPILogger - INFO - [req_35] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 4478
+2025-06-14 12:13:31,855 - scripts.http_ai_client.HTTPAIClient - INFO - [req_35] Request completed successfully in 4.49s - Provider: gemini
+2025-06-14 12:13:31,855 - AIAPILogger - INFO - [req_35] AI Request COMPLETE - Time: 4.49s, Length: 3900, Cost: $0.0000
+2025-06-14 12:13:31,856 - scripts.http_ai_client.HTTPAIClient - INFO - [req_36] Starting AI request - Model preference: auto, Prompt length: 1329
+2025-06-14 12:13:31,857 - AIAPILogger - INFO - [req_36] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1329
+2025-06-14 12:13:36,487 - scripts.http_ai_client.HTTPAIClient - INFO - [req_36] Request completed successfully in 4.63s - Provider: gemini
+2025-06-14 12:13:36,489 - AIAPILogger - INFO - [req_36] AI Request COMPLETE - Time: 4.63s, Length: 3670, Cost: $0.0000
+2025-06-14 12:13:36,489 - scripts.market_research_engine - INFO - 🚀 Generating project opportunities...
+2025-06-14 12:13:36,490 - scripts.market_research_engine - INFO - 🔍 Discovering market trends...
+2025-06-14 12:13:36,490 - scripts.market_research_engine - INFO - Using cached market trends
+2025-06-14 12:13:36,490 - scripts.http_ai_client.HTTPAIClient - INFO - [req_37] Starting AI request - Model preference: auto, Prompt length: 790
+2025-06-14 12:13:36,491 - AIAPILogger - INFO - [req_37] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 790
+2025-06-14 12:13:37,820 - scripts.http_ai_client.HTTPAIClient - INFO - [req_37] Request completed successfully in 1.33s - Provider: gemini
+2025-06-14 12:13:37,820 - AIAPILogger - INFO - [req_37] AI Request COMPLETE - Time: 1.33s, Length: 811, Cost: $0.0000
+2025-06-14 12:13:37,820 - scripts.http_ai_client.HTTPAIClient - INFO - [req_38] Starting AI request - Model preference: auto, Prompt length: 798
+2025-06-14 12:13:37,821 - AIAPILogger - INFO - [req_38] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 798
+2025-06-14 12:13:38,933 - scripts.http_ai_client.HTTPAIClient - INFO - [req_38] Request completed successfully in 1.11s - Provider: gemini
+2025-06-14 12:13:38,934 - AIAPILogger - INFO - [req_38] AI Request COMPLETE - Time: 1.11s, Length: 660, Cost: $0.0000
+2025-06-14 12:13:38,935 - scripts.http_ai_client.HTTPAIClient - INFO - [req_39] Starting AI request - Model preference: auto, Prompt length: 866
+2025-06-14 12:13:38,935 - AIAPILogger - INFO - [req_39] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 866
+2025-06-14 12:13:39,994 - scripts.http_ai_client.HTTPAIClient - INFO - [req_39] Request completed successfully in 1.06s - Provider: gemini
+2025-06-14 12:13:39,995 - AIAPILogger - INFO - [req_39] AI Request COMPLETE - Time: 1.06s, Length: 653, Cost: $0.0000
+2025-06-14 12:13:39,995 - scripts.http_ai_client.HTTPAIClient - INFO - [req_40] Starting AI request - Model preference: auto, Prompt length: 916
+2025-06-14 12:13:39,996 - AIAPILogger - INFO - [req_40] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 916
+2025-06-14 12:13:41,439 - scripts.http_ai_client.HTTPAIClient - INFO - [req_40] Request completed successfully in 1.44s - Provider: gemini
+2025-06-14 12:13:41,440 - AIAPILogger - INFO - [req_40] AI Request COMPLETE - Time: 1.44s, Length: 826, Cost: $0.0000
+2025-06-14 12:13:41,440 - scripts.http_ai_client.HTTPAIClient - INFO - [req_41] Starting AI request - Model preference: auto, Prompt length: 887
+2025-06-14 12:13:41,441 - AIAPILogger - INFO - [req_41] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 887
+2025-06-14 12:13:42,852 - scripts.http_ai_client.HTTPAIClient - INFO - [req_41] Request completed successfully in 1.41s - Provider: gemini
+2025-06-14 12:13:42,852 - AIAPILogger - INFO - [req_41] AI Request COMPLETE - Time: 1.41s, Length: 892, Cost: $0.0000
+2025-06-14 12:13:42,853 - scripts.http_ai_client.HTTPAIClient - INFO - [req_42] Starting AI request - Model preference: auto, Prompt length: 882
+2025-06-14 12:13:42,854 - AIAPILogger - INFO - [req_42] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 882
+2025-06-14 12:13:44,138 - scripts.http_ai_client.HTTPAIClient - INFO - [req_42] Request completed successfully in 1.28s - Provider: gemini
+2025-06-14 12:13:44,138 - AIAPILogger - INFO - [req_42] AI Request COMPLETE - Time: 1.28s, Length: 857, Cost: $0.0000
+2025-06-14 12:13:44,139 - scripts.http_ai_client.HTTPAIClient - INFO - [req_43] Starting AI request - Model preference: auto, Prompt length: 936
+2025-06-14 12:13:44,139 - AIAPILogger - INFO - [req_43] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 936
+2025-06-14 12:13:45,548 - scripts.http_ai_client.HTTPAIClient - INFO - [req_43] Request completed successfully in 1.41s - Provider: gemini
+2025-06-14 12:13:45,548 - AIAPILogger - INFO - [req_43] AI Request COMPLETE - Time: 1.41s, Length: 878, Cost: $0.0000
+2025-06-14 12:13:45,549 - scripts.http_ai_client.HTTPAIClient - INFO - [req_44] Starting AI request - Model preference: auto, Prompt length: 915
+2025-06-14 12:13:45,549 - AIAPILogger - INFO - [req_44] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 915
+2025-06-14 12:13:46,890 - scripts.http_ai_client.HTTPAIClient - INFO - [req_44] Request completed successfully in 1.34s - Provider: gemini
+2025-06-14 12:13:46,891 - AIAPILogger - INFO - [req_44] AI Request COMPLETE - Time: 1.34s, Length: 817, Cost: $0.0000
+2025-06-14 12:13:46,891 - scripts.http_ai_client.HTTPAIClient - INFO - [req_45] Starting AI request - Model preference: auto, Prompt length: 897
+2025-06-14 12:13:46,892 - AIAPILogger - INFO - [req_45] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 897
+2025-06-14 12:13:48,653 - scripts.http_ai_client.HTTPAIClient - INFO - [req_45] Request completed successfully in 1.76s - Provider: gemini
+2025-06-14 12:13:48,654 - AIAPILogger - INFO - [req_45] AI Request COMPLETE - Time: 1.76s, Length: 916, Cost: $0.0000
+2025-06-14 12:13:48,654 - scripts.http_ai_client.HTTPAIClient - INFO - [req_46] Starting AI request - Model preference: auto, Prompt length: 861
+2025-06-14 12:13:48,655 - AIAPILogger - INFO - [req_46] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 861
+2025-06-14 12:13:50,133 - scripts.http_ai_client.HTTPAIClient - INFO - [req_46] Request completed successfully in 1.48s - Provider: gemini
+2025-06-14 12:13:50,133 - AIAPILogger - INFO - [req_46] AI Request COMPLETE - Time: 1.48s, Length: 893, Cost: $0.0000
+2025-06-14 12:13:50,134 - scripts.http_ai_client.HTTPAIClient - INFO - [req_47] Starting AI request - Model preference: auto, Prompt length: 2117
+2025-06-14 12:13:50,134 - AIAPILogger - INFO - [req_47] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 2117
+2025-06-14 12:13:54,994 - scripts.http_ai_client.HTTPAIClient - INFO - [req_47] Request completed successfully in 4.86s - Provider: gemini
+2025-06-14 12:13:54,995 - AIAPILogger - INFO - [req_47] AI Request COMPLETE - Time: 4.86s, Length: 3533, Cost: $0.0000
+2025-06-14 12:13:54,995 - scripts.http_ai_client.HTTPAIClient - INFO - [req_48] Starting AI request - Model preference: auto, Prompt length: 2042
+2025-06-14 12:13:54,996 - AIAPILogger - INFO - [req_48] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 2042
+2025-06-14 12:13:59,271 - scripts.http_ai_client.HTTPAIClient - INFO - [req_48] Request completed successfully in 4.28s - Provider: gemini
+2025-06-14 12:13:59,273 - AIAPILogger - INFO - [req_48] AI Request COMPLETE - Time: 4.28s, Length: 2996, Cost: $0.0000
+2025-06-14 12:13:59,274 - scripts.http_ai_client.HTTPAIClient - INFO - [req_49] Starting AI request - Model preference: auto, Prompt length: 2159
+2025-06-14 12:13:59,275 - AIAPILogger - INFO - [req_49] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 2159
+2025-06-14 12:14:03,557 - scripts.http_ai_client.HTTPAIClient - INFO - [req_49] Request completed successfully in 4.28s - Provider: gemini
+2025-06-14 12:14:03,557 - AIAPILogger - INFO - [req_49] AI Request COMPLETE - Time: 4.28s, Length: 3376, Cost: $0.0000
+2025-06-14 12:14:03,558 - intelligent_work_finder - INFO - 📊 Portfolio analysis complete: 3 opportunities found
+2025-06-14 12:14:03,559 - intelligent_work_finder - INFO - Discovered 9 work items:
+2025-06-14 12:14:03,559 - intelligent_work_finder - INFO -   - NEW_PROJECT: EdgeWise AI (priority: HIGH)
+2025-06-14 12:14:03,559 - intelligent_work_finder - INFO -   - NEW_PROJECT: CodeWhisperer (priority: HIGH)
+2025-06-14 12:14:03,559 - intelligent_work_finder - INFO -   - RESEARCH: Research software architecture best practices (priority: MEDIUM)
+2025-06-14 12:14:03,559 - intelligent_work_finder - INFO -   - NEW_PROJECT: Create shared component library (priority: MEDIUM)
+2025-06-14 12:14:03,560 - intelligent_work_finder - INFO -   - NEW_PROJECT: Zenith (priority: MEDIUM)
+2025-06-14 12:14:03,560 - intelligent_work_finder - INFO -   - MONITORING: Generate performance metrics report (priority: LOW)
+2025-06-14 12:14:03,560 - intelligent_work_finder - INFO -   - RESEARCH: Analyze competitor project structures (priority: LOW)
+2025-06-14 12:14:03,560 - intelligent_work_finder - INFO -   - MAINTENANCE: Clean up old log files (priority: BACKGROUND)
+2025-06-14 12:14:03,560 - intelligent_work_finder - INFO -   - RESEARCH: Research emerging AI development trends (priority: BACKGROUND)
+2025-06-14 12:14:03,560 - intelligent_work_finder - INFO - 📋 Work discovery summary: 4 NEW_PROJECT, 3 RESEARCH, 1 MONITORING, 1 MAINTENANCE
+2025-06-14 12:14:03,561 - continuous_orchestrator - INFO - 📋 Routing task type: NEW_PROJECT
+2025-06-14 12:14:03,562 - continuous_orchestrator - INFO - 📑 Available task handlers: ['SYSTEM_IMPROVEMENT', 'NEW_PROJECT', 'FEATURE', 'BUG_FIX', 'DOCUMENTATION', 'RESEARCH', 'TESTING', 'MAINTENANCE', 'MONITORING', 'INTEGRATION', 'REFACTORING', 'OPTIMIZATION']
+2025-06-14 12:14:03,562 - continuous_orchestrator - INFO - 🔎 Looking for handler for task type: 'NEW_PROJECT'
+2025-06-14 12:14:03,562 - continuous_orchestrator - INFO - ✅ Handler found: _execute_new_project_task
+2025-06-14 12:14:03,562 - continuous_orchestrator - INFO - 🚀 Using specific handler: _execute_new_project_task for task type: NEW_PROJECT
+2025-06-14 12:14:03,562 - continuous_orchestrator - INFO - 📂 Executing new project task: HydraVerse
+🔧 TaskManager initialization:
+   - GitHub token exists: True
+   - Repository name: None (no default)
+   - GitHub client created: True
+   - Repository object created: False
+2025-06-14 12:14:04,079 - StateManager - INFO - save_state_locally called from:
+2025-06-14 12:14:04,081 - StateManager - INFO - Saving state with 0 repositories: []
+2025-06-14 12:14:04,081 - scripts.http_ai_client.HTTPAIClient - INFO - HTTPAIClient initialized with 4 available providers
+2025-06-14 12:14:04,082 - scripts.http_ai_client.HTTPAIClient - INFO - ✓ AI response cache enabled (type: redis)
+✓ AI content generator initialized successfully
+✓ Decomposition system initialized successfully
+2025-06-14 12:14:04,082 - continuous_orchestrator - INFO - 🚀 Creating new project from Laravel React starter kit
+2025-06-14 12:14:04,082 - scripts.project_creator - INFO - Creating project for task: HydraVerse
+2025-06-14 12:14:04,082 - scripts.http_ai_client.HTTPAIClient - INFO - [req_50] Starting AI request - Model preference: gemini, Prompt length: 1640
+2025-06-14 12:14:04,082 - AIAPILogger - INFO - [req_50] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 1640
+2025-06-14 12:14:12,612 - scripts.http_ai_client.HTTPAIClient - INFO - [req_50] Request completed successfully in 8.53s - Provider: gemini
+2025-06-14 12:14:12,613 - AIAPILogger - INFO - [req_50] AI Request COMPLETE - Time: 8.53s, Length: 6812, Cost: $0.0000
+2025-06-14 12:14:12,614 - scripts.http_ai_client.HTTPAIClient - INFO - [req_51] Starting AI request - Model preference: auto, Prompt length: 9303
+2025-06-14 12:14:12,615 - AIAPILogger - INFO - [req_51] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 9303
+2025-06-14 12:14:17,580 - scripts.http_ai_client.HTTPAIClient - INFO - [req_51] Request completed successfully in 4.97s - Provider: gemini
+2025-06-14 12:14:17,581 - AIAPILogger - INFO - [req_51] AI Request COMPLETE - Time: 4.97s, Length: 3061, Cost: $0.0000
+2025-06-14 12:14:18,419 - scripts.project_creator - INFO - Forking laravel/react-starter-kit to CodeWebMobile-AI/review-sentry
+2025-06-14 12:14:19,159 - scripts.project_creator - INFO - Using temporary directory: /tmp/starter_kit_0b6_kjyj
+2025-06-14 12:14:19,160 - scripts.project_creator - INFO - Cloning starter kit from https://github.com/laravel/react-starter-kit.git
+Initialized empty Git repository in /tmp/starter_kit_0b6_kjyj/.git/
+[main (root-commit) e3ee01d] Initial commit from react-starter-kit starter kit
+ 161 files changed, 16239 insertions(+)
+ create mode 100644 .editorconfig
+ create mode 100644 .env.example
+ create mode 100644 .gitattributes
+ create mode 100644 .github/workflows/lint.yml
+ create mode 100644 .github/workflows/tests.yml
+ create mode 100644 .gitignore
+ create mode 100644 .prettierignore
+ create mode 100644 .prettierrc
+ create mode 100644 README.md
+ create mode 100644 app/Http/Controllers/Auth/AuthenticatedSessionController.php
+ create mode 100644 app/Http/Controllers/Auth/ConfirmablePasswordController.php
+ create mode 100644 app/Http/Controllers/Auth/EmailVerificationNotificationController.php
+ create mode 100644 app/Http/Controllers/Auth/EmailVerificationPromptController.php
+ create mode 100644 app/Http/Controllers/Auth/NewPasswordController.php
+ create mode 100644 app/Http/Controllers/Auth/PasswordResetLinkController.php
+ create mode 100644 app/Http/Controllers/Auth/RegisteredUserController.php
+ create mode 100644 app/Http/Controllers/Auth/VerifyEmailController.php
+ create mode 100644 app/Http/Controllers/Controller.php
+ create mode 100644 app/Http/Controllers/Settings/PasswordController.php
+ create mode 100644 app/Http/Controllers/Settings/ProfileController.php
+ create mode 100644 app/Http/Middleware/HandleAppearance.php
+ create mode 100644 app/Http/Middleware/HandleInertiaRequests.php
+ create mode 100644 app/Http/Requests/Auth/LoginRequest.php
+ create mode 100644 app/Http/Requests/Settings/ProfileUpdateRequest.php
+ create mode 100644 app/Models/User.php
+ create mode 100644 app/Providers/AppServiceProvider.php
+ create mode 100755 artisan
+ create mode 100644 bootstrap/app.php
+ create mode 100644 bootstrap/cache/.gitignore
+ create mode 100644 bootstrap/providers.php
+ create mode 100644 components.json
+ create mode 100644 composer.json
+ create mode 100644 config/app.php
+ create mode 100644 config/auth.php
+ create mode 100644 config/cache.php
+ create mode 100644 config/database.php
+ create mode 100644 config/filesystems.php
+ create mode 100644 config/inertia.php
+ create mode 100644 config/logging.php
+ create mode 100644 config/mail.php
+ create mode 100644 config/queue.php
+ create mode 100644 config/services.php
+ create mode 100644 config/session.php
+ create mode 100644 database/.gitignore
+ create mode 100644 database/factories/UserFactory.php
+ create mode 100644 database/migrations/0001_01_01_000000_create_users_table.php
+ create mode 100644 database/migrations/0001_01_01_000001_create_cache_table.php
+ create mode 100644 database/migrations/0001_01_01_000002_create_jobs_table.php
+ create mode 100644 database/seeders/DatabaseSeeder.php
+ create mode 100644 eslint.config.js
+ create mode 100644 package-lock.json
+ create mode 100644 package.json
+ create mode 100644 phpunit.xml
+ create mode 100644 public/.htaccess
+ create mode 100644 public/apple-touch-icon.png
+ create mode 100644 public/favicon.ico
+ create mode 100644 public/favicon.svg
+ create mode 100644 public/index.php
+ create mode 100644 public/logo.svg
+ create mode 100644 public/robots.txt
+ create mode 100644 resources/css/app.css
+ create mode 100644 resources/js/app.tsx
+ create mode 100644 resources/js/components/app-content.tsx
+ create mode 100644 resources/js/components/app-header.tsx
+ create mode 100644 resources/js/components/app-logo-icon.tsx
+ create mode 100644 resources/js/components/app-logo.tsx
+ create mode 100644 resources/js/components/app-shell.tsx
+ create mode 100644 resources/js/components/app-sidebar-header.tsx
+ create mode 100644 resources/js/components/app-sidebar.tsx
+ create mode 100644 resources/js/components/appearance-dropdown.tsx
+ create mode 100644 resources/js/components/appearance-tabs.tsx
+ create mode 100644 resources/js/components/breadcrumbs.tsx
+ create mode 100644 resources/js/components/delete-user.tsx
+ create mode 100644 resources/js/components/heading-small.tsx
+ create mode 100644 resources/js/components/heading.tsx
+ create mode 100644 resources/js/components/icon.tsx
+ create mode 100644 resources/js/components/input-error.tsx
+ create mode 100644 resources/js/components/nav-footer.tsx
+ create mode 100644 resources/js/components/nav-main.tsx
+ create mode 100644 resources/js/components/nav-user.tsx
+ create mode 100644 resources/js/components/text-link.tsx
+ create mode 100644 resources/js/components/ui/alert.tsx
+ create mode 100644 resources/js/components/ui/avatar.tsx
+ create mode 100644 resources/js/components/ui/badge.tsx
+ create mode 100644 resources/js/components/ui/breadcrumb.tsx
+ create mode 100644 resources/js/components/ui/button.tsx
+ create mode 100644 resources/js/components/ui/card.tsx
+ create mode 100644 resources/js/components/ui/checkbox.tsx
+ create mode 100644 resources/js/components/ui/collapsible.tsx
+ create mode 100644 resources/js/components/ui/dialog.tsx
+ create mode 100644 resources/js/components/ui/dropdown-menu.tsx
+ create mode 100644 resources/js/components/ui/icon.tsx
+ create mode 100644 resources/js/components/ui/input.tsx
+ create mode 100644 resources/js/components/ui/label.tsx
+ create mode 100644 resources/js/components/ui/navigation-menu.tsx
+ create mode 100644 resources/js/components/ui/placeholder-pattern.tsx
+ create mode 100644 resources/js/components/ui/select.tsx
+ create mode 100644 resources/js/components/ui/separator.tsx
+ create mode 100644 resources/js/components/ui/sheet.tsx
+ create mode 100644 resources/js/components/ui/sidebar.tsx
+ create mode 100644 resources/js/components/ui/skeleton.tsx
+ create mode 100644 resources/js/components/ui/toggle-group.tsx
+ create mode 100644 resources/js/components/ui/toggle.tsx
+ create mode 100644 resources/js/components/ui/tooltip.tsx
+ create mode 100644 resources/js/components/user-info.tsx
+ create mode 100644 resources/js/components/user-menu-content.tsx
+ create mode 100644 resources/js/hooks/use-appearance.tsx
+ create mode 100644 resources/js/hooks/use-initials.tsx
+ create mode 100644 resources/js/hooks/use-mobile-navigation.ts
+ create mode 100644 resources/js/hooks/use-mobile.tsx
+ create mode 100644 resources/js/layouts/app-layout.tsx
+ create mode 100644 resources/js/layouts/app/app-header-layout.tsx
+ create mode 100644 resources/js/layouts/app/app-sidebar-layout.tsx
+ create mode 100644 resources/js/layouts/auth-layout.tsx
+ create mode 100644 resources/js/layouts/auth/auth-card-layout.tsx
+ create mode 100644 resources/js/layouts/auth/auth-simple-layout.tsx
+ create mode 100644 resources/js/layouts/auth/auth-split-layout.tsx
+ create mode 100644 resources/js/layouts/settings/layout.tsx
+ create mode 100644 resources/js/lib/utils.ts
+ create mode 100644 resources/js/pages/auth/confirm-password.tsx
+ create mode 100644 resources/js/pages/auth/forgot-password.tsx
+ create mode 100644 resources/js/pages/auth/login.tsx
+ create mode 100644 resources/js/pages/auth/register.tsx
+ create mode 100644 resources/js/pages/auth/reset-password.tsx
+ create mode 100644 resources/js/pages/auth/verify-email.tsx
+ create mode 100644 resources/js/pages/dashboard.tsx
+ create mode 100644 resources/js/pages/settings/appearance.tsx
+ create mode 100644 resources/js/pages/settings/password.tsx
+ create mode 100644 resources/js/pages/settings/profile.tsx
+ create mode 100644 resources/js/pages/welcome.tsx
+ create mode 100644 resources/js/ssr.tsx
+ create mode 100644 resources/js/types/global.d.ts
+ create mode 100644 resources/js/types/index.d.ts
+ create mode 100644 resources/js/types/vite-env.d.ts
+ create mode 100644 resources/views/app.blade.php
+ create mode 100644 routes/auth.php
+ create mode 100644 routes/console.php
+ create mode 100644 routes/settings.php
+ create mode 100644 routes/web.php
+ create mode 100644 storage/app/.gitignore
+ create mode 100644 storage/app/private/.gitignore
+ create mode 100644 storage/app/public/.gitignore
+ create mode 100644 storage/framework/.gitignore
+ create mode 100644 storage/framework/cache/.gitignore
+ create mode 100644 storage/framework/cache/data/.gitignore
+ create mode 100644 storage/framework/sessions/.gitignore
+ create mode 100644 storage/framework/testing/.gitignore
+ create mode 100644 storage/framework/views/.gitignore
+ create mode 100644 storage/logs/.gitignore
+ create mode 100644 tests/Feature/Auth/AuthenticationTest.php
+ create mode 100644 tests/Feature/Auth/EmailVerificationTest.php
+ create mode 100644 tests/Feature/Auth/PasswordConfirmationTest.php
+ create mode 100644 tests/Feature/Auth/PasswordResetTest.php
+ create mode 100644 tests/Feature/Auth/RegistrationTest.php
+ create mode 100644 tests/Feature/DashboardTest.php
+ create mode 100644 tests/Feature/Settings/PasswordUpdateTest.php
+ create mode 100644 tests/Feature/Settings/ProfileUpdateTest.php
+ create mode 100644 tests/TestCase.php
+ create mode 100644 tests/Unit/ExampleTest.php
+ create mode 100644 tsconfig.json
+ create mode 100644 vite.config.ts
+2025-06-14 12:14:19,618 - scripts.project_creator - INFO - Setting remote origin to CodeWebMobile-AI/review-sentry
+2025-06-14 12:14:19,620 - scripts.project_creator - INFO - Pushing to CodeWebMobile-AI/review-sentry
+2025-06-14 12:14:20,514 - scripts.project_creator - INFO - Successfully pushed starter kit contents to new repository
+2025-06-14 12:14:20,514 - scripts.project_creator - INFO - Waiting for GitHub to process the push...
+2025-06-14 12:14:20,723 - scripts.project_creator - INFO - Repository now has 26 items in root
+2025-06-14 12:14:20,738 - scripts.project_creator - INFO - Cleaned up temporary directory
+2025-06-14 12:14:20,738 - scripts.project_creator - INFO - Starting project customization for hydra-health-ai
+2025-06-14 12:14:20,738 - scripts.http_ai_client.HTTPAIClient - INFO - [req_52] Starting AI request - Model preference: gemini, Prompt length: 6844
+2025-06-14 12:14:20,739 - AIAPILogger - INFO - [req_52] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 6844
+2025-06-14 12:14:48,753 - scripts.http_ai_client.HTTPAIClient - INFO - [req_52] Request completed successfully in 28.02s - Provider: gemini
+2025-06-14 12:14:48,754 - AIAPILogger - INFO - [req_52] AI Request COMPLETE - Time: 28.02s, Length: 21630, Cost: $0.0000
+2025-06-14 12:14:48,754 - scripts.project_creator - INFO - Generating README for hydra-health-ai
+2025-06-14 12:14:48,755 - scripts.http_ai_client.HTTPAIClient - INFO - [req_53] Starting AI request - Model preference: auto, Prompt length: 48589
+2025-06-14 12:14:48,756 - AIAPILogger - INFO - [req_53] AI Request START - Provider: gemini, Model: gemini-2.0-flash, Type: generate, Length: 48589
+2025-06-14 12:15:01,119 - __main__ - INFO - Received signal 15
+2025-06-14 12:15:05,727 - scripts.http_ai_client.HTTPAIClient - INFO - [req_53] Request completed successfully in 16.97s - Provider: gemini
+2025-06-14 12:15:05,728 - AIAPILogger - INFO - [req_53] AI Request COMPLETE - Time: 16.97s, Length: 13860, Cost: $0.0000
+2025-06-14 12:15:05,729 - scripts.project_creator - INFO - README generated, length: 13860 chars
+2025-06-14 12:15:05,950 - scripts.project_creator - INFO - Current README SHA: 0b05365828a691f420321c4d8a72e6447a212108
+2025-06-14 12:15:06,510 - scripts.project_creator - INFO - README successfully updated!
+2025-06-14 12:15:08,578 - scripts.project_creator - INFO - Architecture document saved successfully
+2025-06-14 12:15:08,579 - scripts.project_creator - INFO - Customization result: {'readme_updated': True, 'package_json_updated': True, 'env_example_updated': True, 'custom_files_created': [], 'architecture_generated': True, 'architecture_saved': True}
+2025-06-14 12:15:08,580 - scripts.project_creator - INFO - Creating initial structure for hydra-health-ai
+2025-06-14 12:15:08,580 - scripts.project_creator - INFO - Structure result: {'directories_created': [], 'files_created': []}

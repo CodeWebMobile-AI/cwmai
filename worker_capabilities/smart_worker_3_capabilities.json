@@ -1,0 +1,11 @@
+{
+  "worker_id": "smart_worker_3",
+  "specialization": null,
+  "current_load": 0.0,
+  "active_tasks": 0,
+  "total_completed": 0,
+  "capabilities": {},
+  "overall_success_rate": 0.0,
+  "exploration_rate": 0.2,
+  "last_updated": "2025-06-12T00:44:33.615329+00:00"
+}

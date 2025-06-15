@@ -19,6 +19,7 @@ import numpy as np
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import pickle
 from scripts.task_manager import TaskManager
+from scripts.repository_exclusion import RepositoryExclusion, should_process_repo
 
 
 @dataclass
@@ -353,6 +354,12 @@ class MultiRepoCoordinator:
             repo_name = repo_url
             repo_url = f"https://github.com/{repo_name}"
         
+        # Check if repository should be excluded
+        if not should_process_repo(repo_name):
+            print(f"Repository {repo_name} is excluded from coordination flows")
+            print(f"Reason: {RepositoryExclusion.get_exclusion_reason(repo_name)}")
+            return None
+        
         if len(self.active_repos) >= self.max_concurrent:
             print(f"Cannot add {repo_name}: Maximum concurrent repos reached")
             return None
@@ -371,6 +378,10 @@ class MultiRepoCoordinator:
                     # Create the repository
                     owner, name = repo_name.split('/')
                     if owner == 'CodeWebMobile-AI':
+                        # Double-check exclusion before creating
+                        if not should_process_repo(repo_name):
+                            raise Exception(f"Cannot create excluded repository: {repo_name}")
+                        
                         # Create in organization
                         org = self.github.get_organization('CodeWebMobile-AI')
                         repo = org.create_repo(
@@ -403,7 +414,10 @@ class MultiRepoCoordinator:
             return repo_url
             
         except Exception as e:
-            print(f"Error adding repository {repo_name}: {e}")
+            if '404' in str(e):
+                self.logger.debug(f"Repository {repo_name} not found (404), skipping")
+            else:
+                self.logger.warning(f"Error adding repository {repo_name}: {e}")
             return None
     
     def create_cross_repo_task(self, repo_url: str, task_type: str, 
@@ -431,12 +445,11 @@ class MultiRepoCoordinator:
             repo = self.github.get_repo(repo_name)
             
             # Create issue using centralized method to ensure @claude mention
-            labels = [task_type, 'ai-generated']
+            labels = [task_type, 'ai-generated', 'ai-managed']
             if 'feature' in task_type.lower():
                 labels.append('enhancement')
             
-            # Use task manager's centralized method
-            self.task_manager.repo = repo
+            # Use task manager's centralized method with target project
             formatted_description = description + "\n\n---\n*This issue was created by the AI coordination system.*"
             
             self.rate_limiter.wait_if_needed()
@@ -445,7 +458,8 @@ class MultiRepoCoordinator:
                 description=formatted_description,
                 labels=labels,
                 priority="medium",
-                task_type=task_type
+                task_type=task_type,
+                repository=repo_name  # Pass the target repository
             )
             
             if not issue_number:
@@ -473,11 +487,14 @@ class MultiRepoCoordinator:
             'recommendations': {}
         }
         
-        # Process each active repository
+        # Process each active repository (excluding any that shouldn't be processed)
         futures = []
         for repo_name in list(self.active_repos):
-            future = self.executor.submit(self._process_repository, repo_name)
-            futures.append((repo_name, future))
+            if should_process_repo(repo_name):
+                future = self.executor.submit(self._process_repository, repo_name)
+                futures.append((repo_name, future))
+            else:
+                print(f"Skipping excluded repository in coordination cycle: {repo_name}")
         
         # Collect results
         for repo_name, future in futures:

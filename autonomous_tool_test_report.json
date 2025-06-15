@@ -1,0 +1,51 @@
+{
+  "timestamp": 17069.793043809,
+  "summary": {
+    "total": 4,
+    "passed": 2,
+    "partial": 0,
+    "failed": 2
+  },
+  "results": [
+    {
+      "scenario": "Simple Counter Tool",
+      "tool_name": "count_markdown_files",
+      "created": true,
+      "syntax_valid": true,
+      "quality_issues": [],
+      "execution_success": true,
+      "execution_message": "Tool executed successfully",
+      "final_status": "PASSED"
+    },
+    {
+      "scenario": "Analysis Tool",
+      "tool_name": "analyze_python_complexity",
+      "created": false,
+      "syntax_valid": false,
+      "quality_issues": [],
+      "execution_success": false,
+      "execution_message": "",
+      "final_status": "FAILED"
+    },
+    {
+      "scenario": "Report Generator",
+      "tool_name": "generate_weekly_report",
+      "created": true,
+      "syntax_valid": true,
+      "quality_issues": [],
+      "execution_success": true,
+      "execution_message": "Tool executed successfully",
+      "final_status": "PASSED"
+    },
+    {
+      "scenario": "Monitoring Tool",
+      "tool_name": "monitor_repository_activity",
+      "created": false,
+      "syntax_valid": false,
+      "quality_issues": [],
+      "execution_success": false,
+      "execution_message": "",
+      "final_status": "FAILED"
+    }
+  ]
+}

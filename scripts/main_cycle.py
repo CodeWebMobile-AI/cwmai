@@ -15,7 +15,7 @@ from typing import Dict, Any
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from state_manager import StateManager
-from context_gatherer import ContextGatherer
+# ContextGatherer functionality migrated to IntelligentAIBrain
 from ai_brain import IntelligentAIBrain
 
 
@@ -219,13 +219,17 @@ def main():
           f"Gemini={ai_status['gemini_available']}, "
           f"DeepSeek={ai_status['deepseek_available']}")
     
-    # Load external context with AI enhancement
+    # Load external context with AI enhancement using integrated methods
     print("Loading and enhancing external context...")
-    context_gatherer = ContextGatherer(ai_brain=ai_brain)
-    enhanced_context = context_gatherer.gather_context(state.get("charter", {}))
-    
-    # Update AI brain with enhanced context
-    ai_brain.context = enhanced_context
+    try:
+        import asyncio
+        enhanced_context = asyncio.run(ai_brain.gather_context(state.get("charter", {})))
+        # Update AI brain with enhanced context
+        ai_brain.context.update(enhanced_context)
+    except Exception as e:
+        print(f"Warning: Context gathering failed: {e}")
+        # Fallback to existing context
+        pass
     
     # Handle forced actions
     forced_action = handle_forced_action()

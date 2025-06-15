@@ -1,0 +1,11 @@
+[Unit]
+Description=Run Repository Maintenance every 6 hours
+Requires=repository-maintenance.service
+
+[Timer]
+OnBootSec=10min
+OnUnitActiveSec=6h
+Unit=repository-maintenance.service
+
+[Install]
+WantedBy=timers.target

@@ -52,16 +52,25 @@ class AIBrainFactory:
                     logger.info("Using standard state loading for workflow")
                     state = state_manager.load_state()
             
-            # Gather CI-specific context
-            from context_gatherer import ContextGatherer
-            context_gatherer = ContextGatherer()
+            # Create brain with loaded data first
+            brain = IntelligentAIBrain(state, {})
             
+            # Gather CI-specific context using integrated methods
             try:
-                context = context_gatherer.gather_workflow_context()
-            except (AttributeError, Exception):
-                # Fallback to regular context if workflow-specific method doesn't exist
-                logger.info("Using standard context gathering for workflow")
-                context = context_gatherer.gather_context(state.get('charter', {}))
+                import asyncio
+                context = asyncio.run(brain.gather_workflow_context())
+            except Exception as e:
+                logger.warning(f"Workflow context gathering failed: {e}, using minimal context")
+                # Fallback to minimal context
+                context = {
+                    "timestamp": datetime.now(timezone.utc).isoformat(),
+                    "charter_goals": ["workflow_execution", "ci_optimization"],
+                    "environment": "github_actions",
+                    "market_trends": [],
+                    "technology_updates": [],
+                    "github_trending": [],
+                    "programming_news": []
+                }
             
             # Add workflow-specific metadata
             context.update({
@@ -75,8 +84,8 @@ class AIBrainFactory:
                 'optimized_for': 'ci_performance'
             })
             
-            # Create brain with loaded data
-            brain = IntelligentAIBrain(state, context)
+            # Update brain with gathered context
+            brain.context.update(context)
             
             # Validate brain health
             if AIBrainFactory._validate_brain_health(brain):
@@ -121,15 +130,51 @@ class AIBrainFactory:
                     logger.info("Using standard state loading for production")
                     state = state_manager.load_state()
             
-            # Gather full production context
-            from context_gatherer import ContextGatherer
-            context_gatherer = ContextGatherer()
+            # Create brain with loaded data first
+            brain = IntelligentAIBrain(state, {})
             
+            # Gather full production context using integrated methods
             try:
-                context = context_gatherer.gather_production_context()
-            except (AttributeError, Exception):
-                logger.info("Using standard context gathering for production")
-                context = context_gatherer.gather_context(state.get('charter', {}))
+                import asyncio
+                # Check if we're already in an event loop
+                try:
+                    loop = asyncio.get_running_loop()
+                    # If we're in a running loop, create a task
+                    task = loop.create_task(brain.gather_production_context(state.get('charter', {})))
+                    context = loop.run_until_complete(task)
+                    logger.info("Production context gathered successfully via event loop task")
+                except RuntimeError:
+                    # No running event loop, safe to use asyncio.run()
+                    context = asyncio.run(brain.gather_production_context(state.get('charter', {})))
+                    logger.info("Production context gathered successfully via asyncio.run()")
+            except Exception as e:
+                logger.warning(f"Production context gathering failed: {e}, using standard context")
+                # Fallback to standard context gathering - fix async issue
+                try:
+                    import asyncio
+                    # Check if we're already in an event loop
+                    try:
+                        loop = asyncio.get_running_loop()
+                        # If we're in a running loop, create a task
+                        task = loop.create_task(brain.gather_context(state.get('charter', {})))
+                        context = loop.run_until_complete(task)
+                        logger.info("Context gathered successfully via event loop task")
+                    except RuntimeError:
+                        # No running event loop, safe to use asyncio.run()
+                        context = asyncio.run(brain.gather_context(state.get('charter', {})))
+                        logger.info("Context gathered successfully via asyncio.run()")
+                except Exception as e2:
+                    logger.error(f"All context gathering failed: {e2}, using minimal context")
+                    context = {
+                        "timestamp": datetime.now(timezone.utc).isoformat(),
+                        "charter_goals": [state.get('charter', {}).get("primary_goal", ""), state.get('charter', {}).get("secondary_goal", "")],
+                        "environment": "production",
+                        "market_trends": [],
+                        "security_alerts": [],
+                        "technology_updates": [],
+                        "github_trending": [],
+                        "programming_news": []
+                    }
             
             # Add production-specific configuration
             context.update({
@@ -141,7 +186,8 @@ class AIBrainFactory:
                 'optimized_for': 'full_capabilities'
             })
             
-            brain = IntelligentAIBrain(state, context)
+            # Update brain with gathered context
+            brain.context.update(context)
             
             if AIBrainFactory._validate_brain_health(brain):
                 logger.info("AIBrain created successfully for production")
@@ -228,10 +274,24 @@ class AIBrainFactory:
             state_manager = StateManager()
             state = state_manager.load_state()
             
-            # Gather context with development optimizations
-            from context_gatherer import ContextGatherer
-            context_gatherer = ContextGatherer()
-            context = context_gatherer.gather_context(state.get('charter', {}))
+            # Create brain with loaded data first
+            brain = IntelligentAIBrain(state, {})
+            
+            # Gather context with development optimizations using integrated methods
+            try:
+                import asyncio
+                context = asyncio.run(brain.gather_context(state.get('charter', {})))
+            except Exception as e:
+                logger.warning(f"Development context gathering failed: {e}, using minimal context")
+                context = {
+                    "timestamp": datetime.now(timezone.utc).isoformat(),
+                    "charter_goals": [state.get('charter', {}).get("primary_goal", ""), state.get('charter', {}).get("secondary_goal", "")],
+                    "environment": "development",
+                    "market_trends": [],
+                    "technology_updates": [],
+                    "github_trending": [],
+                    "programming_news": []
+                }
             
             # Add development-specific configuration
             context.update({
@@ -243,7 +303,8 @@ class AIBrainFactory:
                 'optimized_for': 'development_speed'
             })
             
-            brain = IntelligentAIBrain(state, context)
+            # Update brain with gathered context
+            brain.context.update(context)
             logger.info("AIBrain created successfully for development")
             return brain
             
@@ -252,6 +313,85 @@ class AIBrainFactory:
             # For development, fallback to test data so developers can continue working
             logger.info("Using test configuration for development fallback")
             return AIBrainFactory.create_for_testing()
+    
+    @staticmethod
+    def create_for_research() -> IntelligentAIBrain:
+        """Create AIBrain optimized for research tasks.
+        
+        Configured for research operations with focus on information gathering,
+        analysis, and insight extraction.
+        
+        Returns:
+            AIBrain instance configured for research
+        """
+        logger = logging.getLogger('AIBrainFactory')
+        
+        try:
+            # Load state for research operations
+            from state_manager import StateManager
+            state_manager = StateManager()
+            
+            # Load state with research focus
+            state = state_manager.load_state()
+            
+            # Create brain with loaded data
+            brain = IntelligentAIBrain(state, {})
+            
+            # Gather research-focused context
+            try:
+                import asyncio
+                # Check if we're already in an event loop
+                try:
+                    loop = asyncio.get_running_loop()
+                    # If we're in a running loop, create a task
+                    task = loop.create_task(brain.gather_context(state.get('charter', {})))
+                    context = loop.run_until_complete(task)
+                except RuntimeError:
+                    # No running event loop, safe to use asyncio.run()
+                    context = asyncio.run(brain.gather_context(state.get('charter', {})))
+            except Exception as e:
+                logger.warning(f"Research context gathering failed: {e}, using minimal context")
+                context = {
+                    "timestamp": datetime.now(timezone.utc).isoformat(),
+                    "charter_goals": ["research", "continuous_improvement"],
+                    "environment": "research",
+                    "market_trends": [],
+                    "technology_updates": [],
+                    "github_trending": [],
+                    "programming_news": []
+                }
+            
+            # Add research-specific configuration
+            context.update({
+                'environment': 'research',
+                'research_mode': True,
+                'analysis_enabled': True,
+                'learning_enabled': True,
+                'created_at': datetime.now(timezone.utc).isoformat(),
+                'optimized_for': 'research_and_learning',
+                'research_capabilities': {
+                    'web_search': True,
+                    'paper_analysis': True,
+                    'trend_identification': True,
+                    'pattern_recognition': True,
+                    'insight_extraction': True
+                }
+            })
+            
+            # Update brain with research context
+            brain.context.update(context)
+            
+            if AIBrainFactory._validate_brain_health(brain):
+                logger.info("AIBrain created successfully for research")
+                return brain
+            else:
+                logger.warning("Research brain health check failed, using fallback")
+                return AIBrainFactory.create_for_development()
+            
+        except Exception as e:
+            logger.error(f"Failed to create research AIBrain: {e}")
+            logger.info("Using development AIBrain as fallback for research")
+            return AIBrainFactory.create_for_development()
     
     @staticmethod
     def create_minimal_fallback() -> IntelligentAIBrain:
@@ -313,14 +453,23 @@ class AIBrainFactory:
             else:
                 state = state_manager.load_state()
             
-            # Gather context based on config
-            from context_gatherer import ContextGatherer
-            context_gatherer = ContextGatherer()
+            # Create brain with loaded data first
+            brain = IntelligentAIBrain(state, {})
             
-            if hasattr(context_gatherer, 'gather_context_with_config'):
-                context = context_gatherer.gather_context_with_config(config)
-            else:
-                context = context_gatherer.gather_context(state.get('charter', {}))
+            # Gather context based on config using integrated methods
+            try:
+                import asyncio
+                context = asyncio.run(brain.gather_context(state.get('charter', {})))
+            except Exception as e:
+                logger.warning(f"Context gathering failed: {e}, using minimal context")
+                context = {
+                    "timestamp": datetime.now(timezone.utc).isoformat(),
+                    "charter_goals": [state.get('charter', {}).get("primary_goal", ""), state.get('charter', {}).get("secondary_goal", "")],
+                    "market_trends": [],
+                    "technology_updates": [],
+                    "github_trending": [],
+                    "programming_news": []
+                }
             
             # Add config metadata
             context.update({
@@ -329,7 +478,8 @@ class AIBrainFactory:
                 'created_at': datetime.now(timezone.utc).isoformat()
             })
             
-            brain = IntelligentAIBrain(state, context)
+            # Update brain with gathered context
+            brain.context.update(context)
             logger.info("AIBrain created successfully with custom configuration")
             return brain
             

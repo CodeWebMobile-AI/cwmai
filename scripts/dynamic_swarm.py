@@ -13,7 +13,7 @@ from typing import Dict, List, Any, Optional
 import asyncio
 
 # Import base swarm
-from swarm_intelligence import RealSwarmIntelligence, RealSwarmAgent, AgentRole
+from scripts.swarm_intelligence import RealSwarmIntelligence, RealSwarmAgent, AgentRole
 
 
 class DynamicSwarmAgent(RealSwarmAgent):
@@ -454,6 +454,17 @@ class DynamicSwarmIntelligence(RealSwarmIntelligence):
             task, consensus, action_plan
         )
         
+        # Extract agent contributions for tracking
+        agent_contributions = {}
+        for analysis in refined_analyses:
+            agent_role = analysis.get('agent_role', 'unknown')
+            key_contributions = analysis.get('key_points', [])
+            if key_contributions:
+                agent_contributions[agent_role] = key_contributions[0] if key_contributions else 'No specific contribution'
+        
+        # Calculate consensus score
+        consensus_score = consensus.get('confidence', 0.0)
+        
         return {
             'task_id': task.get('id', 'unknown'),
             'timestamp': datetime.now(timezone.utc).isoformat(),
@@ -464,7 +475,13 @@ class DynamicSwarmIntelligence(RealSwarmIntelligence):
             'value_prediction': value_prediction,
             'collective_review': self._generate_enhanced_review(
                 consensus, action_plan, value_prediction
-            )
+            ),
+            'ai_collaboration': {
+                'agent_contributions': agent_contributions,
+                'consensus_score': consensus_score,
+                'agent_count': len(self.agents),
+                'iteration_count': 2  # Initial + refined
+            }
         }
     
     async def _phase_enhanced_cross_pollination(self, task: Dict[str, Any],

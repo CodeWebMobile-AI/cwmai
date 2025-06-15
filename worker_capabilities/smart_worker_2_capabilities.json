@@ -1,0 +1,24 @@
+{
+  "worker_id": "smart_worker_2",
+  "specialization": "ai-creative-studio",
+  "current_load": 0.0,
+  "active_tasks": 0,
+  "total_completed": 2,
+  "capabilities": {
+    "SYSTEM_IMPROVEMENT:ai-creative-studio": {
+      "success_rate": 0.6499999999999999,
+      "avg_duration": 0.9308325799777338,
+      "total_tasks": 1,
+      "confidence_multiplier": 0.8807879125215714
+    },
+    "NEW_PROJECT:ai-creative-studio": {
+      "success_rate": 0.6499999999999999,
+      "avg_duration": 2.1723817825424714,
+      "total_tasks": 1,
+      "confidence_multiplier": 0.8922763134703231
+    }
+  },
+  "overall_success_rate": 0.6499999999999999,
+  "exploration_rate": 0.2,
+  "last_updated": "2025-06-12T00:44:33.615080+00:00"
+}

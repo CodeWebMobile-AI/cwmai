@@ -1,0 +1,283 @@
+#!/usr/bin/env python3
+"""
+CWMAI - Smart Conversational AI Assistant
+
+A Claude-like natural language interface for CWMAI that automatically
+handles environment setup and provides intelligent conversation.
+"""
+
+import os
+import sys
+import asyncio
+import argparse
+from pathlib import Path
+import subprocess
+from typing import Optional, Dict, List
+
+# Color support (minimal, no external deps needed here)
+class Colors:
+    CYAN = '\033[96m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    RED = '\033[91m'
+    BLUE = '\033[94m'
+    MAGENTA = '\033[95m'
+    WHITE = '\033[97m'
+    RESET = '\033[0m'
+    BOLD = '\033[1m'
+
+def load_env_file(env_path: Path) -> Dict[str, str]:
+    """Load environment variables from a .env file."""
+    env_vars = {}
+    
+    if not env_path.exists():
+        return env_vars
+    
+    with open(env_path, 'r') as f:
+        for line in f:
+            line = line.strip()
+            # Skip empty lines and comments
+            if not line or line.startswith('#'):
+                continue
+            
+            # Parse KEY=VALUE format - handle export prefix
+            if line.startswith('export '):
+                line = line[7:]  # Remove 'export ' prefix
+            
+            if '=' in line:
+                key, value = line.split('=', 1)
+                # Remove quotes if present
+                value = value.strip()
+                if value.startswith('"') and value.endswith('"'):
+                    value = value[1:-1]
+                elif value.startswith("'") and value.endswith("'"):
+                    value = value[1:-1]
+                
+                env_vars[key.strip()] = value
+    
+    return env_vars
+
+def setup_environment():
+    """Set up environment variables from .env files."""
+    # Priority order: .env.local > .env
+    env_files = [
+        Path('.env.local'),
+        Path('.env')
+    ]
+    
+    loaded_vars = {}
+    for env_file in env_files:
+        if env_file.exists():
+            file_vars = load_env_file(env_file)
+            # Don't override already loaded vars (priority order)
+            for key, value in file_vars.items():
+                if key not in loaded_vars:
+                    loaded_vars[key] = value
+                    os.environ[key] = value
+    
+    return loaded_vars
+
+def check_dependencies() -> bool:
+    """Check if required dependencies are available."""
+    # Add project root to path first
+    project_root = Path(__file__).parent
+    if str(project_root) not in sys.path:
+        sys.path.insert(0, str(project_root))
+    
+    try:
+        import scripts.conversational_ai_assistant
+        return True
+    except ImportError:
+        return False
+
+def print_banner():
+    """Print a beautiful welcome banner."""
+    print(f"""
+{Colors.CYAN}╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║  {Colors.WHITE}{Colors.BOLD}🤖 CWMAI - Your AI Development Assistant{Colors.RESET}{Colors.CYAN}                      ║
+║                                                                  ║
+║  {Colors.GREEN}Chat naturally with Claude-like intelligence{Colors.CYAN}                   ║
+║  {Colors.YELLOW}Execute commands, manage projects, and more!{Colors.CYAN}                   ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝{Colors.RESET}
+""")
+
+def print_error(message: str):
+    """Print an error message."""
+    print(f"{Colors.RED}❌ Error: {message}{Colors.RESET}")
+
+def print_info(message: str):
+    """Print an info message."""
+    print(f"{Colors.BLUE}ℹ️  {message}{Colors.RESET}")
+
+def print_success(message: str):
+    """Print a success message."""
+    print(f"{Colors.GREEN}✅ {message}{Colors.RESET}")
+
+async def run_conversational_assistant(args):
+    """Run the conversational AI assistant."""
+    # Add project root to Python path
+    project_root = Path(__file__).parent
+    sys.path.insert(0, str(project_root))
+    
+    try:
+        from scripts.conversational_ai_assistant import ConversationalAIAssistant
+        from scripts.conversational_ai_assistant import ResponseStyle
+        
+        # Determine response style
+        style = ResponseStyle.FRIENDLY_PROFESSIONAL
+        if args.concise:
+            style = ResponseStyle.CONCISE
+        elif args.detailed:
+            style = ResponseStyle.DETAILED
+        elif args.technical:
+            style = ResponseStyle.TECHNICAL
+        elif args.casual:
+            style = ResponseStyle.CASUAL
+        
+        # Create assistant
+        assistant = ConversationalAIAssistant(style=style)
+        
+        # Initialize
+        print_info("Initializing AI assistant...")
+        await assistant.initialize()
+        print_success("AI assistant ready!")
+        
+        if args.command:
+            # Single command mode
+            response = await assistant.handle_conversation(' '.join(args.command))
+            print(f"\n{response}")
+        else:
+            # Interactive mode
+            print(f"\n{Colors.CYAN}Type your message or question. Use 'exit' or 'quit' to leave.{Colors.RESET}\n")
+            
+            while True:
+                try:
+                    # Get user input with a nice prompt
+                    user_input = input(f"{Colors.GREEN}You > {Colors.RESET}")
+                    
+                    if user_input.lower() in ['exit', 'quit', 'bye', 'goodbye']:
+                        print(f"\n{Colors.YELLOW}👋 Goodbye! Thanks for using CWMAI.{Colors.RESET}")
+                        break
+                    
+                    if not user_input.strip():
+                        continue
+                    
+                    # Process with assistant
+                    print(f"{Colors.BLUE}Assistant > {Colors.RESET}", end='', flush=True)
+                    response = await assistant.handle_conversation(user_input)
+                    print(response)
+                    print()  # Extra line for readability
+                    
+                except KeyboardInterrupt:
+                    print(f"\n\n{Colors.YELLOW}Use 'exit' to quit properly.{Colors.RESET}")
+                except EOFError:
+                    print(f"\n{Colors.YELLOW}👋 Goodbye!{Colors.RESET}")
+                    break
+                    
+    except ImportError as e:
+        print_error(f"Failed to import conversational assistant: {e}")
+        print_info("Make sure you're running from the CWMAI project directory.")
+        return 1
+    except Exception as e:
+        print_error(f"Unexpected error: {e}")
+        return 1
+    
+    return 0
+
+def main():
+    """Main entry point."""
+    parser = argparse.ArgumentParser(
+        description="CWMAI - Smart Conversational AI Assistant",
+        epilog="Examples:\n"
+               "  cwmai                    # Start interactive mode\n"
+               "  cwmai create an issue    # Execute single command\n"
+               "  cwmai --concise          # Use concise responses\n"
+               "  cwmai --no-env           # Skip .env loading",
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    
+    parser.add_argument(
+        'command',
+        nargs='*',
+        help='Command to execute (interactive mode if omitted)'
+    )
+    
+    parser.add_argument(
+        '--no-env',
+        action='store_true',
+        help='Skip loading .env files'
+    )
+    
+    parser.add_argument(
+        '--concise',
+        action='store_true',
+        help='Use concise response style'
+    )
+    
+    parser.add_argument(
+        '--detailed',
+        action='store_true',
+        help='Use detailed response style'
+    )
+    
+    parser.add_argument(
+        '--technical',
+        action='store_true',
+        help='Use technical response style'
+    )
+    
+    parser.add_argument(
+        '--casual',
+        action='store_true',
+        help='Use casual response style'
+    )
+    
+    parser.add_argument(
+        '--no-banner',
+        action='store_true',
+        help='Skip the welcome banner'
+    )
+    
+    args = parser.parse_args()
+    
+    # Show banner unless disabled or in single command mode
+    if not args.no_banner and not args.command:
+        print_banner()
+    
+    # Load environment variables unless disabled
+    if not args.no_env:
+        loaded_vars = setup_environment()
+        if loaded_vars:
+            print_success(f"Loaded {len(loaded_vars)} environment variables")
+    
+    # Check for required environment variables
+    required_vars = ['ANTHROPIC_API_KEY']
+    missing_vars = [var for var in required_vars if not os.getenv(var)]
+    
+    if missing_vars:
+        print_error(f"Missing required environment variables: {', '.join(missing_vars)}")
+        print_info("Please set them in .env.local or .env file")
+        print_info("Example .env.local:")
+        for var in missing_vars:
+            print(f"  {var}=your_key_here")
+        return 1
+    
+    # Check if we can import the assistant
+    if not check_dependencies():
+        print_error("Cannot find CWMAI scripts. Make sure you're in the CWMAI directory.")
+        return 1
+    
+    # Run the assistant
+    try:
+        return asyncio.run(run_conversational_assistant(args))
+    except KeyboardInterrupt:
+        print(f"\n{Colors.YELLOW}👋 Goodbye!{Colors.RESET}")
+        return 0
+    except Exception as e:
+        print_error(f"Failed to run assistant: {e}")
+        return 1
+
+if __name__ == "__main__":
+    sys.exit(main())

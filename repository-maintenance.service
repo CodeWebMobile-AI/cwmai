@@ -1,0 +1,17 @@
+[Unit]
+Description=Repository Maintenance Service
+After=network.target
+
+[Service]
+Type=simple
+User=%i
+WorkingDirectory=/workspaces/cwmai
+Environment="PATH=/usr/local/bin:/usr/bin:/bin"
+ExecStart=/usr/bin/python3 /workspaces/cwmai/scheduled_repository_maintenance.py
+Restart=on-failure
+RestartSec=300
+StandardOutput=append:/workspaces/cwmai/maintenance_service.log
+StandardError=append:/workspaces/cwmai/maintenance_service_error.log
+
+[Install]
+WantedBy=multi-user.target
