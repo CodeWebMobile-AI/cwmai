@@ -1,0 +1,178 @@
+{
+  "prompt_length": 3699,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "technical_score": {
+        "type": "number"
+      },
+      "required_apis": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "cost": {
+              "type": "string"
+            },
+            "limits": {
+              "type": "string"
+            },
+            "alternatives": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "name",
+            "cost",
+            "limits",
+            "alternatives"
+          ]
+        }
+      },
+      "technology_stack": {
+        "type": "object",
+        "properties": {
+          "frontend": {
+            "type": "string"
+          },
+          "backend": {
+            "type": "string"
+          },
+          "database": {
+            "type": "string"
+          },
+          "infrastructure": {
+            "type": "string"
+          },
+          "third_party": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "frontend",
+          "backend",
+          "database",
+          "infrastructure",
+          "third_party"
+        ]
+      },
+      "required_team_size": {
+        "type": "string"
+      },
+      "time_to_mvp": {
+        "type": "string"
+      },
+      "development_complexity": {
+        "type": "string"
+      },
+      "infrastructure_costs": {
+        "type": "object",
+        "properties": {
+          "1k_users": {
+            "type": "string"
+          },
+          "10k_users": {
+            "type": "string"
+          },
+          "100k_users": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "1k_users",
+          "10k_users",
+          "100k_users"
+        ]
+      },
+      "technical_risks": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "similar_implementations": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "unique_technical_challenges": {
+        "type": "string"
+      },
+      "technical_moat": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "technical_score",
+      "required_apis",
+      "technology_stack",
+      "required_team_size",
+      "time_to_mvp",
+      "development_complexity",
+      "infrastructure_costs",
+      "technical_risks",
+      "similar_implementations",
+      "unique_technical_challenges",
+      "technical_moat"
+    ]
+  },
+  "response": {
+    "development_complexity": "medium",
+    "infrastructure_costs": {
+      "100k_users": "$5,000-10,000/month",
+      "10k_users": "$500-1,000/month",
+      "1k_users": "$50-100/month"
+    },
+    "required_apis": [
+      {
+        "alternatives": [
+          "Healthcare Bluebook API",
+          "Turquoise Health API"
+        ],
+        "cost": "Pay-per-request, tiered pricing starting at $100/month",
+        "limits": "1,000 requests per day, higher tiers available",
+        "name": "CMS.gov API"
+      },
+      {
+        "alternatives": [
+          "Amazon Comprehend Medical",
+          "Google Cloud Healthcare API"
+        ],
+        "cost": "Pay-per-use, ~$0.001-0.01 per API call",
+        "limits": "Variable, depending on service tier",
+        "name": "IBM Watson Health API"
+      }
+    ],
+    "required_team_size": "2-3 full-stack developers, 1 data scientist, 1 designer",
+    "similar_implementations": [
+      "Amino (healthcare price transparency)",
+      "HealthSherpa (insurance comparison)",
+      "GoodRx (prescription drug pricing)"
+    ],
+    "technical_moat": "Proprietary cost prediction algorithms and community-generated data",
+    "technical_risks": [
+      "Data quality and accuracy",
+      "API reliability and uptime",
+      "Maintaining HIPAA compliance",
+      "Scaling AI models"
+    ],
+    "technical_score": 7.5,
+    "technology_stack": {
+      "backend": "Python/Django or Node.js/Express.js",
+      "database": "PostgreSQL or MySQL",
+      "frontend": "React or Angular",
+      "infrastructure": "AWS or Google Cloud",
+      "third_party": "Payment gateway, Authentication service, Analytics tools"
+    },
+    "time_to_mvp": "3 months",
+    "unique_technical_challenges": "Integrating with diverse insurance provider APIs, ensuring accurate and personalized cost predictions"
+  },
+  "response_length": 1504
+}

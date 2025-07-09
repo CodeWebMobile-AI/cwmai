@@ -1,0 +1,800 @@
+{
+  "run_info": {
+    "start_time": "2025-06-22T19:10:22.654567",
+    "runtime_minutes": 10,
+    "generations": 14
+  },
+  "results": {
+    "improvements_created": 4,
+    "breakthroughs_found": 0,
+    "improvement_details": [
+      {
+        "name": "ContextAwareWorkflowResilience",
+        "type": "error_fix",
+        "fitness": 0.724849855682682,
+        "file_path": "scripts/improvements/ContextAwareWorkflowResilience.py"
+      },
+      {
+        "name": "Adaptive Resonance Workflow Resilience",
+        "type": "error_fix",
+        "fitness": 0.7309137353591687,
+        "file_path": "scripts/improvements/Adaptive Resonance Workflow Resilience.py"
+      },
+      {
+        "name": "AdaptiveResonanceContextualWorkflowResilience",
+        "type": "error_fix",
+        "fitness": 0.7320485320633432,
+        "file_path": "scripts/improvements/AdaptiveResonanceContextualWorkflowResilience.py"
+      },
+      {
+        "name": "AdaptiveResonanceContextualWorkflowResilience",
+        "type": "error_fix",
+        "fitness": 0.7320485320633432,
+        "file_path": "scripts/improvements/AdaptiveResonanceContextualWorkflowResilience.py"
+      }
+    ],
+    "breakthrough_details": []
+  },
+  "evolution_report": {
+    "current_generation": 15,
+    "population_size": 10,
+    "fitness_history": [
+      {
+        "generation": 1,
+        "average_fitness": 0.546714505497567,
+        "best_fitness": 0.617690750079048,
+        "population_size": 10
+      },
+      {
+        "generation": 2,
+        "average_fitness": 0.6260754145814742,
+        "best_fitness": 0.724849855682682,
+        "population_size": 10
+      },
+      {
+        "generation": 3,
+        "average_fitness": 0.6882090028699639,
+        "best_fitness": 0.724849855682682,
+        "population_size": 10
+      },
+      {
+        "generation": 4,
+        "average_fitness": 0.6782636110921118,
+        "best_fitness": 0.724849855682682,
+        "population_size": 10
+      },
+      {
+        "generation": 5,
+        "average_fitness": 0.6147649308000919,
+        "best_fitness": 0.724849855682682,
+        "population_size": 10
+      },
+      {
+        "generation": 6,
+        "average_fitness": 0.654535139317065,
+        "best_fitness": 0.7309137353591687,
+        "population_size": 10
+      },
+      {
+        "generation": 7,
+        "average_fitness": 0.649141847749679,
+        "best_fitness": 0.7309137353591687,
+        "population_size": 10
+      },
+      {
+        "generation": 8,
+        "average_fitness": 0.6824824842489328,
+        "best_fitness": 0.7320485320633432,
+        "population_size": 10
+      },
+      {
+        "generation": 9,
+        "average_fitness": 0.6816773742260909,
+        "best_fitness": 0.7320485320633432,
+        "population_size": 10
+      },
+      {
+        "generation": 10,
+        "average_fitness": 0.6425315894622533,
+        "best_fitness": 0.7320485320633432,
+        "population_size": 10
+      },
+      {
+        "generation": 11,
+        "average_fitness": 0.6342667820369532,
+        "best_fitness": 0.7320485320633432,
+        "population_size": 10
+      },
+      {
+        "generation": 12,
+        "average_fitness": 0.6303351019725796,
+        "best_fitness": 0.7320485320633432,
+        "population_size": 10
+      },
+      {
+        "generation": 13,
+        "average_fitness": 0.6474319131460943,
+        "best_fitness": 0.7320485320633432,
+        "population_size": 10
+      },
+      {
+        "generation": 14,
+        "average_fitness": 0.6014889842739098,
+        "best_fitness": 0.7320485320633432,
+        "population_size": 10
+      },
+      {
+        "generation": 15,
+        "average_fitness": 0.6514137144210006,
+        "best_fitness": 0.7320485320633432,
+        "population_size": 10
+      }
+    ],
+    "best_improvements": [
+      {
+        "name": "AdaptiveResonanceContextualWorkflowResilience",
+        "type": "error_fix",
+        "description": "A hybrid resilience framework that dynamically adjusts workflow behavior and resource allocation based on contextual cues and resonance within the workflow environment. It leverages adaptive resonance theory (ART) to proactively identify and mitigate potential failures, informed by contextual data and reinforcement learning to optimize resource utilization and workflow execution.",
+        "approach": "This approach combines Adaptive Resonance Theory (ART) for anomaly detection and proactive failure prediction with contextual awareness and reinforcement learning.  The system learns typical workflow patterns and resource usage through ART. Contextual data (e.g., time of day, user role, external service availability) is then used to refine the ART network and predict deviations from the norm.  Reinforcement learning is integrated to dynamically adjust resource allocation and workflow execution paths in response to predicted or detected failures. Specifically, upon detecting a resonance disruption (potential failure) based on context and ART outputs, the system uses a reinforcement learning agent to select the optimal mitigation strategy from a set of predefined actions (e.g., resource reallocation, workflow rerouting, proactive scaling). This creates a feedback loop where the system continuously learns and adapts its resilience strategies based on observed outcomes.",
+        "metrics": [
+          "Mean Time To Recovery (MTTR)",
+          "Workflow Completion Rate Under Stress",
+          "Resource Utilization Efficiency",
+          "False Positive Rate (Anomaly Detection)",
+          "False Negative Rate (Anomaly Detection)",
+          "Percentage of Proactively Mitigated Failures",
+          "Reduction in Service Level Agreement (SLA) Breaches"
+        ],
+        "integration_points": [
+          "Workflow Engine API (for workflow execution and rerouting)",
+          "Resource Management System API (for dynamic resource allocation)",
+          "Contextual Data Sources (e.g., monitoring systems, user profiles, external service APIs)",
+          "Logging and Monitoring Systems (for collecting performance data and error logs)",
+          "Reinforcement Learning Platform (for training and deploying the RL agent)",
+          "Alerting System (for notifying administrators of critical failures or predicted issues)"
+        ],
+        "code": "\"\"\"\nAdaptiveResonanceContextualWorkflowResilience - A hybrid resilience framework that dynamically adjusts workflow behavior and resource allocation based on contextual cues and resonance within the workflow environment. It leverages adaptive resonance theory (ART) to proactively identify and mitigate potential failures, informed by contextual data and reinforcement learning to optimize resource utilization and workflow execution.\nGenerated by CWMAI Evolutionary System\n\"\"\"\n\nimport logging\nfrom typing import Dict, Any\n\n\nclass Adaptiveresonancecontextualworkflowresilience:\n    def __init__(self):\n        self.logger = logging.getLogger(__name__)\n        self.name = \"AdaptiveResonanceContextualWorkflowResilience\"\n        \n    def apply(self, context: Dict[str, Any]) -> Dict[str, Any]:\n        # This approach combines Adaptive Resonance Theory (ART) for anomaly detection and proactive failure prediction with contextual awareness and reinforcement learning.  The system learns typical workflow patterns and resource usage through ART. Contextual data (e.g., time of day, user role, external service availability) is then used to refine the ART network and predict deviations from the norm.  Reinforcement learning is integrated to dynamically adjust resource allocation and workflow execution paths in response to predicted or detected failures. Specifically, upon detecting a resonance disruption (potential failure) based on context and ART outputs, the system uses a reinforcement learning agent to select the optimal mitigation strategy from a set of predefined actions (e.g., resource reallocation, workflow rerouting, proactive scaling). This creates a feedback loop where the system continuously learns and adapts its resilience strategies based on observed outcomes.\n        self.logger.info(f\"Applying {self.name}\")\n        return {'success': True, 'improvement': self.name}\n",
+        "created_at": "2025-06-22T18:13:09.062583+00:00",
+        "parents": [
+          "17a9f613",
+          "06849edc"
+        ],
+        "generation": 7,
+        "fitness": 0.7320485320633432,
+        "crossover_type": "knowledge_enhanced",
+        "combined_patterns": [
+          "approach:adaptive",
+          "approach:event",
+          "class:adaptivecontextualresonanceworkflowresilience",
+          "class:adaptiveresonanceworkflowresilience",
+          "import:logging",
+          "integration:adaptive",
+          "integration:contextual",
+          "integration:event",
+          "integration:reinforcement",
+          "integration:resource",
+          "integration:workflow",
+          "type:error_fix"
+        ],
+        "id": "517c5ca2",
+        "fitness_components": {
+          "base": 0.6867475534389054,
+          "predicted_success": 1.0,
+          "novelty": 1.0,
+          "gap_bonus": 0,
+          "final": 0.7320485320633432
+        }
+      },
+      {
+        "name": "AdaptiveResonanceContextualWorkflowResilience_v3",
+        "type": "error_fix",
+        "description": "A hybrid resilience framework that dynamically adjusts workflow behavior and resource allocation based on contextual cues and resonance within the workflow environment. It leverages adaptive resonance theory (ART) to proactively identify and mitigate potential failures, informed by contextual data and reinforcement learning to optimize resource utilization and workflow execution.",
+        "approach": "This approach combines Adaptive Resonance Theory (ART) for anomaly detection and proactive failure prediction with contextual awareness and reinforcement learning.  The system learns typical workflow patterns and resource usage through ART. Contextual data (e.g., time of day, user role, external service availability) is then used to refine the ART network and predict deviations from the norm.  Reinforcement learning is integrated to dynamically adjust resource allocation and workflow execution paths in response to predicted or detected failures. Specifically, upon detecting a resonance disruption (potential failure) based on context and ART outputs, the system uses a reinforcement learning agent to select the optimal mitigation strategy from a set of predefined actions (e.g., resource reallocation, workflow rerouting, proactive scaling). This creates a feedback loop where the system continuously learns and adapts its resilience strategies based on observed outcomes.",
+        "metrics": [
+          "Mean Time To Recovery (MTTR)",
+          "Workflow Completion Rate Under Stress",
+          "Resource Utilization Efficiency",
+          "False Positive Rate (Anomaly Detection)",
+          "False Negative Rate (Anomaly Detection)",
+          "Percentage of Proactively Mitigated Failures",
+          "Reduction in Service Level Agreement (SLA) Breaches"
+        ],
+        "integration_points": [
+          "Workflow Engine API (for workflow execution and rerouting)",
+          "Resource Management System API (for dynamic resource allocation)",
+          "Contextual Data Sources (e.g., monitoring systems, user profiles, external service APIs)",
+          "Logging and Monitoring Systems (for collecting performance data and error logs)",
+          "Reinforcement Learning Platform (for training and deploying the RL agent)",
+          "Alerting System (for notifying administrators of critical failures or predicted issues)"
+        ],
+        "code": "\"\"\"\nAdaptiveResonanceContextualWorkflowResilience - A hybrid resilience framework that dynamically adjusts workflow behavior and resource allocation based on contextual cues and resonance within the workflow environment. It leverages adaptive resonance theory (ART) to proactively identify and mitigate potential failures, informed by contextual data and reinforcement learning to optimize resource utilization and workflow execution.\nGenerated by CWMAI Evolutionary System\n\"\"\"\n\nimport logging\nfrom typing import Dict, Any\n\n\nclass Adaptiveresonancecontextualworkflowresilience:\n    def __init__(self):\n        self.logger = logging.getLogger(__name__)\n        self.name = \"AdaptiveResonanceContextualWorkflowResilience\"\n        \n    def apply(self, context: Dict[str, Any]) -> Dict[str, Any]:\n        # This approach combines Adaptive Resonance Theory (ART) for anomaly detection and proactive failure prediction with contextual awareness and reinforcement learning.  The system learns typical workflow patterns and resource usage through ART. Contextual data (e.g., time of day, user role, external service availability) is then used to refine the ART network and predict deviations from the norm.  Reinforcement learning is integrated to dynamically adjust resource allocation and workflow execution paths in response to predicted or detected failures. Specifically, upon detecting a resonance disruption (potential failure) based on context and ART outputs, the system uses a reinforcement learning agent to select the optimal mitigation strategy from a set of predefined actions (e.g., resource reallocation, workflow rerouting, proactive scaling). This creates a feedback loop where the system continuously learns and adapts its resilience strategies based on observed outcomes.\n        self.logger.info(f\"Applying {self.name}\")\n        return {'success': True, 'improvement': self.name}\n",
+        "created_at": "2025-06-22T18:13:09.062583+00:00",
+        "parents": [
+          "17a9f613",
+          "06849edc"
+        ],
+        "generation": 7,
+        "fitness": 0.7320485320633432,
+        "crossover_type": "knowledge_enhanced",
+        "combined_patterns": [
+          "approach:adaptive",
+          "approach:event",
+          "class:adaptivecontextualresonanceworkflowresilience",
+          "class:adaptiveresonanceworkflowresilience",
+          "import:logging",
+          "integration:adaptive",
+          "integration:contextual",
+          "integration:event",
+          "integration:reinforcement",
+          "integration:resource",
+          "integration:workflow",
+          "type:error_fix"
+        ],
+        "id": "5159d775",
+        "fitness_components": {
+          "base": 0.6867475534389054,
+          "predicted_success": 1.0,
+          "novelty": 1.0,
+          "gap_bonus": 0,
+          "final": 0.7320485320633432
+        }
+      },
+      {
+        "name": "AdaptiveResonanceContextualWorkflowResilience_v3",
+        "type": "error_fix",
+        "description": "A hybrid resilience framework that dynamically adjusts workflow behavior and resource allocation based on contextual cues and resonance within the workflow environment. It leverages adaptive resonance theory (ART) to proactively identify and mitigate potential failures, informed by contextual data and reinforcement learning to optimize resource utilization and workflow execution.",
+        "approach": "This approach combines Adaptive Resonance Theory (ART) for anomaly detection and proactive failure prediction with contextual awareness and reinforcement learning.  The system learns typical workflow patterns and resource usage through ART. Contextual data (e.g., time of day, user role, external service availability) is then used to refine the ART network and predict deviations from the norm.  Reinforcement learning is integrated to dynamically adjust resource allocation and workflow execution paths in response to predicted or detected failures. Specifically, upon detecting a resonance disruption (potential failure) based on context and ART outputs, the system uses a reinforcement learning agent to select the optimal mitigation strategy from a set of predefined actions (e.g., resource reallocation, workflow rerouting, proactive scaling). This creates a feedback loop where the system continuously learns and adapts its resilience strategies based on observed outcomes.",
+        "metrics": [
+          "Mean Time To Recovery (MTTR)",
+          "Workflow Completion Rate Under Stress",
+          "Resource Utilization Efficiency",
+          "False Positive Rate (Anomaly Detection)",
+          "False Negative Rate (Anomaly Detection)",
+          "Percentage of Proactively Mitigated Failures",
+          "Reduction in Service Level Agreement (SLA) Breaches"
+        ],
+        "integration_points": [
+          "Workflow Engine API (for workflow execution and rerouting)",
+          "Resource Management System API (for dynamic resource allocation)",
+          "Contextual Data Sources (e.g., monitoring systems, user profiles, external service APIs)",
+          "Logging and Monitoring Systems (for collecting performance data and error logs)",
+          "Reinforcement Learning Platform (for training and deploying the RL agent)",
+          "Alerting System (for notifying administrators of critical failures or predicted issues)"
+        ],
+        "code": "\"\"\"\nAdaptiveResonanceContextualWorkflowResilience - A hybrid resilience framework that dynamically adjusts workflow behavior and resource allocation based on contextual cues and resonance within the workflow environment. It leverages adaptive resonance theory (ART) to proactively identify and mitigate potential failures, informed by contextual data and reinforcement learning to optimize resource utilization and workflow execution.\nGenerated by CWMAI Evolutionary System\n\"\"\"\n\nimport logging\nfrom typing import Dict, Any\n\n\nclass Adaptiveresonancecontextualworkflowresilience:\n    def __init__(self):\n        self.logger = logging.getLogger(__name__)\n        self.name = \"AdaptiveResonanceContextualWorkflowResilience\"\n        \n    def apply(self, context: Dict[str, Any]) -> Dict[str, Any]:\n        # This approach combines Adaptive Resonance Theory (ART) for anomaly detection and proactive failure prediction with contextual awareness and reinforcement learning.  The system learns typical workflow patterns and resource usage through ART. Contextual data (e.g., time of day, user role, external service availability) is then used to refine the ART network and predict deviations from the norm.  Reinforcement learning is integrated to dynamically adjust resource allocation and workflow execution paths in response to predicted or detected failures. Specifically, upon detecting a resonance disruption (potential failure) based on context and ART outputs, the system uses a reinforcement learning agent to select the optimal mitigation strategy from a set of predefined actions (e.g., resource reallocation, workflow rerouting, proactive scaling). This creates a feedback loop where the system continuously learns and adapts its resilience strategies based on observed outcomes.\n        self.logger.info(f\"Applying {self.name}\")\n        return {'success': True, 'improvement': self.name}\n",
+        "created_at": "2025-06-22T18:13:09.062583+00:00",
+        "parents": [
+          "17a9f613",
+          "06849edc"
+        ],
+        "generation": 7,
+        "fitness": 0.7320485320633432,
+        "crossover_type": "knowledge_enhanced",
+        "combined_patterns": [
+          "approach:adaptive",
+          "approach:event",
+          "class:adaptivecontextualresonanceworkflowresilience",
+          "class:adaptiveresonanceworkflowresilience",
+          "import:logging",
+          "integration:adaptive",
+          "integration:contextual",
+          "integration:event",
+          "integration:reinforcement",
+          "integration:resource",
+          "integration:workflow",
+          "type:error_fix"
+        ],
+        "id": "5159d775",
+        "fitness_components": {
+          "base": 0.6867475534389054,
+          "predicted_success": 1.0,
+          "novelty": 1.0,
+          "gap_bonus": 0,
+          "final": 0.7320485320633432
+        }
+      }
+    ],
+    "knowledge_stats": {
+      "total_improvements_stored": 10,
+      "avoided_duplicates": 0,
+      "knowledge_guided_mutations": 29,
+      "successful_patterns": 38,
+      "failed_patterns": 0,
+      "knowledge_gaps": 20
+    },
+    "generation_insights": [
+      {
+        "generation": 10,
+        "duration": 24.640349,
+        "population_size": 10,
+        "avoided_duplicates": 0,
+        "knowledge_guided_mutations": 20,
+        "pattern_changes": {
+          "new": [
+            "integration:knowledge_graph",
+            "type:tool",
+            "integration:anomaly",
+            "integration:siem_system",
+            "integration:access_control_system",
+            "class:adaptiveresonancecontextualworkflowresiliencev3secureai",
+            "type:workflowresiliencemechanism",
+            "integration:conversation_manager",
+            "class:adaptiveresonancecontextualworkflowresiliencequantumleap",
+            "integration:anomaly_detection_system",
+            "approach:event",
+            "approach:predictive",
+            "type:workflow resilience system",
+            "integration:persona_database",
+            "class:adaptiveresonancecontextualworkflowresilienceturbo",
+            "integration:anomaly_detection_module",
+            "integration:vulnerability_scanner",
+            "integration:feedback_loop",
+            "integration:ci/cd",
+            "integration:firewall",
+            "integration:logging_and_monitoring",
+            "integration:prompt_generator",
+            "integration:monitoring_system",
+            "class:cwmaiadaptivepersonagenerator",
+            "integration:tool_invocation_manager",
+            "integration:event"
+          ],
+          "lost": [
+            "class:proqueryunderstandingenhancer",
+            "class:adaptiveresonancecontextualworkflowresilienceplus",
+            "integration:diversity_auditor",
+            "type:error_fix, integration:alerting, integration:llm_orchestrator, feature_enhancement",
+            "integration:query_router",
+            "integration:configuration",
+            "integration:error",
+            "class:aiaugmentedadaptiveresonancecontextualworkflowresiliencev4arcrv4",
+            "integration:data_sources",
+            "type:enhanced_error_fix",
+            "integration:data",
+            "type:workflow orchestration with ai-driven resilience and contextual adaptation",
+            "integration:llm",
+            "integration:event-driven",
+            "class:adaptiveresonanceworkflowresilience",
+            "integration:natural_language_processing",
+            "approach:stream",
+            "integration:version",
+            "type:analysis",
+            "integration:llm_orchestrator"
+          ],
+          "persistent": [
+            "integration:workflow",
+            "integration:reinforcement",
+            "integration:resource",
+            "integration:logging",
+            "class:adaptiveresonancecontextualworkflowresilience",
+            "approach:real-time",
+            "integration:monitoring",
+            "integration:prompt_engineering_module",
+            "import:logging",
+            "type:error_fix",
+            "integration:contextual",
+            "integration:alerting",
+            "approach:adaptive",
+            "integration:cloud",
+            "class:adaptiveresonancecontextualworkflowresiliencev4"
+          ]
+        },
+        "fitness_stats": {
+          "min": 0.0,
+          "max": 0.7320485320633432,
+          "avg": 0.21961455961900295
+        }
+      },
+      {
+        "generation": 11,
+        "duration": 24.093392,
+        "population_size": 10,
+        "avoided_duplicates": 0,
+        "knowledge_guided_mutations": 22,
+        "pattern_changes": {
+          "new": [
+            "type:workflow engine with adaptive error recovery",
+            "integration:data_augmentation",
+            "integration:llm_core",
+            "class:adaptiveresonancecontextualworkflowresilienceenhanced",
+            "integration:causal",
+            "integration:contextualadaptiveworkflowrecoverynetworkcawrn",
+            "type:workflow resilience strategy",
+            "integration:container",
+            "integration:security_module",
+            "integration:event_logger",
+            "integration:resource_manager",
+            "type:security",
+            "type:workflow adaptation system",
+            "integration:prompt_parser",
+            "class:evolutionaryadversarialdefense",
+            "integration:data",
+            "type:workflow orchestration and resilience framework"
+          ],
+          "lost": [
+            "integration:knowledge_graph",
+            "type:tool",
+            "integration:anomaly",
+            "integration:siem_system",
+            "integration:access_control_system",
+            "class:adaptiveresonancecontextualworkflowresiliencev3secureai",
+            "type:workflowresiliencemechanism",
+            "integration:conversation_manager",
+            "class:adaptiveresonancecontextualworkflowresiliencequantumleap",
+            "integration:anomaly_detection_system",
+            "type:workflow resilience system",
+            "integration:persona_database",
+            "class:adaptiveresonancecontextualworkflowresilienceturbo",
+            "integration:anomaly_detection_module",
+            "integration:vulnerability_scanner",
+            "integration:feedback_loop",
+            "integration:ci/cd",
+            "integration:firewall",
+            "integration:logging_and_monitoring",
+            "integration:prompt_generator",
+            "class:cwmaiadaptivepersonagenerator",
+            "integration:tool_invocation_manager",
+            "integration:event"
+          ],
+          "persistent": [
+            "integration:workflow",
+            "integration:reinforcement",
+            "integration:resource",
+            "integration:logging",
+            "class:adaptiveresonancecontextualworkflowresilience",
+            "approach:event",
+            "approach:real-time",
+            "approach:predictive",
+            "integration:monitoring",
+            "integration:monitoring_system",
+            "integration:prompt_engineering_module",
+            "import:logging",
+            "type:error_fix",
+            "integration:contextual",
+            "integration:alerting",
+            "approach:adaptive",
+            "integration:cloud",
+            "class:adaptiveresonancecontextualworkflowresiliencev4"
+          ]
+        },
+        "fitness_stats": {
+          "min": 0.0,
+          "max": 0.7320485320633432,
+          "avg": 0.21961455961900295
+        }
+      },
+      {
+        "generation": 12,
+        "duration": 23.31455,
+        "population_size": 10,
+        "avoided_duplicates": 0,
+        "knowledge_guided_mutations": 24,
+        "pattern_changes": {
+          "new": [
+            "integration:llm_request_router",
+            "integration:alerting_systems",
+            "type:workflow resilience",
+            "integration:user_profile_service",
+            "integration:cryptographic_module",
+            "type:workflow resilience framework",
+            "class:secureadaptiveresonancecontextualworkflowresiliencev4",
+            "class:dynamicadaptiveresonancecontextualworkflowresilience",
+            "integration:centralized",
+            "integration:dynamic_authorization_service",
+            "type:workflow management system enhancement",
+            "class:adaptiveresonancecontextualworkflowresiliencequantum",
+            "integration:monitoring_systems",
+            "class:cwmaidynamictoolselector",
+            "integration:failure_analysis_engine",
+            "integration:security_information_and_event_management_(siem)_system",
+            "integration:integration:llm_orchestrator",
+            "integration:integration:class:cwmaiworkflowrecover",
+            "integration:resource_management_platforms",
+            "integration:cloud_platforms",
+            "type:integration",
+            "integration:alerting_system",
+            "approach:stream",
+            "integration:task",
+            "integration:tool_repository",
+            "integration:resource_management_system",
+            "integration:workflow_management_systems",
+            "integration:external",
+            "integration:logging_system",
+            "integration:workflow_engine",
+            "integration:api",
+            "integration:class:adaptivecontextualresonanceworkflowresilience",
+            "integration:data_analytics_platforms"
+          ],
+          "lost": [
+            "integration:cloud",
+            "integration:data_augmentation",
+            "approach:predictive",
+            "integration:prompt_engineering_module",
+            "integration:container",
+            "integration:security_module",
+            "integration:prompt_parser",
+            "integration:data",
+            "integration:event_logger",
+            "type:security",
+            "type:workflow adaptation system",
+            "class:evolutionaryadversarialdefense",
+            "type:workflow engine with adaptive error recovery",
+            "integration:llm_core",
+            "class:adaptiveresonancecontextualworkflowresilienceenhanced",
+            "integration:causal",
+            "type:workflow resilience strategy",
+            "integration:resource_manager",
+            "integration:contextualadaptiveworkflowrecoverynetworkcawrn"
+          ],
+          "persistent": [
+            "integration:workflow",
+            "integration:reinforcement",
+            "integration:resource",
+            "integration:logging",
+            "class:adaptiveresonancecontextualworkflowresilience",
+            "approach:event",
+            "approach:real-time",
+            "integration:monitoring",
+            "integration:monitoring_system",
+            "type:error_fix",
+            "integration:contextual",
+            "integration:alerting",
+            "approach:adaptive",
+            "import:logging",
+            "class:adaptiveresonancecontextualworkflowresiliencev4",
+            "type:workflow orchestration and resilience framework"
+          ]
+        },
+        "fitness_stats": {
+          "min": 0.0,
+          "max": 0.7320485320633432,
+          "avg": 0.21961455961900295
+        }
+      },
+      {
+        "generation": 13,
+        "duration": 25.269485,
+        "population_size": 10,
+        "avoided_duplicates": 0,
+        "knowledge_guided_mutations": 26,
+        "pattern_changes": {
+          "new": [
+            "integration:cwmaiworkflowrecover",
+            "integration:adaptive_learning",
+            "integration:machine",
+            "approach:predictive",
+            "integration:knowledge_graph_connector",
+            "integration:infrastructure",
+            "integration:error",
+            "class:intelligentcontextaugmentation",
+            "integration:data_sources",
+            "integration:prompt_manager",
+            "approach:distributed",
+            "integration:data",
+            "integration:user",
+            "integration:resource_management",
+            "integration:authentication_authorization",
+            "type:workflow resilience and scalability enhancement",
+            "class:adaptiveresonancecontextualworkflowresiliencev4scalable",
+            "integration:nlp_pipeline",
+            "class:adaptiveresonancecontextualworkflowresiliencev4reinforcement",
+            "approach:async",
+            "integration:external_services",
+            "type:optimization",
+            "type:workflow management system"
+          ],
+          "lost": [
+            "integration:llm_request_router",
+            "integration:alerting_systems",
+            "type:workflow resilience",
+            "integration:user_profile_service",
+            "integration:cryptographic_module",
+            "type:workflow resilience framework",
+            "class:secureadaptiveresonancecontextualworkflowresiliencev4",
+            "class:dynamicadaptiveresonancecontextualworkflowresilience",
+            "integration:centralized",
+            "integration:dynamic_authorization_service",
+            "class:adaptiveresonancecontextualworkflowresiliencequantum",
+            "integration:monitoring_systems",
+            "class:cwmaidynamictoolselector",
+            "integration:failure_analysis_engine",
+            "integration:security_information_and_event_management_(siem)_system",
+            "integration:integration:llm_orchestrator",
+            "integration:integration:class:cwmaiworkflowrecover",
+            "integration:resource_management_platforms",
+            "integration:cloud_platforms",
+            "type:workflow orchestration and resilience framework",
+            "integration:alerting_system",
+            "type:integration",
+            "approach:stream",
+            "integration:task",
+            "integration:monitoring_system",
+            "integration:tool_repository",
+            "integration:resource_management_system",
+            "integration:workflow_management_systems",
+            "integration:logging_system",
+            "integration:workflow_engine",
+            "integration:class:adaptivecontextualresonanceworkflowresilience",
+            "integration:data_analytics_platforms"
+          ],
+          "persistent": [
+            "integration:workflow",
+            "integration:reinforcement",
+            "integration:resource",
+            "integration:logging",
+            "class:adaptiveresonancecontextualworkflowresilience",
+            "approach:event",
+            "approach:real-time",
+            "integration:monitoring",
+            "type:workflow management system enhancement",
+            "integration:external",
+            "type:error_fix",
+            "integration:contextual",
+            "integration:alerting",
+            "approach:adaptive",
+            "integration:api",
+            "import:logging",
+            "class:adaptiveresonancecontextualworkflowresiliencev4"
+          ]
+        },
+        "fitness_stats": {
+          "min": 0.0,
+          "max": 0.7320485320633432,
+          "avg": 0.21961455961900295
+        }
+      },
+      {
+        "generation": 14,
+        "duration": 23.480019,
+        "population_size": 10,
+        "avoided_duplicates": 0,
+        "knowledge_guided_mutations": 28,
+        "pattern_changes": {
+          "new": [
+            "integration:automation_platforms",
+            "class:automatedadaptiveresonancecontextualworkflowresiliencev4",
+            "integration:alerting_systems",
+            "integration:intent_parser",
+            "class:cwmaiintentalignment",
+            "integration:orchestration",
+            "integration:configuration",
+            "class:adaptiveresonancecontextualworkflowresiliencev4optimized",
+            "integration:tool_generator",
+            "integration:action_executor",
+            "type:workflow orchestrator",
+            "integration:log_management_systems",
+            "type:workflow resilience system",
+            "integration:monitoring_systems",
+            "class:adaptiveresonancecontextualworkflowresiliencev3plus",
+            "integration:incident_management_systems",
+            "integration:ci/cd",
+            "integration:cloud_providers",
+            "integration:workflow_definition",
+            "integration:knowledge_base_systems",
+            "integration:resource_monitor",
+            "integration:task",
+            "integration:tool_invocation_manager",
+            "integration:identity"
+          ],
+          "lost": [
+            "integration:cwmaiworkflowrecover",
+            "integration:adaptive_learning",
+            "integration:machine",
+            "integration:knowledge_graph_connector",
+            "integration:infrastructure",
+            "type:workflow management system enhancement",
+            "integration:error",
+            "class:intelligentcontextaugmentation",
+            "integration:data_sources",
+            "integration:prompt_manager",
+            "approach:distributed",
+            "integration:user",
+            "integration:resource_management",
+            "integration:authentication_authorization",
+            "type:workflow resilience and scalability enhancement",
+            "class:adaptiveresonancecontextualworkflowresiliencev4scalable",
+            "integration:nlp_pipeline",
+            "class:adaptiveresonancecontextualworkflowresiliencev4reinforcement",
+            "integration:external_services",
+            "type:optimization",
+            "integration:api"
+          ],
+          "persistent": [
+            "integration:reinforcement",
+            "class:adaptiveresonancecontextualworkflowresilience",
+            "approach:adaptive",
+            "integration:resource",
+            "integration:logging",
+            "approach:event",
+            "approach:predictive",
+            "approach:real-time",
+            "integration:monitoring",
+            "import:logging",
+            "integration:data",
+            "type:error_fix",
+            "class:adaptiveresonancecontextualworkflowresiliencev4",
+            "integration:workflow",
+            "approach:async",
+            "integration:external",
+            "integration:contextual",
+            "integration:alerting",
+            "type:workflow management system"
+          ]
+        },
+        "fitness_stats": {
+          "min": 0.0,
+          "max": 0.7320485320633432,
+          "avg": 0.21961455961900295
+        }
+      }
+    ],
+    "top_patterns": [
+      "integration:prompt_generator",
+      "integration:prompt_engineering_module",
+      "type:error_fix",
+      "integration:failure_analysis_engine",
+      "class:contextualunderstandingenhancement",
+      "import:logging",
+      "integration:llm_orchestrator",
+      "class:proactiveresourcegovernance",
+      "integration:resource_monitor",
+      "integration:workflow_orchestrator"
+    ],
+    "recommendations": [
+      "Consider increasing mutation rate or population size due to stagnation",
+      "Explore 20 identified knowledge gaps"
+    ]
+  },
+  "synthesis_analysis": {
+    "total_nodes": 0,
+    "total_edges": 0,
+    "improvement_nodes": 0,
+    "research_nodes": 0,
+    "cross_connections": 0,
+    "knowledge_bridges": [],
+    "isolated_components": []
+  },
+  "research_summary": {
+    "enabled": true,
+    "cycles_completed": 0,
+    "insights_generated": 0,
+    "research_state": {
+      "cycles_completed": 0,
+      "is_running": false,
+      "topics_explored": [],
+      "insights": [],
+      "statistics": {
+        "successful_cycles": 0,
+        "failed_cycles": 0,
+        "total_research_conducted": 0,
+        "total_insights_extracted": 0,
+        "total_tasks_generated": 0,
+        "performance_improvements": []
+      },
+      "last_cycle_time": null,
+      "config": {
+        "max_concurrent_research": 5,
+        "cycle_interval_seconds": 60,
+        "emergency_cycle_interval": 180,
+        "max_research_per_cycle": 5,
+        "min_insight_confidence": 0.5,
+        "auto_implement_threshold": 0.7,
+        "enable_dynamic_triggering": true,
+        "enable_fixed_interval": false,
+        "enable_external_agent_research": true,
+        "external_research_frequency": 3,
+        "ai_papers_repositories": [
+          "https://github.com/masamasa59/ai-agent-papers",
+          "https://github.com/microsoft/autogen",
+          "https://github.com/microsoft/semantic-kernel",
+          "https://github.com/langchain-ai/langchain"
+        ],
+        "max_external_capabilities_per_cycle": 5,
+        "external_synthesis_threshold": 0.6,
+        "enable_proactive_research": true
+      },
+      "knowledge_store_size": 0,
+      "performance_improvements": []
+    }
+  },
+  "timestamp": "2025-06-22T19:16:04.534638"
+}

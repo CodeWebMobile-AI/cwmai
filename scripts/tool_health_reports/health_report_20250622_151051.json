@@ -1,0 +1,236 @@
+{
+  "timestamp": "2025-06-22T15:10:51.475947+00:00",
+  "total_tools": 81,
+  "healthy_tools": 65,
+  "issues_found": [
+    {
+      "tool": "control_system",
+      "type": "method_existence",
+      "description": "Found 2 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        174,
+        182
+      ],
+      "status": "fixed"
+    },
+    {
+      "tool": "security_vulnerability_scanner",
+      "type": "method_existence",
+      "description": "Found 1 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        79
+      ],
+      "status": "fixed"
+    },
+    {
+      "tool": "performance_analyzer",
+      "type": "method_existence",
+      "description": "Found 1 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        138
+      ],
+      "status": "fixed"
+    },
+    {
+      "tool": "analyze_tool_success",
+      "type": "method_existence",
+      "description": "Found 1 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        45
+      ],
+      "status": "fixed"
+    },
+    {
+      "tool": "check_laravel_react_completeness",
+      "type": "method_existence",
+      "description": "Found 1 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        129
+      ],
+      "status": "fixed"
+    },
+    {
+      "tool": "setup_laravel_react_starter",
+      "type": "null_safety",
+      "description": "Found 2 potential NoneType errors",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "add_null_checks",
+      "line_numbers": [
+        363,
+        376
+      ],
+      "status": "failed_to_fix"
+    },
+    {
+      "tool": "setup_laravel_react_starter",
+      "type": "method_existence",
+      "description": "Found 1 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        91
+      ],
+      "status": "fixed"
+    },
+    {
+      "tool": "advanced_code_analysis",
+      "type": "null_safety",
+      "description": "Found 1 potential NoneType errors",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "add_null_checks",
+      "line_numbers": [
+        202
+      ],
+      "status": "failed_to_fix"
+    },
+    {
+      "tool": "ensure_claude_workflow",
+      "type": "null_safety",
+      "description": "Found 3 potential NoneType errors",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "add_null_checks",
+      "line_numbers": [
+        52,
+        53,
+        54
+      ],
+      "status": "failed_to_fix"
+    },
+    {
+      "tool": "ensure_claude_workflow",
+      "type": "method_existence",
+      "description": "Found 1 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        98
+      ],
+      "status": "fixed"
+    },
+    {
+      "tool": "tool_task_1",
+      "type": "null_safety",
+      "description": "Found 2 potential NoneType errors",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "add_null_checks",
+      "line_numbers": [
+        371,
+        397
+      ],
+      "status": "failed_to_fix"
+    },
+    {
+      "tool": "add_missing_configs",
+      "type": "method_existence",
+      "description": "Found 1 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        139
+      ],
+      "status": "fixed"
+    },
+    {
+      "tool": "get_repository_issue_content",
+      "type": "method_existence",
+      "description": "Found 1 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        174
+      ],
+      "status": "fixed"
+    },
+    {
+      "tool": "get_project_info",
+      "type": "method_existence",
+      "description": "Found 3 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        45,
+        87,
+        191
+      ],
+      "status": "fixed"
+    },
+    {
+      "tool": "check_architecture_simple",
+      "type": "null_safety",
+      "description": "Found 1 potential NoneType errors",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "add_null_checks",
+      "line_numbers": [
+        91
+      ],
+      "status": "failed_to_fix"
+    },
+    {
+      "tool": "update_architecture_docs",
+      "type": "method_existence",
+      "description": "Found 1 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        354
+      ],
+      "status": "fixed"
+    },
+    {
+      "tool": "get_repository_issues",
+      "type": "method_existence",
+      "description": "Found 1 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        91
+      ],
+      "status": "fixed"
+    },
+    {
+      "tool": "find_async_functions",
+      "type": "null_safety",
+      "description": "Found 1 potential NoneType errors",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "add_null_checks",
+      "line_numbers": [
+        504
+      ],
+      "status": "failed_to_fix"
+    }
+  ],
+  "auto_fixed": 12,
+  "recommendations": [
+    "Consider implementing a standard null-safety pattern across all tools",
+    "Update tool documentation to reflect current API methods",
+    "Consider running the health check more frequently to catch issues early"
+  ]
+}

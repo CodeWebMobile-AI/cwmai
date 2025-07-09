@@ -1,0 +1,9 @@
+{
+  "name": "cwmai_evolutionary_dependency_management_v3_v4",
+  "type": "workflow",
+  "description": "Extends the existing dependency management system with proactive vulnerability scanning, automated remediation, and enhanced CI/CD integration using a risk-based scoring system. This version incorporates an error handling module to gracefully manage resolution failures and provides detailed rollback capabilities. It aims to minimize disruptions and improve application stability by proactively addressing dependency-related risks.",
+  "fitness": 0.7630152136644899,
+  "created_at": "2025-06-23T16:11:26.452640+00:00",
+  "generation": 6,
+  "file_path": "scripts/improvements/cwmai_evolutionary_dependency_management_v3_v4.py"
+}

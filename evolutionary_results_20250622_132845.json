@@ -1,0 +1,258 @@
+{
+  "summary": {
+    "runtime": "0:04:00.113567",
+    "generations_completed": 1,
+    "improvements_created": 0,
+    "errors_encountered": 17,
+    "final_population_size": 22,
+    "fitness_history": [
+      {
+        "generation": 1,
+        "average_fitness": 0.36363636363636365,
+        "best_fitness": 0.455,
+        "population_size": 11
+      }
+    ],
+    "verification_pass_rate": 0.0
+  },
+  "improvements_created": [],
+  "errors": [
+    {
+      "generation": 2,
+      "error": "unhashable type: 'dict'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 318, in calculate_diversity\n    unique_approaches = len(set(approaches))\nTypeError: unhashable type: 'dict'\n",
+      "timestamp": "2025-06-22T12:28:11.815126+00:00"
+    },
+    {
+      "generation": 3,
+      "error": "unhashable type: 'dict'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 318, in calculate_diversity\n    unique_approaches = len(set(approaches))\nTypeError: unhashable type: 'dict'\n",
+      "timestamp": "2025-06-22T12:28:13.816683+00:00"
+    },
+    {
+      "generation": 4,
+      "error": "unhashable type: 'dict'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 318, in calculate_diversity\n    unique_approaches = len(set(approaches))\nTypeError: unhashable type: 'dict'\n",
+      "timestamp": "2025-06-22T12:28:15.818712+00:00"
+    },
+    {
+      "generation": 5,
+      "error": "unhashable type: 'dict'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 318, in calculate_diversity\n    unique_approaches = len(set(approaches))\nTypeError: unhashable type: 'dict'\n",
+      "timestamp": "2025-06-22T12:28:17.820680+00:00"
+    },
+    {
+      "generation": 6,
+      "error": "unhashable type: 'dict'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 318, in calculate_diversity\n    unique_approaches = len(set(approaches))\nTypeError: unhashable type: 'dict'\n",
+      "timestamp": "2025-06-22T12:28:19.822431+00:00"
+    },
+    {
+      "generation": 7,
+      "error": "unhashable type: 'dict'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 318, in calculate_diversity\n    unique_approaches = len(set(approaches))\nTypeError: unhashable type: 'dict'\n",
+      "timestamp": "2025-06-22T12:28:21.824254+00:00"
+    },
+    {
+      "generation": 8,
+      "error": "unhashable type: 'dict'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 318, in calculate_diversity\n    unique_approaches = len(set(approaches))\nTypeError: unhashable type: 'dict'\n",
+      "timestamp": "2025-06-22T12:28:23.825944+00:00"
+    },
+    {
+      "generation": 9,
+      "error": "unhashable type: 'dict'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 318, in calculate_diversity\n    unique_approaches = len(set(approaches))\nTypeError: unhashable type: 'dict'\n",
+      "timestamp": "2025-06-22T12:28:25.828007+00:00"
+    },
+    {
+      "generation": 10,
+      "error": "unhashable type: 'dict'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 318, in calculate_diversity\n    unique_approaches = len(set(approaches))\nTypeError: unhashable type: 'dict'\n",
+      "timestamp": "2025-06-22T12:28:27.829701+00:00"
+    },
+    {
+      "generation": 11,
+      "error": "unhashable type: 'dict'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 318, in calculate_diversity\n    unique_approaches = len(set(approaches))\nTypeError: unhashable type: 'dict'\n",
+      "timestamp": "2025-06-22T12:28:29.831273+00:00"
+    },
+    {
+      "generation": 12,
+      "error": "unhashable type: 'dict'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 318, in calculate_diversity\n    unique_approaches = len(set(approaches))\nTypeError: unhashable type: 'dict'\n",
+      "timestamp": "2025-06-22T12:28:31.833313+00:00"
+    },
+    {
+      "generation": 13,
+      "error": "unhashable type: 'dict'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 318, in calculate_diversity\n    unique_approaches = len(set(approaches))\nTypeError: unhashable type: 'dict'\n",
+      "timestamp": "2025-06-22T12:28:33.835031+00:00"
+    },
+    {
+      "generation": 14,
+      "error": "unhashable type: 'dict'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 318, in calculate_diversity\n    unique_approaches = len(set(approaches))\nTypeError: unhashable type: 'dict'\n",
+      "timestamp": "2025-06-22T12:28:35.837418+00:00"
+    },
+    {
+      "generation": 15,
+      "error": "unhashable type: 'dict'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 318, in calculate_diversity\n    unique_approaches = len(set(approaches))\nTypeError: unhashable type: 'dict'\n",
+      "timestamp": "2025-06-22T12:28:37.839375+00:00"
+    },
+    {
+      "generation": 16,
+      "error": "unhashable type: 'dict'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 318, in calculate_diversity\n    unique_approaches = len(set(approaches))\nTypeError: unhashable type: 'dict'\n",
+      "timestamp": "2025-06-22T12:28:39.841227+00:00"
+    },
+    {
+      "generation": 17,
+      "error": "unhashable type: 'dict'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 318, in calculate_diversity\n    unique_approaches = len(set(approaches))\nTypeError: unhashable type: 'dict'\n",
+      "timestamp": "2025-06-22T12:28:41.843072+00:00"
+    },
+    {
+      "generation": 18,
+      "error": "unhashable type: 'dict'",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 318, in calculate_diversity\n    unique_approaches = len(set(approaches))\nTypeError: unhashable type: 'dict'\n",
+      "timestamp": "2025-06-22T12:28:43.844594+00:00"
+    }
+  ],
+  "verification_results": [],
+  "final_population": [
+    {
+      "name": "lru_cache_implementation",
+      "type": "optimization",
+      "fitness": 0.455,
+      "generation": 0
+    },
+    {
+      "name": "distributed_cache_implementation",
+      "type": "optimization",
+      "fitness": 0.395,
+      "generation": 0
+    },
+    {
+      "name": "ttl_cache_implementation",
+      "type": "optimization",
+      "fitness": 0.375,
+      "generation": 0
+    },
+    {
+      "name": "lru_cache_implementation",
+      "type": "cache",
+      "fitness": 0.0,
+      "generation": 1
+    },
+    {
+      "name": "Unified Distributed and TTL Cache",
+      "type": "Caching System",
+      "fitness": 0.0,
+      "generation": 1
+    },
+    {
+      "name": "lru_cache_implementation_v3",
+      "type": "optimization",
+      "fitness": 0.0,
+      "generation": 0
+    },
+    {
+      "name": "result_memoization_implementation",
+      "type": "optimization",
+      "fitness": 0,
+      "generation": 0
+    },
+    {
+      "name": "Optimized Distributed Cache",
+      "type": "Distributed Caching System",
+      "fitness": 0.0,
+      "generation": 1
+    },
+    {
+      "name": "Smart Cache with TTL and Distribution",
+      "type": "Cache System",
+      "fitness": 0.0,
+      "generation": 1
+    },
+    {
+      "name": "distributed_cache_implementation_v7",
+      "type": "optimization",
+      "fitness": 0.0,
+      "generation": 0
+    },
+    {
+      "name": "ttl_cache_implementation",
+      "type": "optimization",
+      "fitness": 0,
+      "generation": 0
+    },
+    {
+      "name": "DistributedCacheEnhanced",
+      "type": "Distributed Cache Implementation",
+      "fitness": 0.0,
+      "generation": 1
+    },
+    {
+      "name": "Distributed LRU Cache",
+      "type": "Caching System",
+      "fitness": 0.0,
+      "generation": 1
+    },
+    {
+      "name": "ttl_cache_implementation_v11",
+      "type": "optimization",
+      "fitness": 0.0,
+      "generation": 0
+    },
+    {
+      "name": "lru_cache_implementation",
+      "type": "optimization",
+      "fitness": 0,
+      "generation": 0
+    },
+    {
+      "name": "distributed_cache_implementation",
+      "type": "component",
+      "fitness": 0.0,
+      "generation": 1
+    },
+    {
+      "name": "Distributed LRU Cache",
+      "type": "Cache",
+      "fitness": 0.0,
+      "generation": 1
+    },
+    {
+      "name": "lru_cache_implementation_v15",
+      "type": "optimization",
+      "fitness": 0.0,
+      "generation": 0
+    },
+    {
+      "name": "distributed_cache_implementation",
+      "type": "optimization",
+      "fitness": 0,
+      "generation": 0
+    },
+    {
+      "name": "LRU Cache Implementation with Error Recovery",
+      "type": "Cache",
+      "fitness": 0.0,
+      "generation": 1
+    },
+    {
+      "name": "Hybrid Distributed LRU Cache",
+      "type": "Caching System",
+      "fitness": 0.0,
+      "generation": 1
+    },
+    {
+      "name": "distributed_cache_implementation_v19",
+      "type": "optimization",
+      "fitness": 0.0,
+      "generation": 0
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+[
+  {
+    "task_id": "issue_CodeWebMobile-AI/craftflow_2_1751560592_24aec86d",
+    "event": "started",
+    "timestamp": "2025-07-03T16:39:00.488354+00:00",
+    "metadata": {
+      "executor": "LocalIssueCreator",
+      "claude_enabled": true
+    }
+  }
+]

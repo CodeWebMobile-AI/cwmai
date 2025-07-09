@@ -1,0 +1,30 @@
+# Core Dependencies for CWMAI
+# These are the essential packages needed for basic functionality
+
+# GitHub Integration
+PyGithub==1.59.0
+
+# HTTP and Web
+requests==2.32.3
+aiohttp==3.9.1
+websockets==12.0
+beautifulsoup4==4.12.3
+
+# Async Support
+nest_asyncio==1.6.0
+
+# Redis (without conflicting packages)
+redis==5.0.1
+aioredis==2.0.1
+hiredis==2.3.2
+
+# Environment and System
+python-dotenv
+psutil==5.9.5
+gitpython==3.1.35
+
+# Terminal Colors
+colorama==0.4.6
+
+# Basic Data Processing
+networkx==3.2.1

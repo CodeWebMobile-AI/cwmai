@@ -1,0 +1,12 @@
+#!/bin/bash
+# CWMAI ARM64 Wrapper - Ensures consistent ARM64 execution
+
+# Get the directory of this script
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# Export environment variables
+export $(cat "$SCRIPT_DIR/.env.local" | grep -v '^#' | xargs)
+export NLTK_DATA="$HOME/nltk_data"
+
+# Force ARM64 architecture
+exec arch -arm64 "$SCRIPT_DIR/cwmai" "$@"

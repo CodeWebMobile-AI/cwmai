@@ -1,0 +1,672 @@
+{
+  "summary": {
+    "runtime": "0:10:01.848380",
+    "generations_completed": 10,
+    "improvements_created": 3,
+    "errors_encountered": 0,
+    "final_population_size": 22,
+    "fitness_history": [
+      {
+        "generation": 1,
+        "average_fitness": 0.3654545454545455,
+        "best_fitness": 0.455,
+        "population_size": 11
+      },
+      {
+        "generation": 2,
+        "average_fitness": 0.47522727272727283,
+        "best_fitness": 0.61,
+        "population_size": 22
+      },
+      {
+        "generation": 3,
+        "average_fitness": 0.5543181818181817,
+        "best_fitness": 0.6299999999999999,
+        "population_size": 22
+      },
+      {
+        "generation": 4,
+        "average_fitness": 0.5386363636363636,
+        "best_fitness": 0.6499999999999999,
+        "population_size": 22
+      },
+      {
+        "generation": 5,
+        "average_fitness": 0.5338636363636363,
+        "best_fitness": 0.6499999999999999,
+        "population_size": 22
+      },
+      {
+        "generation": 6,
+        "average_fitness": 0.58,
+        "best_fitness": 0.6499999999999999,
+        "population_size": 22
+      },
+      {
+        "generation": 7,
+        "average_fitness": 0.5459090909090908,
+        "best_fitness": 0.6499999999999999,
+        "population_size": 22
+      },
+      {
+        "generation": 8,
+        "average_fitness": 0.5732758620689655,
+        "best_fitness": 0.6499999999999999,
+        "population_size": 29
+      },
+      {
+        "generation": 9,
+        "average_fitness": 0.5813636363636364,
+        "best_fitness": 0.6499999999999999,
+        "population_size": 22
+      },
+      {
+        "generation": 10,
+        "average_fitness": 0.6038636363636364,
+        "best_fitness": 0.6499999999999999,
+        "population_size": 22
+      }
+    ],
+    "verification_pass_rate": 1.0
+  },
+  "improvements_created": [
+    {
+      "improvement": {
+        "name": "Evolutionary CWMAI Buffer with ATRO-Guided Logic",
+        "type": "Adaptive Data Reservoir",
+        "description": "A dynamic data reservoir, replacing a traditional adaptive resource allocation (ARA) cache, designed for resilient performance. It leverages a Covariance-Weighted Moving Average (CWMAI) during runtime to predict data demand and proactively adapt storage allocation. To enhance robustness, an Adaptive Transaction Replay Optimization (ATRO) logic, inspired by evolutionary algorithms, is integrated to handle data inconsistencies and potential failures across multiple clusters. Instead of fixed resources, storage 'units' are evolved over time, optimized for performance and data integrity. It considers the workload during allocation and recovery, ensuring the 'reservoir' always has enough units for current operation.",
+        "approach": "The data reservoir utilizes a multi-faceted approach. 1) **CWMAI-Based Prediction:** The CWMAI component continuously monitors access patterns and predicts future data requirements. This allows for proactive adjustment of storage unit allocation across the four clusters. 2) **ATRO-Driven Recovery:** In case of data corruption or failure, ATRO logic kicks in. ATRO works by analyzing the transaction log. It uses an evolutionary inspired algorithm to determine the optimal 'replays' (transactions) necessary to restore data consistency, minimizing rollback time. Different potential replay sequences are 'evolved' and tested for effectiveness. The most 'fit' sequence is chosen for recovery. 3) **Evolving Units:** The reservoir dynamically adapts the size and placement of its 'units' of data based on both CWMAI prediction and feedback from the ATRO's success rate. Units can migrate between clusters to optimize access. 4) **Logic Execution Context:** ATRO ensures the logic operates with contextual awareness. For instance, critical logic will execute on specific clusters to limit external dependency.",
+        "metrics": [
+          "Data Availability (percentage of time data is accessible)",
+          "Recovery Time (average time to recover from a data failure)",
+          "Hit Ratio (percentage of successful data accesses)",
+          "Unit Migration Frequency (number of units moving between clusters per unit time)",
+          "CWMAI Prediction Accuracy (deviation between predicted and actual data access)",
+          "ATRO Convergence Rate (time it takes for ATRO to find the optimal replay sequence)",
+          "Storage Unit Utilization (percentage of allocated storage actively used)",
+          "Transaction Completion Rate During Degradation",
+          "Total Logic Execution Time per recovery cycle"
+        ],
+        "integration_points": [
+          "Data Ingestion Pipeline: Integrates with data sources to populate the reservoir.",
+          "Data Retrieval API: Provides access to the data stored in the reservoir.",
+          "Monitoring System: Reports metrics on data availability, recovery time, and resource utilization.",
+          "Fault Detection System: Triggers ATRO logic upon detection of data inconsistencies.",
+          "Transaction Logging Service: Provides the raw transaction data necessary for ATRO."
+        ],
+        "code": "\"\"\"\nEvolutionary CWMAI Buffer with ATRO-Guided Logic - A dynamic data reservoir, replacing a traditional adaptive resource allocation (ARA) cache, designed for resilient performance. It leverages a Covariance-Weighted Moving Average (CWMAI) during runtime to predict data demand and proactively adapt storage allocation. To enhance robustness, an Adaptive Transaction Replay Optimization (ATRO) logic, inspired by evolutionary algorithms, is integrated to handle data inconsistencies and potential failures across multiple clusters. Instead of fixed resources, storage 'units' are evolved over time, optimized for performance and data integrity. It considers the workload during allocation and recovery, ensuring the 'reservoir' always has enough units for current operation.\nGenerated by CWMAI Evolutionary System\n\"\"\"\n\nimport logging\nfrom typing import Dict, Any\n\n\nclass EvolutionaryCwmaiBufferWithAtroGuidedLogic:\n    def __init__(self):\n        self.logger = logging.getLogger(__name__)\n        self.name = \"Evolutionary CWMAI Buffer with ATRO-Guided Logic\"\n        \n    def apply(self, context: Dict[str, Any]) -> Dict[str, Any]:\n        # The data reservoir utilizes a multi-faceted approach. 1) **CWMAI-Based Prediction:** The CWMAI component continuously monitors access patterns and predicts future data requirements. This allows for proactive adjustment of storage unit allocation across the four clusters. 2) **ATRO-Driven Recovery:** In case of data corruption or failure, ATRO logic kicks in. ATRO works by analyzing the transaction log. It uses an evolutionary inspired algorithm to determine the optimal 'replays' (transactions) necessary to restore data consistency, minimizing rollback time. Different potential replay sequences are 'evolved' and tested for effectiveness. The most 'fit' sequence is chosen for recovery. 3) **Evolving Units:** The reservoir dynamically adapts the size and placement of its 'units' of data based on both CWMAI prediction and feedback from the ATRO's success rate. Units can migrate between clusters to optimize access. 4) **Logic Execution Context:** ATRO ensures the logic operates with contextual awareness. For instance, critical logic will execute on specific clusters to limit external dependency.\n        self.logger.info(f\"Applying {self.name}\")\n        return {'success': True, 'improvement': self.name}\n",
+        "created_at": "2025-06-22T13:55:18.253110+00:00",
+        "parent": "46bebb1c",
+        "mutation": "Add error recovery mechanisms",
+        "generation": 2,
+        "fitness": 0.6299999999999999,
+        "id": "591b9f12",
+        "objective_scores": {
+          "performance": 0.35,
+          "quality": 0.5499999999999999,
+          "maintainability": 0.8999999999999999,
+          "innovation": 0.8999999999999999,
+          "overall": 0.6299999999999999,
+          "_evaluated_at": 1750600535.30333
+        }
+      },
+      "verification": {
+        "improvement_id": "591b9f12",
+        "improvement_name": "Evolutionary CWMAI Buffer with ATRO-Guided Logic",
+        "verification_levels": {
+          "syntax": {
+            "passed": true,
+            "metrics": {
+              "functions": 2,
+              "classes": 1,
+              "lines": 19,
+              "imports": 2
+            }
+          },
+          "imports": {
+            "passed": true,
+            "metrics": {
+              "import_count": 3
+            }
+          },
+          "execution": {
+            "passed": true,
+            "metrics": {
+              "execution_time": "under 10s",
+              "stdout_lines": 0
+            }
+          },
+          "integration": {
+            "passed": false,
+            "errors": [
+              "Module not found for: Data Ingestion Pipeline: Integrates with data sources to populate the reservoir.",
+              "Module not found for: Data Retrieval API: Provides access to the data stored in the reservoir.",
+              "Module not found for: Monitoring System: Reports metrics on data availability, recovery time, and resource utilization.",
+              "Module not found for: Fault Detection System: Triggers ATRO logic upon detection of data inconsistencies.",
+              "Module not found for: Transaction Logging Service: Provides the raw transaction data necessary for ATRO."
+            ]
+          }
+        },
+        "overall_score": 0.6,
+        "is_deployable": true,
+        "issues": [
+          "Module not found for: Data Ingestion Pipeline: Integrates with data sources to populate the reservoir.",
+          "Module not found for: Data Retrieval API: Provides access to the data stored in the reservoir.",
+          "Module not found for: Monitoring System: Reports metrics on data availability, recovery time, and resource utilization.",
+          "Module not found for: Fault Detection System: Triggers ATRO logic upon detection of data inconsistencies.",
+          "Module not found for: Transaction Logging Service: Provides the raw transaction data necessary for ATRO."
+        ],
+        "metrics": {
+          "functions": 2,
+          "classes": 1,
+          "lines": 19,
+          "imports": 2,
+          "import_count": 3,
+          "execution_time": "under 10s",
+          "stdout_lines": 0
+        }
+      },
+      "file_path": "scripts/improvements/Evolutionary CWMAI Buffer with ATRO-Guided Logic.py",
+      "timestamp": "2025-06-22T13:56:25.757670+00:00"
+    },
+    {
+      "improvement": {
+        "name": "Event-Keyed Attenuation with Proactive Cache Allocation (EKAPCA)",
+        "type": "Dynamic Resource Management System",
+        "description": "EKAPCA optimizes application performance by intelligently attenuating resource impact based on real-time telemetry and proactively allocating cache using an event-keyed strategy. Instead of static resource limits, EKAPCA employs adaptive attenuation modulated by incoming data characteristics coupled with a dynamic cache, responsive to predicted future demand. More specifically, incoming 'event' types trigger adjustments to resource attenuation levels, informing predictive 'key'-based cache population.",
+        "approach": "EKAPCA combines telemetry-driven resource attenuation with predictive cache allocation. Incoming events are classified and trigger adjustments to attenuation factors, limiting the resource footprint of specific operations. A predictive cache uses historical event patterns and associated telemetry to proactively allocate storage for frequently accessed or high-impact 'keys'. This allows for more granular control over resource usage, preventing bottlenecks while ensuring data accessibility. A central 'broker' orchestrates event processing, attenuation calculations, and cache management.",
+        "metrics": [
+          "Event Processing Latency",
+          "Cache Hit Ratio (per 'key')",
+          "Resource Attenuation Factor (by event type)",
+          "CPU Utilization (across application components)",
+          "Memory Footprint (of cache)",
+          "Request Throughput",
+          "Anomaly Detection Rate (of performance deviations)"
+        ],
+        "integration_points": [
+          "Telemetry Collection Agents (e.g., Prometheus exporters)",
+          "Application Instrumentation (for event emission)",
+          "Message Queues (for event delivery)",
+          "Central 'Broker' API (for configuration and monitoring)",
+          "Resource Management Frameworks (e.g., Kubernetes, Mesos)",
+          "Monitoring and Alerting Systems (e.g., Grafana, PagerDuty)",
+          "Data Streaming Platforms (e.g., Kafka, Flink)"
+        ],
+        "code": "\"\"\"\nEvent-Keyed Attenuation with Proactive Cache Allocation (EKAPCA) - EKAPCA optimizes application performance by intelligently attenuating resource impact based on real-time telemetry and proactively allocating cache using an event-keyed strategy. Instead of static resource limits, EKAPCA employs adaptive attenuation modulated by incoming data characteristics coupled with a dynamic cache, responsive to predicted future demand. More specifically, incoming 'event' types trigger adjustments to resource attenuation levels, informing predictive 'key'-based cache population.\nGenerated by CWMAI Evolutionary System\n\"\"\"\n\nimport logging\nfrom typing import Dict, Any\n\n\nclass EventKeyedAttenuationWithProactiveCacheAllocationEkapca:\n    def __init__(self):\n        self.logger = logging.getLogger(__name__)\n        self.name = \"Event-Keyed Attenuation with Proactive Cache Allocation (EKAPCA)\"\n        \n    def apply(self, context: Dict[str, Any]) -> Dict[str, Any]:\n        # EKAPCA combines telemetry-driven resource attenuation with predictive cache allocation. Incoming events are classified and trigger adjustments to attenuation factors, limiting the resource footprint of specific operations. A predictive cache uses historical event patterns and associated telemetry to proactively allocate storage for frequently accessed or high-impact 'keys'. This allows for more granular control over resource usage, preventing bottlenecks while ensuring data accessibility. A central 'broker' orchestrates event processing, attenuation calculations, and cache management.\n        self.logger.info(f\"Applying {self.name}\")\n        return {'success': True, 'improvement': self.name}\n",
+        "created_at": "2025-06-22T13:56:23.664420+00:00",
+        "parents": [
+          "9d27ccf1",
+          "46bebb1c"
+        ],
+        "generation": 3,
+        "fitness": 0.6499999999999999,
+        "id": "1b66181a",
+        "objective_scores": {
+          "performance": 0.35,
+          "quality": 0.5499999999999999,
+          "maintainability": 0.8999999999999999,
+          "innovation": 1.0,
+          "overall": 0.6499999999999999,
+          "_evaluated_at": 1750600587.814642
+        }
+      },
+      "verification": {
+        "improvement_id": "1b66181a",
+        "improvement_name": "Event-Keyed Attenuation with Proactive Cache Allocation (EKAPCA)",
+        "verification_levels": {
+          "syntax": {
+            "passed": true,
+            "metrics": {
+              "functions": 2,
+              "classes": 1,
+              "lines": 19,
+              "imports": 2
+            }
+          },
+          "imports": {
+            "passed": true,
+            "metrics": {
+              "import_count": 3
+            }
+          },
+          "execution": {
+            "passed": true,
+            "metrics": {
+              "execution_time": "under 10s",
+              "stdout_lines": 0
+            }
+          },
+          "integration": {
+            "passed": false,
+            "errors": [
+              "Module not found for: Telemetry Collection Agents (e.g., Prometheus exporters)",
+              "Module not found for: Resource Management Frameworks (e.g., Kubernetes, Mesos)",
+              "Module not found for: Monitoring and Alerting Systems (e.g., Grafana, PagerDuty)",
+              "Module not found for: Data Streaming Platforms (e.g., Kafka, Flink)"
+            ]
+          }
+        },
+        "overall_score": 0.6,
+        "is_deployable": true,
+        "issues": [
+          "Module not found for: Telemetry Collection Agents (e.g., Prometheus exporters)",
+          "Module not found for: Resource Management Frameworks (e.g., Kubernetes, Mesos)",
+          "Module not found for: Monitoring and Alerting Systems (e.g., Grafana, PagerDuty)",
+          "Module not found for: Data Streaming Platforms (e.g., Kafka, Flink)"
+        ],
+        "metrics": {
+          "functions": 2,
+          "classes": 1,
+          "lines": 19,
+          "imports": 2,
+          "import_count": 3,
+          "execution_time": "under 10s",
+          "stdout_lines": 0
+        }
+      },
+      "file_path": "scripts/improvements/Event-Keyed Attenuation with Proactive Cache Allocation (EKAPCA).py",
+      "timestamp": "2025-06-22T13:59:05.823255+00:00"
+    },
+    {
+      "improvement": {
+        "name": "Event-Keyed Attenuation with Proactive Cache Allocation (EKAPCA)",
+        "type": "Dynamic Resource Management System",
+        "description": "EKAPCA optimizes application performance by intelligently attenuating resource impact based on real-time telemetry and proactively allocating cache using an event-keyed strategy. Instead of static resource limits, EKAPCA employs adaptive attenuation modulated by incoming data characteristics coupled with a dynamic cache, responsive to predicted future demand. More specifically, incoming 'event' types trigger adjustments to resource attenuation levels, informing predictive 'key'-based cache population.",
+        "approach": "EKAPCA combines telemetry-driven resource attenuation with predictive cache allocation. Incoming events are classified and trigger adjustments to attenuation factors, limiting the resource footprint of specific operations. A predictive cache uses historical event patterns and associated telemetry to proactively allocate storage for frequently accessed or high-impact 'keys'. This allows for more granular control over resource usage, preventing bottlenecks while ensuring data accessibility. A central 'broker' orchestrates event processing, attenuation calculations, and cache management.",
+        "metrics": [
+          "Event Processing Latency",
+          "Cache Hit Ratio (per 'key')",
+          "Resource Attenuation Factor (by event type)",
+          "CPU Utilization (across application components)",
+          "Memory Footprint (of cache)",
+          "Request Throughput",
+          "Anomaly Detection Rate (of performance deviations)"
+        ],
+        "integration_points": [
+          "Telemetry Collection Agents (e.g., Prometheus exporters)",
+          "Application Instrumentation (for event emission)",
+          "Message Queues (for event delivery)",
+          "Central 'Broker' API (for configuration and monitoring)",
+          "Resource Management Frameworks (e.g., Kubernetes, Mesos)",
+          "Monitoring and Alerting Systems (e.g., Grafana, PagerDuty)",
+          "Data Streaming Platforms (e.g., Kafka, Flink)"
+        ],
+        "code": "\"\"\"\nEvent-Keyed Attenuation with Proactive Cache Allocation (EKAPCA) - EKAPCA optimizes application performance by intelligently attenuating resource impact based on real-time telemetry and proactively allocating cache using an event-keyed strategy. Instead of static resource limits, EKAPCA employs adaptive attenuation modulated by incoming data characteristics coupled with a dynamic cache, responsive to predicted future demand. More specifically, incoming 'event' types trigger adjustments to resource attenuation levels, informing predictive 'key'-based cache population.\nGenerated by CWMAI Evolutionary System\n\"\"\"\n\nimport logging\nfrom typing import Dict, Any\n\n\nclass EventKeyedAttenuationWithProactiveCacheAllocationEkapca:\n    def __init__(self):\n        self.logger = logging.getLogger(__name__)\n        self.name = \"Event-Keyed Attenuation with Proactive Cache Allocation (EKAPCA)\"\n        \n    def apply(self, context: Dict[str, Any]) -> Dict[str, Any]:\n        # EKAPCA combines telemetry-driven resource attenuation with predictive cache allocation. Incoming events are classified and trigger adjustments to attenuation factors, limiting the resource footprint of specific operations. A predictive cache uses historical event patterns and associated telemetry to proactively allocate storage for frequently accessed or high-impact 'keys'. This allows for more granular control over resource usage, preventing bottlenecks while ensuring data accessibility. A central 'broker' orchestrates event processing, attenuation calculations, and cache management.\n        self.logger.info(f\"Applying {self.name}\")\n        return {'success': True, 'improvement': self.name}\n",
+        "created_at": "2025-06-22T13:56:23.664420+00:00",
+        "parents": [
+          "9d27ccf1",
+          "46bebb1c"
+        ],
+        "generation": 3,
+        "fitness": 0.6499999999999999,
+        "id": "1b66181a",
+        "objective_scores": {
+          "performance": 0.35,
+          "quality": 0.5499999999999999,
+          "maintainability": 0.8999999999999999,
+          "innovation": 1.0,
+          "overall": 0.6499999999999999,
+          "_evaluated_at": 1750600587.814642
+        }
+      },
+      "verification": {
+        "improvement_id": "1b66181a",
+        "improvement_name": "Event-Keyed Attenuation with Proactive Cache Allocation (EKAPCA)",
+        "verification_levels": {
+          "syntax": {
+            "passed": true,
+            "metrics": {
+              "functions": 2,
+              "classes": 1,
+              "lines": 19,
+              "imports": 2
+            }
+          },
+          "imports": {
+            "passed": true,
+            "metrics": {
+              "import_count": 3
+            }
+          },
+          "execution": {
+            "passed": true,
+            "metrics": {
+              "execution_time": "under 10s",
+              "stdout_lines": 0
+            }
+          },
+          "integration": {
+            "passed": false,
+            "errors": [
+              "Module not found for: Telemetry Collection Agents (e.g., Prometheus exporters)",
+              "Module not found for: Resource Management Frameworks (e.g., Kubernetes, Mesos)",
+              "Module not found for: Monitoring and Alerting Systems (e.g., Grafana, PagerDuty)",
+              "Module not found for: Data Streaming Platforms (e.g., Kafka, Flink)"
+            ]
+          }
+        },
+        "overall_score": 0.6,
+        "is_deployable": true,
+        "issues": [
+          "Module not found for: Telemetry Collection Agents (e.g., Prometheus exporters)",
+          "Module not found for: Resource Management Frameworks (e.g., Kubernetes, Mesos)",
+          "Module not found for: Monitoring and Alerting Systems (e.g., Grafana, PagerDuty)",
+          "Module not found for: Data Streaming Platforms (e.g., Kafka, Flink)"
+        ],
+        "metrics": {
+          "functions": 2,
+          "classes": 1,
+          "lines": 19,
+          "imports": 2,
+          "import_count": 3,
+          "execution_time": "under 10s",
+          "stdout_lines": 0
+        }
+      },
+      "file_path": "scripts/improvements/Event-Keyed Attenuation with Proactive Cache Allocation (EKAPCA).py",
+      "timestamp": "2025-06-22T14:01:18.244596+00:00"
+    }
+  ],
+  "errors": [],
+  "verification_results": [
+    {
+      "improvement_id": "591b9f12",
+      "improvement_name": "Evolutionary CWMAI Buffer with ATRO-Guided Logic",
+      "verification_levels": {
+        "syntax": {
+          "passed": true,
+          "metrics": {
+            "functions": 2,
+            "classes": 1,
+            "lines": 19,
+            "imports": 2
+          }
+        },
+        "imports": {
+          "passed": true,
+          "metrics": {
+            "import_count": 3
+          }
+        },
+        "execution": {
+          "passed": true,
+          "metrics": {
+            "execution_time": "under 10s",
+            "stdout_lines": 0
+          }
+        },
+        "integration": {
+          "passed": false,
+          "errors": [
+            "Module not found for: Data Ingestion Pipeline: Integrates with data sources to populate the reservoir.",
+            "Module not found for: Data Retrieval API: Provides access to the data stored in the reservoir.",
+            "Module not found for: Monitoring System: Reports metrics on data availability, recovery time, and resource utilization.",
+            "Module not found for: Fault Detection System: Triggers ATRO logic upon detection of data inconsistencies.",
+            "Module not found for: Transaction Logging Service: Provides the raw transaction data necessary for ATRO."
+          ]
+        }
+      },
+      "overall_score": 0.6,
+      "is_deployable": true,
+      "issues": [
+        "Module not found for: Data Ingestion Pipeline: Integrates with data sources to populate the reservoir.",
+        "Module not found for: Data Retrieval API: Provides access to the data stored in the reservoir.",
+        "Module not found for: Monitoring System: Reports metrics on data availability, recovery time, and resource utilization.",
+        "Module not found for: Fault Detection System: Triggers ATRO logic upon detection of data inconsistencies.",
+        "Module not found for: Transaction Logging Service: Provides the raw transaction data necessary for ATRO."
+      ],
+      "metrics": {
+        "functions": 2,
+        "classes": 1,
+        "lines": 19,
+        "imports": 2,
+        "import_count": 3,
+        "execution_time": "under 10s",
+        "stdout_lines": 0
+      }
+    },
+    {
+      "improvement_id": "1b66181a",
+      "improvement_name": "Event-Keyed Attenuation with Proactive Cache Allocation (EKAPCA)",
+      "verification_levels": {
+        "syntax": {
+          "passed": true,
+          "metrics": {
+            "functions": 2,
+            "classes": 1,
+            "lines": 19,
+            "imports": 2
+          }
+        },
+        "imports": {
+          "passed": true,
+          "metrics": {
+            "import_count": 3
+          }
+        },
+        "execution": {
+          "passed": true,
+          "metrics": {
+            "execution_time": "under 10s",
+            "stdout_lines": 0
+          }
+        },
+        "integration": {
+          "passed": false,
+          "errors": [
+            "Module not found for: Telemetry Collection Agents (e.g., Prometheus exporters)",
+            "Module not found for: Resource Management Frameworks (e.g., Kubernetes, Mesos)",
+            "Module not found for: Monitoring and Alerting Systems (e.g., Grafana, PagerDuty)",
+            "Module not found for: Data Streaming Platforms (e.g., Kafka, Flink)"
+          ]
+        }
+      },
+      "overall_score": 0.6,
+      "is_deployable": true,
+      "issues": [
+        "Module not found for: Telemetry Collection Agents (e.g., Prometheus exporters)",
+        "Module not found for: Resource Management Frameworks (e.g., Kubernetes, Mesos)",
+        "Module not found for: Monitoring and Alerting Systems (e.g., Grafana, PagerDuty)",
+        "Module not found for: Data Streaming Platforms (e.g., Kafka, Flink)"
+      ],
+      "metrics": {
+        "functions": 2,
+        "classes": 1,
+        "lines": 19,
+        "imports": 2,
+        "import_count": 3,
+        "execution_time": "under 10s",
+        "stdout_lines": 0
+      }
+    },
+    {
+      "improvement_id": "1b66181a",
+      "improvement_name": "Event-Keyed Attenuation with Proactive Cache Allocation (EKAPCA)",
+      "verification_levels": {
+        "syntax": {
+          "passed": true,
+          "metrics": {
+            "functions": 2,
+            "classes": 1,
+            "lines": 19,
+            "imports": 2
+          }
+        },
+        "imports": {
+          "passed": true,
+          "metrics": {
+            "import_count": 3
+          }
+        },
+        "execution": {
+          "passed": true,
+          "metrics": {
+            "execution_time": "under 10s",
+            "stdout_lines": 0
+          }
+        },
+        "integration": {
+          "passed": false,
+          "errors": [
+            "Module not found for: Telemetry Collection Agents (e.g., Prometheus exporters)",
+            "Module not found for: Resource Management Frameworks (e.g., Kubernetes, Mesos)",
+            "Module not found for: Monitoring and Alerting Systems (e.g., Grafana, PagerDuty)",
+            "Module not found for: Data Streaming Platforms (e.g., Kafka, Flink)"
+          ]
+        }
+      },
+      "overall_score": 0.6,
+      "is_deployable": true,
+      "issues": [
+        "Module not found for: Telemetry Collection Agents (e.g., Prometheus exporters)",
+        "Module not found for: Resource Management Frameworks (e.g., Kubernetes, Mesos)",
+        "Module not found for: Monitoring and Alerting Systems (e.g., Grafana, PagerDuty)",
+        "Module not found for: Data Streaming Platforms (e.g., Kafka, Flink)"
+      ],
+      "metrics": {
+        "functions": 2,
+        "classes": 1,
+        "lines": 19,
+        "imports": 2,
+        "import_count": 3,
+        "execution_time": "under 10s",
+        "stdout_lines": 0
+      }
+    }
+  ],
+  "final_population": [
+    {
+      "name": "Event-Keyed Attenuation with Proactive Cache Allocation (EKAPCA)",
+      "type": "Dynamic Resource Management System",
+      "fitness": 0.6499999999999999,
+      "generation": 3
+    },
+    {
+      "name": "Event-Keyed Attenuation with Proactive Cache Allocation (EKAPCA)_v3",
+      "type": "Dynamic Resource Management System",
+      "fitness": 0.6499999999999999,
+      "generation": 3
+    },
+    {
+      "name": "Event-Keyed Attenuation with Proactive Cache Allocation (EKAPCA)_v15",
+      "type": "Dynamic Resource Management System",
+      "fitness": 0.6499999999999999,
+      "generation": 3
+    },
+    {
+      "name": "Event-Keyed Attenuation with Proactive Cache Allocation (EKAPCA)_v3",
+      "type": "Dynamic Resource Management System",
+      "fitness": 0.6499999999999999,
+      "generation": 3
+    },
+    {
+      "name": "Event-Keyed Attenuation with Proactive Cache Allocation (EKAPCA)_v3_v7",
+      "type": "Dynamic Resource Management System",
+      "fitness": 0.6499999999999999,
+      "generation": 3
+    },
+    {
+      "name": "Event-Keyed Attenuation with Proactive Cache Allocation (EKAPCA)_v15_v11",
+      "type": "Dynamic Resource Management System",
+      "fitness": 0.6499999999999999,
+      "generation": 3
+    },
+    {
+      "name": "Event-Keyed Attenuation with Proactive Cache Allocation (EKAPCA)_v15",
+      "type": "Dynamic Resource Management System",
+      "fitness": 0.6499999999999999,
+      "generation": 3
+    },
+    {
+      "name": "Event-Keyed Attenuation with Proactive Cache Allocation (EKAPCA)_v3_v19",
+      "type": "Dynamic Resource Management System",
+      "fitness": 0.6499999999999999,
+      "generation": 3
+    },
+    {
+      "name": "Event-Keyed Attenuation with Proactive Cache Allocation (EKAPCA)_v3_v3",
+      "type": "Dynamic Resource Management System",
+      "fitness": 0.6499999999999999,
+      "generation": 3
+    },
+    {
+      "name": "Root-Like Projection with Generated Atro-but Differentiation (RPGAD)_v1",
+      "type": "Dynamic Data Dispersion and Prioritization",
+      "fitness": 0.0,
+      "generation": 10
+    },
+    {
+      "name": "Root-Cause Likelihood Propagation with Generated-Policy Caching (RLPGC)",
+      "type": "Dynamic Resource Provisioning",
+      "fitness": 0.0,
+      "generation": 10
+    },
+    {
+      "name": "Event-Keyed Attenuation with Proactive Cache Allocation (EKAPCA)_v3_v3",
+      "type": "Dynamic Resource Management System",
+      "fitness": 0.0,
+      "generation": 3
+    },
+    {
+      "name": "result_memoization_implementation",
+      "type": "optimization",
+      "fitness": 0,
+      "generation": 0
+    },
+    {
+      "name": "Root-Like Generated Attribute-Troves with Bounded Unpredictability (RLGATBU)_v1",
+      "type": "Data Shaping & Distribution",
+      "fitness": 0.0,
+      "generation": 10
+    },
+    {
+      "name": "Root-Inferred Resonance Mapping with Dynamically Generated Prominence (RIRM-DGP)",
+      "type": "Adaptive Resource Management Strategy",
+      "fitness": 0.0,
+      "generation": 10
+    },
+    {
+      "name": "Event-Keyed Attenuation with Proactive Cache Allocation (EKAPCA)_v3_v19_v7",
+      "type": "Dynamic Resource Management System",
+      "fitness": 0.0,
+      "generation": 3
+    },
+    {
+      "name": "distributed_cache_implementation",
+      "type": "optimization",
+      "fitness": 0,
+      "generation": 0
+    },
+    {
+      "name": "Rooted Atro-Likeness Propagation with Generated Topology Orchestration (RALPTO)_v1",
+      "type": "Distributed data dissemination and consistency protocol",
+      "fitness": 0.0,
+      "generation": 10
+    },
+    {
+      "name": "Root-Like Affinity with Generative Resource Dedication (RLAGRD)",
+      "type": "Dynamic Resource Management Framework",
+      "fitness": 0.0,
+      "generation": 10
+    },
+    {
+      "name": "Event-Keyed Attenuation with Proactive Cache Allocation (EKAPCA)_v15_v11",
+      "type": "Dynamic Resource Management System",
+      "fitness": 0.0,
+      "generation": 3
+    },
+    {
+      "name": "result_memoization_implementation",
+      "type": "optimization",
+      "fitness": 0,
+      "generation": 0
+    },
+    {
+      "name": "Root-Like Atro-Generated Propagation with Buffer-Assisted Redundancy (RAGPBR)_v1",
+      "type": "Adaptive Data Distribution",
+      "fitness": 0.0,
+      "generation": 10
+    }
+  ]
+}

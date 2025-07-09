@@ -1,0 +1,105 @@
+{
+  "outcomes": [
+    {
+      "project_name": "invoice-automation-pro",
+      "problem_statement": "Automate invoice processing",
+      "created_at": "2025-07-01T12:03:37.932533",
+      "validation_score": 7.5,
+      "severity_score": 8.0,
+      "market_size": "$5B",
+      "monetization_model": "Per-transaction fees",
+      "success_metrics": {
+        "revenue": 0,
+        "users": 0
+      },
+      "outcome_status": "in_progress",
+      "lessons_learned": []
+    },
+    {
+      "project_name": "invoice-automation-pro",
+      "problem_statement": "Automate invoice processing",
+      "created_at": "2025-07-01T12:09:18.633917",
+      "validation_score": 7.5,
+      "severity_score": 8.0,
+      "market_size": "$5B",
+      "monetization_model": "Per-transaction fees",
+      "success_metrics": {
+        "revenue": 0,
+        "users": 0
+      },
+      "outcome_status": "in_progress",
+      "lessons_learned": []
+    },
+    {
+      "project_name": "invoice-automation-pro",
+      "problem_statement": "Automate invoice processing",
+      "created_at": "2025-07-01T12:14:01.029868",
+      "validation_score": 7.5,
+      "severity_score": 8.0,
+      "market_size": "$5B",
+      "monetization_model": "Per-transaction fees",
+      "success_metrics": {
+        "revenue": 0,
+        "users": 0
+      },
+      "outcome_status": "in_progress",
+      "lessons_learned": []
+    },
+    {
+      "project_name": "invoice-automation-pro",
+      "problem_statement": "Automate invoice processing",
+      "created_at": "2025-07-01T12:16:57.389464",
+      "validation_score": 7.5,
+      "severity_score": 8.0,
+      "market_size": "$5B",
+      "monetization_model": "Per-transaction fees",
+      "success_metrics": {
+        "revenue": 0,
+        "users": 0
+      },
+      "outcome_status": "in_progress",
+      "lessons_learned": []
+    },
+    {
+      "project_name": "invoice-automation-pro",
+      "problem_statement": "Automate invoice processing",
+      "created_at": "2025-07-01T12:29:17.274669",
+      "validation_score": 7.5,
+      "severity_score": 8.0,
+      "market_size": "$5B",
+      "monetization_model": "Per-transaction fees",
+      "success_metrics": {
+        "revenue": 0,
+        "users": 0
+      },
+      "outcome_status": "in_progress",
+      "lessons_learned": []
+    },
+    {
+      "project_name": "test-project",
+      "problem_statement": "Test problem",
+      "created_at": "2025-07-01T12:40:32.050096",
+      "validation_score": 7.5,
+      "severity_score": 8.0,
+      "market_size": "$1M",
+      "monetization_model": "SaaS",
+      "success_metrics": {
+        "revenue": 0
+      },
+      "outcome_status": "in_progress",
+      "lessons_learned": []
+    }
+  ],
+  "learned_patterns": {
+    "successful_characteristics": [],
+    "failure_patterns": [],
+    "optimal_thresholds": {
+      "validation_score": 7.0,
+      "severity_score": 7.0,
+      "market_timing_score": 6.0
+    },
+    "successful_monetization_models": [],
+    "successful_problem_types": []
+  },
+  "last_updated": "2025-07-01T12:40:32.050144"
+}

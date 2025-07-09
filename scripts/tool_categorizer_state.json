@@ -1,0 +1,195 @@
+{
+  "learned_patterns": {
+    "repository": {
+      "patterns": [
+        "manage",
+        "repositories",
+        "files",
+        "operations",
+        "update",
+        "environment_config_manager",
+        "create",
+        "manage_local_repository",
+        "development_server_manager",
+        "git_repository_operations"
+      ],
+      "imports": [
+        "datetime",
+        "typing",
+        "asyncio",
+        "pathlib",
+        "Path",
+        "Dict,",
+        "shutil",
+        "subprocess",
+        "'",
+        "backup"
+      ]
+    },
+    "documentation": {
+      "patterns": [
+        "documentation_generator",
+        "generate_all_docs"
+      ],
+      "imports": [
+        "asyncio",
+        "datetime",
+        "ARCHITECTURE",
+        "pathlib",
+        "Path",
+        "typing",
+        "Dict,",
+        "HTTPAIClient",
+        "Logger",
+        "code"
+      ]
+    },
+    "core": {
+      "patterns": [
+        "system_controller",
+        "system_monitor",
+        "architecture_analyzer",
+        "universal_counter",
+        "smart_creator",
+        "code_analyzer",
+        "repository_manager",
+        "file_manager"
+      ],
+      "imports": [
+        "asyncio",
+        "typing",
+        "Dict,",
+        "pathlib",
+        "Path",
+        "datetime",
+        "datetime,",
+        "StateManager",
+        "HTTPAIClient",
+        "collections"
+      ]
+    },
+    "security": {
+      "patterns": [
+        "security_scanner"
+      ],
+      "imports": [
+        "asyncio",
+        "datetime",
+        "subprocess",
+        "pathlib",
+        "Path",
+        "typing",
+        "Dict,",
+        "hashlib",
+        "HTTPAIClient",
+        "Logger"
+      ]
+    },
+    "testing": {
+      "patterns": [
+        "testing_manager"
+      ],
+      "imports": [
+        "asyncio",
+        "datetime",
+        "output",
+        "subprocess",
+        "pathlib",
+        "Path",
+        "typing",
+        "Dict,",
+        "ast",
+        "HTTPAIClient"
+      ]
+    },
+    "deployment": {
+      "patterns": [
+        "deployment_manager"
+      ],
+      "imports": [
+        "asyncio",
+        "datetime",
+        "subprocess",
+        "yaml",
+        "pathlib",
+        "Path",
+        "typing",
+        "Dict,",
+        "shutil",
+        "HTTPAIClient"
+      ]
+    },
+    "api": {
+      "patterns": [
+        "api_manager"
+      ],
+      "imports": [
+        "datetime",
+        "asyncio",
+        "code",
+        "endpoints",
+        "OpenAPI",
+        "time",
+        "flask",
+        "rate_limiter",
+        "yaml",
+        "pathlib"
+      ]
+    },
+    "monetization": {
+      "patterns": [
+        "monetization",
+        "generate",
+        "with",
+        "market",
+        "analysis",
+        "comprehensive",
+        "project",
+        "discover_business_opportunities",
+        "business",
+        "opportunities"
+      ],
+      "imports": [
+        "asyncio",
+        "typing",
+        "Dict,",
+        "IntelligentAIBrain",
+        "pathlib",
+        "Path",
+        "datetime",
+        "StateManager",
+        "BusinessMarketResearchEngine",
+        "ExistingProjectMonetizationAnalyzer"
+      ]
+    },
+    "general": {
+      "patterns": [
+        "search_tool",
+        "items",
+        "tool_usage_history",
+        "list_files",
+        "search",
+        "tool",
+        "list",
+        "files"
+      ],
+      "imports": [
+        "typing",
+        "Dict,",
+        "StateManager",
+        "the",
+        "datetime",
+        "MCPGitHubIssueCreator",
+        "RepositoryAnalyzer",
+        "{repo}:",
+        "pathlib",
+        "Path"
+      ]
+    }
+  },
+  "category_stats": {},
+  "new_categories_created": [
+    "blockchain"
+  ],
+  "last_updated": "2025-06-23T13:22:28.127332"
+}

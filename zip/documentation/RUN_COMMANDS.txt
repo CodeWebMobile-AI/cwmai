@@ -1,0 +1,28 @@
+CWMAI ZIP DIRECTORY - RUN COMMANDS
+===================================
+
+The system is configured for permanent LOCAL MODE (storage_mode: "local")
+
+UPDATED COMMANDS TO RUN FROM ZIP DIRECTORY:
+
+1. HYBRID CONTINUOUS SYSTEM (10 WORKERS):
+------------------------------------------
+cd /Users/fortressarigo/PhpstormProjects/cwmai/zip && export $(cat .env.local | grep -v '^#' | xargs) && PYTHONPATH=/Users/fortressarigo/PhpstormProjects/cwmai/zip arch -arm64 /usr/bin/python3 run_hybrid_continuous.py --workers 10
+
+2. ENHANCED CONVERSATIONAL ASSISTANT:
+-------------------------------------
+cd /Users/fortressarigo/PhpstormProjects/cwmai/zip && export $(cat .env.local | grep -v '^#' | xargs) && PYTHONPATH=/Users/fortressarigo/PhpstormProjects/cwmai/zip arch -arm64 /usr/bin/python3 scripts/enhanced_conversational_assistant.py
+
+KEY DIFFERENCES FROM ORIGINAL:
+- Changed directory to /Users/fortressarigo/PhpstormProjects/cwmai/zip
+- Updated PYTHONPATH to point to zip directory
+- All dependencies are self-contained in the zip folder
+
+SYSTEM STATUS:
+✓ Storage mode: LOCAL (no GitHub integration)
+✓ All Python dependencies included
+✓ Configuration files copied
+✓ State and database files ready
+✓ Custom tools directory included
+
+Note: The system will operate entirely in local mode, creating tasks and storing data locally without any GitHub interaction.

@@ -1,0 +1,971 @@
+{
+  "summary": {
+    "total_files": 158,
+    "used_files": 1,
+    "unused_files": 157,
+    "errors": 1
+  },
+  "unused_files_by_category": {
+    "scripts": [
+      {
+        "path": "scripts/ai_api_logger.py",
+        "name": "ai_api_logger.py",
+        "size": 16284
+      },
+      {
+        "path": "scripts/ai_brain.py",
+        "name": "ai_brain.py",
+        "size": 43818
+      },
+      {
+        "path": "scripts/ai_brain_factory.py",
+        "name": "ai_brain_factory.py",
+        "size": 23391
+      },
+      {
+        "path": "scripts/ai_response_cache.py",
+        "name": "ai_response_cache.py",
+        "size": 13619
+      },
+      {
+        "path": "scripts/ai_response_enhancer.py",
+        "name": "ai_response_enhancer.py",
+        "size": 11329
+      },
+      {
+        "path": "scripts/ai_task_content_generator.py",
+        "name": "ai_task_content_generator.py",
+        "size": 19541
+      },
+      {
+        "path": "scripts/alternative_task_generator.py",
+        "name": "alternative_task_generator.py",
+        "size": 20286
+      },
+      {
+        "path": "scripts/architecture_generator.py",
+        "name": "architecture_generator.py",
+        "size": 26836
+      },
+      {
+        "path": "scripts/architecture_markdown_converter.py",
+        "name": "architecture_markdown_converter.py",
+        "size": 12739
+      },
+      {
+        "path": "scripts/autonomous_improvement_system.py",
+        "name": "autonomous_improvement_system.py",
+        "size": 44115
+      },
+      {
+        "path": "scripts/background_intelligence_daemon.py",
+        "name": "background_intelligence_daemon.py",
+        "size": 21094
+      },
+      {
+        "path": "scripts/business_market_research_engine.py",
+        "name": "business_market_research_engine.py",
+        "size": 20041
+      },
+      {
+        "path": "scripts/capability_analyzer.py",
+        "name": "capability_analyzer.py",
+        "size": 29936
+      },
+      {
+        "path": "scripts/capability_extractor.py",
+        "name": "capability_extractor.py",
+        "size": 46773
+      },
+      {
+        "path": "scripts/capability_synthesizer.py",
+        "name": "capability_synthesizer.py",
+        "size": 49746
+      },
+      {
+        "path": "scripts/chunked_research_engine.py",
+        "name": "chunked_research_engine.py",
+        "size": 14881
+      },
+      {
+        "path": "scripts/claude_execution_queue.py",
+        "name": "claude_execution_queue.py",
+        "size": 29079
+      },
+      {
+        "path": "scripts/claude_executor.py",
+        "name": "claude_executor.py",
+        "size": 17484
+      },
+      {
+        "path": "scripts/code_analyzer.py",
+        "name": "code_analyzer.py",
+        "size": 6187
+      },
+      {
+        "path": "scripts/complexity_analyzer.py",
+        "name": "complexity_analyzer.py",
+        "size": 37125
+      },
+      {
+        "path": "scripts/continuous_orchestrator.py",
+        "name": "continuous_orchestrator.py",
+        "size": 143445
+      },
+      {
+        "path": "scripts/continuous_orchestrator_no_redis.py",
+        "name": "continuous_orchestrator_no_redis.py",
+        "size": 41933
+      },
+      {
+        "path": "scripts/conversational_ai_assistant.py",
+        "name": "conversational_ai_assistant.py",
+        "size": 79818
+      },
+      {
+        "path": "scripts/conversational_ai_logger.py",
+        "name": "conversational_ai_logger.py",
+        "size": 9589
+      },
+      {
+        "path": "scripts/cross_research_analyzer.py",
+        "name": "cross_research_analyzer.py",
+        "size": 34393
+      },
+      {
+        "path": "scripts/custom_json_encoder.py",
+        "name": "custom_json_encoder.py",
+        "size": 2184
+      },
+      {
+        "path": "scripts/dependency_resolver.py",
+        "name": "dependency_resolver.py",
+        "size": 14854
+      },
+      {
+        "path": "scripts/diversity_enhancer.py",
+        "name": "diversity_enhancer.py",
+        "size": 13123
+      },
+      {
+        "path": "scripts/duplicate_prevention_system.py",
+        "name": "duplicate_prevention_system.py",
+        "size": 21587
+      },
+      {
+        "path": "scripts/dynamic_charter.py",
+        "name": "dynamic_charter.py",
+        "size": 12037
+      },
+      {
+        "path": "scripts/dynamic_claude_executor_pool.py",
+        "name": "dynamic_claude_executor_pool.py",
+        "size": 22978
+      },
+      {
+        "path": "scripts/dynamic_context_collector.py",
+        "name": "dynamic_context_collector.py",
+        "size": 19145
+      },
+      {
+        "path": "scripts/dynamic_research_prompt_generator.py",
+        "name": "dynamic_research_prompt_generator.py",
+        "size": 7723
+      },
+      {
+        "path": "scripts/dynamic_research_trigger.py",
+        "name": "dynamic_research_trigger.py",
+        "size": 28549
+      },
+      {
+        "path": "scripts/dynamic_task_loader.py",
+        "name": "dynamic_task_loader.py",
+        "size": 7464
+      },
+      {
+        "path": "scripts/dynamic_task_selector.py",
+        "name": "dynamic_task_selector.py",
+        "size": 4160
+      },
+      {
+        "path": "scripts/dynamic_validator.py",
+        "name": "dynamic_validator.py",
+        "size": 23123
+      },
+      {
+        "path": "scripts/dynamic_work_generator.py",
+        "name": "dynamic_work_generator.py",
+        "size": 15664
+      },
+      {
+        "path": "scripts/emergent_learning_system.py",
+        "name": "emergent_learning_system.py",
+        "size": 11616
+      },
+      {
+        "path": "scripts/enhanced_architecture_generator.py",
+        "name": "enhanced_architecture_generator.py",
+        "size": 38114
+      },
+      {
+        "path": "scripts/enhanced_conversational_assistant.py",
+        "name": "enhanced_conversational_assistant.py",
+        "size": 37851
+      },
+      {
+        "path": "scripts/enhanced_intelligent_task_generator.py",
+        "name": "enhanced_intelligent_task_generator.py",
+        "size": 30215
+      },
+      {
+        "path": "scripts/enhanced_project_opportunity.py",
+        "name": "enhanced_project_opportunity.py",
+        "size": 12864
+      },
+      {
+        "path": "scripts/enhanced_smart_task_system.py",
+        "name": "enhanced_smart_task_system.py",
+        "size": 17699
+      },
+      {
+        "path": "scripts/enhanced_work_generator.py",
+        "name": "enhanced_work_generator.py",
+        "size": 19483
+      },
+      {
+        "path": "scripts/enhanced_work_queue_manager.py",
+        "name": "enhanced_work_queue_manager.py",
+        "size": 9952
+      },
+      {
+        "path": "scripts/evolutionary_memory.py",
+        "name": "evolutionary_memory.py",
+        "size": 15215
+      },
+      {
+        "path": "scripts/existing_project_monetization_analyzer.py",
+        "name": "existing_project_monetization_analyzer.py",
+        "size": 23256
+      },
+      {
+        "path": "scripts/external_agent_discoverer.py",
+        "name": "external_agent_discoverer.py",
+        "size": 43400
+      },
+      {
+        "path": "scripts/external_knowledge_integrator.py",
+        "name": "external_knowledge_integrator.py",
+        "size": 55152
+      },
+      {
+        "path": "scripts/feedback_learning_system.py",
+        "name": "feedback_learning_system.py",
+        "size": 32344
+      },
+      {
+        "path": "scripts/gemini_deep_research.py",
+        "name": "gemini_deep_research.py",
+        "size": 106106
+      },
+      {
+        "path": "scripts/github_issue_creator.py",
+        "name": "github_issue_creator.py",
+        "size": 27241
+      },
+      {
+        "path": "scripts/github_issue_queue.py",
+        "name": "github_issue_queue.py",
+        "size": 9419
+      },
+      {
+        "path": "scripts/github_issue_queue_no_redis.py",
+        "name": "github_issue_queue_no_redis.py",
+        "size": 5316
+      },
+      {
+        "path": "scripts/github_retry_manager.py",
+        "name": "github_retry_manager.py",
+        "size": 16887
+      },
+      {
+        "path": "scripts/hierarchical_task_manager.py",
+        "name": "hierarchical_task_manager.py",
+        "size": 31376
+      },
+      {
+        "path": "scripts/http_ai_client.py",
+        "name": "http_ai_client.py",
+        "size": 47348
+      },
+      {
+        "path": "scripts/http_ai_client_helpers.py",
+        "name": "http_ai_client_helpers.py",
+        "size": 3931
+      },
+      {
+        "path": "scripts/hybrid_orchestrator_enhanced.py",
+        "name": "hybrid_orchestrator_enhanced.py",
+        "size": 57102
+      },
+      {
+        "path": "scripts/hybrid_state_manager.py",
+        "name": "hybrid_state_manager.py",
+        "size": 14583
+      },
+      {
+        "path": "scripts/improvement_discovery.py",
+        "name": "improvement_discovery.py",
+        "size": 17719
+      },
+      {
+        "path": "scripts/improvement_ensemble.py",
+        "name": "improvement_ensemble.py",
+        "size": 17999
+      },
+      {
+        "path": "scripts/in_memory_work_queue.py",
+        "name": "in_memory_work_queue.py",
+        "size": 24575
+      },
+      {
+        "path": "scripts/integrated_project_evaluation_system.py",
+        "name": "integrated_project_evaluation_system.py",
+        "size": 36013
+      },
+      {
+        "path": "scripts/intelligent_codebase_context.py",
+        "name": "intelligent_codebase_context.py",
+        "size": 17977
+      },
+      {
+        "path": "scripts/intelligent_monitoring_system.py",
+        "name": "intelligent_monitoring_system.py",
+        "size": 38071
+      },
+      {
+        "path": "scripts/intelligent_research_selector.py",
+        "name": "intelligent_research_selector.py",
+        "size": 20744
+      },
+      {
+        "path": "scripts/intelligent_task_generator.py",
+        "name": "intelligent_task_generator.py",
+        "size": 124885
+      },
+      {
+        "path": "scripts/intelligent_work_finder.py",
+        "name": "intelligent_work_finder.py",
+        "size": 53775
+      },
+      {
+        "path": "scripts/knowledge_graph_builder.py",
+        "name": "knowledge_graph_builder.py",
+        "size": 35876
+      },
+      {
+        "path": "scripts/knowledge_synthesis_engine.py",
+        "name": "knowledge_synthesis_engine.py",
+        "size": 24373
+      },
+      {
+        "path": "scripts/local_github_simulator.py",
+        "name": "local_github_simulator.py",
+        "size": 29182
+      },
+      {
+        "path": "scripts/local_issue_creator.py",
+        "name": "local_issue_creator.py",
+        "size": 46968
+      },
+      {
+        "path": "scripts/logger.py",
+        "name": "logger.py",
+        "size": 1192
+      },
+      {
+        "path": "scripts/market_discovery.py",
+        "name": "market_discovery.py",
+        "size": 2983
+      },
+      {
+        "path": "scripts/market_research_engine.py",
+        "name": "market_research_engine.py",
+        "size": 23622
+      },
+      {
+        "path": "scripts/mcp_client.py",
+        "name": "mcp_client.py",
+        "size": 13199
+      },
+      {
+        "path": "scripts/mcp_config.py",
+        "name": "mcp_config.py",
+        "size": 7681
+      },
+      {
+        "path": "scripts/mcp_integration.py",
+        "name": "mcp_integration.py",
+        "size": 12781
+      },
+      {
+        "path": "scripts/module_discovery.py",
+        "name": "module_discovery.py",
+        "size": 7838
+      },
+      {
+        "path": "scripts/monitoring_integration.py",
+        "name": "monitoring_integration.py",
+        "size": 11393
+      },
+      {
+        "path": "scripts/multi_objective_optimizer.py",
+        "name": "multi_objective_optimizer.py",
+        "size": 14797
+      },
+      {
+        "path": "scripts/multi_repo_coordinator.py",
+        "name": "multi_repo_coordinator.py",
+        "size": 35751
+      },
+      {
+        "path": "scripts/multi_tool_orchestrator.py",
+        "name": "multi_tool_orchestrator.py",
+        "size": 20302
+      },
+      {
+        "path": "scripts/natural_language_todo_cli.py",
+        "name": "natural_language_todo_cli.py",
+        "size": 21859
+      },
+      {
+        "path": "scripts/natural_language_todo_manager.py",
+        "name": "natural_language_todo_manager.py",
+        "size": 17156
+      },
+      {
+        "path": "scripts/natural_language_todo_queue.py",
+        "name": "natural_language_todo_queue.py",
+        "size": 14109
+      },
+      {
+        "path": "scripts/outcome_learning.py",
+        "name": "outcome_learning.py",
+        "size": 19699
+      },
+      {
+        "path": "scripts/parameter_evolution_handler.py",
+        "name": "parameter_evolution_handler.py",
+        "size": 14283
+      },
+      {
+        "path": "scripts/pattern_learning_engine.py",
+        "name": "pattern_learning_engine.py",
+        "size": 21553
+      },
+      {
+        "path": "scripts/portfolio_intelligence.py",
+        "name": "portfolio_intelligence.py",
+        "size": 19664
+      },
+      {
+        "path": "scripts/progressive_task_generator.py",
+        "name": "progressive_task_generator.py",
+        "size": 44669
+      },
+      {
+        "path": "scripts/project_config.py",
+        "name": "project_config.py",
+        "size": 4062
+      },
+      {
+        "path": "scripts/project_context_model.py",
+        "name": "project_context_model.py",
+        "size": 10289
+      },
+      {
+        "path": "scripts/project_creator.py",
+        "name": "project_creator.py",
+        "size": 164193
+      },
+      {
+        "path": "scripts/project_factory.py",
+        "name": "project_factory.py",
+        "size": 7379
+      },
+      {
+        "path": "scripts/project_lifecycle_analyzer.py",
+        "name": "project_lifecycle_analyzer.py",
+        "size": 39884
+      },
+      {
+        "path": "scripts/project_manager.py",
+        "name": "project_manager.py",
+        "size": 1554
+      },
+      {
+        "path": "scripts/project_outcome_tracker.py",
+        "name": "project_outcome_tracker.py",
+        "size": 20644
+      },
+      {
+        "path": "scripts/project_planner.py",
+        "name": "project_planner.py",
+        "size": 29756
+      },
+      {
+        "path": "scripts/quality_improvement_daemon.py",
+        "name": "quality_improvement_daemon.py",
+        "size": 3617
+      },
+      {
+        "path": "scripts/real_improvement_validator.py",
+        "name": "real_improvement_validator.py",
+        "size": 19987
+      },
+      {
+        "path": "scripts/repository_analysis_cache.py",
+        "name": "repository_analysis_cache.py",
+        "size": 10774
+      },
+      {
+        "path": "scripts/repository_analyzer.py",
+        "name": "repository_analyzer.py",
+        "size": 23376
+      },
+      {
+        "path": "scripts/repository_analyzer_refactored.py",
+        "name": "repository_analyzer_refactored.py",
+        "size": 13836
+      },
+      {
+        "path": "scripts/repository_data_provider.py",
+        "name": "repository_data_provider.py",
+        "size": 13918
+      },
+      {
+        "path": "scripts/repository_exclusion.py",
+        "name": "repository_exclusion.py",
+        "size": 9609
+      },
+      {
+        "path": "scripts/research_action_engine.py",
+        "name": "research_action_engine.py",
+        "size": 35556
+      },
+      {
+        "path": "scripts/research_engine_fixes.py",
+        "name": "research_engine_fixes.py",
+        "size": 17127
+      },
+      {
+        "path": "scripts/research_engine_optimized.py",
+        "name": "research_engine_optimized.py",
+        "size": 7723
+      },
+      {
+        "path": "scripts/research_evolution_engine.py",
+        "name": "research_evolution_engine.py",
+        "size": 69084
+      },
+      {
+        "path": "scripts/research_evolution_engine_logged.py",
+        "name": "research_evolution_engine_logged.py",
+        "size": 72330
+      },
+      {
+        "path": "scripts/research_evolver.py",
+        "name": "research_evolver.py",
+        "size": 30152
+      },
+      {
+        "path": "scripts/research_insight_processor.py",
+        "name": "research_insight_processor.py",
+        "size": 27414
+      },
+      {
+        "path": "scripts/research_knowledge_store.py",
+        "name": "research_knowledge_store.py",
+        "size": 21209
+      },
+      {
+        "path": "scripts/research_learning_system.py",
+        "name": "research_learning_system.py",
+        "size": 27960
+      },
+      {
+        "path": "scripts/research_memory.py",
+        "name": "research_memory.py",
+        "size": 17322
+      },
+      {
+        "path": "scripts/research_need_analyzer.py",
+        "name": "research_need_analyzer.py",
+        "size": 38705
+      },
+      {
+        "path": "scripts/research_query_generator.py",
+        "name": "research_query_generator.py",
+        "size": 21266
+      },
+      {
+        "path": "scripts/research_scheduler.py",
+        "name": "research_scheduler.py",
+        "size": 18345
+      },
+      {
+        "path": "scripts/safe_disk_io.py",
+        "name": "safe_disk_io.py",
+        "size": 1419
+      },
+      {
+        "path": "scripts/safe_self_improver.py",
+        "name": "safe_self_improver.py",
+        "size": 66319
+      },
+      {
+        "path": "scripts/self_improvement_orchestrator.py",
+        "name": "self_improvement_orchestrator.py",
+        "size": 18783
+      },
+      {
+        "path": "scripts/semantic_tool_matcher.py",
+        "name": "semantic_tool_matcher.py",
+        "size": 19325
+      },
+      {
+        "path": "scripts/solution_designer.py",
+        "name": "solution_designer.py",
+        "size": 4858
+      },
+      {
+        "path": "scripts/sqlite_state_manager.py",
+        "name": "sqlite_state_manager.py",
+        "size": 14327
+      },
+      {
+        "path": "scripts/state_manager.py",
+        "name": "state_manager.py",
+        "size": 41981
+      },
+      {
+        "path": "scripts/storage_factory.py",
+        "name": "storage_factory.py",
+        "size": 6822
+      },
+      {
+        "path": "scripts/storage_mode.py",
+        "name": "storage_mode.py",
+        "size": 186
+      },
+      {
+        "path": "scripts/swarm_intelligence.py",
+        "name": "swarm_intelligence.py",
+        "size": 49015
+      },
+      {
+        "path": "scripts/system_aligned_diversity_enhancer.py",
+        "name": "system_aligned_diversity_enhancer.py",
+        "size": 16798
+      },
+      {
+        "path": "scripts/task_decomposition_engine.py",
+        "name": "task_decomposition_engine.py",
+        "size": 24927
+      },
+      {
+        "path": "scripts/task_dependency_graph.py",
+        "name": "task_dependency_graph.py",
+        "size": 12140
+      },
+      {
+        "path": "scripts/task_manager.py",
+        "name": "task_manager.py",
+        "size": 126810
+      },
+      {
+        "path": "scripts/task_monitoring_system.py",
+        "name": "task_monitoring_system.py",
+        "size": 31152
+      },
+      {
+        "path": "scripts/task_persistence.py",
+        "name": "task_persistence.py",
+        "size": 22789
+      },
+      {
+        "path": "scripts/task_prioritization_strategies.py",
+        "name": "task_prioritization_strategies.py",
+        "size": 13562
+      },
+      {
+        "path": "scripts/task_type_config.py",
+        "name": "task_type_config.py",
+        "size": 7929
+      },
+      {
+        "path": "scripts/task_type_container.py",
+        "name": "task_type_container.py",
+        "size": 7620
+      },
+      {
+        "path": "scripts/task_type_plugin_base.py",
+        "name": "task_type_plugin_base.py",
+        "size": 7240
+      },
+      {
+        "path": "scripts/task_types.py",
+        "name": "task_types.py",
+        "size": 14081
+      },
+      {
+        "path": "scripts/todo_nlp_processor.py",
+        "name": "todo_nlp_processor.py",
+        "size": 19603
+      },
+      {
+        "path": "scripts/todo_processor_pool.py",
+        "name": "todo_processor_pool.py",
+        "size": 13764
+      },
+      {
+        "path": "scripts/tool_calling_system.py",
+        "name": "tool_calling_system.py",
+        "size": 69756
+      },
+      {
+        "path": "scripts/tool_error_monitor.py",
+        "name": "tool_error_monitor.py",
+        "size": 25239
+      },
+      {
+        "path": "scripts/tool_evolution.py",
+        "name": "tool_evolution.py",
+        "size": 25086
+      },
+      {
+        "path": "scripts/tool_execution_engine.py",
+        "name": "tool_execution_engine.py",
+        "size": 10642
+      },
+      {
+        "path": "scripts/tool_health_checker.py",
+        "name": "tool_health_checker.py",
+        "size": 18612
+      },
+      {
+        "path": "scripts/unified_project_discovery.py",
+        "name": "unified_project_discovery.py",
+        "size": 20198
+      },
+      {
+        "path": "scripts/unified_task_state.py",
+        "name": "unified_task_state.py",
+        "size": 20908
+      },
+      {
+        "path": "scripts/work_distribution_patch.py",
+        "name": "work_distribution_patch.py",
+        "size": 5155
+      },
+      {
+        "path": "scripts/work_item_types.py",
+        "name": "work_item_types.py",
+        "size": 2664
+      }
+    ],
+    "scripts/custom_tools/core": [
+      {
+        "path": "scripts/custom_tools/core/__init__.py",
+        "name": "__init__.py",
+        "size": 25
+      },
+      {
+        "path": "scripts/custom_tools/core/system_controller.py",
+        "name": "system_controller.py",
+        "size": 2492
+      }
+    ],
+    "scripts/custom_tools": [
+      {
+        "path": "scripts/custom_tools/tool_usage_history.py",
+        "name": "tool_usage_history.py",
+        "size": 6117
+      }
+    ],
+    "scripts/utilities": [
+      {
+        "path": "scripts/utilities/run_hybrid_continuous.py",
+        "name": "run_hybrid_continuous.py",
+        "size": 9364
+      }
+    ]
+  },
+  "all_unused_files": [
+    "scripts/ai_api_logger.py",
+    "scripts/ai_brain.py",
+    "scripts/ai_brain_factory.py",
+    "scripts/ai_response_cache.py",
+    "scripts/ai_response_enhancer.py",
+    "scripts/ai_task_content_generator.py",
+    "scripts/alternative_task_generator.py",
+    "scripts/architecture_generator.py",
+    "scripts/architecture_markdown_converter.py",
+    "scripts/autonomous_improvement_system.py",
+    "scripts/background_intelligence_daemon.py",
+    "scripts/business_market_research_engine.py",
+    "scripts/capability_analyzer.py",
+    "scripts/capability_extractor.py",
+    "scripts/capability_synthesizer.py",
+    "scripts/chunked_research_engine.py",
+    "scripts/claude_execution_queue.py",
+    "scripts/claude_executor.py",
+    "scripts/code_analyzer.py",
+    "scripts/complexity_analyzer.py",
+    "scripts/continuous_orchestrator.py",
+    "scripts/continuous_orchestrator_no_redis.py",
+    "scripts/conversational_ai_assistant.py",
+    "scripts/conversational_ai_logger.py",
+    "scripts/cross_research_analyzer.py",
+    "scripts/custom_json_encoder.py",
+    "scripts/custom_tools/core/__init__.py",
+    "scripts/custom_tools/core/system_controller.py",
+    "scripts/custom_tools/tool_usage_history.py",
+    "scripts/dependency_resolver.py",
+    "scripts/diversity_enhancer.py",
+    "scripts/duplicate_prevention_system.py",
+    "scripts/dynamic_charter.py",
+    "scripts/dynamic_claude_executor_pool.py",
+    "scripts/dynamic_context_collector.py",
+    "scripts/dynamic_research_prompt_generator.py",
+    "scripts/dynamic_research_trigger.py",
+    "scripts/dynamic_task_loader.py",
+    "scripts/dynamic_task_selector.py",
+    "scripts/dynamic_validator.py",
+    "scripts/dynamic_work_generator.py",
+    "scripts/emergent_learning_system.py",
+    "scripts/enhanced_architecture_generator.py",
+    "scripts/enhanced_conversational_assistant.py",
+    "scripts/enhanced_intelligent_task_generator.py",
+    "scripts/enhanced_project_opportunity.py",
+    "scripts/enhanced_smart_task_system.py",
+    "scripts/enhanced_work_generator.py",
+    "scripts/enhanced_work_queue_manager.py",
+    "scripts/evolutionary_memory.py",
+    "scripts/existing_project_monetization_analyzer.py",
+    "scripts/external_agent_discoverer.py",
+    "scripts/external_knowledge_integrator.py",
+    "scripts/feedback_learning_system.py",
+    "scripts/gemini_deep_research.py",
+    "scripts/github_issue_creator.py",
+    "scripts/github_issue_queue.py",
+    "scripts/github_issue_queue_no_redis.py",
+    "scripts/github_retry_manager.py",
+    "scripts/hierarchical_task_manager.py",
+    "scripts/http_ai_client.py",
+    "scripts/http_ai_client_helpers.py",
+    "scripts/hybrid_orchestrator_enhanced.py",
+    "scripts/hybrid_state_manager.py",
+    "scripts/improvement_discovery.py",
+    "scripts/improvement_ensemble.py",
+    "scripts/in_memory_work_queue.py",
+    "scripts/integrated_project_evaluation_system.py",
+    "scripts/intelligent_codebase_context.py",
+    "scripts/intelligent_monitoring_system.py",
+    "scripts/intelligent_research_selector.py",
+    "scripts/intelligent_task_generator.py",
+    "scripts/intelligent_work_finder.py",
+    "scripts/knowledge_graph_builder.py",
+    "scripts/knowledge_synthesis_engine.py",
+    "scripts/local_github_simulator.py",
+    "scripts/local_issue_creator.py",
+    "scripts/logger.py",
+    "scripts/market_discovery.py",
+    "scripts/market_research_engine.py",
+    "scripts/mcp_client.py",
+    "scripts/mcp_config.py",
+    "scripts/mcp_integration.py",
+    "scripts/module_discovery.py",
+    "scripts/monitoring_integration.py",
+    "scripts/multi_objective_optimizer.py",
+    "scripts/multi_repo_coordinator.py",
+    "scripts/multi_tool_orchestrator.py",
+    "scripts/natural_language_todo_cli.py",
+    "scripts/natural_language_todo_manager.py",
+    "scripts/natural_language_todo_queue.py",
+    "scripts/outcome_learning.py",
+    "scripts/parameter_evolution_handler.py",
+    "scripts/pattern_learning_engine.py",
+    "scripts/portfolio_intelligence.py",
+    "scripts/progressive_task_generator.py",
+    "scripts/project_config.py",
+    "scripts/project_context_model.py",
+    "scripts/project_creator.py",
+    "scripts/project_factory.py",
+    "scripts/project_lifecycle_analyzer.py",
+    "scripts/project_manager.py",
+    "scripts/project_outcome_tracker.py",
+    "scripts/project_planner.py",
+    "scripts/quality_improvement_daemon.py",
+    "scripts/real_improvement_validator.py",
+    "scripts/repository_analysis_cache.py",
+    "scripts/repository_analyzer.py",
+    "scripts/repository_analyzer_refactored.py",
+    "scripts/repository_data_provider.py",
+    "scripts/repository_exclusion.py",
+    "scripts/research_action_engine.py",
+    "scripts/research_engine_fixes.py",
+    "scripts/research_engine_optimized.py",
+    "scripts/research_evolution_engine.py",
+    "scripts/research_evolution_engine_logged.py",
+    "scripts/research_evolver.py",
+    "scripts/research_insight_processor.py",
+    "scripts/research_knowledge_store.py",
+    "scripts/research_learning_system.py",
+    "scripts/research_memory.py",
+    "scripts/research_need_analyzer.py",
+    "scripts/research_query_generator.py",
+    "scripts/research_scheduler.py",
+    "scripts/safe_disk_io.py",
+    "scripts/safe_self_improver.py",
+    "scripts/self_improvement_orchestrator.py",
+    "scripts/semantic_tool_matcher.py",
+    "scripts/solution_designer.py",
+    "scripts/sqlite_state_manager.py",
+    "scripts/state_manager.py",
+    "scripts/storage_factory.py",
+    "scripts/storage_mode.py",
+    "scripts/swarm_intelligence.py",
+    "scripts/system_aligned_diversity_enhancer.py",
+    "scripts/task_decomposition_engine.py",
+    "scripts/task_dependency_graph.py",
+    "scripts/task_manager.py",
+    "scripts/task_monitoring_system.py",
+    "scripts/task_persistence.py",
+    "scripts/task_prioritization_strategies.py",
+    "scripts/task_type_config.py",
+    "scripts/task_type_container.py",
+    "scripts/task_type_plugin_base.py",
+    "scripts/task_types.py",
+    "scripts/todo_nlp_processor.py",
+    "scripts/todo_processor_pool.py",
+    "scripts/tool_calling_system.py",
+    "scripts/tool_error_monitor.py",
+    "scripts/tool_evolution.py",
+    "scripts/tool_execution_engine.py",
+    "scripts/tool_health_checker.py",
+    "scripts/unified_project_discovery.py",
+    "scripts/unified_task_state.py",
+    "scripts/utilities/run_hybrid_continuous.py",
+    "scripts/work_distribution_patch.py",
+    "scripts/work_item_types.py"
+  ],
+  "used_files": [
+    "run_hybrid_continuous.py"
+  ],
+  "errors": [
+    {
+      "file": "run_hybrid_continuous.py",
+      "error": "name 'content' is not defined"
+    }
+  ]
+}

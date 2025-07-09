@@ -1,0 +1,796 @@
+"""
+Continuous 24/7 AI Orchestrator (Redis-Free Version)
+
+Uses SQLite and in-memory queues instead of Redis.
+Drop-in replacement for the original continuous orchestrator.
+"""
+
+import asyncio
+import logging
+import time
+from datetime import datetime, timezone
+from typing import Dict, List, Any, Optional, Callable
+from dataclasses import dataclass, field
+from enum import Enum
+import json
+import traceback
+import re
+import os
+import random
+
+from scripts.state_manager import StateManager
+from scripts.ai_brain import IntelligentAIBrain
+from scripts.work_item_types import WorkItem, TaskPriority
+from scripts.task_persistence import TaskPersistence
+from scripts.ai_brain_factory import AIBrainFactory
+from scripts.alternative_task_generator import AlternativeTaskGenerator
+# Enhanced work generator removed - using intelligent_work_finder instead
+
+# Import our new hybrid state manager
+from scripts.hybrid_state_manager import HybridStateManager
+
+# Import for real task execution
+from scripts.storage_factory import ProjectCreatorFactory
+
+
+class WorkerStatus(Enum):
+    """Status of parallel workers."""
+    IDLE = "idle"
+    WORKING = "working"
+    ERROR = "error"
+    SHUTTING_DOWN = "shutting_down"
+
+
+@dataclass
+class WorkerState:
+    """State of a parallel worker."""
+    id: str
+    status: WorkerStatus
+    current_work: Optional[WorkItem] = None
+    total_completed: int = 0
+    total_errors: int = 0
+    started_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    last_activity: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    specialization: Optional[str] = None  # repository or task type specialization
+
+
+class ContinuousOrchestratorNoRedis:
+    """24/7 Continuous AI Orchestrator without Redis dependency."""
+    
+    def __init__(self, max_workers: int = 10, enable_parallel: bool = True,
+                 enable_round_robin: bool = False):
+        """Initialize the continuous orchestrator.
+        
+        Args:
+            max_workers: Maximum number of parallel workers
+            enable_parallel: Whether to enable parallel processing
+            enable_round_robin: Whether to enable round-robin AI provider selection
+        """
+        self.max_workers = max_workers
+        self.enable_parallel = enable_parallel
+        self.enable_round_robin = enable_round_robin
+        self.logger = logging.getLogger(__name__)
+        
+        # Use hybrid state manager instead of Redis
+        self.hybrid_state = HybridStateManager(
+            db_path="cwmai_state.db",
+            queue_persistence_file="work_queue_backup.json",
+            enable_queue_persistence=True
+        )
+        print("✓ Using SQLite/In-Memory hybrid state manager")
+        
+        # Use regular state manager for file-based state
+        self.state_manager = StateManager()
+        
+        # Load state with repository discovery
+        self.system_state = self.state_manager.load_state_with_repository_discovery()
+        self.ai_brain = IntelligentAIBrain(self.system_state, {}, enable_round_robin=enable_round_robin)
+        
+        # Work management
+        self.work_generator = AlternativeTaskGenerator(self.ai_brain)
+        
+        # Initialize workers
+        self.workers = {}
+        self.worker_tasks = {}
+        
+        # Control flags
+        self.shutdown_requested = False
+        self.pause_requested = False
+        
+        # Metrics
+        self.metrics = {
+            'total_work_completed': 0,
+            'total_errors': 0,
+            'total_work_created': 0,
+            'work_per_hour': 0.0,
+            'average_completion_time': 0.0,
+            'uptime_hours': 0.0
+        }
+        self.start_time = time.time()
+        self.completion_times = []
+        
+        # Research functionality moved to knowledge-driven evolution system
+        
+        # Task persistence
+        self.task_persistence = TaskPersistence()
+        
+        # Performance monitoring
+        self.performance_window = []
+        self.performance_window_size = 100
+        
+        print(f"\n✓ Continuous orchestrator initialized")
+        print(f"  - Max workers: {max_workers}")
+        print(f"  - Parallel processing: {'enabled' if enable_parallel else 'disabled'}")
+        print(f"  - Research evolution: Moved to knowledge-driven evolution system")
+        print(f"  - AI round-robin: {'enabled' if enable_round_robin else 'disabled'}")
+    
+    async def find_single_work_item(self, worker_id: str = None) -> Optional[WorkItem]:
+        """Find a single work item for a worker.
+        
+        Args:
+            worker_id: ID of the worker requesting work
+            
+        Returns:
+            A single work item or None if no work available
+        """
+        try:
+            # 1. First priority: Check work queue
+            work_dict = self.hybrid_state.dequeue_work(timeout=0.1, worker_id=worker_id)
+            if work_dict:
+                # Convert dict to WorkItem
+                work_item = WorkItem(
+                    id=work_dict.get('id'),
+                    task_type=work_dict.get('type', work_dict.get('task_type', 'unknown')),
+                    title=work_dict.get('title'),
+                    description=work_dict.get('description'),
+                    repository=work_dict.get('repository'),
+                    priority=TaskPriority(work_dict.get('priority', TaskPriority.MEDIUM.value)),
+                    metadata=work_dict.get('metadata', {})
+                )
+                self.logger.info(f"Dequeued work item from queue: {work_item.id}")
+                return work_item
+            
+            # 2. Second priority: Generate new work using intelligent work finder
+            # Note: IntelligentWorkFinder is already used in hybrid orchestrator's find_work method
+            
+        except Exception as e:
+            self.logger.error(f"Error finding work: {e}")
+            traceback.print_exc()
+        
+        return None
+    
+    
+    async def _execute_work_item(self, worker_id: str, work_item: WorkItem) -> Dict[str, Any]:
+        """Execute a single work item.
+        
+        Args:
+            worker_id: ID of the worker executing this item
+            work_item: The work item to execute
+            
+        Returns:
+            Execution result
+        """
+        start_time = time.time()
+        result = {
+            'success': False,
+            'error': None,
+            'duration': 0,
+            'output': None
+        }
+        
+        try:
+            self.logger.info(f"Worker {worker_id} STARTING execution: {work_item.title} (ID: {work_item.id}, Type: {work_item.task_type})")
+            
+            # Update worker state
+            self.workers[worker_id].current_work = work_item
+            self.workers[worker_id].last_activity = datetime.now(timezone.utc)
+            
+            # Log actual execution
+            self.logger.debug(f"Worker {worker_id} executing task type: {work_item.task_type}")
+            
+            # Execute based on work type with periodic status updates
+            async def execute_with_status():
+                if work_item.task_type == "research":
+                    self.logger.debug(f"Worker {worker_id} handling research task")
+                    return await self._handle_research_task(work_item)
+                elif work_item.task_type == "code_improvement":
+                    self.logger.debug(f"Worker {worker_id} handling code improvement task")
+                    return await self._handle_code_improvement(work_item)
+                else:
+                    self.logger.debug(f"Worker {worker_id} handling generic task of type: {work_item.task_type}")
+                    return await self._handle_generic_task(work_item)
+            
+            # Run execution with periodic status updates
+            execution_task = asyncio.create_task(execute_with_status())
+            elapsed = 0
+            
+            while not execution_task.done():
+                await asyncio.sleep(60)  # Check every minute
+                elapsed += 60
+                if not execution_task.done():
+                    self.logger.info(f"Worker {worker_id} still executing {work_item.title} ({elapsed}s elapsed)")
+            
+            result['output'] = await execution_task
+            
+            result['success'] = True
+            
+            # Mark as completed
+            self.logger.info(f"Worker {worker_id} COMPLETED: {work_item.title} in {time.time() - start_time:.2f}s")
+            # Note: Work items created by generator weren't dequeued, so they're not in processing
+            # This is why we get "not in processing" warnings - it's expected behavior
+            self.hybrid_state.complete_work(work_item.id, result)
+            
+        except Exception as e:
+            result['error'] = str(e)
+            result['traceback'] = traceback.format_exc()
+            self.logger.error(f"Worker {worker_id} FAILED on {work_item.title}: {e}")
+            
+            # Mark as failed
+            self.hybrid_state.fail_work(work_item.id, str(e), retry=True)
+            
+            # Update worker error count
+            self.workers[worker_id].total_errors += 1
+        
+        finally:
+            # Calculate duration
+            result['duration'] = time.time() - start_time
+            
+            # Log completion details
+            self.logger.info(f"Worker {worker_id} task result: success={result['success']}, duration={result['duration']:.2f}s, output_type={type(result['output'])}")
+            
+            # Update metrics
+            self._update_metrics(work_item, result)
+            
+            # Clear current work and update status
+            self.workers[worker_id].current_work = None
+            self.workers[worker_id].status = WorkerStatus.IDLE
+            
+            # Record completion time
+            if result['success']:
+                self.completion_times.append(result['duration'])
+                # Keep only recent completion times
+                if len(self.completion_times) > 1000:
+                    self.completion_times = self.completion_times[-1000:]
+        
+        return result
+    
+    
+    async def _handle_research_task(self, work_item: WorkItem) -> Dict[str, Any]:
+        """Handle research task - now redirects to knowledge-driven evolution."""
+        return {
+            'type': 'research',
+            'status': 'redirected',
+            'message': 'Research tasks are now handled by the knowledge-driven evolution system',
+            'recommendation': 'Run run_knowledge_driven_evolution.py for research and improvement generation',
+            'execution_time': time.time()
+        }
+    
+    async def _handle_code_improvement(self, work_item: WorkItem) -> Dict[str, Any]:
+        """Handle code improvement task by creating actual GitHub issues."""
+        try:
+            # Import the GitHub issue creator for real execution
+            from scripts.storage_factory import IssueCreatorFactory
+            github_creator = IssueCreatorFactory.create()
+            
+            # Check if we can create GitHub issues
+            if github_creator.can_create_issues():
+                # Execute the work item to create a real GitHub issue
+                result = await github_creator.execute_work_item(work_item)
+                return {
+                    'type': 'code_improvement',
+                    'repository': work_item.repository,
+                    'github_issue_created': result.get('success', False),
+                    'issue_number': result.get('issue_number'),
+                    'value_created': result.get('value_created', 0),
+                    'execution_time': result.get('execution_time', time.time())
+                }
+            else:
+                # Fallback to task manager if GitHub integration not available
+                from scripts.task_manager import TaskManager
+                task_manager = TaskManager(repository=work_item.repository)
+                
+                # Create task using task manager
+                task = task_manager.create_task(
+                    task_type='refactor',  # Code improvement maps to refactor
+                    title=work_item.title,
+                    description=work_item.description,
+                    repository=work_item.repository
+                )
+                
+                return {
+                    'type': 'code_improvement',
+                    'repository': work_item.repository,
+                    'task_created': bool(task),
+                    'task_id': task.get('id') if task else None,
+                    'execution_time': time.time()
+                }
+                
+        except Exception as e:
+            self.logger.error(f"Error handling code improvement: {e}")
+            return {
+                'type': 'code_improvement',
+                'repository': work_item.repository,
+                'error': str(e),
+                'execution_time': time.time()
+            }
+    
+    
+    async def _handle_generic_task(self, work_item: WorkItem) -> Dict[str, Any]:
+        """Handle generic task by executing real work based on task type."""
+        self.logger.info(f"Executing real work for {work_item.task_type} task: {work_item.title}")
+        
+        try:
+            # Handle NEW_PROJECT tasks
+            if work_item.task_type == "NEW_PROJECT" or work_item.task_type == "new_project":
+                return await self._handle_new_project_task(work_item)
+            
+            # Handle documentation tasks internally
+            doc_types = ['DOCUMENTATION_ALL', 'DOCUMENTATION']
+            if work_item.task_type in doc_types or 'documentation' in work_item.task_type.lower():
+                return await self._handle_documentation_task(work_item)
+            
+            # Handle all other tasks by creating GitHub issues
+            from scripts.storage_factory import IssueCreatorFactory
+            github_creator = IssueCreatorFactory.create()
+            
+            # Check if we can create GitHub issues
+            if github_creator.can_create_issues():
+                # Execute the work item to create a real GitHub issue
+                result = await github_creator.execute_work_item(work_item)
+                return {
+                    'type': work_item.task_type,
+                    'title': work_item.title,
+                    'github_issue_created': result.get('success', False),
+                    'issue_number': result.get('issue_number'),
+                    'value_created': result.get('value_created', 0),
+                    'repository': work_item.repository,
+                    'duplicate': result.get('duplicate', False),
+                    'existing_issue': result.get('existing_issue', False),
+                    'execution_time': result.get('execution_time', time.time())
+                }
+            else:
+                # Fallback to task manager if GitHub integration not available
+                self.logger.warning("GitHub integration not available, using task manager")
+                from scripts.task_manager import TaskManager, TaskType
+                task_manager = TaskManager(repository=work_item.repository)
+                
+                # Map work item type to TaskType
+                task_type_map = {
+                    'FEATURE': TaskType.FEATURE,
+                    'BUG_FIX': TaskType.BUG_FIX,
+                    'TESTING': TaskType.TESTING,
+                    'DOCUMENTATION': TaskType.DOCUMENTATION,
+                    'PERFORMANCE': TaskType.PERFORMANCE,
+                    'SECURITY': TaskType.SECURITY,
+                    'REFACTOR': TaskType.REFACTOR
+                }
+                
+                task_type = task_type_map.get(work_item.task_type, TaskType.FEATURE)
+                
+                # Create task using task manager
+                task = task_manager.create_task(
+                    task_type=task_type,
+                    title=work_item.title,
+                    description=work_item.description,
+                    repository=work_item.repository
+                )
+                
+                return {
+                    'type': work_item.task_type,
+                    'title': work_item.title,
+                    'task_created': bool(task),
+                    'task_id': task.get('id') if task else None,
+                    'repository': work_item.repository,
+                    'execution_time': time.time()
+                }
+                
+        except Exception as e:
+            self.logger.error(f"Error handling generic task: {e}")
+            import traceback
+            self.logger.error(traceback.format_exc())
+            return {
+                'type': work_item.task_type,
+                'title': work_item.title,
+                'error': str(e),
+                'execution_time': time.time()
+            }
+    
+    async def _handle_new_project_task(self, work_item: WorkItem) -> Dict[str, Any]:
+        """Handle NEW_PROJECT task by creating actual GitHub repository."""
+        self.logger.info(f"Creating new project: {work_item.title}")
+        
+        try:
+            # Get GitHub token
+            github_token = os.getenv('GITHUB_TOKEN') or os.getenv('CLAUDE_PAT')
+            if not github_token:
+                raise ValueError("No GitHub token available for project creation")
+            
+            # Create project creator instance
+            project_creator = ProjectCreatorFactory.create(github_token, self.ai_brain)
+            
+            # Convert work item to task format for project creator
+            task = {
+                'id': work_item.id,
+                'type': 'NEW_PROJECT',
+                'title': work_item.title,
+                'description': work_item.description,
+                'metadata': work_item.metadata or {}
+            }
+            
+            # Create the project
+            creation_result = await project_creator.create_project(task)
+            
+            if creation_result['success']:
+                self.logger.info(f"✅ Successfully created project: {creation_result.get('project_name')} at {creation_result.get('repo_url')}")
+                return {
+                    'type': 'NEW_PROJECT',
+                    'title': work_item.title,
+                    'project_created': True,
+                    'project_name': creation_result.get('project_name'),
+                    'repo_url': creation_result.get('repo_url'),
+                    'repo_name': creation_result.get('repo_name'),
+                    'customizations': creation_result.get('customizations'),
+                    'initial_issues': creation_result.get('initial_issues'),
+                    'value_created': 2.0,  # NEW_PROJECT has highest value
+                    'execution_time': time.time()
+                }
+            else:
+                error_msg = creation_result.get('error', 'Unknown error')
+                self.logger.error(f"❌ Failed to create project: {error_msg}")
+                return {
+                    'type': 'NEW_PROJECT',
+                    'title': work_item.title,
+                    'project_created': False,
+                    'error': error_msg,
+                    'value_created': 0,
+                    'execution_time': time.time()
+                }
+                
+        except Exception as e:
+            self.logger.error(f"Error creating new project: {e}")
+            import traceback
+            self.logger.error(traceback.format_exc())
+            
+            # Fallback to creating GitHub issue for NEW_PROJECT
+            try:
+                from scripts.github_issue_creator import GitHubIssueCreator
+                github_creator = GitHubIssueCreator()
+                
+                if github_creator.can_create_issues():
+                    result = await github_creator.execute_work_item(work_item)
+                    return {
+                        'type': 'NEW_PROJECT',
+                        'title': work_item.title,
+                        'project_created': False,
+                        'github_issue_created': result.get('success', False),
+                        'issue_number': result.get('issue_number'),
+                        'error': f"Project creation failed, created issue instead: {e}",
+                        'value_created': result.get('value_created', 0),
+                        'execution_time': time.time()
+                    }
+            except Exception as fallback_error:
+                self.logger.error(f"Fallback to issue creation also failed: {fallback_error}")
+            
+            return {
+                'type': 'NEW_PROJECT',
+                'title': work_item.title,
+                'project_created': False,
+                'error': str(e),
+                'value_created': 0,
+                'execution_time': time.time()
+            }
+    
+    async def _handle_documentation_task(self, work_item: WorkItem) -> Dict[str, Any]:
+        """Handle documentation tasks by generating all 3 MD files internally."""
+        self.logger.info(f"Handling documentation task internally: {work_item.title}")
+        
+        try:
+            # Import the documentation generator
+            from scripts.custom_tools.documentation.generate_all_docs import UnifiedDocumentationGenerator
+            
+            # Extract repository name from work item
+            repo_name = work_item.repository
+            if not repo_name:
+                return {
+                    'type': 'DOCUMENTATION',
+                    'title': work_item.title,
+                    'success': False,
+                    'error': 'No repository specified in work item',
+                    'value_created': 0,
+                    'execution_time': time.time()
+                }
+            
+            # Initialize documentation generator
+            doc_generator = UnifiedDocumentationGenerator()
+            
+            # Generate all documentation files for the repository
+            self.logger.info(f"Generating all documentation files for {repo_name}")
+            result = await doc_generator.generate_all_docs(
+                project_name=repo_name,
+                force=False  # Don't overwrite existing files
+            )
+            
+            if result.get('success', False):
+                generated_files = result.get('generated', [])
+                skipped_files = result.get('skipped', [])
+                
+                self.logger.info(f"Documentation generation complete for {repo_name}")
+                self.logger.info(f"Generated: {generated_files}")
+                self.logger.info(f"Skipped (already exist): {skipped_files}")
+                
+                # Calculate value based on files generated
+                value_created = len(generated_files) * 0.8  # 0.8 value per doc file
+                
+                return {
+                    'type': 'DOCUMENTATION',
+                    'title': work_item.title,
+                    'success': True,
+                    'files_generated': generated_files,
+                    'files_skipped': skipped_files,
+                    'repository': repo_name,
+                    'value_created': value_created,
+                    'execution_time': time.time()
+                }
+            else:
+                return {
+                    'type': 'DOCUMENTATION',
+                    'title': work_item.title,
+                    'success': False,
+                    'error': result.get('error', 'Unknown error during documentation generation'),
+                    'repository': repo_name,
+                    'value_created': 0,
+                    'execution_time': time.time()
+                }
+                
+        except Exception as e:
+            self.logger.error(f"Error handling documentation task: {e}")
+            return {
+                'type': 'DOCUMENTATION',
+                'title': work_item.title,
+                'success': False,
+                'error': str(e),
+                'repository': work_item.repository,
+                'value_created': 0,
+                'execution_time': time.time()
+            }
+    
+    def _update_metrics(self, work_item: WorkItem, result: Dict[str, Any]):
+        """Update performance metrics."""
+        old_completed = self.metrics.get('total_work_completed', 0)
+        
+        if result['success']:
+            self.metrics['total_work_completed'] += 1
+            self.logger.debug(f"Metrics updated: completed {old_completed} -> {self.metrics['total_work_completed']} for {work_item.id}")
+        else:
+            self.metrics['total_errors'] += 1
+            self.logger.debug(f"Metrics updated: error count increased for {work_item.id}")
+        
+        # Update work per hour
+        hours_running = (time.time() - self.start_time) / 3600
+        if hours_running > 0:
+            self.metrics['work_per_hour'] = self.metrics['total_work_completed'] / hours_running
+            self.metrics['uptime_hours'] = hours_running
+        
+        # Update average completion time
+        if self.completion_times:
+            self.metrics['average_completion_time'] = sum(self.completion_times) / len(self.completion_times)
+        
+        # Track in performance window
+        self.performance_window.append({
+            'timestamp': time.time(),
+            'success': result['success'],
+            'duration': result['duration'],
+            'work_type': work_item.task_type
+        })
+        
+        # Trim window
+        if len(self.performance_window) > self.performance_window_size:
+            self.performance_window = self.performance_window[-self.performance_window_size:]
+    
+    async def _worker_loop(self, worker_id: str):
+        """Main loop for a worker with enhanced error handling.
+        
+        Args:
+            worker_id: Unique identifier for this worker
+        """
+        self.logger.info(f"Worker {worker_id} started")
+        consecutive_errors = 0
+        max_consecutive_errors = 5
+        
+        while not self.shutdown_requested:
+            try:
+                # Check if paused
+                if self.pause_requested:
+                    await asyncio.sleep(1)
+                    continue
+                
+                # Update worker status
+                self.workers[worker_id].status = WorkerStatus.IDLE
+                
+                # Find a single work item for this worker
+                work_item = await self.find_single_work_item(worker_id)
+                
+                if not work_item:
+                    # No work available, wait a bit
+                    await asyncio.sleep(5)
+                    continue
+                
+                # Update worker status
+                self.workers[worker_id].status = WorkerStatus.WORKING
+                
+                # Execute work WITHOUT timeout - let it run as long as needed
+                result = await self._execute_work_item(worker_id, work_item)
+                
+                # Update completion count
+                if result['success']:
+                    self.workers[worker_id].total_completed += 1
+                    consecutive_errors = 0  # Reset error count on success
+                
+                # Small delay between tasks
+                await asyncio.sleep(1)
+                
+            except Exception as e:
+                consecutive_errors += 1
+                self.logger.error(f"Worker {worker_id} loop error ({consecutive_errors}/{max_consecutive_errors}): {e}")
+                self.workers[worker_id].status = WorkerStatus.ERROR
+                
+                # If too many consecutive errors, shut down this worker
+                if consecutive_errors >= max_consecutive_errors:
+                    self.logger.error(f"Worker {worker_id} shutting down due to excessive errors")
+                    break
+                    
+                # Exponential backoff on errors
+                wait_time = min(60, 5 * (2 ** (consecutive_errors - 1)))
+                await asyncio.sleep(wait_time)
+        
+        self.workers[worker_id].status = WorkerStatus.SHUTTING_DOWN
+        self.logger.info(f"Worker {worker_id} stopped")
+    
+    async def start(self):
+        """Start the orchestrator and all workers."""
+        self.logger.info("Starting continuous orchestrator...")
+        
+        # Initialize workers
+        for i in range(self.max_workers if self.enable_parallel else 1):
+            worker_id = f"worker_{i:02d}"
+            self.workers[worker_id] = WorkerState(
+                id=worker_id,
+                status=WorkerStatus.IDLE
+            )
+            
+            # Start worker task
+            self.worker_tasks[worker_id] = asyncio.create_task(
+                self._worker_loop(worker_id)
+            )
+        
+        self.logger.info(f"Started {len(self.workers)} workers")
+        
+        # Monitor loop
+        last_recovery_check = time.time()
+        monitor_errors = 0
+        
+        try:
+            while not self.shutdown_requested:
+                try:
+                    # Log status periodically
+                    await asyncio.sleep(60)  # Every minute
+                    status = await self.get_status()
+                    self.logger.info(f"Status: {status['workers']} workers, "
+                                  f"{status['metrics']['total_work_completed']} completed, "
+                                  f"{status['metrics']['work_per_hour']:.1f} work/hour")
+                    
+                    # Save metrics to state
+                    self.hybrid_state.set_json('orchestrator_metrics', self.metrics)
+                    
+                    # Skip stale recovery - Claude tasks can run as long as needed
+                    # We don't want to interrupt long-running Claude executions
+                    
+                    # Check worker health
+                    failed_workers = sum(1 for w in self.workers.values() if w.status == WorkerStatus.ERROR)
+                    if failed_workers > self.max_workers // 2:
+                        self.logger.error(f"Too many failed workers ({failed_workers}/{self.max_workers}), initiating shutdown")
+                        self.shutdown_requested = True
+                    
+                    monitor_errors = 0  # Reset error count on success
+                    
+                except Exception as e:
+                    monitor_errors += 1
+                    self.logger.error(f"Monitor loop error ({monitor_errors}): {e}")
+                    if monitor_errors > 10:
+                        self.logger.error("Too many monitor errors, shutting down")
+                        self.shutdown_requested = True
+                        break
+                    await asyncio.sleep(5)
+        
+        except Exception as e:
+            self.logger.error(f"Fatal monitor error: {e}")
+            self.shutdown_requested = True
+        
+        finally:
+            # Wait for all workers to finish
+            self.logger.info("Waiting for workers to finish...")
+            await asyncio.gather(*self.worker_tasks.values(), return_exceptions=True)
+            
+            self.logger.info("Orchestrator stopped")
+    
+    async def stop(self):
+        """Stop the orchestrator gracefully."""
+        self.logger.info("Stopping orchestrator...")
+        self.shutdown_requested = True
+        
+        # Save final state
+        self.hybrid_state.set_json('orchestrator_final_metrics', {
+            'stopped_at': datetime.now(timezone.utc).isoformat(),
+            'metrics': self.metrics,
+            'workers': len(self.workers)
+        })
+        
+        # Close hybrid state manager
+        self.hybrid_state.close()
+    
+    async def pause(self):
+        """Pause all workers."""
+        self.pause_requested = True
+        self.logger.info("Orchestrator paused")
+    
+    async def resume(self):
+        """Resume all workers."""
+        self.pause_requested = False
+        self.logger.info("Orchestrator resumed")
+    
+    async def get_status(self) -> Dict[str, Any]:
+        """Get current orchestrator status.
+        
+        Returns:
+            Status dictionary
+        """
+        worker_summary = {
+            'total': len(self.workers),
+            'idle': sum(1 for w in self.workers.values() if w.status == WorkerStatus.IDLE),
+            'working': sum(1 for w in self.workers.values() if w.status == WorkerStatus.WORKING),
+            'error': sum(1 for w in self.workers.values() if w.status == WorkerStatus.ERROR)
+        }
+        
+        return {
+            'running': not self.shutdown_requested,
+            'paused': self.pause_requested,
+            'workers': worker_summary,
+            'metrics': self.metrics,
+            'work_queue': self.hybrid_state.get_work_stats(),
+            'state_manager': self.hybrid_state.get_status()
+        }
+    
+    async def add_work(self, work_item: WorkItem) -> bool:
+        """Add a work item to the queue.
+        
+        Args:
+            work_item: Work item to add
+            
+        Returns:
+            True if successfully added
+        """
+        try:
+            return self.hybrid_state.enqueue_work(work_item.to_dict())
+        except Exception as e:
+            self.logger.error(f"Error adding work: {e}")
+            return False
+
+
+# Create an alias for backward compatibility
+ContinuousOrchestrator = ContinuousOrchestratorNoRedis
+
+
+# Example usage
+if __name__ == "__main__":
+    async def main():
+        orchestrator = ContinuousOrchestratorNoRedis(
+            max_workers=5,
+            enable_parallel=True
+        )
+        
+        try:
+            await orchestrator.start()
+        except KeyboardInterrupt:
+            await orchestrator.stop()
+    
+    asyncio.run(main())

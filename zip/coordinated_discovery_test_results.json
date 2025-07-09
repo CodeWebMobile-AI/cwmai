@@ -1,0 +1,56 @@
+{
+  "test_time": "2025-07-02T21:31:30.882554",
+  "duration_minutes": 0.5,
+  "old_system": {
+    "attempts_per_hour": 1200.0,
+    "coordination": false,
+    "research_aware": false
+  },
+  "new_system": {
+    "attempts_per_hour": 360.0,
+    "coordination": true,
+    "research_aware": true,
+    "stats": {
+      "coordinator": {
+        "total_attempts": 3,
+        "successful_attempts": 0,
+        "success_rate": "0.0%",
+        "work_items_found": 0,
+        "average_time_per_attempt": "0.0s",
+        "consecutive_empty": 2,
+        "current_backoff_factor": 1.0,
+        "next_check_interval": "240s",
+        "research_in_progress": false,
+        "current_queue_size": 15,
+        "last_attempt": "2025-07-02T21:31:28.880542",
+        "last_success": null
+      },
+      "research_scheduler": {
+        "research_active": false,
+        "total_research_phases": 1,
+        "average_duration": 0,
+        "current_research": null,
+        "recent_research": [
+          {
+            "phase_id": "market_discovery_20250702_213122",
+            "duration": "2s",
+            "problems_found": 5
+          }
+        ]
+      },
+      "work_queue": {
+        "current_size": 15,
+        "min_size": 20,
+        "optimal_size": 50,
+        "consumption_rate": "0.0 items/min",
+        "needs_work": true,
+        "depletion_time": "unknown",
+        "health": "low"
+      },
+      "active_research": null
+    }
+  },
+  "improvement": {
+    "reduction_percent": 70.0
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "summary": {
+    "runtime": "0:02:04.124981",
+    "generations_completed": 0,
+    "improvements_created": 0,
+    "errors_encountered": 0,
+    "final_population_size": 11,
+    "fitness_history": [],
+    "verification_pass_rate": 0.0
+  },
+  "improvements_created": [],
+  "errors": [],
+  "verification_results": [],
+  "final_population": [
+    {
+      "name": "continuous_performance_monitoring",
+      "type": "workflow",
+      "fitness": 0.0,
+      "generation": 0
+    },
+    {
+      "name": "rate_limit_error_handler",
+      "type": "error_fix",
+      "fitness": 0.0,
+      "generation": 0
+    },
+    {
+      "name": "response_cache_optimizer",
+      "type": "tool",
+      "fitness": 0.0,
+      "generation": 0
+    },
+    {
+      "name": "continuous_performance_monitoring_workflow",
+      "type": "workflow",
+      "fitness": 0.0,
+      "generation": 0
+    },
+    {
+      "name": "improvement_tracking_error_fix",
+      "type": "error_fix",
+      "fitness": 0.0,
+      "generation": 0
+    },
+    {
+      "name": "response_cache_optimizer",
+      "type": "workflow",
+      "fitness": 0.0,
+      "generation": 0
+    },
+    {
+      "name": "fix_improvement_tracking",
+      "type": "error_fix",
+      "fitness": 0.0,
+      "generation": 0
+    },
+    {
+      "name": "continuous_performance_monitoring",
+      "type": "workflow",
+      "fitness": 0.0,
+      "generation": 0
+    },
+    {
+      "name": "prompt_injection_defender",
+      "type": "error_fix",
+      "fitness": 0.0,
+      "generation": 0
+    },
+    {
+      "name": "timeout_error_resolver",
+      "type": "error_fix",
+      "fitness": 0.0,
+      "generation": 0
+    },
+    {
+      "name": "fallback_improvement",
+      "type": "optimization",
+      "fitness": 0,
+      "generation": 0
+    }
+  ]
+}

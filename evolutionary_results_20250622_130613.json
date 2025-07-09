@@ -1,0 +1,156 @@
+{
+  "summary": {
+    "runtime": "0:04:02.437456",
+    "generations_completed": 1,
+    "improvements_created": 0,
+    "errors_encountered": 6,
+    "final_population_size": 10,
+    "fitness_history": [
+      {
+        "generation": 1,
+        "average_fitness": 0.34727272727272723,
+        "best_fitness": 0.395,
+        "population_size": 11
+      },
+      {
+        "generation": 2,
+        "average_fitness": 0.43950000000000006,
+        "best_fitness": 0.59,
+        "population_size": 10
+      },
+      {
+        "generation": 3,
+        "average_fitness": 0.43950000000000006,
+        "best_fitness": 0.59,
+        "population_size": 10
+      },
+      {
+        "generation": 4,
+        "average_fitness": 0.43950000000000006,
+        "best_fitness": 0.59,
+        "population_size": 10
+      },
+      {
+        "generation": 5,
+        "average_fitness": 0.43950000000000006,
+        "best_fitness": 0.59,
+        "population_size": 10
+      },
+      {
+        "generation": 6,
+        "average_fitness": 0.43950000000000006,
+        "best_fitness": 0.59,
+        "population_size": 10
+      },
+      {
+        "generation": 7,
+        "average_fitness": 0.43950000000000006,
+        "best_fitness": 0.59,
+        "population_size": 10
+      }
+    ],
+    "verification_pass_rate": 0.0
+  },
+  "improvements_created": [],
+  "errors": [
+    {
+      "generation": 2,
+      "error": "local variable 'improvement_type' referenced before assignment",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 252, in smart_evolve_generation\n    await runner._original_evolve()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 211, in _evolve_generation\n    await self.evolutionary_engine.evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/scripts/evolutionary_improvement_engine.py\", line 491, in evolve_generation\n    improvement = await self._generate_improvement_candidate([])\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 294, in smart_generate_candidate\n    result = await runner._original_generate(needs)\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/scripts/evolutionary_improvement_engine.py\", line 92, in _generate_improvement_candidate\n    self.last_5_types.append(improvement_type)\nUnboundLocalError: local variable 'improvement_type' referenced before assignment\n",
+      "timestamp": "2025-06-22T12:05:15.712422+00:00"
+    },
+    {
+      "generation": 3,
+      "error": "local variable 'improvement_type' referenced before assignment",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 252, in smart_evolve_generation\n    await runner._original_evolve()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 211, in _evolve_generation\n    await self.evolutionary_engine.evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/scripts/evolutionary_improvement_engine.py\", line 491, in evolve_generation\n    improvement = await self._generate_improvement_candidate([])\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 294, in smart_generate_candidate\n    result = await runner._original_generate(needs)\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/scripts/evolutionary_improvement_engine.py\", line 92, in _generate_improvement_candidate\n    self.last_5_types.append(improvement_type)\nUnboundLocalError: local variable 'improvement_type' referenced before assignment\n",
+      "timestamp": "2025-06-22T12:05:24.791710+00:00"
+    },
+    {
+      "generation": 4,
+      "error": "local variable 'improvement_type' referenced before assignment",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 252, in smart_evolve_generation\n    await runner._original_evolve()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 211, in _evolve_generation\n    await self.evolutionary_engine.evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/scripts/evolutionary_improvement_engine.py\", line 491, in evolve_generation\n    improvement = await self._generate_improvement_candidate([])\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 294, in smart_generate_candidate\n    result = await runner._original_generate(needs)\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/scripts/evolutionary_improvement_engine.py\", line 92, in _generate_improvement_candidate\n    self.last_5_types.append(improvement_type)\nUnboundLocalError: local variable 'improvement_type' referenced before assignment\n",
+      "timestamp": "2025-06-22T12:05:35.419578+00:00"
+    },
+    {
+      "generation": 5,
+      "error": "local variable 'improvement_type' referenced before assignment",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 252, in smart_evolve_generation\n    await runner._original_evolve()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 211, in _evolve_generation\n    await self.evolutionary_engine.evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/scripts/evolutionary_improvement_engine.py\", line 491, in evolve_generation\n    improvement = await self._generate_improvement_candidate([])\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 294, in smart_generate_candidate\n    result = await runner._original_generate(needs)\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/scripts/evolutionary_improvement_engine.py\", line 92, in _generate_improvement_candidate\n    self.last_5_types.append(improvement_type)\nUnboundLocalError: local variable 'improvement_type' referenced before assignment\n",
+      "timestamp": "2025-06-22T12:05:47.579394+00:00"
+    },
+    {
+      "generation": 6,
+      "error": "local variable 'improvement_type' referenced before assignment",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 252, in smart_evolve_generation\n    await runner._original_evolve()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 211, in _evolve_generation\n    await self.evolutionary_engine.evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/scripts/evolutionary_improvement_engine.py\", line 491, in evolve_generation\n    improvement = await self._generate_improvement_candidate([])\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 294, in smart_generate_candidate\n    result = await runner._original_generate(needs)\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/scripts/evolutionary_improvement_engine.py\", line 92, in _generate_improvement_candidate\n    self.last_5_types.append(improvement_type)\nUnboundLocalError: local variable 'improvement_type' referenced before assignment\n",
+      "timestamp": "2025-06-22T12:06:00.925150+00:00"
+    },
+    {
+      "generation": 7,
+      "error": "local variable 'improvement_type' referenced before assignment",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 252, in smart_evolve_generation\n    await runner._original_evolve()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 211, in _evolve_generation\n    await self.evolutionary_engine.evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/scripts/evolutionary_improvement_engine.py\", line 491, in evolve_generation\n    improvement = await self._generate_improvement_candidate([])\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 294, in smart_generate_candidate\n    result = await runner._original_generate(needs)\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/scripts/evolutionary_improvement_engine.py\", line 92, in _generate_improvement_candidate\n    self.last_5_types.append(improvement_type)\nUnboundLocalError: local variable 'improvement_type' referenced before assignment\n",
+      "timestamp": "2025-06-22T12:06:11.010438+00:00"
+    }
+  ],
+  "verification_results": [],
+  "final_population": [
+    {
+      "name": "Smart Query Caching with Distributed Backing Store",
+      "type": "Performance Optimization",
+      "fitness": 0.59,
+      "generation": 1
+    },
+    {
+      "name": "Enhanced Distributed Cache Implementation",
+      "type": "System Component",
+      "fitness": 0.57,
+      "generation": 1
+    },
+    {
+      "name": "Distributed Cache Implementation",
+      "type": "Infrastructure",
+      "fitness": 0.57,
+      "generation": 1
+    },
+    {
+      "name": "distributed_cache_implementation",
+      "type": "optimization",
+      "fitness": 0.395,
+      "generation": 0
+    },
+    {
+      "name": "distributed_cache_implementation",
+      "type": "optimization",
+      "fitness": 0.395,
+      "generation": 0
+    },
+    {
+      "name": "distributed_cache_implementation_v3",
+      "type": "optimization",
+      "fitness": 0.395,
+      "generation": 0
+    },
+    {
+      "name": "distributed_cache_implementation",
+      "type": "optimization",
+      "fitness": 0.395,
+      "generation": 0
+    },
+    {
+      "name": "distributed_cache_implementation_v7",
+      "type": "optimization",
+      "fitness": 0.395,
+      "generation": 0
+    },
+    {
+      "name": "query_cache_implementation",
+      "type": "optimization",
+      "fitness": 0.375,
+      "generation": 0
+    },
+    {
+      "name": "result_memoization_implementation",
+      "type": "optimization",
+      "fitness": 0.315,
+      "generation": 0
+    }
+  ]
+}

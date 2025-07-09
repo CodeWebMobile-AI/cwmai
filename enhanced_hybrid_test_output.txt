@@ -1,0 +1,84 @@
+2025-06-22 02:51:19,922 - scripts.in_memory_work_queue - INFO - Loaded 0 items from disk
+2025-06-22 02:51:19,922 - scripts.hybrid_state_manager - INFO - Hybrid state manager initialized
+2025-06-22 02:51:19,932 - scripts.hybrid_orchestrator_enhanced - INFO - Initializing Dynamic God Mode components...
+2025-06-22 02:51:19,933 - AIBrainFactory - INFO - Loading production state with repository discovery
+2025-06-22 02:51:19,934 - AIBrainFactory - INFO - Production loaded 37 repositories
+2025-06-22 02:51:26,344 - AIBrainFactory - INFO - Production context gathered successfully via event loop task
+2025-06-22 02:51:26,344 - AIBrainFactory - INFO - AIBrain created successfully for production
+2025-06-22 02:51:26,346 - scripts.storage_factory - INFO - StorageFactory initialized with mode: local
+2025-06-22 02:51:26,346 - scripts.multi_repo_coordinator - INFO - Running in local mode - using file system storage
+2025-06-22 02:51:26,346 - scripts.storage_factory - INFO - Creating task manager for mode: local
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/project-analytics-dashboard: Repository file://local_repos/repositories/CodeWebMobile-AI/project-analytics-dashboard not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/business-analytics-dashboard: Repository file://local_repos/repositories/CodeWebMobile-AI/business-analytics-dashboard not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/summarize-ai-mobile: Repository file://local_repos/repositories/CodeWebMobile-AI/summarize-ai-mobile not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/brand-guardian-ai: Repository file://local_repos/repositories/CodeWebMobile-AI/brand-guardian-ai not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/reputation-ai: Repository file://local_repos/repositories/CodeWebMobile-AI/reputation-ai not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/eco-track-ai: Repository file://local_repos/repositories/CodeWebMobile-AI/eco-track-ai not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/ai-powered-inventory-sync: Repository file://local_repos/repositories/CodeWebMobile-AI/ai-powered-inventory-sync not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/community-connect-platform: Repository file://local_repos/repositories/CodeWebMobile-AI/community-connect-platform not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/mindleap-ai: Repository file://local_repos/repositories/CodeWebMobile-AI/mindleap-ai not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/vid-gen-ai: Repository file://local_repos/repositories/CodeWebMobile-AI/vid-gen-ai not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/hydra-health-ai: Repository file://local_repos/repositories/CodeWebMobile-AI/hydra-health-ai not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/review-sentry: Repository file://local_repos/repositories/CodeWebMobile-AI/review-sentry not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/skillswap-global: Repository file://local_repos/repositories/CodeWebMobile-AI/skillswap-global not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/mentormatch-global: Repository file://local_repos/repositories/CodeWebMobile-AI/mentormatch-global not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/skillswap-local: Repository file://local_repos/repositories/CodeWebMobile-AI/skillswap-local not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/smb-unified-inbox-ai: Repository file://local_repos/repositories/CodeWebMobile-AI/smb-unified-inbox-ai not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/remote-team-hub: Repository file://local_repos/repositories/CodeWebMobile-AI/remote-team-hub not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/habit-forge-ai: Repository file://local_repos/repositories/CodeWebMobile-AI/habit-forge-ai not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/freelance-finance-manager: Repository file://local_repos/repositories/CodeWebMobile-AI/freelance-finance-manager not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/local-seo-autopilot: Repository file://local_repos/repositories/CodeWebMobile-AI/local-seo-autopilot not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/recycleye-marketplace: Repository file://local_repos/repositories/CodeWebMobile-AI/recycleye-marketplace not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/eco-local-marketplace: Repository file://local_repos/repositories/CodeWebMobile-AI/eco-local-marketplace not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/subscription-saver-ai: Repository file://local_repos/repositories/CodeWebMobile-AI/subscription-saver-ai not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/fin-flow-react: Repository file://local_repos/repositories/CodeWebMobile-AI/fin-flow-react not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/cognitive-convo-hub: Repository file://local_repos/repositories/CodeWebMobile-AI/cognitive-convo-hub not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/fina-flux: Repository file://local_repos/repositories/CodeWebMobile-AI/fina-flux not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/spark-marketplace: Repository file://local_repos/repositories/CodeWebMobile-AI/spark-marketplace not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/social-nexus-app: Repository file://local_repos/repositories/CodeWebMobile-AI/social-nexus-app not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/iota-control-center: Repository file://local_repos/repositories/CodeWebMobile-AI/iota-control-center not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/cognito-conversa: Repository file://local_repos/repositories/CodeWebMobile-AI/cognito-conversa not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/learn-sphere-nexus: Repository file://local_repos/repositories/CodeWebMobile-AI/learn-sphere-nexus not found
+2025-06-22 02:51:26,347 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/learn-spark-platform: Repository file://local_repos/repositories/CodeWebMobile-AI/learn-spark-platform not found
+2025-06-22 02:51:26,348 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/kinetic-task-flow: Repository file://local_repos/repositories/CodeWebMobile-AI/kinetic-task-flow not found
+2025-06-22 02:51:26,348 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/synapse-ai-chat: Repository file://local_repos/repositories/CodeWebMobile-AI/synapse-ai-chat not found
+2025-06-22 02:51:26,348 - scripts.multi_repo_coordinator - WARNING - Error adding repository file://local_repos/repositories/CodeWebMobile-AI/task-flow-mobile: Repository file://local_repos/repositories/CodeWebMobile-AI/task-flow-mobile not found
+2025-06-22 02:51:26,348 - scripts.hybrid_orchestrator_enhanced - INFO - Dynamic God Mode components initialized
+2025-06-22 02:51:26,348 - scripts.hybrid_orchestrator_enhanced - INFO - Starting continuous orchestrator...
+2025-06-22 02:51:26,348 - scripts.hybrid_orchestrator_enhanced - INFO - Started 3 workers
+2025-06-22 02:51:26,348 - scripts.hybrid_orchestrator_enhanced - INFO - Worker worker_00 started
+2025-06-22 02:51:26,348 - scripts.hybrid_orchestrator_enhanced - INFO - Found 0 GitHub issues
+2025-06-22 02:51:26,348 - repository_analysis_cache - INFO - Using cached analysis for CodeWebMobile-AI/project-analytics-dashboard
+2025-06-22 02:51:26,348 - scripts.hybrid_orchestrator_enhanced - WARNING - Error building context for CodeWebMobile-AI/project-analytics-dashboard: can't subtract offset-naive and offset-aware datetimes
+2025-06-22 02:51:26,349 - repository_analysis_cache - INFO - Using cached analysis for CodeWebMobile-AI/business-analytics-dashboard
+2025-06-22 02:51:26,349 - scripts.hybrid_orchestrator_enhanced - WARNING - Error building context for CodeWebMobile-AI/business-analytics-dashboard: can't subtract offset-naive and offset-aware datetimes
+2025-06-22 02:51:26,350 - repository_analysis_cache - INFO - Using cached analysis for CodeWebMobile-AI/summarize-ai-mobile
+2025-06-22 02:51:26,350 - scripts.hybrid_orchestrator_enhanced - WARNING - Error building context for CodeWebMobile-AI/summarize-ai-mobile: can't subtract offset-naive and offset-aware datetimes
+2025-06-22 02:51:26,350 - repository_analysis_cache - INFO - Using cached analysis for CodeWebMobile-AI/brand-guardian-ai
+2025-06-22 02:51:26,350 - scripts.hybrid_orchestrator_enhanced - WARNING - Error building context for CodeWebMobile-AI/brand-guardian-ai: can't subtract offset-naive and offset-aware datetimes
+2025-06-22 02:51:26,351 - repository_analysis_cache - INFO - Using cached analysis for CodeWebMobile-AI/reputation-ai
+2025-06-22 02:51:26,351 - scripts.hybrid_orchestrator_enhanced - WARNING - Error building context for CodeWebMobile-AI/reputation-ai: can't subtract offset-naive and offset-aware datetimes
+2025-06-22 02:51:55,002 - repository_analysis_cache - INFO - Saved analysis cache for CodeWebMobile-AI/eco-track-ai
+2025-06-22 02:51:55,006 - scripts.hybrid_orchestrator_enhanced - WARNING - Error building context for CodeWebMobile-AI/eco-track-ai: can't subtract offset-naive and offset-aware datetimes
+2025-06-22 02:52:23,297 - repository_analysis_cache - INFO - Saved analysis cache for CodeWebMobile-AI/ai-powered-inventory-sync
+2025-06-22 02:52:23,301 - scripts.hybrid_orchestrator_enhanced - WARNING - Error building context for CodeWebMobile-AI/ai-powered-inventory-sync: can't subtract offset-naive and offset-aware datetimes
+2025-06-22 02:52:54,861 - repository_analysis_cache - INFO - Saved analysis cache for CodeWebMobile-AI/community-connect-platform
+2025-06-22 02:52:54,866 - scripts.hybrid_orchestrator_enhanced - WARNING - Error building context for CodeWebMobile-AI/community-connect-platform: can't subtract offset-naive and offset-aware datetimes
+2025-06-22 02:53:23,947 - repository_analysis_cache - INFO - Saved analysis cache for CodeWebMobile-AI/mindleap-ai
+2025-06-22 02:53:23,952 - scripts.hybrid_orchestrator_enhanced - WARNING - Error building context for CodeWebMobile-AI/mindleap-ai: can't subtract offset-naive and offset-aware datetimes
+2025-06-22 02:53:36,058 - scripts.repository_analyzer - WARNING - Error analyzing issues: list index out of range
+2025-06-22 02:53:53,231 - repository_analysis_cache - INFO - Saved analysis cache for CodeWebMobile-AI/vid-gen-ai
+2025-06-22 02:53:53,238 - scripts.hybrid_orchestrator_enhanced - WARNING - Error building context for CodeWebMobile-AI/vid-gen-ai: can't subtract offset-naive and offset-aware datetimes
+2025-06-22 02:54:22,437 - repository_analysis_cache - INFO - Saved analysis cache for CodeWebMobile-AI/hydra-health-ai
+2025-06-22 02:54:22,444 - scripts.hybrid_orchestrator_enhanced - WARNING - Error building context for CodeWebMobile-AI/hydra-health-ai: can't subtract offset-naive and offset-aware datetimes
+2025-06-22 02:54:51,452 - repository_analysis_cache - INFO - Saved analysis cache for CodeWebMobile-AI/review-sentry
+2025-06-22 02:54:51,459 - scripts.hybrid_orchestrator_enhanced - WARNING - Error building context for CodeWebMobile-AI/review-sentry: can't subtract offset-naive and offset-aware datetimes
+2025-06-22 02:55:24,770 - repository_analysis_cache - INFO - Saved analysis cache for CodeWebMobile-AI/skillswap-global
+2025-06-22 02:55:24,780 - scripts.hybrid_orchestrator_enhanced - WARNING - Error building context for CodeWebMobile-AI/skillswap-global: can't subtract offset-naive and offset-aware datetimes
+2025-06-22 02:55:53,624 - repository_analysis_cache - INFO - Saved analysis cache for CodeWebMobile-AI/mentormatch-global
+2025-06-22 02:55:53,632 - scripts.hybrid_orchestrator_enhanced - WARNING - Error building context for CodeWebMobile-AI/mentormatch-global: can't subtract offset-naive and offset-aware datetimes
+2025-06-22 02:56:23,768 - repository_analysis_cache - INFO - Saved analysis cache for CodeWebMobile-AI/skillswap-local
+2025-06-22 02:56:23,778 - scripts.hybrid_orchestrator_enhanced - WARNING - Error building context for CodeWebMobile-AI/skillswap-local: can't subtract offset-naive and offset-aware datetimes
+2025-06-22 02:56:52,258 - repository_analysis_cache - INFO - Saved analysis cache for CodeWebMobile-AI/smb-unified-inbox-ai
+2025-06-22 02:56:52,267 - scripts.hybrid_orchestrator_enhanced - WARNING - Error building context for CodeWebMobile-AI/smb-unified-inbox-ai: can't subtract offset-naive and offset-aware datetimes
+2025-06-22 02:57:04,601 - scripts.repository_analyzer - WARNING - Error analyzing issues: list index out of range

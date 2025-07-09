@@ -1,0 +1,11 @@
+{
+  "name": "Contextual Resonance Mapping",
+  "type": "feature_enhancement",
+  "description": "This feature expands contextual diversity measurement by mapping semantic relationships between contextual elements and user intent. It goes beyond simple co-occurrence to analyze how concepts resonate with the user's predicted needs and goals, considering subtle nuances and implicit associations.",
+  "fitness": 0.6288535957011249,
+  "created_at": "2025-06-22T17:38:57.850176+00:00",
+  "generation": 1,
+  "file_path": "scripts/improvements/Contextual Resonance Mapping.py",
+  "recovered_from": "knowledge_evolution_report_20250622_183936.json",
+  "recovered_at": "2025-06-22T19:23:32.708439"
+}

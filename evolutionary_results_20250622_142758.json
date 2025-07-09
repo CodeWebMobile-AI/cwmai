@@ -1,0 +1,1493 @@
+{
+  "summary": {
+    "runtime": "0:10:01.119502",
+    "generations_completed": 0,
+    "improvements_created": 0,
+    "errors_encountered": 235,
+    "final_population_size": 11,
+    "fitness_history": [],
+    "verification_pass_rate": 0.0
+  },
+  "improvements_created": [],
+  "errors": [
+    {
+      "generation": 1,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:20:08.104601+00:00"
+    },
+    {
+      "generation": 2,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:20:10.105975+00:00"
+    },
+    {
+      "generation": 3,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:20:12.107254+00:00"
+    },
+    {
+      "generation": 4,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:20:14.107774+00:00"
+    },
+    {
+      "generation": 5,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:20:16.109090+00:00"
+    },
+    {
+      "generation": 6,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:20:18.110443+00:00"
+    },
+    {
+      "generation": 7,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:20:20.111750+00:00"
+    },
+    {
+      "generation": 8,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:20:22.113041+00:00"
+    },
+    {
+      "generation": 9,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:20:24.114331+00:00"
+    },
+    {
+      "generation": 10,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:20:26.115716+00:00"
+    },
+    {
+      "generation": 11,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:20:28.117071+00:00"
+    },
+    {
+      "generation": 12,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:20:30.118394+00:00"
+    },
+    {
+      "generation": 13,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:20:32.119111+00:00"
+    },
+    {
+      "generation": 14,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:20:34.120444+00:00"
+    },
+    {
+      "generation": 15,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:20:36.121745+00:00"
+    },
+    {
+      "generation": 16,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:20:38.123056+00:00"
+    },
+    {
+      "generation": 17,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:20:40.124370+00:00"
+    },
+    {
+      "generation": 18,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:20:42.125642+00:00"
+    },
+    {
+      "generation": 19,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:20:44.126970+00:00"
+    },
+    {
+      "generation": 20,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:20:46.128300+00:00"
+    },
+    {
+      "generation": 21,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:20:48.129571+00:00"
+    },
+    {
+      "generation": 22,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:20:50.130876+00:00"
+    },
+    {
+      "generation": 23,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:20:52.132198+00:00"
+    },
+    {
+      "generation": 24,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:20:54.133504+00:00"
+    },
+    {
+      "generation": 25,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:20:56.134841+00:00"
+    },
+    {
+      "generation": 26,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:20:58.136150+00:00"
+    },
+    {
+      "generation": 27,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:00.137336+00:00"
+    },
+    {
+      "generation": 28,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:02.137727+00:00"
+    },
+    {
+      "generation": 29,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:04.138986+00:00"
+    },
+    {
+      "generation": 30,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:06.140258+00:00"
+    },
+    {
+      "generation": 31,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:08.141526+00:00"
+    },
+    {
+      "generation": 32,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:10.141991+00:00"
+    },
+    {
+      "generation": 33,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:12.142584+00:00"
+    },
+    {
+      "generation": 34,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:14.143487+00:00"
+    },
+    {
+      "generation": 35,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:16.144881+00:00"
+    },
+    {
+      "generation": 36,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:18.146204+00:00"
+    },
+    {
+      "generation": 37,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:20.147510+00:00"
+    },
+    {
+      "generation": 38,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:22.147879+00:00"
+    },
+    {
+      "generation": 39,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:24.148571+00:00"
+    },
+    {
+      "generation": 40,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:26.149879+00:00"
+    },
+    {
+      "generation": 41,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:28.151175+00:00"
+    },
+    {
+      "generation": 42,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:30.152473+00:00"
+    },
+    {
+      "generation": 43,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:32.153784+00:00"
+    },
+    {
+      "generation": 44,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:34.155166+00:00"
+    },
+    {
+      "generation": 45,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:36.156178+00:00"
+    },
+    {
+      "generation": 46,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:38.157019+00:00"
+    },
+    {
+      "generation": 47,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:40.158389+00:00"
+    },
+    {
+      "generation": 48,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:42.159684+00:00"
+    },
+    {
+      "generation": 49,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:44.160194+00:00"
+    },
+    {
+      "generation": 50,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:46.161518+00:00"
+    },
+    {
+      "generation": 51,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:48.162847+00:00"
+    },
+    {
+      "generation": 52,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:50.163271+00:00"
+    },
+    {
+      "generation": 53,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:52.164572+00:00"
+    },
+    {
+      "generation": 54,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:54.164996+00:00"
+    },
+    {
+      "generation": 55,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:56.166310+00:00"
+    },
+    {
+      "generation": 56,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:21:58.167585+00:00"
+    },
+    {
+      "generation": 57,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:00.168492+00:00"
+    },
+    {
+      "generation": 58,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:02.169796+00:00"
+    },
+    {
+      "generation": 59,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:04.170820+00:00"
+    },
+    {
+      "generation": 60,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:06.171372+00:00"
+    },
+    {
+      "generation": 61,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:08.172684+00:00"
+    },
+    {
+      "generation": 62,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:10.173524+00:00"
+    },
+    {
+      "generation": 63,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:12.174830+00:00"
+    },
+    {
+      "generation": 64,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:14.176116+00:00"
+    },
+    {
+      "generation": 65,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:16.176453+00:00"
+    },
+    {
+      "generation": 66,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:18.176764+00:00"
+    },
+    {
+      "generation": 67,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:20.178059+00:00"
+    },
+    {
+      "generation": 68,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:22.179329+00:00"
+    },
+    {
+      "generation": 69,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:24.180616+00:00"
+    },
+    {
+      "generation": 70,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:26.183076+00:00"
+    },
+    {
+      "generation": 71,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:28.184534+00:00"
+    },
+    {
+      "generation": 72,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:30.185848+00:00"
+    },
+    {
+      "generation": 73,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:32.187165+00:00"
+    },
+    {
+      "generation": 74,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:34.188002+00:00"
+    },
+    {
+      "generation": 75,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:36.189007+00:00"
+    },
+    {
+      "generation": 76,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:38.190302+00:00"
+    },
+    {
+      "generation": 77,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:40.191919+00:00"
+    },
+    {
+      "generation": 78,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:42.193560+00:00"
+    },
+    {
+      "generation": 79,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:44.194920+00:00"
+    },
+    {
+      "generation": 80,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:46.195381+00:00"
+    },
+    {
+      "generation": 81,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:48.196731+00:00"
+    },
+    {
+      "generation": 82,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:50.197920+00:00"
+    },
+    {
+      "generation": 83,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:52.199255+00:00"
+    },
+    {
+      "generation": 84,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:54.199634+00:00"
+    },
+    {
+      "generation": 85,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:56.200985+00:00"
+    },
+    {
+      "generation": 86,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:22:58.202304+00:00"
+    },
+    {
+      "generation": 87,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:00.203481+00:00"
+    },
+    {
+      "generation": 88,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:02.204787+00:00"
+    },
+    {
+      "generation": 89,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:04.206092+00:00"
+    },
+    {
+      "generation": 90,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:06.207472+00:00"
+    },
+    {
+      "generation": 91,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:08.208366+00:00"
+    },
+    {
+      "generation": 92,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:10.209706+00:00"
+    },
+    {
+      "generation": 93,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:12.211059+00:00"
+    },
+    {
+      "generation": 94,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:14.212326+00:00"
+    },
+    {
+      "generation": 95,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:16.213674+00:00"
+    },
+    {
+      "generation": 96,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:18.214989+00:00"
+    },
+    {
+      "generation": 97,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:20.216385+00:00"
+    },
+    {
+      "generation": 98,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:22.217722+00:00"
+    },
+    {
+      "generation": 99,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:24.218997+00:00"
+    },
+    {
+      "generation": 100,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:26.220440+00:00"
+    },
+    {
+      "generation": 101,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:28.221643+00:00"
+    },
+    {
+      "generation": 102,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:30.222815+00:00"
+    },
+    {
+      "generation": 103,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:32.224255+00:00"
+    },
+    {
+      "generation": 104,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:34.225628+00:00"
+    },
+    {
+      "generation": 105,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:36.226962+00:00"
+    },
+    {
+      "generation": 106,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:38.227791+00:00"
+    },
+    {
+      "generation": 107,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:40.228547+00:00"
+    },
+    {
+      "generation": 108,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:42.229917+00:00"
+    },
+    {
+      "generation": 109,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:44.230566+00:00"
+    },
+    {
+      "generation": 110,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:46.231977+00:00"
+    },
+    {
+      "generation": 111,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:48.233305+00:00"
+    },
+    {
+      "generation": 112,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:50.234593+00:00"
+    },
+    {
+      "generation": 113,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:52.235889+00:00"
+    },
+    {
+      "generation": 114,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:54.237178+00:00"
+    },
+    {
+      "generation": 115,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:56.237620+00:00"
+    },
+    {
+      "generation": 116,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:23:58.238899+00:00"
+    },
+    {
+      "generation": 117,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:00.240225+00:00"
+    },
+    {
+      "generation": 118,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:02.241668+00:00"
+    },
+    {
+      "generation": 119,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:04.242967+00:00"
+    },
+    {
+      "generation": 120,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:06.244274+00:00"
+    },
+    {
+      "generation": 121,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:08.245617+00:00"
+    },
+    {
+      "generation": 122,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:10.246905+00:00"
+    },
+    {
+      "generation": 123,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:12.248200+00:00"
+    },
+    {
+      "generation": 124,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:14.249506+00:00"
+    },
+    {
+      "generation": 125,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:16.252144+00:00"
+    },
+    {
+      "generation": 126,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:18.252759+00:00"
+    },
+    {
+      "generation": 127,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:20.254134+00:00"
+    },
+    {
+      "generation": 128,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:22.255429+00:00"
+    },
+    {
+      "generation": 129,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:24.256741+00:00"
+    },
+    {
+      "generation": 130,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:26.258287+00:00"
+    },
+    {
+      "generation": 131,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:28.259685+00:00"
+    },
+    {
+      "generation": 132,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:30.260194+00:00"
+    },
+    {
+      "generation": 133,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:32.261540+00:00"
+    },
+    {
+      "generation": 134,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:34.262860+00:00"
+    },
+    {
+      "generation": 135,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:36.263210+00:00"
+    },
+    {
+      "generation": 136,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:38.264112+00:00"
+    },
+    {
+      "generation": 137,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:40.265515+00:00"
+    },
+    {
+      "generation": 138,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:42.266438+00:00"
+    },
+    {
+      "generation": 139,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:44.267768+00:00"
+    },
+    {
+      "generation": 140,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:46.268415+00:00"
+    },
+    {
+      "generation": 141,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:48.269058+00:00"
+    },
+    {
+      "generation": 142,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:50.270695+00:00"
+    },
+    {
+      "generation": 143,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:52.272130+00:00"
+    },
+    {
+      "generation": 144,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:54.273453+00:00"
+    },
+    {
+      "generation": 145,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:56.274771+00:00"
+    },
+    {
+      "generation": 146,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:24:58.276125+00:00"
+    },
+    {
+      "generation": 147,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:00.277437+00:00"
+    },
+    {
+      "generation": 148,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:02.278748+00:00"
+    },
+    {
+      "generation": 149,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:04.279565+00:00"
+    },
+    {
+      "generation": 150,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:06.280965+00:00"
+    },
+    {
+      "generation": 151,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:08.282328+00:00"
+    },
+    {
+      "generation": 152,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:10.283701+00:00"
+    },
+    {
+      "generation": 153,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:12.285047+00:00"
+    },
+    {
+      "generation": 154,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:14.286330+00:00"
+    },
+    {
+      "generation": 155,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:16.287608+00:00"
+    },
+    {
+      "generation": 156,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:18.288898+00:00"
+    },
+    {
+      "generation": 157,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:20.290206+00:00"
+    },
+    {
+      "generation": 158,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:22.291516+00:00"
+    },
+    {
+      "generation": 159,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:24.292116+00:00"
+    },
+    {
+      "generation": 160,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:26.295783+00:00"
+    },
+    {
+      "generation": 161,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:28.297332+00:00"
+    },
+    {
+      "generation": 162,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:30.298650+00:00"
+    },
+    {
+      "generation": 163,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:32.299456+00:00"
+    },
+    {
+      "generation": 164,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:34.300755+00:00"
+    },
+    {
+      "generation": 165,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:36.302106+00:00"
+    },
+    {
+      "generation": 166,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:38.303572+00:00"
+    },
+    {
+      "generation": 167,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:40.304884+00:00"
+    },
+    {
+      "generation": 168,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:42.306174+00:00"
+    },
+    {
+      "generation": 169,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:44.307468+00:00"
+    },
+    {
+      "generation": 170,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:46.308779+00:00"
+    },
+    {
+      "generation": 171,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:48.310073+00:00"
+    },
+    {
+      "generation": 172,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:50.310853+00:00"
+    },
+    {
+      "generation": 173,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:52.311881+00:00"
+    },
+    {
+      "generation": 174,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:54.313262+00:00"
+    },
+    {
+      "generation": 175,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:56.313603+00:00"
+    },
+    {
+      "generation": 176,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:25:58.314126+00:00"
+    },
+    {
+      "generation": 177,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:00.315420+00:00"
+    },
+    {
+      "generation": 178,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:02.316166+00:00"
+    },
+    {
+      "generation": 179,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:04.316591+00:00"
+    },
+    {
+      "generation": 180,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:06.317047+00:00"
+    },
+    {
+      "generation": 181,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:08.318366+00:00"
+    },
+    {
+      "generation": 182,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:10.319661+00:00"
+    },
+    {
+      "generation": 183,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:12.320964+00:00"
+    },
+    {
+      "generation": 184,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:14.321875+00:00"
+    },
+    {
+      "generation": 185,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:16.322400+00:00"
+    },
+    {
+      "generation": 186,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:18.323817+00:00"
+    },
+    {
+      "generation": 187,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:20.325156+00:00"
+    },
+    {
+      "generation": 188,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:22.326461+00:00"
+    },
+    {
+      "generation": 189,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:24.327828+00:00"
+    },
+    {
+      "generation": 190,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:26.329297+00:00"
+    },
+    {
+      "generation": 191,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:28.330650+00:00"
+    },
+    {
+      "generation": 192,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:30.331281+00:00"
+    },
+    {
+      "generation": 193,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:32.332613+00:00"
+    },
+    {
+      "generation": 194,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:34.334099+00:00"
+    },
+    {
+      "generation": 195,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:36.334890+00:00"
+    },
+    {
+      "generation": 196,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:38.336366+00:00"
+    },
+    {
+      "generation": 197,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:40.337614+00:00"
+    },
+    {
+      "generation": 198,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:42.338347+00:00"
+    },
+    {
+      "generation": 199,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:44.339658+00:00"
+    },
+    {
+      "generation": 200,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:46.340540+00:00"
+    },
+    {
+      "generation": 201,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:48.341898+00:00"
+    },
+    {
+      "generation": 202,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:50.343298+00:00"
+    },
+    {
+      "generation": 203,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:52.344582+00:00"
+    },
+    {
+      "generation": 204,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:54.345890+00:00"
+    },
+    {
+      "generation": 205,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:56.347315+00:00"
+    },
+    {
+      "generation": 206,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:26:58.348593+00:00"
+    },
+    {
+      "generation": 207,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:00.349866+00:00"
+    },
+    {
+      "generation": 208,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:02.351162+00:00"
+    },
+    {
+      "generation": 209,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:04.352477+00:00"
+    },
+    {
+      "generation": 210,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:06.352903+00:00"
+    },
+    {
+      "generation": 211,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:08.353542+00:00"
+    },
+    {
+      "generation": 212,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:10.354848+00:00"
+    },
+    {
+      "generation": 213,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:12.355677+00:00"
+    },
+    {
+      "generation": 214,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:14.356973+00:00"
+    },
+    {
+      "generation": 215,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:16.358280+00:00"
+    },
+    {
+      "generation": 216,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:18.359569+00:00"
+    },
+    {
+      "generation": 217,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:20.360841+00:00"
+    },
+    {
+      "generation": 218,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:22.362143+00:00"
+    },
+    {
+      "generation": 219,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:24.363009+00:00"
+    },
+    {
+      "generation": 220,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:26.364404+00:00"
+    },
+    {
+      "generation": 221,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:28.365729+00:00"
+    },
+    {
+      "generation": 222,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:30.367024+00:00"
+    },
+    {
+      "generation": 223,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:32.367480+00:00"
+    },
+    {
+      "generation": 224,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:34.368820+00:00"
+    },
+    {
+      "generation": 225,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:36.370090+00:00"
+    },
+    {
+      "generation": 226,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:38.371391+00:00"
+    },
+    {
+      "generation": 227,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:40.372705+00:00"
+    },
+    {
+      "generation": 228,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:42.374016+00:00"
+    },
+    {
+      "generation": 229,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:44.375304+00:00"
+    },
+    {
+      "generation": 230,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:46.376596+00:00"
+    },
+    {
+      "generation": 231,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:48.376955+00:00"
+    },
+    {
+      "generation": 232,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:50.378266+00:00"
+    },
+    {
+      "generation": 233,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:52.379821+00:00"
+    },
+    {
+      "generation": 234,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:54.380540+00:00"
+    },
+    {
+      "generation": 235,
+      "error": "name 'runner' is not defined",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_improvements.py\", line 116, in run\n    await self._evolve_generation()\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 229, in smart_evolve_generation\n    \"diversity_score\": calculate_diversity(runner.evolutionary_engine.improvement_population),\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_aggressive.py\", line 313, in calculate_diversity\n    if hasattr(runner.evolutionary_engine, 'diversity_enhancer'):\nNameError: name 'runner' is not defined\n",
+      "timestamp": "2025-06-22T13:27:56.381537+00:00"
+    }
+  ],
+  "verification_results": [],
+  "final_population": [
+    {
+      "name": "lru_cache_implementation",
+      "type": "optimization",
+      "fitness": 0,
+      "generation": 0
+    },
+    {
+      "name": "lru_cache_implementation",
+      "type": "optimization",
+      "fitness": 0,
+      "generation": 0
+    },
+    {
+      "name": "lru_cache_implementation",
+      "type": "optimization",
+      "fitness": 0,
+      "generation": 0
+    },
+    {
+      "name": "lru_cache_implementation",
+      "type": "optimization",
+      "fitness": 0,
+      "generation": 0
+    },
+    {
+      "name": "ttl_cache_implementation",
+      "type": "optimization",
+      "fitness": 0,
+      "generation": 0
+    },
+    {
+      "name": "query_cache_implementation",
+      "type": "optimization",
+      "fitness": 0,
+      "generation": 0
+    },
+    {
+      "name": "lru_cache_implementation",
+      "type": "optimization",
+      "fitness": 0,
+      "generation": 0
+    },
+    {
+      "name": "distributed_cache_implementation",
+      "type": "optimization",
+      "fitness": 0,
+      "generation": 0
+    },
+    {
+      "name": "ttl_cache_implementation",
+      "type": "optimization",
+      "fitness": 0,
+      "generation": 0
+    },
+    {
+      "name": "lru_cache_implementation",
+      "type": "optimization",
+      "fitness": 0,
+      "generation": 0
+    },
+    {
+      "name": "fallback_improvement",
+      "type": "optimization",
+      "fitness": 0,
+      "generation": 0
+    }
+  ]
+}

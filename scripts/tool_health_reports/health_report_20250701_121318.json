@@ -1,0 +1,58 @@
+{
+  "timestamp": "2025-07-01T12:13:18.329992+00:00",
+  "total_tools": 47,
+  "healthy_tools": 43,
+  "issues_found": [
+    {
+      "tool": "create_spaced_tool",
+      "type": "error_handling",
+      "description": "Main function lacks error handling",
+      "severity": "medium",
+      "auto_fixable": false,
+      "fix_action": null,
+      "line_numbers": [],
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "search_tool",
+      "type": "method_existence",
+      "description": "Found 1 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        71
+      ],
+      "status": "fixed"
+    },
+    {
+      "tool": "orchestrate_workflows",
+      "type": "import_validity",
+      "description": "Found 1 outdated imports",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_imports",
+      "line_numbers": [
+        20
+      ],
+      "status": "fixed"
+    },
+    {
+      "tool": "list_files",
+      "type": "method_existence",
+      "description": "Found 1 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        57
+      ],
+      "status": "fixed"
+    }
+  ],
+  "auto_fixed": 3,
+  "recommendations": [
+    "Update tool documentation to reflect current API methods",
+    "Run a full import audit to update all outdated module references"
+  ]
+}

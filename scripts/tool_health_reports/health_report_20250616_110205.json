@@ -1,0 +1,363 @@
+{
+  "timestamp": "2025-06-16T11:02:05.187391+00:00",
+  "total_tools": 44,
+  "healthy_tools": 0,
+  "issues_found": [
+    {
+      "tool": "count_repositories_evolved",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "tool_task_8",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "get_repositories",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "check_system_status",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "create_spaced_tool",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "control_system",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "analyze_tool_success",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "how_many_active_workers_do_we_",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "find_todo_comments_in_python_files",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "show_me_files_changed_today",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "get_repositories_evolved",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "tool_task_2",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "analyze_file_types_and_size",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "tool_task_6",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "count_lines_by_language",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "calculate_the_average_file",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "find_all_functions_that",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "tool_task_3",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "generate_weekly_report",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "count_markdown_files",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "tool_task_4",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "stop_system",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "analyze_code_complexity",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "restart_system",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "run_tool_health_check",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "demo_calculator",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "orchestrate_workflows",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "tool_task_1",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "access_public_api_tool",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "count_python_files",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "simple_test_tool",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "analyze_file_types",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "analyze_json_files",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "tool_task_5",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "whats_the_disk_usage_of_log_fi",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "list_tasks",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "count_how_many_python",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "count_files_in_directory",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "count_python_files_in_directory",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "start_system",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "get_me",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "find_async_functions",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "calculate_project_statistics",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "monitor_worker_activity",
+      "type": "read_error",
+      "description": "Failed to read tool file: name 're' is not defined",
+      "severity": "high",
+      "auto_fixable": false,
+      "status": "manual_fix_required"
+    }
+  ],
+  "auto_fixed": 0,
+  "recommendations": [
+    "Consider running the health check more frequently to catch issues early"
+  ]
+}

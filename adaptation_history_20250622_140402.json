@@ -1,0 +1,264 @@
+{
+  "history": [
+    {
+      "generation": 0,
+      "strategy": "increase_population",
+      "context": {
+        "fitness_stagnation": 0.1,
+        "diversity_score": 0.36363636363636365,
+        "fitness_improvement": 0.0,
+        "time_pressure": 0.5,
+        "success_trend": 0.5
+      },
+      "old_params": {},
+      "new_params": {
+        "population_size": 30,
+        "elite_size": 9
+      },
+      "timestamp": "2025-06-22T13:55:53.359523"
+    },
+    {
+      "generation": 1,
+      "strategy": "increase_mutation",
+      "context": {
+        "fitness_stagnation": 0.0,
+        "diversity_score": 0.39655172413793105,
+        "fitness_improvement": 0.12810344827586206,
+        "time_pressure": 0.5,
+        "success_trend": 0.5
+      },
+      "old_params": {
+        "population_size": 30,
+        "elite_size": 9
+      },
+      "new_params": {
+        "population_size": 22,
+        "elite_size": 9,
+        "mutation_rate": 0.39
+      },
+      "timestamp": "2025-06-22T13:56:45.422279"
+    },
+    {
+      "generation": 2,
+      "strategy": "increase_mutation",
+      "context": {
+        "fitness_stagnation": 0.0,
+        "diversity_score": 0.7954545454545454,
+        "fitness_improvement": 0.11170454545454545,
+        "time_pressure": 0.5,
+        "success_trend": 0.5
+      },
+      "old_params": {
+        "population_size": 22,
+        "elite_size": 9,
+        "mutation_rate": 0.39
+      },
+      "new_params": {
+        "population_size": 22,
+        "elite_size": 9,
+        "mutation_rate": 0.39
+      },
+      "timestamp": "2025-06-22T13:57:34.178278"
+    },
+    {
+      "generation": 3,
+      "strategy": "increase_mutation",
+      "context": {
+        "fitness_stagnation": 0.0,
+        "diversity_score": 0.7954545454545454,
+        "fitness_improvement": 0.08248510971786832,
+        "time_pressure": 0.5,
+        "success_trend": 0.625
+      },
+      "old_params": {
+        "population_size": 22,
+        "elite_size": 9,
+        "mutation_rate": 0.39
+      },
+      "new_params": {
+        "population_size": 22,
+        "elite_size": 9,
+        "mutation_rate": 0.39
+      },
+      "timestamp": "2025-06-22T13:58:19.273708"
+    },
+    {
+      "generation": 4,
+      "strategy": "increase_mutation",
+      "context": {
+        "fitness_stagnation": 0.1,
+        "diversity_score": 0.75,
+        "fitness_improvement": 0.06291692789968652,
+        "time_pressure": 0.5,
+        "success_trend": 0.7
+      },
+      "old_params": {
+        "population_size": 22,
+        "elite_size": 9,
+        "mutation_rate": 0.39
+      },
+      "new_params": {
+        "population_size": 22,
+        "elite_size": 9,
+        "mutation_rate": 0.403
+      },
+      "timestamp": "2025-06-22T13:59:00.734199"
+    },
+    {
+      "generation": 5,
+      "strategy": "increase_mutation",
+      "context": {
+        "fitness_stagnation": 0.2,
+        "diversity_score": 0.7045454545454546,
+        "fitness_improvement": 0.049019704433497534,
+        "time_pressure": 0.5,
+        "success_trend": 0.8
+      },
+      "old_params": {
+        "population_size": 22,
+        "elite_size": 9,
+        "mutation_rate": 0.403
+      },
+      "new_params": {
+        "population_size": 22,
+        "elite_size": 9,
+        "mutation_rate": 0.41600000000000004
+      },
+      "timestamp": "2025-06-22T13:59:46.804276"
+    }
+  ],
+  "strategy_rewards": {
+    "increase_mutation": [],
+    "increase_population": [],
+    "increase_crossover": [],
+    "increase_elite": [],
+    "decrease_all": []
+  },
+  "summary": {
+    "total_adaptations": 6,
+    "current_parameters": {
+      "population_size": 22,
+      "elite_size": 9,
+      "mutation_rate": 0.41600000000000004
+    },
+    "stagnation_level": 2,
+    "strategy_performance": {
+      "increase_mutation": 0.5,
+      "increase_population": 0.5,
+      "increase_crossover": 0.5,
+      "increase_elite": 0.5,
+      "decrease_all": 0.5
+    },
+    "recent_adaptations": [
+      {
+        "generation": 1,
+        "strategy": "increase_mutation",
+        "context": {
+          "fitness_stagnation": 0.0,
+          "diversity_score": 0.39655172413793105,
+          "fitness_improvement": 0.12810344827586206,
+          "time_pressure": 0.5,
+          "success_trend": 0.5
+        },
+        "old_params": {
+          "population_size": 30,
+          "elite_size": 9
+        },
+        "new_params": {
+          "population_size": 22,
+          "elite_size": 9,
+          "mutation_rate": 0.39
+        },
+        "timestamp": "2025-06-22T13:56:45.422279"
+      },
+      {
+        "generation": 2,
+        "strategy": "increase_mutation",
+        "context": {
+          "fitness_stagnation": 0.0,
+          "diversity_score": 0.7954545454545454,
+          "fitness_improvement": 0.11170454545454545,
+          "time_pressure": 0.5,
+          "success_trend": 0.5
+        },
+        "old_params": {
+          "population_size": 22,
+          "elite_size": 9,
+          "mutation_rate": 0.39
+        },
+        "new_params": {
+          "population_size": 22,
+          "elite_size": 9,
+          "mutation_rate": 0.39
+        },
+        "timestamp": "2025-06-22T13:57:34.178278"
+      },
+      {
+        "generation": 3,
+        "strategy": "increase_mutation",
+        "context": {
+          "fitness_stagnation": 0.0,
+          "diversity_score": 0.7954545454545454,
+          "fitness_improvement": 0.08248510971786832,
+          "time_pressure": 0.5,
+          "success_trend": 0.625
+        },
+        "old_params": {
+          "population_size": 22,
+          "elite_size": 9,
+          "mutation_rate": 0.39
+        },
+        "new_params": {
+          "population_size": 22,
+          "elite_size": 9,
+          "mutation_rate": 0.39
+        },
+        "timestamp": "2025-06-22T13:58:19.273708"
+      },
+      {
+        "generation": 4,
+        "strategy": "increase_mutation",
+        "context": {
+          "fitness_stagnation": 0.1,
+          "diversity_score": 0.75,
+          "fitness_improvement": 0.06291692789968652,
+          "time_pressure": 0.5,
+          "success_trend": 0.7
+        },
+        "old_params": {
+          "population_size": 22,
+          "elite_size": 9,
+          "mutation_rate": 0.39
+        },
+        "new_params": {
+          "population_size": 22,
+          "elite_size": 9,
+          "mutation_rate": 0.403
+        },
+        "timestamp": "2025-06-22T13:59:00.734199"
+      },
+      {
+        "generation": 5,
+        "strategy": "increase_mutation",
+        "context": {
+          "fitness_stagnation": 0.2,
+          "diversity_score": 0.7045454545454546,
+          "fitness_improvement": 0.049019704433497534,
+          "time_pressure": 0.5,
+          "success_trend": 0.8
+        },
+        "old_params": {
+          "population_size": 22,
+          "elite_size": 9,
+          "mutation_rate": 0.403
+        },
+        "new_params": {
+          "population_size": 22,
+          "elite_size": 9,
+          "mutation_rate": 0.41600000000000004
+        },
+        "timestamp": "2025-06-22T13:59:46.804276"
+      }
+    ]
+  }
+}

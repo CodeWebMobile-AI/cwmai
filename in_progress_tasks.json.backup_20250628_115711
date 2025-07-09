@@ -1,0 +1,28 @@
+{
+  "in_progress_tasks": {
+    "test_1750945028": {
+      "work_item_id": "test_1750945028",
+      "title": "Test Task Completion Fix",
+      "task_type": "FEATURE",
+      "repository": "micronutrient-optimizer",
+      "stage": "issue_created",
+      "claude_task_id": "d43cef29-7842-4130-994c-7d9e06dc5fa5",
+      "issue_number": 5,
+      "started_at": "2025-06-26T13:37:08.689718+00:00",
+      "execution_result": {
+        "success": true,
+        "completed": false,
+        "stage": "issue_created",
+        "task_id": "test_1750945028",
+        "issue_number": 5,
+        "repository": "micronutrient-optimizer",
+        "value_created": 1.65,
+        "execution_time": 1750945028.689703,
+        "storage_mode": "local",
+        "claude_task_id": "d43cef29-7842-4130-994c-7d9e06dc5fa5",
+        "claude_queued": true
+      }
+    }
+  },
+  "last_updated": "2025-06-26T13:37:08.689740+00:00"
+}

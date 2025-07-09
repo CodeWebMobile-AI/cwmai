@@ -1,0 +1,13 @@
+{
+  "test_timestamp": "2025-06-24T15:50:25.543296",
+  "total_opportunities": 0,
+  "developer_focused": 0,
+  "real_world_focused": 0,
+  "research_areas_used": 25,
+  "validation_stats": {
+    "total_sources": 0,
+    "avg_sources_per_opportunity": 0
+  },
+  "opportunities": [],
+  "analysis": []
+}

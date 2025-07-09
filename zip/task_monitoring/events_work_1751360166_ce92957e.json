@@ -1,0 +1,11 @@
+[
+  {
+    "task_id": "work_1751360166_ce92957e",
+    "event": "started",
+    "timestamp": "2025-07-01T08:56:30.894545+00:00",
+    "metadata": {
+      "executor": "LocalIssueCreator",
+      "claude_enabled": true
+    }
+  }
+]

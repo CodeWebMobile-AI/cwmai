@@ -55,6 +55,10 @@ class StateManager:
             local_path: Local file path for state storage
             repo_path: Repository path for remote state storage
         """
+        # Make paths relative to script directory, not working directory
+        script_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        if not os.path.isabs(local_path):
+            local_path = os.path.join(script_dir, local_path)
         self.local_path = local_path
         self.repo_path = repo_path
         self.github_token = os.getenv('CLAUDE_PAT') or os.getenv('GITHUB_TOKEN')
@@ -253,6 +257,196 @@ class StateManager:
                 'active_branches': 0
             }
     
+    
+    def _should_exclude_repository(self, repo_name: str) -> bool:
+        """Check if a repository should be excluded from processing.
+        
+        Args:
+            repo_name: Repository name or full name to check
+            
+        Returns:
+            True if repository should be excluded
+        """
+        return not should_process_repo(repo_name)
+    
+    def discover_local_repositories(self) -> List[Dict[str, Any]]:
+        """Discover repositories from local storage.
+        
+        Returns:
+            List of repository data dictionaries
+        """
+        repositories = []
+        # Use script location to find local_repos, not current working directory
+        script_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        local_repos_path = os.path.join(script_dir, 'local_repos', 'repositories')
+        
+        if not os.path.exists(local_repos_path):
+            print(f"Local repositories directory not found: {local_repos_path}")
+            return repositories
+            
+        print(f"Discovering repositories in local storage...")
+        
+        # Import LocalGitHubSimulator to get repository info
+        try:
+            from scripts.local_github_simulator import LocalGitHubSimulator
+            simulator = LocalGitHubSimulator()
+            local_repos = simulator.list_repositories()
+            
+            for repo in local_repos:
+                if self._should_exclude_repository(repo.name):
+                    print(f"Skipping excluded repository: {repo.name}")
+                    continue
+                    
+                try:
+                    # Get repository data
+                    repo_data = {
+                        'name': repo.name,
+                        'full_name': repo.full_name,
+                        'description': repo.description or f"Repository: {repo.name}",
+                        'url': f"local:///{repo.full_name}",
+                        'clone_url': f"local:///{repo.full_name}",
+                        'language': repo.language,
+                        'private': False,
+                        'created_at': repo.created_at.isoformat() if hasattr(repo, 'created_at') and repo.created_at else datetime.now(timezone.utc).isoformat(),
+                        'updated_at': repo.updated_at.isoformat() if hasattr(repo, 'updated_at') and repo.updated_at else datetime.now(timezone.utc).isoformat(),
+                        'pushed_at': repo.pushed_at.isoformat() if hasattr(repo, 'pushed_at') and repo.pushed_at else datetime.now(timezone.utc).isoformat(),
+                        'size': 0,
+                        'metrics': {
+                            'stars': 0,
+                            'forks': 0,
+                            'watchers': 0,
+                            'issues_open': len(repo.open_issues) if hasattr(repo, 'open_issues') else 0,
+                            'has_issues': True,
+                            'has_projects': False,
+                            'has_wiki': False
+                        },
+                        'topics': [],
+                        'default_branch': 'main',
+                        'health_score': 75.0,  # Default health score for local repos
+                        'discovered_at': datetime.now(timezone.utc).isoformat(),
+                        'recent_activity': {
+                            'recent_commits': 0,
+                            'recent_issues': 0,
+                            'recent_prs': 0,
+                            'contributors_count': 1,
+                            'last_commit_date': None,
+                            'active_branches': 1
+                        }
+                    }
+                    
+                    repositories.append(repo_data)
+                    print(f"✓ Discovered local repository: {repo.name}")
+                    
+                except Exception as e:
+                    print(f"Error processing local repository {repo.name}: {e}")
+                    continue
+                    
+        except ImportError:
+            print("Warning: Could not import LocalGitHubSimulator, using direct file listing")
+            # Fallback to direct directory listing
+            for org_dir in os.listdir(local_repos_path):
+                org_path = os.path.join(local_repos_path, org_dir)
+                if os.path.isdir(org_path):
+                    for repo_dir in os.listdir(org_path):
+                        repo_path = os.path.join(org_path, repo_dir)
+                        if os.path.isdir(repo_path):
+                            repo_name = repo_dir
+                            full_name = f"{org_dir}/{repo_dir}"
+                            
+                            if self._should_exclude_repository(full_name):
+                                print(f"Skipping excluded repository: {full_name}")
+                                continue
+                            
+                            repo_data = {
+                                'name': repo_name,
+                                'full_name': full_name,
+                                'description': f"Local repository: {repo_name}",
+                                'url': f"local:///{full_name}",
+                                'clone_url': f"local:///{full_name}",
+                                'language': None,
+                                'private': False,
+                                'created_at': datetime.now(timezone.utc).isoformat(),
+                                'updated_at': datetime.now(timezone.utc).isoformat(),
+                                'pushed_at': datetime.now(timezone.utc).isoformat(),
+                                'size': 0,
+                                'metrics': {
+                                    'stars': 0,
+                                    'forks': 0,
+                                    'watchers': 0,
+                                    'issues_open': 0,
+                                    'has_issues': True,
+                                    'has_projects': False,
+                                    'has_wiki': False
+                                },
+                                'topics': [],
+                                'default_branch': 'main',
+                                'health_score': 75.0,
+                                'discovered_at': datetime.now(timezone.utc).isoformat(),
+                                'recent_activity': {
+                                    'recent_commits': 0,
+                                    'recent_issues': 0,
+                                    'recent_prs': 0,
+                                    'contributors_count': 1,
+                                    'last_commit_date': None,
+                                    'active_branches': 1
+                                }
+                            }
+                            repositories.append(repo_data)
+                            print(f"✓ Discovered local repository: {full_name}")
+        
+        print(f"Successfully discovered {len(repositories)} local repositories")
+        return repositories
+    
+    def load_state_with_local_repository_discovery(self) -> Dict[str, Any]:
+        """Load system state and automatically discover local repositories.
+        
+        Returns:
+            Dict containing the system state with discovered repositories
+        """
+        # Load existing state
+        state = self.load_state()
+        
+        # Discover local repositories and update state
+        discovered_repos = self.discover_local_repositories()
+        
+        if discovered_repos:
+            # Don't clear all projects - only update/add discovered ones
+            if 'projects' not in state:
+                state['projects'] = {}
+            
+            for repo_data in discovered_repos:
+                project_id = repo_data['name']
+                state['projects'][project_id] = {
+                    'name': repo_data['name'],
+                    'full_name': repo_data['full_name'],
+                    'description': repo_data['description'],
+                    'url': repo_data['url'],
+                    'clone_url': repo_data['clone_url'],
+                    'language': repo_data['language'],
+                    'health_score': repo_data['health_score'],
+                    'last_checked': repo_data['discovered_at'],
+                    'metrics': repo_data['metrics'],
+                    'recent_activity': repo_data['recent_activity'],
+                    'topics': repo_data['topics'],
+                    'default_branch': repo_data['default_branch'],
+                    'type': 'local_repository',
+                    'status': 'active',
+                    'action_history': [
+                        {
+                            "action": "repository_discovered",
+                            "details": f"Local repository {repo_data['name']} discovered and integrated into system",
+                            "outcome": "success_discovered",
+                            "timestamp": repo_data['discovered_at']
+                        }
+                    ]
+                }
+            
+            # Save updated state
+            self.state = state
+            self.save_state()
+            
+        return state
+    
     def load_state_with_repository_discovery(self) -> Dict[str, Any]:
         """Load system state and automatically discover organization repositories.
         
@@ -262,8 +456,15 @@ class StateManager:
         # Load existing state
         state = self.load_state()
         
-        # Discover repositories and update state
-        discovered_repos = self.discover_organization_repositories()
+        # ALWAYS use local mode
+        use_local_mode = True
+        
+        if use_local_mode:
+            # Use local repository discovery instead of GitHub API
+            discovered_repos = self.discover_local_repositories()
+        else:
+            # Discover repositories and update state
+            discovered_repos = self.discover_organization_repositories()
         
         if discovered_repos:
             # Don't clear all projects - only update/add discovered ones

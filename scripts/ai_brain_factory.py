@@ -117,18 +117,25 @@ class AIBrainFactory:
             from state_manager import StateManager
             state_manager = StateManager()
             
-            try:
-                # Always use repository discovery for production to get latest repo data
-                logger.info("Loading production state with repository discovery")
-                state = state_manager.load_state_with_repository_discovery()
-                logger.info(f"Production loaded {len(state.get('projects', {}))} repositories")
-            except Exception as e:
-                logger.warning(f"Repository discovery failed in production, using fallback: {e}")
+            # ALWAYS use local mode
+            use_local_mode = True
+            
+            if use_local_mode:
+                logger.info("Local mode enabled - skipping repository discovery")
+                state = state_manager.load_state()
+            else:
                 try:
-                    state = state_manager.load_production_state()
-                except (AttributeError, FileNotFoundError):
-                    logger.info("Using standard state loading for production")
-                    state = state_manager.load_state()
+                    # Always use repository discovery for production to get latest repo data
+                    logger.info("Loading production state with repository discovery")
+                    state = state_manager.load_state_with_repository_discovery()
+                    logger.info(f"Production loaded {len(state.get('projects', {}))} repositories")
+                except Exception as e:
+                    logger.warning(f"Repository discovery failed in production, using fallback: {e}")
+                    try:
+                        state = state_manager.load_production_state()
+                    except (AttributeError, FileNotFoundError):
+                        logger.info("Using standard state loading for production")
+                        state = state_manager.load_state()
             
             # Create brain with loaded data first
             brain = IntelligentAIBrain(state, {})

@@ -1,0 +1,11 @@
+[
+  {
+    "task_id": "issue_CodeWebMobile-AI/review-rally_1_1751197682_d607e25e",
+    "event": "started",
+    "timestamp": "2025-06-29T11:48:17.562896+00:00",
+    "metadata": {
+      "executor": "LocalIssueCreator",
+      "claude_enabled": true
+    }
+  }
+]

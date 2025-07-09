@@ -1,0 +1,6 @@
+{
+  "success": false,
+  "error": "unsupported format string passed to dict.__format__",
+  "traceback": "Traceback (most recent call last):\n  File \"/Users/fortressarigo/PhpstormProjects/cwmai/run_evolutionary_fast.py\", line 52, in fast_run\n    print(f\"   Average fitness: {engine.fitness_history[-1]:.3f}\")\n                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: unsupported format string passed to dict.__format__\n",
+  "timestamp": "2025-06-22T01:18:56.005294"
+}

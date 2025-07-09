@@ -1,0 +1,562 @@
+"""
+Hybrid Continuous Orchestrator
+
+Combines the 24/7 operation of Continuous System with the
+strategic intelligence of Dynamic God Mode.
+
+Best of both worlds: continuous execution with learning and evolution.
+"""
+
+import asyncio
+import logging
+import time
+from datetime import datetime, timezone
+from typing import Dict, List, Any, Optional
+from dataclasses import dataclass
+from enum import Enum
+import json
+import traceback
+import os
+
+# Import base continuous system
+from scripts.continuous_orchestrator import ContinuousOrchestrator, WorkerStatus, WorkerState
+from scripts.work_item_types import WorkItem, TaskPriority
+
+# Import Dynamic God Mode components
+from scripts.dynamic_charter import DynamicCharter
+from scripts.outcome_learning import OutcomeLearningSystem
+from scripts.intelligent_task_generator import IntelligentTaskGenerator
+from scripts.dynamic_validator import DynamicTaskValidator
+from scripts.repository_analyzer import RepositoryAnalyzer
+from scripts.project_creator import ProjectCreator
+from scripts.task_manager import TaskManager, TaskType
+from scripts.multi_repo_coordinator import MultiRepoCoordinator
+
+# Import utilities
+from scripts.ai_brain_factory import AIBrainFactory
+from scripts.state_manager import StateManager
+from scripts.repository_exclusion import should_process_repo
+
+
+class HybridContinuousOrchestrator(ContinuousOrchestrator):
+    """
+    Hybrid orchestrator combining continuous operation with strategic intelligence.
+    
+    Features:
+    - 24/7 continuous operation
+    - Dynamic charter evolution
+    - Outcome-based learning
+    - Repository-first task generation
+    - Task validation and correction
+    - Intelligent work prioritization
+    """
+    
+    def __init__(self, max_workers: int = 5, enable_parallel: bool = True,
+                 enable_research: bool = True, enable_round_robin: bool = False):
+        """Initialize hybrid orchestrator with Dynamic God Mode intelligence.
+        
+        Args:
+            max_workers: Maximum number of parallel workers
+            enable_parallel: Whether to enable parallel processing
+            enable_research: Whether to enable research evolution
+            enable_round_robin: Whether to enable round-robin AI selection
+        """
+        # Initialize base continuous orchestrator
+        super().__init__(max_workers, enable_parallel, enable_research, enable_round_robin)
+        
+        self.logger = logging.getLogger(__name__)
+        
+        # Initialize Dynamic God Mode components
+        self._initialize_dynamic_components()
+        
+        # Metrics for hybrid operation
+        self.hybrid_metrics = {
+            'charters_generated': 0,
+            'tasks_validated': 0,
+            'tasks_corrected': 0,
+            'outcomes_learned': 0,
+            'strategic_decisions': 0,
+            'repository_analyses': 0
+        }
+        
+        # Ensure we have metrics from parent (parent uses self.metrics)
+        if not hasattr(self, 'metrics'):
+            self.metrics = {
+                'total_work_completed': 0,
+                'total_errors': 0,
+                'total_work_created': 0,
+                'work_per_hour': 0.0,
+                'average_completion_time': 0.0
+            }
+        
+        # Charter update frequency (every N cycles)
+        self.charter_update_frequency = 50
+        self.cycles_since_charter_update = 0
+        
+    def _initialize_dynamic_components(self):
+        """Initialize Dynamic God Mode components."""
+        self.logger.info("Initializing Dynamic God Mode components...")
+        
+        # Use production AI brain
+        self.ai_brain = AIBrainFactory.create_for_production()
+        
+        # Dynamic systems
+        self.charter_system = DynamicCharter(self.ai_brain)
+        self.learning_system = OutcomeLearningSystem(self.ai_brain)
+        self.task_generator = IntelligentTaskGenerator(
+            self.ai_brain,
+            self.charter_system,
+            self.learning_system
+        )
+        self.task_validator = DynamicTaskValidator(
+            self.ai_brain,
+            self.charter_system
+        )
+        
+        # Repository analyzer with caching
+        self.repository_analyzer = RepositoryAnalyzer(
+            ai_brain=self.ai_brain,
+            state_manager=self.state_manager,
+            use_cache=True
+        )
+        
+        # Project creator for NEW_PROJECT tasks
+        github_token = os.getenv('GITHUB_TOKEN') or os.getenv('CLAUDE_PAT')
+        self.project_creator = ProjectCreator(github_token, self.ai_brain) if github_token else None
+        
+        # Multi-repo coordinator
+        if github_token and self.system_state.get('projects'):
+            # Count active repositories to set max_concurrent
+            active_repos = [p for p in self.system_state.get('projects', {}).values() 
+                           if should_process_repo(p.get('full_name', ''))]
+            max_concurrent = max(len(active_repos), 50)  # At least 50 or number of repos
+            
+            self.coordinator = MultiRepoCoordinator(github_token, max_concurrent=max_concurrent)
+            # Add discovered repositories
+            for project_id, project_data in self.system_state.get('projects', {}).items():
+                if project_data.get('clone_url') and should_process_repo(project_data.get('full_name', '')):
+                    try:
+                        self.coordinator.add_repository(project_data['clone_url'])
+                    except Exception as e:
+                        self.logger.warning(f"Failed to add repository {project_id}: {e}")
+        else:
+            self.coordinator = None
+            
+        # Load current charter
+        self.current_charter = None
+        asyncio.create_task(self._load_initial_charter())
+        
+        self.logger.info("Dynamic God Mode components initialized")
+    
+    async def _load_initial_charter(self):
+        """Load or generate initial charter."""
+        try:
+            context = await self._gather_enhanced_context()
+            self.current_charter = await self.charter_system.generate_charter(context)
+            self.hybrid_metrics['charters_generated'] += 1
+        except Exception as e:
+            self.logger.error(f"Failed to load initial charter: {e}")
+    
+    async def find_work(self) -> List[WorkItem]:
+        """Find work using Dynamic God Mode's intelligent approach.
+        
+        Returns:
+            List of work items prioritized by importance
+        """
+        all_work = []
+        
+        try:
+            # 1. First check GitHub issues (real user needs)
+            github_work = await self._get_github_issues()
+            all_work.extend(github_work)
+            
+            self.logger.info(f"Found {len(github_work)} GitHub issues")
+            
+            # 2. If we need more work, generate intelligently
+            if len(all_work) < self.max_workers:
+                needed = self.max_workers - len(all_work)
+                
+                # Gather context for intelligent generation
+                context = await self._gather_enhanced_context()
+                
+                # Generate tasks using repository-first approach
+                generated_tasks = await self._generate_intelligent_tasks(context, needed)
+                
+                # Convert to work items
+                for task in generated_tasks:
+                    work_item = self._task_to_work_item(task)
+                    if work_item:
+                        all_work.append(work_item)
+                
+                self.logger.info(f"Generated {len(generated_tasks)} intelligent tasks")
+            
+            # 3. Update charter periodically
+            self.cycles_since_charter_update += 1
+            if self.cycles_since_charter_update >= self.charter_update_frequency:
+                await self._update_charter()
+                self.cycles_since_charter_update = 0
+            
+        except Exception as e:
+            self.logger.error(f"Error finding work: {e}")
+            traceback.print_exc()
+        
+        return all_work[:self.max_workers]  # Return up to max_workers items
+    
+    async def _generate_intelligent_tasks(self, context: Dict[str, Any], 
+                                         count: int) -> List[Dict[str, Any]]:
+        """Generate tasks using Dynamic God Mode's approach.
+        
+        Args:
+            context: System context
+            count: Number of tasks to generate
+            
+        Returns:
+            List of validated tasks
+        """
+        tasks = []
+        
+        # Get available repositories
+        available_repos = self._get_available_repositories(context)
+        
+        # If no repositories, generate NEW_PROJECT tasks
+        if not available_repos:
+            self.logger.info("No repositories available - generating NEW_PROJECT tasks")
+            for i in range(min(count, 2)):  # Max 2 new projects at once
+                task = await self._generate_new_project_task(context)
+                if task:
+                    tasks.append(task)
+            return tasks
+        
+        # Repository-first task generation
+        used_repositories = []
+        
+        for i in range(count):
+            try:
+                # Filter out already used repositories
+                remaining_repos = [r for r in available_repos 
+                                 if r.get('full_name') not in used_repositories]
+                
+                if not remaining_repos:
+                    break
+                
+                # 1. Select repository intelligently
+                repo_selection = await self.ai_brain.select_repository_for_task({
+                    **context,
+                    'active_projects': remaining_repos
+                })
+                
+                if not repo_selection:
+                    continue
+                
+                # 2. Analyze the selected repository
+                repo_name = repo_selection['repository']
+                repo_analysis = await self.repository_analyzer.analyze_repository(repo_name)
+                self.hybrid_metrics['repository_analyses'] += 1
+                
+                # 3. Generate task specific to this repository
+                task = await self.task_generator.generate_task_for_repository(
+                    repo_name,
+                    repo_analysis,
+                    context
+                )
+                
+                if task:
+                    tasks.append(task)
+                    used_repositories.append(repo_name)
+                
+            except Exception as e:
+                self.logger.warning(f"Error generating task {i+1}: {e}")
+                continue
+        
+        # Validate all tasks
+        if tasks:
+            validation_context = context.copy()
+            validation_context['existing_tasks'] = self._get_existing_tasks()
+            
+            validations = await self.task_validator.validate_batch(tasks, validation_context)
+            
+            validated_tasks = []
+            for task, validation in zip(tasks, validations):
+                self.hybrid_metrics['tasks_validated'] += 1
+                
+                if validation['valid']:
+                    validated_tasks.append(task)
+                elif validation.get('corrected_task'):
+                    validated_tasks.append(validation['corrected_task'])
+                    self.hybrid_metrics['tasks_corrected'] += 1
+                else:
+                    self.logger.warning(f"Task invalid and unfixable: {validation.get('issues')}")
+            
+            return validated_tasks
+        
+        return []
+    
+    async def _execute_work_item(self, worker_id: str, work_item: WorkItem) -> Dict[str, Any]:
+        """Execute a work item and record outcome for learning.
+        
+        Args:
+            worker_id: Worker ID
+            work_item: Work item to execute
+            
+        Returns:
+            Execution result
+        """
+        # Execute using parent method
+        result = await super()._execute_work_item(worker_id, work_item)
+        
+        # Record outcome for learning
+        try:
+            # Convert work item to task format for learning system
+            task = {
+                'type': work_item.type,
+                'title': work_item.title,
+                'description': work_item.description,
+                'repository': work_item.repository,
+                'priority': work_item.priority
+            }
+            
+            await self.learning_system.record_outcome(task, result)
+            self.hybrid_metrics['outcomes_learned'] += 1
+            
+        except Exception as e:
+            self.logger.error(f"Error recording outcome: {e}")
+        
+        return result
+    
+    async def _gather_enhanced_context(self) -> Dict[str, Any]:
+        """Gather comprehensive context for decision making.
+        
+        Returns:
+            Enhanced context including learning insights
+        """
+        # Get base context
+        context = {
+            'timestamp': datetime.now(timezone.utc).isoformat(),
+            'system_state': self.system_state,
+            'worker_states': self._get_worker_summary(),
+            'performance_metrics': self.metrics,  # Parent uses self.metrics
+            'hybrid_metrics': self.hybrid_metrics
+        }
+        
+        # Add active projects
+        context['active_projects'] = self._get_active_projects()
+        
+        # Add recent outcomes from learning system
+        if hasattr(self.learning_system, 'outcome_history'):
+            context['recent_outcomes'] = self.learning_system.outcome_history[-10:]
+        
+        # Add recent tasks
+        if hasattr(self.task_generator, 'task_history'):
+            context['recent_tasks'] = self.task_generator.task_history[-10:]
+        
+        # Add learning summary
+        try:
+            context['learning_summary'] = await self.learning_system.get_recommendations()
+        except:
+            pass
+        
+        # Add current charter
+        if self.current_charter:
+            context['charter'] = self.current_charter
+        
+        return context
+    
+    async def _update_charter(self):
+        """Update system charter based on current context and learning."""
+        try:
+            self.logger.info("Updating system charter...")
+            
+            context = await self._gather_enhanced_context()
+            self.current_charter = await self.charter_system.generate_charter(context)
+            self.hybrid_metrics['charters_generated'] += 1
+            
+            self.logger.info("Charter updated successfully")
+            
+        except Exception as e:
+            self.logger.error(f"Error updating charter: {e}")
+    
+    def _get_available_repositories(self, context: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Get list of available repositories for task generation.
+        
+        Args:
+            context: System context
+            
+        Returns:
+            List of available repositories
+        """
+        projects = self.system_state.get('projects', {})
+        
+        # Convert to list format
+        repos = []
+        for project_id, project_data in projects.items():
+            if project_data.get('status') == 'active' and should_process_repo(project_data.get('full_name', '')):
+                repos.append({
+                    'name': project_data.get('name', project_id),
+                    'full_name': project_data.get('full_name', project_id),
+                    'url': project_data.get('url', ''),
+                    'description': project_data.get('description', ''),
+                    'language': project_data.get('language', 'Unknown'),
+                    'health_score': project_data.get('health_score', 0)
+                })
+        
+        return repos
+    
+    def _get_active_projects(self) -> List[Dict[str, Any]]:
+        """Get list of active projects with details."""
+        return self._get_available_repositories({})
+    
+    async def _generate_new_project_task(self, context: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        """Generate a NEW_PROJECT task when no repositories exist.
+        
+        Args:
+            context: System context
+            
+        Returns:
+            NEW_PROJECT task or None
+        """
+        try:
+            # Use task generator's method
+            task = await self.task_generator._generate_new_project_task(context)
+            return task
+        except Exception as e:
+            self.logger.warning(f"Failed to generate NEW_PROJECT task: {e}")
+        return None
+    
+    def _task_to_work_item(self, task: Dict[str, Any]) -> Optional[WorkItem]:
+        """Convert a task to a work item.
+        
+        Args:
+            task: Task dictionary
+            
+        Returns:
+            WorkItem or None
+        """
+        try:
+            # Map task priority
+            priority_map = {
+                'critical': TaskPriority.CRITICAL,
+                'high': TaskPriority.HIGH,
+                'medium': TaskPriority.MEDIUM,
+                'low': TaskPriority.LOW
+            }
+            
+            priority = priority_map.get(
+                task.get('priority', 'medium').lower(),
+                TaskPriority.MEDIUM
+            )
+            
+            return WorkItem(
+                id=task.get('id', f"task_{int(time.time())}"),
+                type=task.get('type', 'task'),
+                title=task.get('title', 'Untitled Task'),
+                description=task.get('description', ''),
+                repository=task.get('repository', task.get('target_project')),
+                priority=priority,
+                metadata=task
+            )
+            
+        except Exception as e:
+            self.logger.error(f"Error converting task to work item: {e}")
+            return None
+    
+    def _get_existing_tasks(self) -> List[Dict[str, Any]]:
+        """Get list of existing tasks from task state.
+        
+        Returns:
+            List of existing tasks
+        """
+        try:
+            task_state_path = 'task_state.json'
+            if os.path.exists(task_state_path):
+                with open(task_state_path, 'r') as f:
+                    task_state = json.load(f)
+                    return task_state.get('tasks', [])
+        except Exception as e:
+            self.logger.warning(f"Could not load existing tasks: {e}")
+        
+        return []
+    
+    def _get_worker_summary(self) -> Dict[str, Any]:
+        """Get summary of worker states.
+        
+        Returns:
+            Worker summary
+        """
+        summary = {
+            'total_workers': len(self.workers),
+            'idle_workers': sum(1 for w in self.workers.values() if w.status == WorkerStatus.IDLE),
+            'busy_workers': sum(1 for w in self.workers.values() if w.status == WorkerStatus.WORKING),
+            'error_workers': sum(1 for w in self.workers.values() if w.status == WorkerStatus.ERROR)
+        }
+        return summary
+    
+    async def get_system_status(self) -> Dict[str, Any]:
+        """Get comprehensive system status.
+        
+        Returns:
+            System status including hybrid metrics
+        """
+        status = await super().get_status()
+        
+        # Add hybrid-specific status
+        status['hybrid_mode'] = {
+            'enabled': True,
+            'charter_version': len(self.charter_system.charter_history) if hasattr(self.charter_system, 'charter_history') else 0,
+            'outcomes_recorded': len(self.learning_system.outcome_history) if hasattr(self.learning_system, 'outcome_history') else 0,
+            'metrics': self.hybrid_metrics
+        }
+        
+        # Add learning insights
+        try:
+            status['learning_insights'] = await self.learning_system.get_recommendations()
+        except:
+            pass
+        
+        return status
+    
+    async def run(self):
+        """Alias for start() to support both naming conventions."""
+        await self.start()
+    
+    async def shutdown(self):
+        """Graceful shutdown with outcome recording."""
+        self.logger.info("Shutting down Hybrid Continuous Orchestrator...")
+        
+        # Save final metrics
+        try:
+            final_state = {
+                'shutdown_time': datetime.now(timezone.utc).isoformat(),
+                'total_work_completed': self.metrics.get('total_work_completed', 0),
+                'hybrid_metrics': self.hybrid_metrics,
+                'final_charter': self.current_charter
+            }
+            
+            # Save to state
+            self.state_manager.update_state({'hybrid_final_state': final_state})
+            
+        except Exception as e:
+            self.logger.error(f"Error saving final state: {e}")
+        
+        # Call parent shutdown if it exists
+        if hasattr(super(), 'shutdown'):
+            await super().shutdown()
+        else:
+            # Manual shutdown
+            self.shutdown_requested = True
+            if hasattr(self, 'workers'):
+                for worker in self.workers.values():
+                    worker.status = WorkerStatus.SHUTTING_DOWN
+
+
+# Example usage
+if __name__ == "__main__":
+    async def run_hybrid():
+        orchestrator = HybridContinuousOrchestrator(
+            max_workers=5,
+            enable_parallel=True,
+            enable_research=True
+        )
+        
+        await orchestrator.run()
+    
+    asyncio.run(run_hybrid())

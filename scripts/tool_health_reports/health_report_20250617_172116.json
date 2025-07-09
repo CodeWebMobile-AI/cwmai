@@ -1,0 +1,155 @@
+{
+  "timestamp": "2025-06-17T17:21:16.452508+00:00",
+  "total_tools": 61,
+  "healthy_tools": 50,
+  "issues_found": [
+    {
+      "tool": "control_system",
+      "type": "method_existence",
+      "description": "Found 2 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        156,
+        165
+      ],
+      "status": "fixed"
+    },
+    {
+      "tool": "performance_analyzer",
+      "type": "method_existence",
+      "description": "Found 1 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        169
+      ],
+      "status": "fixed"
+    },
+    {
+      "tool": "advanced_code_analysis",
+      "type": "null_safety",
+      "description": "Found 1 potential NoneType errors",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "add_null_checks",
+      "line_numbers": [
+        127
+      ],
+      "status": "failed_to_fix"
+    },
+    {
+      "tool": "run_tool_health_check",
+      "type": "null_safety",
+      "description": "Found 2 potential NoneType errors",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "add_null_checks",
+      "line_numbers": [
+        330,
+        343
+      ],
+      "status": "failed_to_fix"
+    },
+    {
+      "tool": "tool_task_1",
+      "type": "null_safety",
+      "description": "Found 2 potential NoneType errors",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "add_null_checks",
+      "line_numbers": [
+        371,
+        397
+      ],
+      "status": "failed_to_fix"
+    },
+    {
+      "tool": "analyze_json_files",
+      "type": "null_safety",
+      "description": "Found 2 potential NoneType errors",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "add_null_checks",
+      "line_numbers": [
+        356,
+        357
+      ],
+      "status": "failed_to_fix"
+    },
+    {
+      "tool": "get_repository_issue_content",
+      "type": "method_existence",
+      "description": "Found 1 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        154
+      ],
+      "status": "fixed"
+    },
+    {
+      "tool": "get_project_info",
+      "type": "method_existence",
+      "description": "Found 3 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        45,
+        87,
+        191
+      ],
+      "status": "fixed"
+    },
+    {
+      "tool": "get_repository_issues",
+      "type": "method_existence",
+      "description": "Found 1 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        87
+      ],
+      "status": "fixed"
+    },
+    {
+      "tool": "start_system",
+      "type": "null_safety",
+      "description": "Found 5 potential NoneType errors",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "add_null_checks",
+      "line_numbers": [
+        135,
+        380,
+        393,
+        403,
+        421
+      ],
+      "status": "failed_to_fix"
+    },
+    {
+      "tool": "find_async_functions",
+      "type": "null_safety",
+      "description": "Found 1 potential NoneType errors",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "add_null_checks",
+      "line_numbers": [
+        504
+      ],
+      "status": "failed_to_fix"
+    }
+  ],
+  "auto_fixed": 5,
+  "recommendations": [
+    "Consider implementing a standard null-safety pattern across all tools",
+    "Update tool documentation to reflect current API methods",
+    "Consider running the health check more frequently to catch issues early"
+  ]
+}

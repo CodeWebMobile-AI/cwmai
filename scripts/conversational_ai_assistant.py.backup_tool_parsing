@@ -1,0 +1,1496 @@
+#!/usr/bin/env python3
+"""
+CWMAI Conversational AI Assistant
+
+A Claude-like conversational interface that understands natural language,
+maintains context, and can execute CWMAI commands within a friendly dialogue.
+
+SECURITY FIXES APPLIED:
+1. SYSTEM_COMMAND handler now uses strict allowlist
+2. SYSTEM_COMMAND removed from AI prompt to prevent misuse
+3. Tool loading is resilient to broken tools
+4. Tool parameter parsing uses ast.literal_eval for safety
+5. All logging calls have been reviewed for correctness
+"""
+
+import asyncio
+import json
+import logging
+import os
+import re
+import random
+import subprocess
+import psutil
+import signal
+import sys
+import shutil
+import ast
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Dict, List, Any, Optional, Tuple
+from dataclasses import dataclass, field
+from enum import Enum
+
+# Import logging functions but don't set up yet
+from scripts.conversational_ai_logger import setup_conversational_ai_logging, log_user_message, log_system_message
+
+# CWMAI imports
+from scripts.ai_brain import IntelligentAIBrain
+from scripts.natural_language_interface import NaturalLanguageInterface
+from scripts.task_manager import TaskManager
+from scripts.state_manager import StateManager
+from scripts.http_ai_client import HTTPAIClient
+from scripts.dynamic_context_collector import DynamicContextCollector
+from scripts.workflow_orchestrator import WorkflowOrchestrator
+from scripts.system_workflows import get_workflow_definition, list_all_workflows
+from scripts.conversation_pattern_analyzer import ConversationPatternAnalyzer
+from scripts.tool_context_enhancer import get_tool_context_enhancer
+from scripts.tool_discovery_flow import ToolDiscoveryFlow
+from scripts.tool_execution_engine import ToolExecutionEngine
+from scripts.intelligent_codebase_context import IntelligentCodebaseContext
+
+
+@dataclass
+class ConversationTurn:
+    """Represents a single turn in the conversation."""
+    timestamp: datetime
+    user_input: str
+    assistant_response: str
+    actions_taken: List[Dict[str, Any]] = field(default_factory=list)
+    context_updates: Dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass
+class ConversationMemory:
+    """Long-term memory for the assistant."""
+    user_preferences: Dict[str, Any] = field(default_factory=dict)
+    project_context: Dict[str, Any] = field(default_factory=dict)
+    common_tasks: List[str] = field(default_factory=list)
+    interaction_style: str = "friendly_professional"
+    learned_patterns: Dict[str, int] = field(default_factory=dict)
+
+
+class ResponseStyle(Enum):
+    """Different response styles the assistant can use."""
+    FRIENDLY_PROFESSIONAL = "friendly_professional"
+    CONCISE = "concise"
+    DETAILED = "detailed"
+    TECHNICAL = "technical"
+    CASUAL = "casual"
+
+
+class ResetType(Enum):
+    """Different types of system resets."""
+    FULL = "full"  # Clear everything
+    SELECTIVE = "selective"  # Preserve AI cache and/or knowledge base
+    EMERGENCY = "emergency"  # When system is in bad state
+    LOGS_ONLY = "logs_only"  # Clear only log files
+    STATE_ONLY = "state_only"  # Clear only state files
+    CACHE_ONLY = "cache_only"  # Clear only cache files
+
+
+class ConversationalAIAssistant:
+    """A Claude-like conversational AI assistant for CWMAI."""
+
+    # SECURITY: Strict allowlist for system commands
+    ALLOWED_SYSTEM_COMMANDS = [
+        'ls -l',
+        'pwd',
+        'echo',
+        'df -h',
+        'date',
+        'uptime',
+        'ls',
+        'ls -la',
+        'whoami',
+        'hostname'
+    ]
+
+    def __init__(self, style: ResponseStyle = ResponseStyle.FRIENDLY_PROFESSIONAL):
+        """Initialize the conversational assistant.
+
+        Args:
+            style: The response style to use
+        """
+        self.logger = logging.getLogger(__name__)
+        self.style = style
+
+        # Core components
+        self.ai_brain = IntelligentAIBrain(enable_round_robin=False)
+        self.nli = NaturalLanguageInterface()
+        self.http_client = HTTPAIClient(enable_round_robin=False)
+        self.context_collector = DynamicContextCollector()
+        self.workflow_orchestrator = WorkflowOrchestrator()
+        self.state_manager = StateManager()  # Add state manager
+        self.pattern_analyzer = ConversationPatternAnalyzer()  # Add pattern analyzer
+        self.context_enhancer = get_tool_context_enhancer()  # Add context enhancer
+        self.discovery_flow = ToolDiscoveryFlow()  # Add discovery flow manager
+
+        # Initialize execution engine after tool system is ready
+        self.execution_engine = None
+
+        # Conversation state
+        self.conversation_history: List[ConversationTurn] = []
+        self.current_context: Dict[str, Any] = {
+            'current_project': None,
+            'current_task': None,
+            'last_command': None,
+            'pending_confirmations': {},
+            'conversation_topic': None
+        }
+
+        # Memory
+        self.memory = ConversationMemory()
+        self.memory_file = Path.home() / ".cwmai" / "conversation_memory.json"
+        self._load_memory()
+
+        # Conversation templates
+        self.templates = self._load_conversation_templates()
+
+        # Continuous AI system control
+        self.continuous_ai_process = None
+        self.continuous_ai_script = Path(__file__).parent.parent / "run_continuous_ai.py"
+
+        # Complete context mode - no need for caching
+        self._tools_initialized = False
+
+    def _load_memory(self):
+        """Load conversation memory from disk."""
+        try:
+            if self.memory_file.exists():
+                with open(self.memory_file, 'r') as f:
+                    data = json.load(f)
+                    self.memory.user_preferences = data.get('user_preferences', {})
+                    self.memory.project_context = data.get('project_context', {})
+                    self.memory.common_tasks = data.get('common_tasks', [])
+                    self.memory.learned_patterns = data.get('learned_patterns', {})
+
+                    # Load conversation history
+                    history_data = data.get('conversation_history', [])
+                    for turn_data in history_data[-20:]:  # Keep last 20 turns
+                        try:
+                            turn = ConversationTurn(
+                                timestamp=datetime.fromisoformat(turn_data['timestamp']),
+                                user_input=turn_data['user_input'],
+                                assistant_response=turn_data['assistant_response'],
+                                actions_taken=turn_data.get('actions_taken', []),
+                                context_updates=turn_data.get('context_updates', {})
+                            )
+                            self.conversation_history.append(turn)
+                        except:
+                            pass  # Skip invalid entries
+        except Exception as e:
+            self.logger.debug(f"Could not load memory: {e}")
+
+    def _save_memory(self):
+        """Save conversation memory to disk."""
+        try:
+            self.memory_file.parent.mkdir(exist_ok=True)
+
+            # Prepare conversation history for serialization
+            history_data = []
+            for turn in self.conversation_history[-20:]:  # Keep last 20 turns
+                history_data.append({
+                    'timestamp': turn.timestamp.isoformat(),
+                    'user_input': turn.user_input,
+                    'assistant_response': turn.assistant_response,
+                    'actions_taken': turn.actions_taken,
+                    'context_updates': turn.context_updates
+                })
+
+            with open(self.memory_file, 'w') as f:
+                json.dump({
+                    'user_preferences': self.memory.user_preferences,
+                    'project_context': self.memory.project_context,
+                    'common_tasks': self.memory.common_tasks[-20:],  # Keep last 20
+                    'learned_patterns': self.memory.learned_patterns,
+                    'conversation_history': history_data
+                }, f, indent=2)
+        except Exception as e:
+            self.logger.debug(f"Could not save memory: {e}")
+
+    def _load_conversation_templates(self) -> Dict[str, List[str]]:
+        """Load conversation response templates."""
+        return {
+            'greetings': [
+                "Hi! I'm your CWMAI assistant. How can I help you today?",
+                "Hello! Ready to help you manage your projects. What would you like to work on?",
+                "Hey there! I'm here to help with your development tasks. What's on your mind?"
+            ],
+            'confirmations': [
+                "Got it! Let me {} for you.",
+                "Sure thing! I'll {} right away.",
+                "Absolutely! Working on {} now."
+            ],
+            'clarifications': [
+                "I want to make sure I understand correctly. Did you mean {}?",
+                "Just to clarify, you'd like me to {}?",
+                "Let me confirm - you want to {}?"
+            ],
+            'thinking': [
+                "Let me check that for you...",
+                "Looking into this...",
+                "Give me a moment to find that information..."
+            ],
+            'success': [
+                "✓ Done! {}",
+                "✓ Successfully {}",
+                "✓ All set! I've {}"
+            ],
+            'error_gentle': [
+                "I ran into a small issue: {}. Would you like me to try a different approach?",
+                "Hmm, there was a problem: {}. Let me suggest an alternative.",
+                "I couldn't complete that because: {}. Here's what we can do instead:"
+            ]
+        }
+
+    async def initialize(self):
+        """Initialize the assistant and its components."""
+        log_system_message("Initializing conversational AI assistant...")
+        await self.nli.initialize()
+        await self.workflow_orchestrator.initialize()
+
+        # Initialize tool execution engine
+        try:
+            from scripts.tool_calling_system import ToolCallingSystem
+            tool_system = ToolCallingSystem()
+            self.execution_engine = ToolExecutionEngine(
+                ai_brain=self.ai_brain,
+                tool_system=tool_system,
+                discovery_flow=self.discovery_flow
+            )
+            log_system_message("Tool execution engine initialized")
+        except Exception as e:
+            log_system_message(f"Failed to initialize execution engine: {e}", "WARNING")
+
+        # Quality monitoring disabled - was causing hangs
+        # try:
+        #     from scripts.quality_improvement_daemon import start_quality_monitoring
+        #     await start_quality_monitoring()
+        #     log_system_message("Quality monitoring started")
+        # except Exception as e:
+        #     log_system_message(f"Quality monitoring failed to start: {e}", "WARNING")
+
+        log_system_message("Assistant ready for conversation")
+        log_user_message("Assistant initialized and ready!")
+
+    async def handle_conversation(self, user_input: str) -> str:
+        """Handle a conversational turn with the user using AI with full context.
+
+        # Add console logging for debugging
+        print(f"\n[DEBUG] handle_conversation called with: {user_input}")
+
+        Args:
+            user_input: The user's input
+
+        Returns:
+            The assistant's response
+        """
+        # Update conversation context
+        self._update_context(user_input)
+
+        # ALWAYS use AI with full context - no hardcoded patterns
+        response = await self._handle_with_intelligent_context(user_input)
+
+        # Record the turn
+        turn = ConversationTurn(
+            timestamp=datetime.now(timezone.utc),
+            user_input=user_input,
+            assistant_response=response,
+            actions_taken=self.current_context.get('last_actions', []),
+            context_updates=self.current_context.copy()
+        )
+        self.conversation_history.append(turn)
+
+        # Learn from the interaction
+        self._learn_from_interaction(user_input, response)
+
+        # Save memory periodically
+        if len(self.conversation_history) % 10 == 0:
+            self._save_memory()
+
+        return response
+
+    async def _handle_with_intelligent_context(self, user_input: str) -> str:
+        """Handle user input using complete context approach.
+
+        Provides AI with comprehensive context using Gemini's large token window.
+        """
+        log_system_message(f"Processing user input: {user_input[:100]}...")
+
+        # Check if this is a continuation of a tool discovery flow
+        if hasattr(self, '_tool_discovery_context'):
+            return await self._continue_tool_discovery_flow(user_input)
+
+        # Otherwise, start fresh with complete context
+        print(f"[DEBUG] Calling _handle_with_complete_context")
+        result = await self._handle_with_complete_context(user_input)
+        print(f"[DEBUG] Result from _handle_with_complete_context: {result[:100] if result else 'None'}...")
+        return result
+
+    async def _handle_with_complete_context(self, user_input: str) -> str:
+        """Handle input with COMPLETE context using Gemini's 1M token window."""
+        print(f"[DEBUG] Processing with complete context: {user_input[:100]}...")
+
+        # Gather COMPLETE system context
+        dynamic_context = await self._gather_complete_context(user_input)
+
+        # Format the complete context for AI
+        formatted_context = self.context_collector.format_context_for_ai(dynamic_context)
+
+        # Get all available tools
+        essential_tools = self._get_essential_tools_for_request(user_input)
+
+        # Get MCP tools too
+        mcp_tools = []
+        try:
+            mcp_tools = self.mcp_hub.list_available_tools()
+        except:
+            pass
+
+        # Build comprehensive tool list - include ALL tools
+        tool_info = []
+        for tool in essential_tools:  # Include ALL tools, not just 50
+            name = tool.get('name', 'unknown')
+            desc = tool.get('description', 'No description')
+            params = tool.get('parameters', {})
+            tool_info.append(f"- {name}: {desc}")
+            if params:
+                # Handle different parameter formats
+                param_parts = []
+                if isinstance(params, dict):
+                    for k, v in params.items():
+                        if isinstance(v, dict):
+                            # v is a parameter definition dict
+                            required = v.get('required', False)
+                            param_parts.append(f"{k}({'required' if required else 'optional'})")
+                        else:
+                            # v is probably a type string or other format
+                            param_parts.append(f"{k}(type: {v})")
+                elif isinstance(params, list):
+                    # params is a list of parameter names
+                    param_parts = [str(p) for p in params]
+                else:
+                    # params is something else, just convert to string
+                    param_parts = [str(params)]
+
+                if param_parts:
+                    param_list = ', '.join(param_parts)
+                    tool_info.append(f"  Parameters: {param_list}")
+
+        # Add MCP tools
+        if mcp_tools:
+            tool_info.append("\n=== MCP Tools ===")
+            tool_info.append("- brave_search:search - Web search using Brave Search API")
+            tool_info.append("- github:* - GitHub operations (issues, PRs, etc)")
+            tool_info.append("- filesystem:* - File system operations")
+            tool_info.append("- memory:* - Context storage and retrieval")
+
+        # Include FULL conversation history (we have 1M tokens!)
+        history_context = ""
+        if self.conversation_history:
+            history_context = "\n=== FULL CONVERSATION HISTORY ===\n"
+            for i, turn in enumerate(self.conversation_history):
+                history_context += f"\n[Turn {i+1} - {turn.timestamp.strftime('%H:%M:%S')}]\n"
+                history_context += f"User: {turn.user_input}\n"
+                history_context += f"Assistant: {turn.assistant_response}\n"
+                if turn.actions_taken:
+                    history_context += f"Actions: {turn.actions_taken}\n"
+
+        # Build comprehensive prompt with ALL context
+        prompt = f"""=== COMPLETE SYSTEM CONTEXT ===
+{formatted_context}
+
+{history_context}
+
+=== INTELLIGENT CODEBASE CONTEXT ===
+The system has provided query-aware codebase context based on your request.
+- Query Type: {dynamic_context.get('codebase', {}).get('query_type', 'general')}
+- Context includes: file structure, code analysis, tool information, and more
+- Usage hints: {', '.join(dynamic_context.get('codebase', {}).get('usage_hints', []))}
+
+=== CURRENT REQUEST ===
+Request: {user_input}
+
+You are an AI assistant with COMPLETE understanding of this codebase. You have:
+1. Full system context including all repositories, tasks, and workflows
+2. Intelligent codebase analysis tailored to the query
+3. Access to all tools to explore and discover information
+4. 1 million token context window - no need to worry about space
+
+Your goal is to provide the MOST helpful, accurate, and complete answers possible.
+
+Available tools (ALL {len(essential_tools)} tools included):
+{chr(10).join(tool_info)}
+
+CODEBASE UNDERSTANDING:
+- The intelligent context system analyzed your query and provided relevant code information
+- If you need deeper analysis of specific files/functions, they're included in the context
+- Reference code locations using file:line format when helpful
+- The context is query-aware - it focuses on what's relevant to your question
+
+Be extremely thorough. With 1M tokens available, provide comprehensive answers that fully address the user's needs.
+
+When creating tools:
+1. ALWAYS search the codebase first to find existing functionality
+2. NEVER create placeholder implementations - tools must actually work
+3. Integrate with existing modules like GitHubIssueCreator, WorkflowOrchestrator, StateManager
+4. Use async/await patterns consistent with the codebase
+5. Return structured responses: {{"success": bool, "result": data, "error": str}}
+6. The system will enforce these rules and reject placeholder tools
+
+IMPORTANT TOOL EXECUTION FORMAT:
+- To EXECUTE a tool, use: EXECUTE_TOOL::tool_name(params)::END_TOOL
+- Or use the simpler format: !execute tool_name(params)
+- Examples and explanations should use regular format: tool_name(params)
+- Only tools wrapped in EXECUTE_TOOL:: or !execute will actually run
+
+Examples:
+- Showing an example: "You could use count_files(directory='.')"
+- Actually executing: "EXECUTE_TOOL::count_files(directory='.')::END_TOOL"
+- Or executing: "!execute count_files(directory='.')"
+
+Respond naturally and comprehensively. Use all available context to provide the best possible answer."""
+
+        try:
+            print(f"[DEBUG] About to call execute_capability...")
+            response = await self.ai_brain.execute_capability('intelligent_analysis', {
+                'prompt': prompt,
+                'model': 'gemini'
+            })
+            print(f"[DEBUG] Response from execute_capability: type={type(response)}, content={response}")
+
+            # Type check to prevent AttributeError
+            if isinstance(response, dict):
+                ai_response = response.get('result', '')
+                print(f"[DEBUG] Extracted result from dict: {ai_response[:100] if ai_response else 'None'}...")
+            else:
+                print(f"[DEBUG] Unexpected response type: {type(response)}")
+                ai_response = str(response)
+
+            # Process the response to execute any mentioned tools
+            print(f"[DEBUG] About to process AI response...")
+            processed_response = await self._process_ai_response(ai_response, user_input)
+            print(f"[DEBUG] Processed response: {processed_response[:100] if processed_response else 'None'}...")
+            return processed_response
+
+        except Exception as e:
+            import traceback
+            self.logger.error(f"Error in _handle_with_complete_context: {e}")
+            print(f"[DEBUG] Full traceback: {traceback.format_exc()}")
+            return f"Error: {str(e)}"
+
+    async def _execute_and_continue(self, ai_response: str, original_request: str) -> str:
+        """Execute tools mentioned in AI response and continue the conversation flow.
+
+        This method handles multi-step workflows where the AI needs to:
+        1. Execute a tool
+        2. Analyze the results
+        3. Decide on next steps
+        4. Continue until the task is complete
+        """
+        # Check if this is a multi-step workflow
+        if "STEP:" in ai_response or "Next:" in ai_response:
+            # Process the current step
+            processed = await self._process_ai_response(ai_response, original_request)
+
+            # Check if we need to continue
+            if "COMPLETE" not in processed and "FINAL" not in processed:
+                # Ask AI what to do next based on results
+                continuation_prompt = f"""Original request: {original_request}
+
+Previous step result:
+{processed}
+
+What should we do next to complete the user's request? If the task is complete, say COMPLETE."""
+
+                next_response = await self.ai_brain.execute_capability('intelligent_analysis', {
+                    'prompt': continuation_prompt,
+                    'model': 'gemini'
+                })
+
+                # Type check to prevent AttributeError
+                if isinstance(next_response, dict):
+                    next_step = next_response.get('result', '')
+                else:
+                    print(f"[DEBUG] Unexpected next_response type: {type(next_response)}")
+                    next_step = str(next_response)
+
+                # Recursively continue if not complete
+                if "COMPLETE" not in next_step:
+                    return await self._execute_and_continue(next_step, original_request)
+
+            return processed
+        else:
+            # Single step response, just process normally
+            return await self._process_ai_response(ai_response, original_request)
+
+    def _get_essential_tools_for_request(self, user_input: str) -> List[Dict[str, Any]]:
+        """Get all available tools."""
+        try:
+            from scripts.tool_calling_system import ToolCallingSystem
+            tool_system = ToolCallingSystem()
+            return tool_system.get_tools_for_ai()
+        except:
+            return []
+
+    def _format_essential_tools(self, tools: List[Dict[str, Any]], style: str = "detailed") -> str:
+        """Format tools for AI display in various styles.
+
+        Args:
+            tools: List of tool definitions
+            style: Format style - 'detailed', 'compact', 'categorized'
+
+        Returns:
+            Formatted string representation of tools
+        """
+        if not tools:
+            return "No tools available"
+
+        if style == "compact":
+            # Just tool names
+            return ', '.join([t.get('name', 'unknown') for t in tools[:30]])
+
+        elif style == "categorized":
+            # Group tools by category
+            categories = {
+                'search': [],
+                'analysis': [],
+                'creation': [],
+                'system': [],
+                'repository': [],
+                'other': []
+            }
+
+            for tool in tools:
+                name = tool.get('name', '').lower()
+                if 'search' in name or 'grep' in name or 'find' in name:
+                    categories['search'].append(tool)
+                elif 'analyze' in name or 'check' in name or 'test' in name:
+                    categories['analysis'].append(tool)
+                elif 'create' in name or 'generate' in name or 'make' in name:
+                    categories['creation'].append(tool)
+                elif 'system' in name or 'status' in name or 'control' in name:
+                    categories['system'].append(tool)
+                elif 'repository' in name or 'repo' in name or 'project' in name:
+                    categories['repository'].append(tool)
+                else:
+                    categories['other'].append(tool)
+
+            formatted = []
+            for cat, cat_tools in categories.items():
+                if cat_tools:
+                    formatted.append(f"\n{cat.upper()} TOOLS:")
+                    for tool in cat_tools[:5]:  # Limit per category
+                        formatted.append(f"  - {tool.get('name')}: {tool.get('description', '')[:60]}...")
+
+            return '\n'.join(formatted)
+
+        else:  # detailed
+            # Full details for most relevant tools
+            formatted = []
+            for tool in tools[:15]:  # Top 15 tools
+                name = tool.get('name', 'unknown')
+                desc = tool.get('description', 'No description')[:80]
+                params = tool.get('parameters', {})
+                param_list = ', '.join(params.keys()) if params else 'none'
+
+                formatted.append(f"- {name}: {desc}\n  Parameters: {param_list}")
+
+            return '\n'.join(formatted)
+
+
+    async def _process_ai_response(self, ai_response: str, user_input: str) -> str:
+        """Process AI response and execute any tool calls mentioned."""
+        import re
+
+        # Get available tools
+        tools = self._get_essential_tools_for_request(user_input)
+        tool_names = [t['name'] for t in tools]
+
+        executed_tools = []
+
+        # Pattern 1: EXECUTE_TOOL::tool_name(params)::END_TOOL
+        exec_pattern = r'EXECUTE_TOOL::(\w+)\s*\((.*?)\)::END_TOOL'
+        for match in re.finditer(exec_pattern, ai_response):
+            tool_name = match.group(1)
+            params_str = match.group(2)
+            if tool_name in tool_names:
+                try:
+                    tool_call = f"{tool_name}({params_str})"
+                    result = await self._execute_tool_call(tool_call)
+                    executed_tools.append((tool_name, result))
+                except Exception as e:
+                    self.logger.error(f"Error executing tool {tool_name}: {e}")
+
+        # Also support simpler !execute format
+        simple_exec_pattern = r'!execute\s+(\w+)\s*\((.*?)\)'
+        for match in re.finditer(simple_exec_pattern, ai_response):
+            tool_name = match.group(1)
+            params_str = match.group(2)
+            if tool_name in tool_names:
+                try:
+                    tool_call = f"{tool_name}({params_str})"
+                    result = await self._execute_tool_call(tool_call)
+                    executed_tools.append((tool_name, result))
+                except Exception as e:
+                    self.logger.error(f"Error executing tool {tool_name}: {e}")
+
+        # Pattern 3: Code blocks with tool calls (```tool_code or ``` blocks)
+        # This handles various code block formats the AI might use
+        code_block_patterns = [
+            # Matches ```tool_code\ntool_name(params)\n```
+            r'```(?:tool_code|python|code)?\s*\n\s*(\w+)\s*\((.*?)\)\s*\n\s*```',
+            # Matches standalone function calls in code blocks
+            r'```\s*\n\s*(\w+)\s*\((.*?)\)\s*\n\s*```',
+            # Matches inline code blocks `tool_name(params)`
+            r'`(\w+)\s*\((.*?)\)`'
+        ]
+
+        for pattern in code_block_patterns:
+            for match in re.finditer(pattern, ai_response, re.DOTALL):
+                tool_name = match.group(1)
+                params_str = match.group(2)
+                # Check if this is a known tool and hasn't been executed yet
+                if tool_name in tool_names and not any(t[0] == tool_name and str(t[1]).count(params_str) > 0 for t in executed_tools):
+                    try:
+                        tool_call = f"{tool_name}({params_str})"
+                        result = await self._execute_tool_call(tool_call)
+                        executed_tools.append((tool_name, result))
+                        self.logger.info(f"Executed tool from code block: {tool_name}")
+                    except Exception as e:
+                        self.logger.error(f"Error executing tool {tool_name}: {e}")
+
+        # Pattern 4: Standalone tool names on their own line (legacy support)
+        lines = ai_response.split('\n')
+        for line in lines:
+            line = line.strip()
+            # Skip lines that are part of code blocks
+            if line.startswith('```') or line.endswith('```'):
+                continue
+            # Check if line is just a tool name (possibly with backticks)
+            cleaned_line = line.strip('`').strip()
+            # Match tool_name() format
+            standalone_match = re.match(r'^(\w+)\s*\(\s*\)$', cleaned_line)
+            if standalone_match:
+                tool_name = standalone_match.group(1)
+                if tool_name in tool_names and tool_name not in [t[0] for t in executed_tools]:
+                    try:
+                        tool_call = f"{tool_name}()"
+                        result = await self._execute_tool_call(tool_call)
+                        executed_tools.append((tool_name, result))
+                    except Exception as e:
+                        self.logger.error(f"Error executing tool {tool_name}: {e}")
+
+        # If we executed any tools, have AI interpret the results
+        if executed_tools:
+            # Build a prompt for the AI to interpret the results
+            interpretation_prompt = f"The user asked: {user_input}\n\n"
+            interpretation_prompt += "I executed the following tools and got these results:\n\n"
+
+            for tool_name, result in executed_tools:
+                interpretation_prompt += f"Tool: {tool_name}\n"
+                if isinstance(result, dict):
+                    import json
+                    interpretation_prompt += f"Result: {json.dumps(result, indent=2)}\n\n"
+                else:
+                    interpretation_prompt += f"Result: {str(result)}\n\n"
+
+            interpretation_prompt += "Please provide a natural language summary of these results for the user. Be conversational and highlight the key information."
+
+            # Get AI to interpret the results
+            try:
+                response = await self.ai_brain.execute_capability('intelligent_analysis', {
+                    'prompt': interpretation_prompt,
+                    'model': 'gemini'
+                })
+
+                # Type check to prevent AttributeError
+                if isinstance(response, dict):
+                    interpreted_response = response.get('result', '')
+                else:
+                    print(f"[DEBUG] Unexpected interpretation response type: {type(response)}")
+                    interpreted_response = str(response)
+
+                # Return the original AI response plus the interpretation
+                return f"{ai_response}\n\n{interpreted_response}"
+
+            except Exception as e:
+                self.logger.error(f"Error interpreting results: {e}")
+                # Fallback to showing raw results
+                return f"{ai_response}\n\nTool Results: {json.dumps(executed_tools[0][1], indent=2)}"
+
+        # Otherwise just return the AI response
+        return ai_response
+
+    async def _continue_tool_discovery_flow(self, user_input: str) -> str:
+        """Continue an ongoing tool discovery flow for multi-step tool creation.
+
+        This handles cases where creating a tool requires multiple steps:
+        1. Gathering requirements
+        2. Confirming specifications
+        3. Implementing the tool
+        4. Testing and refinement
+        """
+        if not hasattr(self, '_tool_discovery_context'):
+            # No ongoing flow, start fresh
+            return await self._handle_with_complete_context(user_input)
+
+        context = self._tool_discovery_context
+        current_step = context.get('step', 'requirements')
+
+        if current_step == 'requirements':
+            # User provided requirements, move to confirmation
+            context['requirements'] = user_input
+            context['step'] = 'confirmation'
+
+            return f"""I understand you want to create a tool with these requirements:
+{user_input}
+
+Let me confirm the specifications:
+- Tool name: {context.get('tool_name', 'To be determined')}
+- Purpose: {context.get('purpose', 'To be determined')}
+- Parameters needed: {context.get('parameters', 'To be determined')}
+
+Is this correct? Would you like me to proceed with creating this tool?"""
+
+        elif current_step == 'confirmation':
+            if 'yes' in user_input.lower() or 'proceed' in user_input.lower():
+                # Create the tool
+                context['step'] = 'implementation'
+
+                # Use the create_new_tool function
+                try:
+                    from scripts.tool_calling_system import ToolCallingSystem
+                    tool_system = ToolCallingSystem()
+
+                    result = await tool_system.call_tool(
+                        'create_new_tool',
+                        name=context.get('tool_name'),
+                        description=context.get('purpose'),
+                        requirements=context.get('requirements')
+                    )
+
+                    # Clear the context
+                    delattr(self, '_tool_discovery_context')
+
+                    # Type check result
+                    if isinstance(result, dict):
+                        if result.get('success'):
+                            return f"✅ Tool created successfully! You can now use `{context.get('tool_name')}` in your commands."
+                        else:
+                            return f"❌ Tool creation failed: {result.get('error')}"
+                    else:
+                        return f"❌ Tool creation failed: Unexpected result format - {str(result)}"
+
+                except Exception as e:
+                    delattr(self, '_tool_discovery_context')
+                    return f"❌ Error creating tool: {str(e)}"
+            else:
+                # User wants changes
+                context['step'] = 'requirements'
+                return "What changes would you like to make to the tool specifications?"
+
+        # Default fallback
+        return await self._handle_with_complete_context(user_input)
+
+
+
+
+    # REMOVED - AI provides all responses
+
+
+
+
+
+    # REMOVED - No more hardcoded patterns!
+    # The AI decides everything based on context
+
+    def _update_context(self, user_input: str):
+        """Update conversation context."""
+        # Just store the input - let AI understand context
+        self.current_context['last_input'] = user_input
+        self.current_context['timestamp'] = datetime.now(timezone.utc).isoformat()
+
+    # REMOVED - AI generates greetings based on context
+
+    # REMOVED - All input goes through AI
+
+    # REMOVED - All input goes through AI
+
+    # REMOVED - AI handles confirmations with context
+
+    # REMOVED - AI generates appropriate responses
+
+    # REMOVED - All input goes through AI
+
+
+    async def _gather_complete_context(self, user_input: str) -> Dict[str, Any]:
+        """Gather COMPLETE system context with INTELLIGENT codebase understanding."""
+        # Start with dynamic context
+        # Convert ConversationTurn objects to dictionaries for serialization
+        history_dicts = []
+        if self.conversation_history:
+            for turn in self.conversation_history[-15:]:  # Use last 15 conversation turns
+                history_dicts.append({
+                    'timestamp': turn.timestamp.isoformat(),
+                    'user_input': turn.user_input,
+                    'assistant_response': turn.assistant_response,
+                    'actions_taken': turn.actions_taken,
+                    'context_updates': turn.context_updates
+                })
+
+        context = await self.context_collector.gather_context_for_query(
+            user_input,
+            history_dicts
+        )
+
+        # Add INTELLIGENT codebase context based on query
+        try:
+            if not hasattr(self, 'codebase_context'):
+                self.codebase_context = IntelligentCodebaseContext()
+
+            # Get query-aware codebase context
+            codebase_info = await self.codebase_context.get_context_for_query(user_input)
+            context['codebase'] = codebase_info
+
+            # Log what type of context we provided
+            print(f"[DEBUG] Provided {codebase_info['query_type']} context for query")
+        except Exception as e:
+            print(f"[DEBUG] Error getting codebase context: {e}")
+            context['codebase'] = {'error': str(e)}
+
+        # Add system status
+        try:
+            continuous_status = await self.check_continuous_ai_status()
+            context['continuous_ai_status'] = continuous_status
+        except Exception as e:
+            log_system_message(f"Error getting continuous AI status: {e}", "ERROR")
+            context['continuous_ai_status'] = {'error': str(e)}
+
+        # Add workflow information
+        context['available_workflows'] = list_all_workflows()
+        context['custom_workflows'] = self.workflow_orchestrator.list_workflows()
+
+        # Add file system info
+        context['important_files'] = {
+            'run_continuous_ai.py': 'Starts the continuous AI system with options',
+            'reset_system.py': 'Resets system state with preservation options',
+            'system_state.json': 'Current system state',
+            'task_state.json': 'Current task queue state',
+            'logs/': 'System and conversation logs',
+            'scripts/': 'Core system modules',
+            'scripts/custom_tools/': 'Generated tools directory'
+        }
+
+        # Add current working directory and environment
+        context['environment'] = {
+            'cwd': os.getcwd(),
+            'python_version': sys.version,
+            'platform': sys.platform
+        }
+
+        # Add memory and learning
+        context['assistant_memory'] = {
+            'user_preferences': self.memory.user_preferences,
+            'common_tasks': self.memory.common_tasks[-10:],
+            'learned_patterns': dict(sorted(
+                [(k, v) for k, v in self.memory.learned_patterns.items() if isinstance(v, (int, float))],
+                key=lambda x: x[1], reverse=True)[:10])
+        }
+
+        # Add pending actions
+        context['pending_actions'] = self.current_context.get('pending_confirmations', {})
+
+        # Add context size estimate
+        context_str = json.dumps(context)
+        context['meta'] = {
+            'size_bytes': len(context_str),
+            'estimated_tokens': len(context_str) // 4,  # Rough estimate
+            'query_type': context.get('codebase', {}).get('query_type', 'general')
+        }
+
+        return context
+
+    # REMOVED - No more pattern matching! AI decides everything
+
+    def _get_recent_user_input(self) -> str:
+        """Get the most recent user input from conversation history."""
+        if self.conversation_history:
+            return self.conversation_history[-1].user_input
+        return ""
+
+    async def _execute_tool_call(self, tool_call_str: str) -> str:
+        """Execute a tool call string like 'tool_name(param1="value1")'."""
+        print(f"[DEBUG] _execute_tool_call called with: {tool_call_str}")
+        try:
+            # Parse tool name and parameters
+            match = re.match(r'(\w+)\((.*)\)', tool_call_str)
+            if not match:
+                return f"Invalid tool call format: {tool_call_str}"
+
+            tool_name = match.group(1)
+            params_str = match.group(2)
+
+            # SECURITY: Parse parameters using ast.literal_eval for safety
+            params = {}
+            if params_str:
+                try:
+                    # Transform the parameter string into a valid dict representation
+                    # Replace parameter format: key=value -> "key": value
+                    dict_str = params_str
+
+                    # Handle various parameter formats
+                    # First, extract all key=value pairs using a more robust regex
+                    param_pattern = r'(\w+)\s*=\s*(\'[^\']*\'|"[^"]*"|\[[^\]]*\]|\{[^\}]*\}|[^,]+)'
+                    param_matches = re.findall(param_pattern, params_str)
+
+                    if param_matches:
+                        # Build a proper dictionary string
+                        dict_parts = []
+                        for key, value in param_matches:
+                            # Clean up the value
+                            value = value.strip()
+
+                            # If it's already quoted, use it as-is
+                            if (value.startswith('"') and value.endswith('"')) or \
+                               (value.startswith("'") and value.endswith("'")):
+                                dict_parts.append(f'"{key}": {value}')
+                            # If it looks like a number
+                            elif value.replace('.', '').replace('-', '').isdigit():
+                                dict_parts.append(f'"{key}": {value}')
+                            # If it's a boolean
+                            elif value.lower() in ['true', 'false']:
+                                dict_parts.append(f'"{key}": {value.lower()}')
+                            # If it's a list or dict (already has brackets)
+                            elif value.startswith('[') or value.startswith('{'):
+                                dict_parts.append(f'"{key}": {value}')
+                            # Otherwise, treat as string
+                            else:
+                                dict_parts.append(f'"{key}": "{value}"')
+
+                        dict_str = "{" + ", ".join(dict_parts) + "}"
+
+                        # Use ast.literal_eval for safe parsing
+                        params = ast.literal_eval(dict_str)
+
+                except (ValueError, SyntaxError) as e:
+                    # Fallback to simple parsing if ast.literal_eval fails
+                    log_system_message(f"Parameter parsing with ast.literal_eval failed: {e}, using fallback", "WARNING")
+                    param_matches = re.findall(r'(\w+)=["\']?([^,"\']+)["\']?', params_str)
+                    for key, value in param_matches:
+                        # Try to convert to appropriate type
+                        if value.isdigit():
+                            params[key] = int(value)
+                        elif value.lower() in ['true', 'false']:
+                            params[key] = value.lower() == 'true'
+                        else:
+                            params[key] = value
+
+            # Enhance parameters with context from conversation
+            # TEMPORARILY DISABLED to debug issue
+            # enhanced_params = self.context_enhancer.enhance_tool_parameters(
+            #     tool_name,
+            #     params,
+            #     self._get_recent_user_input()
+            # )
+            enhanced_params = params  # Use params directly
+
+            # Execute the tool
+            from scripts.tool_calling_system import ToolCallingSystem
+            tool_system = ToolCallingSystem()
+
+            # Debug logging
+            print(f"[DEBUG] About to call tool '{tool_name}' with params: {enhanced_params}")
+            log_system_message(f"Calling tool {tool_name} with params: {enhanced_params}")
+
+            try:
+                result = await tool_system.call_tool(tool_name, **enhanced_params)
+                print(f"[DEBUG] Tool call completed, result type: {type(result)}")
+            except Exception as e:
+                print(f"[DEBUG] Tool call exception: {type(e).__name__}: {e}")
+                log_system_message(f"Tool call exception: {e}", "ERROR")
+                # Re-raise with more context
+                raise Exception(f"Tool {tool_name} failed with: {str(e)}")
+
+            # Format the result with type checking
+            if isinstance(result, dict):
+                if result.get('success'):
+                    return self._format_tool_result(result.get('result'), tool_name)
+                elif result.get('error') and 'not found' in result.get('error'):
+                    # Tool doesn't exist, offer to create it
+                    return await self._handle_missing_tool(tool_name, params)
+                else:
+                    error_msg = result.get('error', '')
+                    return f"Error executing {tool_name}: {error_msg}"
+            else:
+                # Result is not a dict - convert to string for error handling
+                result_str = str(result)
+                print(f"[DEBUG] Tool result is not a dict: {type(result)} - {result_str[:100]}")
+                if 'not found' in result_str:
+                    return await self._handle_missing_tool(tool_name, params)
+                else:
+                    return f"Unexpected tool result format: {result_str}"
+
+        except Exception as e:
+            self.logger.error(f"Error executing tool call: {e}")
+            return f"I encountered an error executing the tool: {str(e)}"
+
+    async def _handle_missing_tool(self, tool_name: str, params: Dict[str, Any]) -> str:
+        """Handle case where a tool doesn't exist."""
+        return f"""I notice we don't have a '{tool_name}' tool yet. Let me create it for you...
+
+Creating new tool: {tool_name}
+This tool will {tool_name.replace('_', ' ')} based on your request.
+
+Please wait a moment while I generate this functionality..."""
+
+
+    async def _create_and_execute_tool(self, tool_name: str, user_input: str, description: str) -> str:
+        """Create a new tool and execute it."""
+        from scripts.tool_calling_system import ToolCallingSystem
+        tool_system = ToolCallingSystem()
+
+        # Determine requirements based on tool name and user input
+        requirements = f"""
+        Based on user request: {user_input}
+        Create a tool that: {description}
+        Tool should integrate with existing system components
+        """
+
+        # Create the tool
+        creation_result = await tool_system._create_new_tool(
+            name=tool_name,
+            description=description,
+            requirements=requirements
+        )
+
+        if isinstance(creation_result, dict) and creation_result.get('success'):
+            # Tool created, now execute it with context
+            tool_params = {
+                'context': {
+                    'user_input': user_input,
+                    'description': description
+                }
+            }
+            result = await tool_system.call_tool(tool_name, **tool_params)
+
+            if isinstance(result, dict) and result.get('success'):
+                return f"""✓ Created new tool '{tool_name}' successfully!
+
+{self._format_tool_result(result.get('result'), tool_name)}
+
+The tool has been saved and will be available for future use."""
+            else:
+                error_msg = result.get('error') if isinstance(result, dict) else str(result)
+                return f"Created tool '{tool_name}' but encountered an error executing it: {error_msg}"
+        else:
+            error_msg = creation_result.get('error') if isinstance(creation_result, dict) else str(creation_result)
+            return f"I couldn't create the tool '{tool_name}': {error_msg}"
+
+    def _format_tool_result(self, result: Any, tool_name: str) -> str:
+        """Return raw tool results without formatting."""
+        # Return raw JSON for all tools so AI can see complete data
+        if isinstance(result, dict):
+            return json.dumps(result, indent=2)
+        elif isinstance(result, list):
+            return json.dumps(result, indent=2)
+        else:
+            # For any other type, just convert to string
+            return str(result)
+
+
+
+
+
+
+
+
+
+    def _format_command_result(self, result: Dict[str, Any], command: str) -> str:
+        """Format command execution result conversationally."""
+        if isinstance(result, dict) and result.get('data'):
+            data = result['data']
+
+            # Handle different data types
+            if isinstance(data, list):
+                if len(data) == 0:
+                    return f"I executed '{command}' but didn't find any results."
+                else:
+                    response = f"Here's what I found:\n\n"
+                    for item in data[:5]:  # Limit to 5 items
+                        if isinstance(item, dict):
+                            response += f"• {item.get('name', item.get('title', str(item)))}\n"
+                        else:
+                            response += f"• {item}\n"
+                    if len(data) > 5:
+                        response += f"\n...and {len(data) - 5} more items"
+                    return response
+            elif isinstance(data, dict):
+                # Format key information from dict
+                important_keys = ['name', 'title', 'description', 'status', 'message', 'count']
+                details = []
+                for key in important_keys:
+                    if key in data:
+                        details.append(f"{key.title()}: {data[key]}")
+                return "\n".join(details) if details else str(data)
+            else:
+                return str(data)
+
+        if isinstance(result, dict):
+            return result.get('message', f"I executed '{command}' successfully.")
+        else:
+            return f"Command result: {str(result)}"
+
+
+    def _learn_from_interaction(self, user_input: str, response: str):
+        """Learn from user interactions to improve future responses."""
+        # Prepare context for pattern analysis
+        context = {
+            'conversation_history': [{
+                'user_input': turn.user_input,
+                'assistant_response': turn.assistant_response,
+                'timestamp': turn.timestamp.isoformat(),
+                'actions': turn.actions_taken
+            } for turn in self.conversation_history[-5:]],  # Last 5 turns
+            'interaction_success': 'success' in response or 'completed' in response,
+            'previous_intent': self.memory.learned_patterns.get('last_intent', 'unknown')
+        }
+
+        # Analyze conversation patterns
+        analysis = self.pattern_analyzer.analyze_conversation_turn(
+            user_input, response, context
+        )
+
+        # Update memory with analysis results
+        if analysis['intent']:
+            self.memory.learned_patterns['last_intent'] = analysis['intent'].primary_intent
+
+            # Track intent frequency
+            intent_key = f"intent_{analysis['intent'].primary_intent}"
+            self.memory.learned_patterns[intent_key] = self.memory.learned_patterns.get(intent_key, 0) + 1
+
+        # Track entities
+        if analysis.get('entities'):
+            for entity_type, values in analysis['entities'].items():
+                entity_key = f"entity_{entity_type}"
+                self.memory.learned_patterns[entity_key] = self.memory.learned_patterns.get(entity_key, 0) + len(values)
+
+        # Track successful patterns
+        if context['interaction_success'] and analysis['detected_patterns']:
+            pattern_key = f"successful_pattern_{analysis['detected_patterns'][0]['type']}"
+            self.memory.learned_patterns[pattern_key] = self.memory.learned_patterns.get(pattern_key, 0) + 1
+
+        # Track common tasks
+        if context['interaction_success']:
+            self.memory.common_tasks.append(user_input)
+            # Keep only last 50 tasks
+            self.memory.common_tasks = self.memory.common_tasks[-50:]
+
+    def get_conversation_summary(self) -> str:
+        """Get a summary of the conversation."""
+        if not self.conversation_history:
+            return "No conversation history yet."
+
+        summary = f"Conversation summary ({len(self.conversation_history)} turns):\n\n"
+
+        # Recent topics
+        recent_topics = set()
+        for turn in self.conversation_history[-10:]:
+            if 'project' in turn.user_input.lower():
+                recent_topics.add('projects')
+            if 'issue' in turn.user_input.lower():
+                recent_topics.add('issues')
+            if 'status' in turn.user_input.lower():
+                recent_topics.add('status')
+
+        if recent_topics:
+            summary += f"Recent topics: {', '.join(recent_topics)}\n"
+
+        # Common patterns
+        if self.memory.learned_patterns:
+            top_intents = sorted(
+                [(k.replace('intent_', ''), v) for k, v in self.memory.learned_patterns.items() if k.startswith('intent_')],
+                key=lambda x: x[1], reverse=True
+            )[:3]
+            if top_intents:
+                summary += f"Common requests: {', '.join([intent[0] for intent in top_intents])}\n"
+
+        # Last 3 interactions
+        summary += "\nRecent conversation:\n"
+        for turn in self.conversation_history[-3:]:
+            summary += f"• User: {turn.user_input}\n"
+            summary += f"  Assistant: {turn.assistant_response[:100]}...\n"
+
+        return summary
+
+
+
+    async def start_continuous_ai_system(self, workers: int = 3, mode: str = 'balanced',
+                                       enable_research: bool = True, enable_monitor: bool = True,
+                                       enable_mcp: bool = True) -> Dict[str, Any]:
+        """Start the continuous AI system with specified options."""
+        try:
+            # Check if already running
+            status = await self.check_continuous_ai_status()
+            if status['running']:
+                return {
+                    'success': False,
+                    'message': f"Continuous AI is already running with PID {status['pid']}",
+                    'status': status
+                }
+
+            # Build command
+            cmd = [sys.executable, str(self.continuous_ai_script)]
+            cmd.extend(['--workers', str(workers)])
+            cmd.extend(['--mode', mode])
+
+            if not enable_research:
+                cmd.append('--no-research')
+            if enable_monitor:
+                cmd.append('--monitor-workers')
+            if not enable_mcp:
+                cmd.append('--no-mcp')
+
+            # Start the process
+            process = subprocess.Popen(
+                cmd,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                preexec_fn=os.setsid if sys.platform != 'win32' else None
+            )
+
+            self.continuous_ai_process = process
+
+            # Wait a moment and check if it started successfully
+            await asyncio.sleep(2)
+
+            if process.poll() is None:
+                # Process is still running
+                new_status = await self.check_continuous_ai_status()
+                return {
+                    'success': True,
+                    'message': f"Started continuous AI system with {workers} workers in {mode} mode",
+                    'pid': process.pid,
+                    'status': new_status
+                }
+            else:
+                # Process terminated
+                stdout, stderr = process.communicate()
+                return {
+                    'success': False,
+                    'message': "Failed to start continuous AI system",
+                    'error': stderr or stdout
+                }
+
+        except Exception as e:
+            self.logger.error(f"Error starting continuous AI: {e}")
+            return {
+                'success': False,
+                'message': f"Error starting continuous AI: {str(e)}"
+            }
+
+    async def stop_continuous_ai_system(self) -> Dict[str, Any]:
+        """Stop the continuous AI system gracefully."""
+        try:
+            status = await self.check_continuous_ai_status()
+
+            if not status['running']:
+                return {
+                    'success': True,
+                    'message': "Continuous AI system is not running"
+                }
+
+            # Try graceful shutdown first
+            if sys.platform != 'win32':
+                os.killpg(os.getpgid(status['pid']), signal.SIGTERM)
+            else:
+                subprocess.run(['taskkill', '/F', '/T', '/PID', str(status['pid'])], capture_output=True)
+
+            # Wait for graceful shutdown
+            await asyncio.sleep(3)
+
+            # Check if stopped
+            new_status = await self.check_continuous_ai_status()
+            if not new_status['running']:
+                return {
+                    'success': True,
+                    'message': "Successfully stopped continuous AI system"
+                }
+
+            # Force kill if still running
+            if sys.platform != 'win32':
+                os.killpg(os.getpgid(status['pid']), signal.SIGKILL)
+            else:
+                subprocess.run(['taskkill', '/F', '/T', '/PID', str(status['pid'])], capture_output=True)
+
+            return {
+                'success': True,
+                'message': "Forcefully stopped continuous AI system"
+            }
+
+        except Exception as e:
+            self.logger.error(f"Error stopping continuous AI: {e}")
+            return {
+                'success': False,
+                'message': f"Error stopping continuous AI: {str(e)}"
+            }
+
+    async def check_continuous_ai_status(self) -> Dict[str, Any]:
+        """Check if continuous AI system is running."""
+        try:
+            # Look for the process
+            for proc in psutil.process_iter(['pid', 'name', 'cmdline', 'create_time']):
+                try:
+                    cmdline = proc.info.get('cmdline', [])
+                    if cmdline and any('run_continuous_ai.py' in arg for arg in cmdline):
+                        # Found the process, get more info
+                        orchestrator_state_file = Path("continuous_orchestrator_state.json")
+
+                        active_workers = 0
+                        queued_tasks = 0
+
+                        if orchestrator_state_file.exists():
+                            try:
+                                with open(orchestrator_state_file, 'r') as f:
+                                    state = json.load(f)
+                                    active_workers = state.get('active_workers', 0)
+                                    queued_tasks = len(state.get('task_queue', []))
+                            except:
+                                pass
+
+                        return {
+                            'running': True,
+                            'pid': proc.info['pid'],
+                            'uptime': datetime.now().timestamp() - proc.info['create_time'],
+                            'active_workers': active_workers,
+                            'queued_tasks': queued_tasks
+                        }
+                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                    continue
+
+            return {
+                'running': False,
+                'pid': None,
+                'active_workers': 0,
+                'queued_tasks': 0
+            }
+
+        except Exception as e:
+            self.logger.error(f"Error checking continuous AI status: {e}")
+            return {
+                'running': False,
+                'error': str(e)
+            }
+
+    async def execute_system_reset(self, reset_type: ResetType) -> Dict[str, Any]:
+        """Execute a system reset with the specified type."""
+        try:
+            reset_script = Path(__file__).parent.parent / "reset_system.py"
+            if not reset_script.exists():
+                return {
+                    'success': False,
+                    'message': "Reset script not found",
+                    'errors': ["reset_system.py not found in project root"]
+                }
+
+            # Build command based on reset type
+            cmd = [sys.executable, str(reset_script)]
+
+            if reset_type == ResetType.SELECTIVE:
+                cmd.extend(['--preserve-cache', '--preserve-knowledge'])
+            elif reset_type == ResetType.LOGS_ONLY:
+                cmd.append('--logs-only')
+            elif reset_type == ResetType.STATE_ONLY:
+                cmd.append('--state-only')
+            elif reset_type == ResetType.CACHE_ONLY:
+                cmd.append('--cache-only')
+            elif reset_type == ResetType.EMERGENCY:
+                cmd.append('--emergency')
+
+            # Execute reset
+            result = subprocess.run(cmd, capture_output=True, text=True)
+
+            if result.returncode == 0:
+                # Parse output to get details
+                output_lines = result.stdout.strip().split('\n')
+                deleted_files = []
+                deleted_size_mb = 0
+                preserved_files = []
+
+                for line in output_lines:
+                    if 'Deleted:' in line:
+                        deleted_files.append(line.split('Deleted:')[1].strip())
+                    elif 'Preserved:' in line:
+                        preserved_files.append(line.split('Preserved:')[1].strip())
+                    elif 'Total size freed:' in line:
+                        try:
+                            size_str = line.split(':')[1].strip()
+                            deleted_size_mb = float(size_str.replace('MB', '').strip())
+                        except:
+                            pass
+
+                return {
+                    'success': True,
+                    'message': f"System reset completed ({reset_type.value})",
+                    'deleted_files': deleted_files,
+                    'deleted_size_mb': deleted_size_mb,
+                    'preserved_files': preserved_files
+                }
+            else:
+                return {
+                    'success': False,
+                    'message': "Reset failed",
+                    'errors': result.stderr.strip().split('\n') if result.stderr else ['Unknown error']
+                }
+
+        except Exception as e:
+            self.logger.error(f"Error executing system reset: {e}")
+            return {
+                'success': False,
+                'message': f"Error executing reset: {str(e)}",
+                'errors': [str(e)]
+            }
+
+
+async def main():
+    """Main entry point for testing the conversational assistant."""
+    # Set up logging
+    setup_conversational_ai_logging()
+
+    # Create assistant
+    assistant = ConversationalAIAssistant()
+    await assistant.initialize()
+
+    print("\n🤖 CWMAI Conversational Assistant Ready!")
+    print("Type 'quit' or 'exit' to stop.\n")
+
+    while True:
+        try:
+            # Get user input
+            user_input = input("\nYou: ").strip()
+
+            if user_input.lower() in ['quit', 'exit', 'bye']:
+                print("\nAssistant: Goodbye! Have a great day! 👋")
+                break
+
+            if not user_input:
+                continue
+
+            # Process conversation
+            response = await assistant.handle_conversation(user_input)
+
+            # Display response
+            print(f"\nAssistant: {response}")
+
+        except KeyboardInterrupt:
+            print("\n\nAssistant: Interrupted. Goodbye! 👋")
+            break
+        except Exception as e:
+            print(f"\nAssistant: I apologize, but I encountered an error: {str(e)}")
+            print("Please try again or rephrase your request.")
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

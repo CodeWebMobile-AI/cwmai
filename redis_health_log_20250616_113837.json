@@ -1,0 +1,2120 @@
+{
+  "summary": {
+    "total_attempts": 300,
+    "successful_connections": 300,
+    "failed_connections": 0,
+    "timeouts": 0,
+    "connection_errors": 0,
+    "other_errors": 0,
+    "average_response_time": 0,
+    "max_response_time": 8.51297378540039,
+    "min_response_time": 0.8211135864257812,
+    "last_failure": null,
+    "consecutive_failures": 0,
+    "max_consecutive_failures": 0
+  },
+  "connection_attempts": [
+    {
+      "timestamp": "2025-06-16T11:33:36.506488",
+      "success": true,
+      "response_time": 1.2140274047851562,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:33:37.509040",
+      "success": true,
+      "response_time": 3.927946090698242,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:33:38.513632",
+      "success": true,
+      "response_time": 2.4068355560302734,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:33:39.517315",
+      "success": true,
+      "response_time": 2.5069713592529297,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:33:40.520387",
+      "success": true,
+      "response_time": 2.538919448852539,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:33:41.524210",
+      "success": true,
+      "response_time": 2.856016159057617,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:33:42.528422",
+      "success": true,
+      "response_time": 2.3522377014160156,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:33:43.531867",
+      "success": true,
+      "response_time": 2.4728775024414062,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:33:44.535616",
+      "success": true,
+      "response_time": 2.521038055419922,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:33:45.539386",
+      "success": true,
+      "response_time": 2.249002456665039,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:33:46.542864",
+      "success": true,
+      "response_time": 2.3920536041259766,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:33:47.546736",
+      "success": true,
+      "response_time": 2.591848373413086,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:33:48.550639",
+      "success": true,
+      "response_time": 2.735137939453125,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:33:49.554668",
+      "success": true,
+      "response_time": 2.686023712158203,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:33:50.558657",
+      "success": true,
+      "response_time": 2.2881031036376953,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:33:51.562193",
+      "success": true,
+      "response_time": 1.7058849334716797,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:33:52.565057",
+      "success": true,
+      "response_time": 1.8889904022216797,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:33:53.568112",
+      "success": true,
+      "response_time": 2.317190170288086,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:33:54.571735",
+      "success": true,
+      "response_time": 2.646923065185547,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:33:55.575636",
+      "success": true,
+      "response_time": 2.5272369384765625,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:33:56.579414",
+      "success": true,
+      "response_time": 1.9571781158447266,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:33:57.582800",
+      "success": true,
+      "response_time": 2.1860599517822266,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:33:58.586186",
+      "success": true,
+      "response_time": 1.5938282012939453,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:33:59.589032",
+      "success": true,
+      "response_time": 2.0949840545654297,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:00.591849",
+      "success": true,
+      "response_time": 3.4308433532714844,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:01.596597",
+      "success": true,
+      "response_time": 2.9180049896240234,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:02.600784",
+      "success": true,
+      "response_time": 1.8548965454101562,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:03.603874",
+      "success": true,
+      "response_time": 1.7251968383789062,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:04.606813",
+      "success": true,
+      "response_time": 3.0159950256347656,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:05.611135",
+      "success": true,
+      "response_time": 2.4619102478027344,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:06.613971",
+      "success": true,
+      "response_time": 2.296924591064453,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:07.617747",
+      "success": true,
+      "response_time": 2.6559829711914062,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:08.621645",
+      "success": true,
+      "response_time": 2.3620128631591797,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:09.625196",
+      "success": true,
+      "response_time": 1.7092227935791016,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:10.628022",
+      "success": true,
+      "response_time": 1.4529228210449219,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:11.630771",
+      "success": true,
+      "response_time": 2.8429031372070312,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:12.634110",
+      "success": true,
+      "response_time": 2.362966537475586,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:13.637324",
+      "success": true,
+      "response_time": 1.9791126251220703,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:14.640742",
+      "success": true,
+      "response_time": 2.6040077209472656,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:15.644612",
+      "success": true,
+      "response_time": 2.9129981994628906,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:16.648719",
+      "success": true,
+      "response_time": 1.7499923706054688,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:17.651867",
+      "success": true,
+      "response_time": 1.6770362854003906,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:18.654837",
+      "success": true,
+      "response_time": 1.4209747314453125,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:19.657354",
+      "success": true,
+      "response_time": 1.3060569763183594,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:20.659771",
+      "success": true,
+      "response_time": 1.3349056243896484,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:21.662109",
+      "success": true,
+      "response_time": 2.5072097778320312,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:22.665866",
+      "success": true,
+      "response_time": 2.3157596588134766,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:23.668806",
+      "success": true,
+      "response_time": 2.6149749755859375,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:24.672276",
+      "success": true,
+      "response_time": 1.0590553283691406,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:25.674428",
+      "success": true,
+      "response_time": 1.241922378540039,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:26.676457",
+      "success": true,
+      "response_time": 2.0983219146728516,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:27.679178",
+      "success": true,
+      "response_time": 1.766204833984375,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:28.682183",
+      "success": true,
+      "response_time": 2.131938934326172,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:29.684955",
+      "success": true,
+      "response_time": 2.669095993041992,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:30.688803",
+      "success": true,
+      "response_time": 1.4510154724121094,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:31.691252",
+      "success": true,
+      "response_time": 1.6751289367675781,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:32.693220",
+      "success": true,
+      "response_time": 1.4159679412841797,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:33.695056",
+      "success": true,
+      "response_time": 0.9849071502685547,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:34.697360",
+      "success": true,
+      "response_time": 2.499103546142578,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:35.700969",
+      "success": true,
+      "response_time": 1.0502338409423828,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:36.702684",
+      "success": true,
+      "response_time": 1.1677742004394531,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:37.704462",
+      "success": true,
+      "response_time": 1.5881061553955078,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:38.707158",
+      "success": true,
+      "response_time": 0.8420944213867188,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:39.709183",
+      "success": true,
+      "response_time": 1.6942024230957031,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:40.711767",
+      "success": true,
+      "response_time": 0.9658336639404297,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:41.713877",
+      "success": true,
+      "response_time": 1.4803409576416016,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:42.715531",
+      "success": true,
+      "response_time": 1.051187515258789,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:43.716742",
+      "success": true,
+      "response_time": 1.7819404602050781,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:44.719689",
+      "success": true,
+      "response_time": 1.215219497680664,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:45.722064",
+      "success": true,
+      "response_time": 1.8229484558105469,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:46.725051",
+      "success": true,
+      "response_time": 1.672983169555664,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:47.728063",
+      "success": true,
+      "response_time": 1.9199848175048828,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:48.731120",
+      "success": true,
+      "response_time": 1.5630722045898438,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:49.733852",
+      "success": true,
+      "response_time": 1.3561248779296875,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:50.736080",
+      "success": true,
+      "response_time": 1.3818740844726562,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:51.738392",
+      "success": true,
+      "response_time": 1.371145248413086,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:52.740714",
+      "success": true,
+      "response_time": 1.283884048461914,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:53.743142",
+      "success": true,
+      "response_time": 1.3649463653564453,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:54.744939",
+      "success": true,
+      "response_time": 1.7840862274169922,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:55.746961",
+      "success": true,
+      "response_time": 1.2087821960449219,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:56.748457",
+      "success": true,
+      "response_time": 1.9099712371826172,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:57.751694",
+      "success": true,
+      "response_time": 1.3020038604736328,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:58.753971",
+      "success": true,
+      "response_time": 1.2340545654296875,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:34:59.756367",
+      "success": true,
+      "response_time": 1.6720294952392578,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:00.759160",
+      "success": true,
+      "response_time": 3.759145736694336,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:01.764099",
+      "success": true,
+      "response_time": 1.712799072265625,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:02.766976",
+      "success": true,
+      "response_time": 1.8150806427001953,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:03.769795",
+      "success": true,
+      "response_time": 1.3439655303955078,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:04.772282",
+      "success": true,
+      "response_time": 1.190185546875,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:05.774343",
+      "success": true,
+      "response_time": 1.4510154724121094,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:06.776869",
+      "success": true,
+      "response_time": 1.1799335479736328,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:07.779108",
+      "success": true,
+      "response_time": 1.4410018920898438,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:08.781759",
+      "success": true,
+      "response_time": 1.6999244689941406,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:09.784214",
+      "success": true,
+      "response_time": 1.5201568603515625,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:10.786819",
+      "success": true,
+      "response_time": 1.2350082397460938,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:11.789159",
+      "success": true,
+      "response_time": 1.3718605041503906,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:12.791653",
+      "success": true,
+      "response_time": 1.5959739685058594,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:13.794106",
+      "success": true,
+      "response_time": 1.3399124145507812,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:14.796593",
+      "success": true,
+      "response_time": 1.4951229095458984,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:15.798694",
+      "success": true,
+      "response_time": 1.7080307006835938,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:16.801742",
+      "success": true,
+      "response_time": 1.6472339630126953,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:17.804722",
+      "success": true,
+      "response_time": 1.4948844909667969,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:18.807362",
+      "success": true,
+      "response_time": 1.5349388122558594,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:19.809842",
+      "success": true,
+      "response_time": 1.264810562133789,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:20.812262",
+      "success": true,
+      "response_time": 1.6567707061767578,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:21.814732",
+      "success": true,
+      "response_time": 1.4190673828125,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:22.817292",
+      "success": true,
+      "response_time": 1.5811920166015625,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:23.819444",
+      "success": true,
+      "response_time": 1.7452239990234375,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:24.822262",
+      "success": true,
+      "response_time": 0.8959770202636719,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:25.824279",
+      "success": true,
+      "response_time": 0.8780956268310547,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:26.826259",
+      "success": true,
+      "response_time": 1.5978813171386719,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:27.829107",
+      "success": true,
+      "response_time": 1.6949176788330078,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:28.832011",
+      "success": true,
+      "response_time": 3.7827491760253906,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:29.836940",
+      "success": true,
+      "response_time": 1.329183578491211,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:30.838425",
+      "success": true,
+      "response_time": 1.7540454864501953,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:31.841278",
+      "success": true,
+      "response_time": 1.4290809631347656,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:32.843839",
+      "success": true,
+      "response_time": 5.416154861450195,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:33.850545",
+      "success": true,
+      "response_time": 1.5799999237060547,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:34.853203",
+      "success": true,
+      "response_time": 1.0581016540527344,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:35.854551",
+      "success": true,
+      "response_time": 2.7620792388916016,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:36.858606",
+      "success": true,
+      "response_time": 2.722024917602539,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:37.863306",
+      "success": true,
+      "response_time": 1.7309188842773438,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:38.866196",
+      "success": true,
+      "response_time": 1.863241195678711,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:39.868558",
+      "success": true,
+      "response_time": 2.432107925415039,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:40.872115",
+      "success": true,
+      "response_time": 3.2291412353515625,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:41.876605",
+      "success": true,
+      "response_time": 1.6829967498779297,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:42.879415",
+      "success": true,
+      "response_time": 1.680135726928711,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:43.882368",
+      "success": true,
+      "response_time": 1.6942024230957031,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:44.885340",
+      "success": true,
+      "response_time": 2.15911865234375,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:45.887956",
+      "success": true,
+      "response_time": 1.7349720001220703,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:46.890833",
+      "success": true,
+      "response_time": 1.7287731170654297,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:47.893771",
+      "success": true,
+      "response_time": 1.7330646514892578,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:48.895700",
+      "success": true,
+      "response_time": 0.8280277252197266,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:49.897467",
+      "success": true,
+      "response_time": 1.1878013610839844,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:50.899750",
+      "success": true,
+      "response_time": 1.631021499633789,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:51.902663",
+      "success": true,
+      "response_time": 2.894878387451172,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:52.906813",
+      "success": true,
+      "response_time": 1.880645751953125,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:53.909234",
+      "success": true,
+      "response_time": 2.5398731231689453,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:54.912973",
+      "success": true,
+      "response_time": 1.795053482055664,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:55.915074",
+      "success": true,
+      "response_time": 2.730131149291992,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:56.918996",
+      "success": true,
+      "response_time": 1.5568733215332031,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:57.921933",
+      "success": true,
+      "response_time": 2.9370784759521484,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:58.926058",
+      "success": true,
+      "response_time": 1.4810562133789062,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:35:59.928701",
+      "success": true,
+      "response_time": 1.3742446899414062,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:00.930304",
+      "success": true,
+      "response_time": 2.14385986328125,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:01.933704",
+      "success": true,
+      "response_time": 2.0008087158203125,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:02.936419",
+      "success": true,
+      "response_time": 1.371145248413086,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:03.938591",
+      "success": true,
+      "response_time": 1.825094223022461,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:04.941528",
+      "success": true,
+      "response_time": 1.7862319946289062,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:05.944401",
+      "success": true,
+      "response_time": 1.3091564178466797,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:06.946300",
+      "success": true,
+      "response_time": 1.081705093383789,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:07.948767",
+      "success": true,
+      "response_time": 3.123760223388672,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:08.952883",
+      "success": true,
+      "response_time": 1.3277530670166016,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:09.955415",
+      "success": true,
+      "response_time": 1.7788410186767578,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:10.958574",
+      "success": true,
+      "response_time": 2.747058868408203,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:11.962562",
+      "success": true,
+      "response_time": 1.9960403442382812,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:12.965748",
+      "success": true,
+      "response_time": 1.5399456024169922,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:13.968359",
+      "success": true,
+      "response_time": 0.8211135864257812,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:14.970018",
+      "success": true,
+      "response_time": 1.8911361694335938,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:15.973050",
+      "success": true,
+      "response_time": 1.5938282012939453,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:16.975793",
+      "success": true,
+      "response_time": 2.0279884338378906,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:17.979246",
+      "success": true,
+      "response_time": 1.920938491821289,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:18.982298",
+      "success": true,
+      "response_time": 1.6467571258544922,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:19.985094",
+      "success": true,
+      "response_time": 2.2029876708984375,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:20.987878",
+      "success": true,
+      "response_time": 1.920938491821289,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:21.990926",
+      "success": true,
+      "response_time": 1.425027847290039,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:22.992742",
+      "success": true,
+      "response_time": 1.6260147094726562,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:23.995502",
+      "success": true,
+      "response_time": 1.7390251159667969,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:24.998478",
+      "success": true,
+      "response_time": 1.3301372528076172,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:26.000329",
+      "success": true,
+      "response_time": 1.293182373046875,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:27.002726",
+      "success": true,
+      "response_time": 1.222848892211914,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:28.005206",
+      "success": true,
+      "response_time": 1.8401145935058594,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:29.008179",
+      "success": true,
+      "response_time": 1.2607574462890625,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:30.010591",
+      "success": true,
+      "response_time": 1.2769699096679688,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:31.013002",
+      "success": true,
+      "response_time": 1.7750263214111328,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:32.015956",
+      "success": true,
+      "response_time": 2.183198928833008,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:33.019312",
+      "success": true,
+      "response_time": 1.9099712371826172,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:34.022407",
+      "success": true,
+      "response_time": 2.0279884338378906,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:35.025623",
+      "success": true,
+      "response_time": 1.486063003540039,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:36.028271",
+      "success": true,
+      "response_time": 1.809835433959961,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:37.031209",
+      "success": true,
+      "response_time": 1.1951923370361328,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:38.033629",
+      "success": true,
+      "response_time": 1.415252685546875,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:39.036236",
+      "success": true,
+      "response_time": 1.6481876373291016,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:40.039040",
+      "success": true,
+      "response_time": 1.6911029815673828,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:41.041925",
+      "success": true,
+      "response_time": 1.233816146850586,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:42.044202",
+      "success": true,
+      "response_time": 1.6391277313232422,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:43.047032",
+      "success": true,
+      "response_time": 1.8050670623779297,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:44.050125",
+      "success": true,
+      "response_time": 2.57110595703125,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:45.053551",
+      "success": true,
+      "response_time": 1.8360614776611328,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:46.056599",
+      "success": true,
+      "response_time": 2.115011215209961,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:47.059169",
+      "success": true,
+      "response_time": 2.6760101318359375,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:48.063406",
+      "success": true,
+      "response_time": 2.599954605102539,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:49.067289",
+      "success": true,
+      "response_time": 2.8769969940185547,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:50.071452",
+      "success": true,
+      "response_time": 2.4471282958984375,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:51.074652",
+      "success": true,
+      "response_time": 1.8990039825439453,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:52.076905",
+      "success": true,
+      "response_time": 1.7459392547607422,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:53.079863",
+      "success": true,
+      "response_time": 1.6188621520996094,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:54.082731",
+      "success": true,
+      "response_time": 2.732992172241211,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:55.086656",
+      "success": true,
+      "response_time": 2.0842552185058594,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:56.089972",
+      "success": true,
+      "response_time": 1.6248226165771484,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:57.092781",
+      "success": true,
+      "response_time": 1.4011859893798828,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:58.095291",
+      "success": true,
+      "response_time": 1.8010139465332031,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:36:59.097636",
+      "success": true,
+      "response_time": 2.355813980102539,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:00.100259",
+      "success": true,
+      "response_time": 2.0651817321777344,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:01.103267",
+      "success": true,
+      "response_time": 2.4051666259765625,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:02.106957",
+      "success": true,
+      "response_time": 2.398967742919922,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:03.110633",
+      "success": true,
+      "response_time": 2.736806869506836,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:04.113967",
+      "success": true,
+      "response_time": 2.8040409088134766,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:05.118063",
+      "success": true,
+      "response_time": 2.583026885986328,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:06.121892",
+      "success": true,
+      "response_time": 1.9869804382324219,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:07.124665",
+      "success": true,
+      "response_time": 2.3419857025146484,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:08.128557",
+      "success": true,
+      "response_time": 2.8340816497802734,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:09.132641",
+      "success": true,
+      "response_time": 2.1522045135498047,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:10.136084",
+      "success": true,
+      "response_time": 2.816915512084961,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:11.140008",
+      "success": true,
+      "response_time": 1.7139911651611328,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:12.142947",
+      "success": true,
+      "response_time": 1.6939640045166016,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:13.145901",
+      "success": true,
+      "response_time": 1.9130706787109375,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:14.148927",
+      "success": true,
+      "response_time": 2.3298263549804688,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:15.152434",
+      "success": true,
+      "response_time": 1.9071102142333984,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:16.154758",
+      "success": true,
+      "response_time": 2.4089813232421875,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:17.158151",
+      "success": true,
+      "response_time": 1.9841194152832031,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:18.161552",
+      "success": true,
+      "response_time": 2.048969268798828,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:19.164835",
+      "success": true,
+      "response_time": 2.3469924926757812,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:20.168373",
+      "success": true,
+      "response_time": 2.658843994140625,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:21.172320",
+      "success": true,
+      "response_time": 2.724170684814453,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:22.176350",
+      "success": true,
+      "response_time": 2.7840137481689453,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:23.180401",
+      "success": true,
+      "response_time": 2.4759769439697266,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:24.184126",
+      "success": true,
+      "response_time": 2.6328563690185547,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:25.187879",
+      "success": true,
+      "response_time": 1.024007797241211,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:26.190075",
+      "success": true,
+      "response_time": 1.149892807006836,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:27.192459",
+      "success": true,
+      "response_time": 1.399993896484375,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:28.195658",
+      "success": true,
+      "response_time": 5.464076995849609,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:29.205542",
+      "success": true,
+      "response_time": 5.37872314453125,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:30.211826",
+      "success": true,
+      "response_time": 1.15203857421875,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:31.214050",
+      "success": true,
+      "response_time": 1.1000633239746094,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:32.216245",
+      "success": true,
+      "response_time": 1.3811588287353516,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:33.218052",
+      "success": true,
+      "response_time": 2.052783966064453,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:34.220909",
+      "success": true,
+      "response_time": 2.927064895629883,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:35.224238",
+      "success": true,
+      "response_time": 2.508878707885742,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:36.227929",
+      "success": true,
+      "response_time": 1.889944076538086,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:37.230753",
+      "success": true,
+      "response_time": 1.9450187683105469,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:38.234534",
+      "success": true,
+      "response_time": 3.020048141479492,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:39.238829",
+      "success": true,
+      "response_time": 2.4292469024658203,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:40.242434",
+      "success": true,
+      "response_time": 2.4771690368652344,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:41.246190",
+      "success": true,
+      "response_time": 2.966165542602539,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:42.249450",
+      "success": true,
+      "response_time": 1.5881061553955078,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:43.252158",
+      "success": true,
+      "response_time": 2.5479793548583984,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:44.255992",
+      "success": true,
+      "response_time": 2.3767948150634766,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:45.259540",
+      "success": true,
+      "response_time": 1.4929771423339844,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:46.262206",
+      "success": true,
+      "response_time": 2.2902488708496094,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:47.265603",
+      "success": true,
+      "response_time": 1.1548995971679688,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:48.268023",
+      "success": true,
+      "response_time": 1.978158950805664,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:49.271282",
+      "success": true,
+      "response_time": 2.7930736541748047,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:50.275083",
+      "success": true,
+      "response_time": 2.875089645385742,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:51.279193",
+      "success": true,
+      "response_time": 2.0761489868164062,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:52.282561",
+      "success": true,
+      "response_time": 2.401113510131836,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:53.286110",
+      "success": true,
+      "response_time": 1.4913082122802734,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:54.288016",
+      "success": true,
+      "response_time": 1.3928413391113281,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:55.290513",
+      "success": true,
+      "response_time": 1.0797977447509766,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:56.292727",
+      "success": true,
+      "response_time": 1.789093017578125,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:57.295680",
+      "success": true,
+      "response_time": 1.6429424285888672,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:58.298719",
+      "success": true,
+      "response_time": 1.4619827270507812,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:37:59.301358",
+      "success": true,
+      "response_time": 1.3010501861572266,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:00.303867",
+      "success": true,
+      "response_time": 2.0051002502441406,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:01.307047",
+      "success": true,
+      "response_time": 1.462697982788086,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:02.309640",
+      "success": true,
+      "response_time": 1.153707504272461,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:03.311970",
+      "success": true,
+      "response_time": 1.51824951171875,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:04.313796",
+      "success": true,
+      "response_time": 1.444101333618164,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:05.316384",
+      "success": true,
+      "response_time": 1.7461776733398438,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:06.319287",
+      "success": true,
+      "response_time": 1.2841224670410156,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:07.321294",
+      "success": true,
+      "response_time": 1.251220703125,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:08.323884",
+      "success": true,
+      "response_time": 1.1320114135742188,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:09.326097",
+      "success": true,
+      "response_time": 1.142740249633789,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:10.328132",
+      "success": true,
+      "response_time": 1.5568733215332031,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:11.330447",
+      "success": true,
+      "response_time": 1.2538433074951172,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:12.332416",
+      "success": true,
+      "response_time": 1.2879371643066406,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:13.334311",
+      "success": true,
+      "response_time": 1.4469623565673828,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:14.336366",
+      "success": true,
+      "response_time": 1.6489028930664062,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:15.339157",
+      "success": true,
+      "response_time": 1.5621185302734375,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:16.341113",
+      "success": true,
+      "response_time": 1.4579296112060547,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:17.343591",
+      "success": true,
+      "response_time": 1.374959945678711,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:18.346264",
+      "success": true,
+      "response_time": 1.6031265258789062,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:19.348174",
+      "success": true,
+      "response_time": 1.6891956329345703,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:20.350228",
+      "success": true,
+      "response_time": 1.7709732055664062,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:21.352311",
+      "success": true,
+      "response_time": 1.1570453643798828,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:22.355437",
+      "success": true,
+      "response_time": 8.51297378540039,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:23.365060",
+      "success": true,
+      "response_time": 1.2230873107910156,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:24.367455",
+      "success": true,
+      "response_time": 1.7571449279785156,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:25.370315",
+      "success": true,
+      "response_time": 1.1301040649414062,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:26.372550",
+      "success": true,
+      "response_time": 1.6109943389892578,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:27.374998",
+      "success": true,
+      "response_time": 1.9099712371826172,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:28.378192",
+      "success": true,
+      "response_time": 1.4238357543945312,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:29.380352",
+      "success": true,
+      "response_time": 1.0712146759033203,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:30.382528",
+      "success": true,
+      "response_time": 1.5501976013183594,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:31.384306",
+      "success": true,
+      "response_time": 2.03704833984375,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:32.387512",
+      "success": true,
+      "response_time": 1.6329288482666016,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:33.390261",
+      "success": true,
+      "response_time": 1.6181468963623047,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:34.392528",
+      "success": true,
+      "response_time": 1.4851093292236328,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:35.395184",
+      "success": true,
+      "response_time": 2.3119449615478516,
+      "error": null,
+      "error_type": null
+    },
+    {
+      "timestamp": "2025-06-16T11:38:36.398626",
+      "success": true,
+      "response_time": 1.3630390167236328,
+      "error": null,
+      "error_type": null
+    }
+  ],
+  "failure_log": [],
+  "timestamp": "2025-06-16T11:38:37.403822"
+}

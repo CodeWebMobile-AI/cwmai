@@ -1,0 +1,17 @@
+{
+  "items": [],
+  "processing": [],
+  "stats": {
+    "total_enqueued": 6,
+    "total_dequeued": 6,
+    "total_completed": 6,
+    "total_failed": 0,
+    "total_retried": 0,
+    "total_duplicates_rejected": 0,
+    "queue_size": 0,
+    "processing": 0,
+    "completed_history": 6,
+    "failed_items": 0
+  },
+  "saved_at": "2025-07-03T20:02:45.929942+00:00"
+}

@@ -1,0 +1,8 @@
+{
+  "timestamp": "2025-06-21T22:24:06.668564+00:00",
+  "error": "'EvolutionaryImprovementRunner' object has no attribute 'initialize'",
+  "type": "AttributeError",
+  "issues": [
+    "Critical error: 'EvolutionaryImprovementRunner' object has no attribute 'initialize'"
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "timestamp": "2025-06-17T16:14:18.064786+00:00",
+  "total_tools": 59,
+  "healthy_tools": 53,
+  "issues_found": [
+    {
+      "tool": "advanced_code_analysis",
+      "type": "null_safety",
+      "description": "Found 1 potential NoneType errors",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "add_null_checks",
+      "line_numbers": [
+        127
+      ],
+      "status": "failed_to_fix"
+    },
+    {
+      "tool": "trigger_async_error",
+      "type": "error_handling",
+      "description": "Main function lacks error handling",
+      "severity": "medium",
+      "auto_fixable": false,
+      "fix_action": null,
+      "line_numbers": [],
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "get_repository_issue_content",
+      "type": "method_existence",
+      "description": "Found 1 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        109
+      ],
+      "status": "fixed"
+    },
+    {
+      "tool": "get_project_info",
+      "type": "method_existence",
+      "description": "Found 2 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        30,
+        50
+      ],
+      "status": "fixed"
+    },
+    {
+      "tool": "get_repository_issues",
+      "type": "method_existence",
+      "description": "Found 1 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        82
+      ],
+      "status": "fixed"
+    },
+    {
+      "tool": "check_intelligence",
+      "type": "method_existence",
+      "description": "Found 1 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        48
+      ],
+      "status": "fixed"
+    }
+  ],
+  "auto_fixed": 4,
+  "recommendations": [
+    "Update tool documentation to reflect current API methods"
+  ]
+}

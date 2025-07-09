@@ -1,0 +1,198 @@
+[
+  {
+    "parameters": {
+      "population_size": 10,
+      "elite_size": 3,
+      "mutation_rate": 0.3
+    },
+    "generations": [
+      {
+        "generation": 1,
+        "best_fitness": 0.9,
+        "avg_fitness": 0.6,
+        "diversity": 0.8
+      },
+      {
+        "generation": 2,
+        "best_fitness": 0.9,
+        "avg_fitness": 0.6,
+        "diversity": 0.8
+      },
+      {
+        "generation": 3,
+        "best_fitness": 0.9,
+        "avg_fitness": 0.6,
+        "diversity": 0.8
+      },
+      {
+        "generation": 4,
+        "best_fitness": 0.9,
+        "avg_fitness": 0.6,
+        "diversity": 0.8
+      },
+      {
+        "generation": 5,
+        "best_fitness": 0.9,
+        "avg_fitness": 0.6,
+        "diversity": 0.8
+      }
+    ],
+    "best_fitness": 0.9,
+    "diversity_scores": [
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8
+    ],
+    "improvements_found": 1,
+    "config_name": "Conservative"
+  },
+  {
+    "parameters": {
+      "population_size": 30,
+      "elite_size": 5,
+      "mutation_rate": 0.5
+    },
+    "generations": [
+      {
+        "generation": 1,
+        "best_fitness": 0.9,
+        "avg_fitness": 0.5333333333333333,
+        "diversity": 0.26666666666666666
+      },
+      {
+        "generation": 2,
+        "best_fitness": 0.9,
+        "avg_fitness": 0.5848828202261939,
+        "diversity": 0.9333333333333333
+      },
+      {
+        "generation": 3,
+        "best_fitness": 0.9,
+        "avg_fitness": 0.6364232468395493,
+        "diversity": 1.0
+      },
+      {
+        "generation": 4,
+        "best_fitness": 0.9,
+        "avg_fitness": 0.6879569959530879,
+        "diversity": 1.0
+      },
+      {
+        "generation": 5,
+        "best_fitness": 0.9,
+        "avg_fitness": 0.739483408673065,
+        "diversity": 1.0
+      }
+    ],
+    "best_fitness": 0.9,
+    "diversity_scores": [
+      0.26666666666666666,
+      0.9333333333333333,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "improvements_found": 1,
+    "config_name": "Moderate"
+  },
+  {
+    "parameters": {
+      "population_size": 75,
+      "elite_size": 8,
+      "mutation_rate": 0.65
+    },
+    "generations": [
+      {
+        "generation": 1,
+        "best_fitness": 0.9,
+        "avg_fitness": 0.5133333333333333,
+        "diversity": 0.10666666666666667
+      },
+      {
+        "generation": 2,
+        "best_fitness": 0.9,
+        "avg_fitness": 0.5133333333333333,
+        "diversity": 0.10666666666666667
+      },
+      {
+        "generation": 3,
+        "best_fitness": 0.9,
+        "avg_fitness": 0.5133333333333333,
+        "diversity": 0.10666666666666667
+      },
+      {
+        "generation": 4,
+        "best_fitness": 0.9,
+        "avg_fitness": 0.5133333333333333,
+        "diversity": 0.10666666666666667
+      },
+      {
+        "generation": 5,
+        "best_fitness": 0.9,
+        "avg_fitness": 0.5133333333333333,
+        "diversity": 0.10666666666666667
+      }
+    ],
+    "best_fitness": 0.9,
+    "diversity_scores": [
+      0.10666666666666667,
+      0.10666666666666667,
+      0.10666666666666667,
+      0.10666666666666667,
+      0.10666666666666667
+    ],
+    "improvements_found": 1,
+    "config_name": "Aggressive"
+  },
+  {
+    "parameters": {
+      "population_size": 100,
+      "elite_size": 10,
+      "mutation_rate": 0.8
+    },
+    "generations": [
+      {
+        "generation": 1,
+        "best_fitness": 0.9,
+        "avg_fitness": 0.51,
+        "diversity": 0.08
+      },
+      {
+        "generation": 2,
+        "best_fitness": 0.9,
+        "avg_fitness": 0.51,
+        "diversity": 0.08
+      },
+      {
+        "generation": 3,
+        "best_fitness": 0.9,
+        "avg_fitness": 0.51,
+        "diversity": 0.08
+      },
+      {
+        "generation": 4,
+        "best_fitness": 0.9,
+        "avg_fitness": 0.51,
+        "diversity": 0.08
+      },
+      {
+        "generation": 5,
+        "best_fitness": 0.9,
+        "avg_fitness": 0.51,
+        "diversity": 0.08
+      }
+    ],
+    "best_fitness": 0.9,
+    "diversity_scores": [
+      0.08,
+      0.08,
+      0.08,
+      0.08,
+      0.08
+    ],
+    "improvements_found": 1,
+    "config_name": "Very Aggressive"
+  }
+]

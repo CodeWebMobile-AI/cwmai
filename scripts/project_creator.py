@@ -15,6 +15,8 @@ import base64
 from scripts.task_manager import TaskManager
 import os
 import aiohttp
+from scripts.storage_mode import StorageMode
+from scripts.local_github_simulator import LocalGitHubSimulator
 
 
 class ProjectCreator:
@@ -30,14 +32,26 @@ class ProjectCreator:
         """Initialize with GitHub client and AI brain.
         
         Args:
-            github_token: GitHub personal access token
+            github_token: GitHub personal access token (None for local mode)
             ai_brain: AI brain for intelligent customization
         """
-        self.github = Github(github_token)
         self.github_token = github_token
         self.ai_brain = ai_brain
         self.logger = logging.getLogger(__name__)
         self.created_projects = []
+        
+        # Check if we're in local mode
+        self.storage_mode = StorageMode.LOCAL  # Always local mode
+        
+        if self.storage_mode == StorageMode.LOCAL:
+            self.logger.info("ProjectCreator initialized in LOCAL mode")
+            self.local_simulator = LocalGitHubSimulator()
+            self.github = None  # No GitHub client in local mode
+        else:
+            self.logger.info("ProjectCreator initialized in GITHUB mode")
+            self.github = Github(github_token)
+            self.local_simulator = None
+            
         self.task_manager = TaskManager(github_token)
         
     async def create_project(self, task: Dict[str, Any]) -> Dict[str, Any]:
@@ -51,75 +65,71 @@ class ProjectCreator:
         """
         self.logger.info(f"Creating project for task: {task.get('title', 'Unknown')}")
         
+        # NO TRY-CATCH - Let exceptions propagate and stop the system
+        # Generate project details using AI
+        project_details = await self._generate_project_details(task)
+        
+        # Check if project already exists
+        if self._project_exists(project_details['name']):
+            raise ValueError(f"Project {project_details['name']} already exists")
+        
+        # Fork the starter kit
+        tech_stack = project_details.get('tech_stack', project_details.get('tech_additions', ''))
+        self.project_description = project_details.get('description', '')
+        forked_repo = await self._fork_starter_kit(project_details['name'], tech_stack)
+        
+        if not forked_repo:
+            raise ValueError('Failed to fork starter kit')
+        
+        # Customize the project
+        self.logger.info(f"Starting project customization for {project_details['name']}")
+        customization_result = await self._customize_project(
+            forked_repo, 
+            project_details
+        )
+        self.logger.info(f"Customization result: {customization_result}")
+        
+        # Create initial project structure
+        self.logger.info(f"Creating initial structure for {project_details['name']}")
+        structure_result = await self._create_initial_structure(
+            forked_repo,
+            project_details
+        )
+        self.logger.info(f"Structure result: {structure_result}")
+        
+        # Create initial issues/tasks
+        issues_created = []
         try:
-            # Generate project details using AI
-            project_details = await self._generate_project_details(task)
-            
-            # Check if project already exists
-            if self._project_exists(project_details['name']):
-                return {
-                    'success': False,
-                    'error': f"Project {project_details['name']} already exists"
-                }
-            
-            # Fork the starter kit
-            tech_stack = project_details.get('tech_stack', project_details.get('tech_additions', ''))
-            self.project_description = project_details.get('description', '')
-            forked_repo = await self._fork_starter_kit(project_details['name'], tech_stack)
-            
-            if not forked_repo:
-                return {
-                    'success': False,
-                    'error': 'Failed to fork starter kit'
-                }
-            
-            # Customize the project
-            self.logger.info(f"Starting project customization for {project_details['name']}")
-            customization_result = await self._customize_project(
-                forked_repo, 
-                project_details
-            )
-            self.logger.info(f"Customization result: {customization_result}")
-            
-            # Create initial project structure
-            self.logger.info(f"Creating initial structure for {project_details['name']}")
-            structure_result = await self._create_initial_structure(
-                forked_repo,
-                project_details
-            )
-            self.logger.info(f"Structure result: {structure_result}")
-            
-            # Create initial issues/tasks
             issues_created = await self._create_initial_issues(
                 forked_repo,
                 project_details
             )
-            
-            # Set up project settings
-            await self._configure_project_settings(forked_repo, project_details)
-            
-            # Record creation
-            creation_record = {
-                'success': True,
-                'repo_url': forked_repo.html_url,
-                'repo_name': forked_repo.name,
-                'project_name': project_details['name'],
-                'description': project_details['description'],
-                'customizations': customization_result,
-                'initial_issues': issues_created,
-                'created_at': datetime.now(timezone.utc).isoformat()
-            }
-            
-            self.created_projects.append(creation_record)
-            
-            return creation_record
-            
         except Exception as e:
-            self.logger.error(f"Project creation failed: {e}")
-            return {
-                'success': False,
-                'error': str(e)
-            }
+            self.logger.warning(f"Issue creation failed (may be in local mode): {e}")
+            # Continue without issues in local mode
+        
+        # Set up project settings
+        await self._configure_project_settings(forked_repo, project_details)
+        
+        # Validate that documentation was created successfully
+        if not customization_result.get('documentation_created'):
+            raise ValueError("Documentation generation failed - cannot proceed without proper documentation")
+        
+        # Record creation
+        creation_record = {
+            'success': True,
+            'repo_url': forked_repo.html_url,
+            'repo_name': forked_repo.name,
+            'project_name': project_details['name'],
+            'description': project_details['description'],
+            'customizations': customization_result,
+            'initial_issues': issues_created,
+            'created_at': datetime.now(timezone.utc).isoformat()
+        }
+        
+        self.created_projects.append(creation_record)
+        
+        return creation_record
     
     async def _generate_project_details(self, task: Dict[str, Any]) -> Dict[str, Any]:
         """Generate project details using AI after market research.
@@ -133,14 +143,12 @@ class ProjectCreator:
         # Check if task already has architecture and project details in metadata
         metadata = task.get('metadata', {})
         self.logger.info(f"Task metadata keys: {list(metadata.keys())}")
-        self.logger.info(f"Has architecture: {bool(metadata.get('architecture'))}")
         self.logger.info(f"Has selected_project: {bool(metadata.get('selected_project'))}")
         
-        if metadata.get('architecture') and metadata.get('selected_project'):
-            self.logger.info("✅ Using pre-generated architecture and project details from task metadata")
+        if metadata.get('selected_project'):
+            self.logger.info("✅ Using pre-generated project details from task metadata")
             
             selected_project = metadata['selected_project']
-            architecture = metadata['architecture']
             
             # Convert to project details format
             return {
@@ -151,7 +159,6 @@ class ProjectCreator:
                 'monetization_strategy': selected_project.get('monetization_strategy', ''),
                 'initial_features': selected_project.get('key_features', []),
                 'core_entities': selected_project.get('core_entities', []),
-                'architecture': architecture,
                 'customizations': {
                     'packages': [],
                     'configuration': [],
@@ -160,144 +167,11 @@ class ProjectCreator:
                 'tech_additions': [],
                 'readme_sections': [],
                 'environment_variables': [],
-                'database_schema': architecture.get('foundational_architecture', {}).get('database_schema', {})
+                'database_schema': {}
             }
         
-        self.logger.warning("⚠️ No pre-generated metadata found - falling back to AI generation")
-        
-        if not self.ai_brain:
-            raise ValueError("AI Brain is required for project generation - cannot proceed without AI")
-        
-        # First, research real-world problems and opportunities
-        self.logger.info("🔍 Starting market research for project generation")
-        research_results = await self._research_market_opportunities()
-        
-        if not research_results:
-            raise ValueError("Market research failed - cannot generate project without real-world insights")
-        
-        # Generate project based on research
-        prompt = f"""
-        Based on real market research, generate a project that solves an actual problem.
-        
-        Market Research Results:
-        {json.dumps(research_results, indent=2)}
-        
-        Task Context:
-        {json.dumps(task, indent=2)}
-        
-        The project will be created by forking the Laravel React starter kit which provides:
-        - Laravel 11+ backend with Sanctum authentication
-        - React 18+ with TypeScript frontend  
-        - Tailwind CSS for styling
-        - MySQL database (NOT PostgreSQL)
-        - Redis for caching, queues, and real-time updates
-        - Laravel Echo Server (local) for WebSockets (NO Pusher)
-        - Docker development environment
-        - GitHub Actions CI/CD
-        
-        Generate project details that:
-        1. Addresses a real problem identified in the research
-        2. Has clear monetization potential (24/7 revenue)
-        3. Solves everyday problems for real people
-        4. Can scale to serve many users
-        
-        Include:
-        1. name: Valid GitHub repository name (lowercase, hyphens, no spaces)
-        2. description: Clear, concise project description (max 200 chars)
-        3. problem_statement: The real-world problem being solved
-        4. target_audience: Who will use this and why
-        5. monetization_strategy: How this will generate revenue 24/7
-        6. customizations: Specific changes needed from base starter kit
-        7. initial_features: First 5 features to build (specific and actionable)
-        8. tech_additions: Any additional technologies/services needed
-        9. readme_sections: Custom sections for README
-        10. environment_variables: Additional env vars needed
-        11. database_schema: Initial schema considerations
-        12. market_validation: Evidence this solution is needed
-        
-        Ensure the project is innovative, practical, and has real business value.
-        Format as JSON.
-        """
-        
-        response = await self.ai_brain.generate_enhanced_response(prompt)
-        details = self._parse_json_response(response)
-        
-        # Ensure required fields
-        return self._ensure_project_details(details, task)
-    
-    async def _research_market_opportunities(self) -> Dict[str, Any]:
-        """Research real-world problems and market opportunities using AI brain.
-        
-        Returns:
-            Market research results
-        """
-        try:
-            # Prepare research prompt
-            research_prompt = """
-            Research current market opportunities and real-world problems that need solving.
-            Focus on:
-            
-            1. Problems people face daily that technology could solve
-            2. Inefficiencies in common business processes  
-            3. Gaps in current software solutions
-            4. Emerging trends that create new needs
-            5. Services that could generate passive income 24/7
-            
-            Consider these criteria:
-            - Must solve real problems for real people
-            - Should have clear monetization potential
-            - Can operate with minimal human intervention
-            - Scalable to serve many users
-            - Not overly saturated in the market
-            
-            Research areas:
-            - Small business operations
-            - Personal productivity
-            - Health and wellness
-            - Education and learning
-            - Financial management
-            - Community and social needs
-            - Environmental solutions
-            - Remote work challenges
-            
-            Provide 5 specific problem/opportunity pairs with:
-            - problem_description: Clear description of the problem
-            - affected_audience: Who experiences this problem
-            - current_solutions: What exists now and why it's insufficient
-            - opportunity: How technology could solve this better
-            - monetization_model: How to generate revenue
-            - market_size: Estimated audience size
-            - competition_level: Low/Medium/High
-            
-            Format as JSON array.
-            """
-            
-            # Use AI brain to get research
-            response = await self.ai_brain.generate_enhanced_response(research_prompt, model='gemini')
-            
-            if response and 'content' in response:
-                content = response['content']
-                
-                # Parse JSON from response
-                import re
-                json_match = re.search(r'\[.*\]', content, re.DOTALL)
-                if json_match:
-                    opportunities = json.loads(json_match.group())
-                    return {
-                        'opportunities': opportunities,
-                        'research_timestamp': datetime.now(timezone.utc).isoformat(),
-                        'source': 'ai_brain_gemini'
-                    }
-            
-            # If parsing fails, raise error
-            raise ValueError("Failed to parse market research response - AI generation required")
-                        
-        except Exception as e:
-            self.logger.error(f"Market research failed: {e}")
-            raise
-    
-    
-    
+        # No fallback - selected_project is required
+        raise ValueError("Task must include 'selected_project' in metadata - no AI generation fallback available")
     
     def _ensure_project_details(self, details: Dict[str, Any], 
                                task: Dict[str, Any]) -> Dict[str, Any]:
@@ -356,10 +230,15 @@ class ProjectCreator:
             True if exists
         """
         try:
-            org = self.github.get_organization(self.ORGANIZATION)
-            org.get_repo(name)
-            return True
-        except GithubException:
+            if self.storage_mode == StorageMode.LOCAL:
+                # Check using local simulator
+                return self.local_simulator.repository_exists(self.ORGANIZATION, name)
+            else:
+                # GitHub mode
+                org = self.github.get_organization(self.ORGANIZATION)
+                org.get_repo(name)
+                return True
+        except (GithubException, Exception):
             return False
     
     async def _fork_starter_kit(self, project_name: str, tech_stack: str = None):
@@ -377,36 +256,65 @@ class ProjectCreator:
             starter_kit_key = 'laravel-react'
             starter_kit_repo = self.STARTER_KITS['laravel-react']
             
-            # Get starter kit repo
-            starter_repo = self.github.get_repo(starter_kit_repo)
-            
-            # Get organization
-            org = self.github.get_organization(self.ORGANIZATION)
-            
-            # Fork to organization
-            self.logger.info(f"Forking {starter_kit_repo} to {self.ORGANIZATION}/{project_name}")
-            
-            # GitHub doesn't allow direct org forking via API, so we need to:
-            # 1. Create a new repo
-            # 2. Push starter kit contents to it
-            
-            # Create new repository
-            new_repo = org.create_repo(
-                name=project_name,
-                description=self.project_description or f"Project created from {starter_kit_key} starter kit",
-                private=False,
-                has_issues=True,
-                has_wiki=True,
-                has_downloads=True,
-                auto_init=False  # Don't auto-init, we'll push from starter
-            )
-            
-            # Clone starter kit contents
-            # In a real implementation, this would use git operations
-            # For now, we'll copy key files
-            await self._copy_starter_contents(starter_repo, new_repo)
-            
-            return new_repo
+            if self.storage_mode == StorageMode.LOCAL:
+                # Local mode - create repository using simulator
+                self.logger.info(f"Creating local repository: {self.ORGANIZATION}/{project_name}")
+                
+                description = self.project_description or f"Project created from {starter_kit_key} starter kit"
+                
+                # Pass template parameter to copy starter kit
+                local_repo = self.local_simulator.create_repository(
+                    organization=self.ORGANIZATION,
+                    name=project_name,
+                    description=description,
+                    template='react-starter-kit'  # This will copy the template
+                )
+                
+                # Validate that template was copied
+                from pathlib import Path
+                repo_path = Path(local_repo.path)
+                essential_files = ['package.json', 'composer.json', 'vite.config.ts', 'artisan']
+                missing_files = [f for f in essential_files if not (repo_path / f).exists()]
+                
+                if missing_files:
+                    error_msg = (
+                        f"❌ LOCAL MODE ERROR: Template files not copied!\n"
+                        f"Missing essential files: {', '.join(missing_files)}\n"
+                        f"The react-starter-kit template was not properly copied to {repo_path}\n"
+                        f"Please ensure the template exists at: {self.local_simulator.templates_path / 'react-starter-kit'}\n"
+                        f"You may need to copy the template from the parent project."
+                    )
+                    self.logger.error(error_msg)
+                    raise NotImplementedError(error_msg)
+                
+                self.logger.info(f"✅ Successfully created local repository with template at {repo_path}")
+                return local_repo
+            else:
+                # GitHub mode - original code
+                # Get starter kit repo
+                starter_repo = self.github.get_repo(starter_kit_repo)
+                
+                # Get organization
+                org = self.github.get_organization(self.ORGANIZATION)
+                
+                # Fork to organization
+                self.logger.info(f"Forking {starter_kit_repo} to {self.ORGANIZATION}/{project_name}")
+                
+                # Create new repository
+                new_repo = org.create_repo(
+                    name=project_name,
+                    description=self.project_description or f"Project created from {starter_kit_key} starter kit",
+                    private=False,
+                    has_issues=True,
+                    has_wiki=True,
+                    has_downloads=True,
+                    auto_init=False  # Don't auto-init, we'll push from starter
+                )
+                
+                # Clone starter kit contents
+                await self._copy_starter_contents(starter_repo, new_repo)
+                
+                return new_repo
             
         except Exception as e:
             self.logger.error(f"Failed to fork starter kit: {e}")
@@ -638,14 +546,10 @@ class ProjectCreator:
         }}
         """
         
-        try:
-            # Use AI brain with Gemini for architecture generation
-            response = await self.ai_brain.generate_enhanced_response(architecture_prompt, model='gemini')
-            return self._parse_json_response(response)
-            
-        except Exception as e:
-            self.logger.error(f"Architecture generation failed: {e}")
-            return {}
+        # NO TRY-CATCH - Let exceptions propagate
+        # Use AI brain with Gemini for architecture generation
+        response = await self.ai_brain.generate_enhanced_response(architecture_prompt, model='gemini')
+        return self._parse_json_response(response)
     
     def _extract_core_entities(self, details: Dict[str, Any]) -> List[str]:
         """Extract core entities from project details.
@@ -696,6 +600,21 @@ class ProjectCreator:
         Returns:
             Customization results
         """
+        # Validate we can customize this repository
+        if self.storage_mode == StorageMode.LOCAL:
+            if not hasattr(repo, 'path'):
+                raise NotImplementedError(
+                    "❌ LOCAL MODE ERROR: Repository object missing 'path' attribute.\n"
+                    "Cannot customize local repository without filesystem path."
+                )
+            
+            # Local mode repositories should have update_file and create_file methods now
+            if not hasattr(repo, 'update_file') or not hasattr(repo, 'create_file'):
+                self.logger.warning(
+                    "Local repository missing update_file/create_file methods. "
+                    "Using fallback methods."
+                )
+        
         results = {
             'readme_updated': False,
             'package_json_updated': False,
@@ -703,50 +622,10 @@ class ProjectCreator:
             'custom_files_created': []
         }
         
-        # Generate architecture if not already done
-        if 'architecture' not in details:
-            architecture = await self._generate_project_architecture(details)
-            if architecture:
-                details['architecture'] = architecture
-                results['architecture_generated'] = True
+        # Architecture is now generated as part of structured documents
+        # Remove this old approach to avoid confusion
         
-        # Update README with architecture
-        self.logger.info(f"📝 Generating README for {details['name']}")
-        self.logger.info(f"Project has architecture: {bool(details.get('architecture'))}")
-        self.logger.info(f"Project has problem_statement: {bool(details.get('problem_statement'))}")
-        readme_content = await self._generate_readme(repo, details)
-        if readme_content:
-            self.logger.info(f"✅ README generated, length: {len(readme_content)} chars")
-            self.logger.info(f"README preview (first 200 chars): {readme_content[:200]}...")
-            # Try to update README with retry logic
-            max_retries = 3
-            for retry in range(max_retries):
-                try:
-                    readme_file = repo.get_contents("README.md")
-                    self.logger.info(f"Current README SHA: {readme_file.sha}")
-                    repo.update_file(
-                        "README.md",
-                        f"Customize README for {details['name']}",
-                        readme_content,
-                        readme_file.sha
-                    )
-                    results['readme_updated'] = True
-                    self.logger.info("✅ README successfully updated in GitHub!")
-                    break
-                except Exception as e:
-                    if retry < max_retries - 1:
-                        self.logger.warning(f"README update attempt {retry + 1}/{max_retries} failed: {e}")
-                        self.logger.info("Waiting before retry...")
-                        await asyncio.sleep(2)
-                        # Refresh repository object
-                        repo = self.github.get_repo(repo.full_name)
-                    else:
-                        self.logger.error(f"❌ Failed to update README after {max_retries} attempts: {e}")
-                        self.logger.error(f"Error type: {type(e).__name__}")
-                        import traceback
-                        self.logger.error(f"Traceback: {traceback.format_exc()}")
-        else:
-            self.logger.warning("⚠️ No README content generated")
+        # README will be generated as part of structured documents below
                 
         # Update package.json with project name
         try:
@@ -771,7 +650,14 @@ class ProjectCreator:
             if env_content:
                 try:
                     env_file = repo.get_contents(".env.example")
-                    updated_env = env_file.decoded_content.decode() + "\n" + env_content
+                    # Handle both string and bytes content
+                    if hasattr(env_file, 'decoded_content'):
+                        existing_content = env_file.decoded_content
+                        if isinstance(existing_content, bytes):
+                            existing_content = existing_content.decode()
+                    else:
+                        existing_content = ""
+                    updated_env = existing_content + "\n" + env_content
                     
                     repo.update_file(
                         ".env.example",
@@ -783,23 +669,49 @@ class ProjectCreator:
                 except Exception as e:
                     self.logger.error(f"Failed to update .env.example: {e}")
         
-        # Save architecture document
-        if details.get('architecture'):
-            try:
-                self.logger.info(f"📐 Creating ARCHITECTURE.md for {details['name']}")
-                architecture_content = self._format_architecture_document(details)
-                self.logger.info(f"Architecture document length: {len(architecture_content)} chars")
-                repo.create_file(
-                    "ARCHITECTURE.md",
-                    "Add project architecture documentation",
-                    architecture_content
-                )
-                results['architecture_saved'] = True
-                self.logger.info("✅ ARCHITECTURE.md saved successfully!")
-            except Exception as e:
-                self.logger.error(f"❌ Failed to save architecture document: {e}")
-                import traceback
-                self.logger.error(f"Traceback: {traceback.format_exc()}")
+        # Create all three documentation files together
+        self.logger.info(f"📚 Creating documentation files for {details['name']}")
+        
+        # Generate structured output for all documents first
+        structured_docs = await self._generate_all_structured_documents(repo, details)
+        
+        # Log the structured data to debug issues
+        self.logger.info(f"📊 Generated structured docs keys: {list(structured_docs.keys())}")
+        self.logger.info(f"📊 README has {len(structured_docs.get('readme', {}))} keys")
+        self.logger.info(f"📊 Architecture has {len(structured_docs.get('architecture', {}))} keys")
+        self.logger.info(f"📊 Monetization has {len(structured_docs.get('monetization', {}))} keys")
+        
+        # Save complete structured data to metadata.json
+        await self._save_project_metadata(repo, details, structured_docs, results)
+        
+        # Transform structured data to markdown files
+        await self._create_markdown_files_from_structured(repo, structured_docs, results)
+        
+        # Validate all documentation was created
+        if not all([
+            results.get('readme_updated'),
+            results.get('architecture_saved'),
+            results.get('monetization_saved'),
+            results.get('metadata_saved')
+        ]):
+            missing = []
+            if not results.get('readme_updated'):
+                missing.append('README.md')
+            if not results.get('architecture_saved'):
+                missing.append('ARCHITECTURE.md')
+            if not results.get('monetization_saved'):
+                missing.append('MONETIZATION_STRATEGY.md')
+            if not results.get('metadata_saved'):
+                missing.append('metadata.json')
+            raise ValueError(f"Failed to create required documentation files: {', '.join(missing)}")
+        
+        # Add documentation creation summary to results
+        results['documentation_created'] = {
+            'readme': results.get('readme_updated', False),
+            'architecture': results.get('architecture_saved', False),
+            'monetization': results.get('monetization_saved', False),
+            'metadata': results.get('metadata_saved', False)
+        }
                     
         return results
     
@@ -923,6 +835,192 @@ class ProjectCreator:
 
 ---
 *This architecture document is maintained by the CodeWebMobile AI system and should be the source of truth for all development decisions.*
+"""
+        
+        return doc
+    
+    def _format_monetization_document(self, details: Dict[str, Any]) -> str:
+        """Format monetization strategy as a comprehensive markdown document.
+        
+        Args:
+            details: Project details including monetization data
+            
+        Returns:
+            Formatted monetization strategy document
+        """
+        doc = f"""# {details.get('name', 'Project')} Monetization Strategy
+
+## Executive Summary
+{details.get('description', '')}
+
+### Market Opportunity
+{details.get('problem_statement', '')}
+
+### Target Market
+{details.get('target_audience', '')}
+
+## Revenue Models
+"""
+        
+        # Add monetization models from details
+        if details.get('monetization_strategy'):
+            doc += f"\n### Primary Revenue Stream\n{details['monetization_strategy']}\n"
+        
+        if details.get('market_research', {}).get('monetization_models'):
+            doc += "\n### Detailed Revenue Streams\n"
+            for model in details['market_research']['monetization_models']:
+                if isinstance(model, dict):
+                    doc += f"\n#### {model.get('model_name', 'Revenue Model')}\n"
+                    doc += f"- **Type**: {model.get('type', '')}\n"
+                    doc += f"- **Description**: {model.get('description', '')}\n"
+                    doc += f"- **Pricing**: {model.get('pricing_structure', '')}\n"
+                    doc += f"- **Target Users**: {model.get('target_segment', '')}\n"
+                    doc += f"- **Revenue Potential**: {model.get('revenue_potential', '')}\n"
+                else:
+                    doc += f"- {model}\n"
+        
+        # Add market analysis
+        doc += "\n## Market Analysis\n"
+        
+        if details.get('market_research', {}).get('market_size'):
+            market = details['market_research']['market_size']
+            doc += f"""
+### Market Size
+- **Total Addressable Market (TAM)**: {market.get('tam', 'To be determined')}
+- **Serviceable Addressable Market (SAM)**: {market.get('sam', 'To be determined')}
+- **Serviceable Obtainable Market (SOM)**: {market.get('som', 'To be determined')}
+- **Growth Rate**: {market.get('growth_rate', 'To be determined')}
+"""
+        
+        if details.get('market_research', {}).get('competitors'):
+            doc += "\n### Competitive Landscape\n"
+            for competitor in details['market_research']['competitors']:
+                if isinstance(competitor, dict):
+                    doc += f"\n#### {competitor.get('name', 'Competitor')}\n"
+                    doc += f"- **Strengths**: {competitor.get('strengths', [])}\n"
+                    doc += f"- **Weaknesses**: {competitor.get('weaknesses', [])}\n"
+                    doc += f"- **Market Share**: {competitor.get('market_share', 'Unknown')}\n"
+                else:
+                    doc += f"- {competitor}\n"
+        
+        # Add pricing strategy
+        doc += "\n## Pricing Strategy\n"
+        
+        if details.get('market_research', {}).get('pricing_strategy'):
+            pricing = details['market_research']['pricing_strategy']
+            if isinstance(pricing, dict):
+                doc += f"""
+### Pricing Tiers
+{pricing.get('overview', '')}
+
+#### Tier Structure
+"""
+                for tier in pricing.get('tiers', []):
+                    if isinstance(tier, dict):
+                        doc += f"\n**{tier.get('name', 'Tier')}** - ${tier.get('price', '0')}/month\n"
+                        doc += f"- Target: {tier.get('target_users', '')}\n"
+                        doc += f"- Features: {', '.join(tier.get('features', []))}\n"
+            else:
+                doc += f"{pricing}\n"
+        
+        # Add customer acquisition strategy
+        doc += "\n## Customer Acquisition Strategy\n"
+        
+        if details.get('market_research', {}).get('customer_acquisition'):
+            acquisition = details['market_research']['customer_acquisition']
+            doc += f"""
+### Acquisition Channels
+{acquisition.get('channels', [])}
+
+### Customer Acquisition Cost (CAC)
+{acquisition.get('estimated_cac', 'To be determined')}
+
+### Lifetime Value (LTV)
+{acquisition.get('estimated_ltv', 'To be determined')}
+
+### LTV:CAC Ratio
+{acquisition.get('ltv_cac_ratio', 'To be determined')}
+"""
+        
+        # Add growth projections
+        doc += "\n## Growth Projections\n"
+        
+        doc += """
+### Year 1 Targets
+- **Users**: 1,000 active users
+- **Revenue**: $10,000 MRR by month 12
+- **Growth Rate**: 20% month-over-month
+
+### Year 2 Targets
+- **Users**: 10,000 active users
+- **Revenue**: $100,000 MRR
+- **Growth Rate**: 15% month-over-month
+
+### Year 3 Targets
+- **Users**: 50,000 active users
+- **Revenue**: $500,000 MRR
+- **Growth Rate**: 10% month-over-month
+"""
+        
+        # Add key metrics
+        doc += "\n## Key Performance Indicators (KPIs)\n"
+        doc += """
+### Revenue Metrics
+- Monthly Recurring Revenue (MRR)
+- Annual Recurring Revenue (ARR)
+- Average Revenue Per User (ARPU)
+- Customer Lifetime Value (CLV)
+
+### Growth Metrics
+- User Growth Rate
+- Revenue Growth Rate
+- Churn Rate
+- Net Revenue Retention
+
+### Engagement Metrics
+- Daily Active Users (DAU)
+- Monthly Active Users (MAU)
+- Feature Adoption Rate
+- User Satisfaction Score (NPS)
+"""
+        
+        # Add implementation roadmap
+        doc += "\n## Implementation Roadmap\n"
+        doc += """
+### Phase 1: MVP & Early Adopters (Months 1-3)
+- Launch core features with basic monetization
+- Focus on early adopter acquisition
+- Implement usage tracking and analytics
+- Target: 100 paying users
+
+### Phase 2: Product Market Fit (Months 4-6)
+- Refine pricing based on user feedback
+- Implement advanced features for premium tiers
+- Launch referral program
+- Target: 500 paying users
+
+### Phase 3: Scale & Optimize (Months 7-12)
+- Optimize conversion funnel
+- Implement enterprise features
+- Launch affiliate program
+- Target: 2,000 paying users
+
+### Phase 4: Market Expansion (Year 2)
+- International market entry
+- Additional product lines
+- Strategic partnerships
+- Target: 10,000 paying users
+"""
+        
+        # Add metadata
+        doc += f"""
+## Metadata
+- **Generated**: {datetime.now(timezone.utc).isoformat()}
+- **Strategy Version**: 1.0.0
+- **Review Cycle**: Quarterly
+
+---
+*This monetization strategy should be reviewed and updated quarterly based on market feedback and performance metrics.*
 """
         
         return doc
@@ -1109,8 +1207,13 @@ This issue tracks the comprehensive initial setup aligned with the project's spe
         )
         
         # Get the issue object for compatibility
-        setup_issue = repo.get_issue(setup_issue_number) if setup_issue_number else None
-        issue_numbers.append(setup_issue.number)
+        if setup_issue_number:
+            try:
+                setup_issue = repo.get_issue(setup_issue_number)
+                issue_numbers.append(setup_issue.number)
+            except Exception as e:
+                self.logger.warning(f"Could not get setup issue: {e}")
+                issue_numbers.append(setup_issue_number)
         
         # Create feature issues using centralized method
         architecture = details.get('architecture', {})
@@ -1221,24 +1324,41 @@ Based on the project architecture for {details.get('name', 'project')}:
             details: Project details
         """
         try:
-            # Update repository description
-            repo.edit(
-                description=details['description'],
-                has_wiki=True,
-                has_issues=True,
-                has_projects=True
-            )
-            
-            # Add topics/tags
-            topics = ['laravel', 'react', 'typescript', 'fullstack']
-            
-            # Add project-specific topics based on features
-            if 'auth' in str(details.get('initial_features', [])).lower():
-                topics.append('authentication')
-            if 'api' in str(details.get('initial_features', [])).lower():
-                topics.append('rest-api')
+            if self.storage_mode == StorageMode.LOCAL:
+                # Local mode - just log the configuration
+                self.logger.info(f"Configured local repository: {repo.name}")
+                self.logger.info(f"Description: {details['description']}")
                 
-            repo.replace_topics(topics)
+                # Add topics/tags to metadata
+                topics = ['laravel', 'react', 'typescript', 'fullstack']
+                
+                # Add project-specific topics based on features
+                if 'auth' in str(details.get('initial_features', [])).lower():
+                    topics.append('authentication')
+                if 'api' in str(details.get('initial_features', [])).lower():
+                    topics.append('rest-api')
+                    
+                self.logger.info(f"Topics: {topics}")
+            else:
+                # GitHub mode - original code
+                # Update repository description
+                repo.edit(
+                    description=details['description'],
+                    has_wiki=True,
+                    has_issues=True,
+                    has_projects=True
+                )
+                
+                # Add topics/tags
+                topics = ['laravel', 'react', 'typescript', 'fullstack']
+                
+                # Add project-specific topics based on features
+                if 'auth' in str(details.get('initial_features', [])).lower():
+                    topics.append('authentication')
+                if 'api' in str(details.get('initial_features', [])).lower():
+                    topics.append('rest-api')
+                    
+                repo.replace_topics(topics)
             
         except Exception as e:
             self.logger.error(f"Failed to configure project settings: {e}")
@@ -1338,3 +1458,1449 @@ Based on the project architecture for {details.get('name', 'project')}:
         
         # GitHub repo name limit is 100 characters
         return name[:100]
+    
+    async def _generate_all_structured_documents(self, repo, details: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate structured output for all documentation.
+        
+        Args:
+            repo: Repository object
+            details: Project details
+            
+        Returns:
+            Dictionary containing structured documentation
+        """
+        self.logger.info("🤖 Generating structured documentation with AI...")
+        
+        structured_docs = {
+            'readme': {},
+            'architecture': {},
+            'monetization': {},
+            'generated_at': datetime.now(timezone.utc).isoformat()
+        }
+        
+        try:
+            # Generate structured README
+            structured_docs['readme'] = await self._generate_structured_readme(details)
+        except Exception as e:
+            self.logger.error(f"Failed to generate structured README: {e}")
+            raise
+        
+        try:
+            # Generate structured architecture
+            structured_docs['architecture'] = await self._generate_structured_architecture(details)
+        except Exception as e:
+            self.logger.error(f"Failed to generate structured architecture: {e}")
+            raise
+        
+        try:
+            # Generate structured monetization strategy
+            structured_docs['monetization'] = await self._generate_structured_monetization(details)
+        except Exception as e:
+            self.logger.error(f"Failed to generate structured monetization: {e}")
+            raise
+        
+        return structured_docs
+    
+    async def _generate_structured_readme(self, details: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate structured README content.
+        
+        Args:
+            details: Project details
+            
+        Returns:
+            Structured README data
+        """
+        if not self.ai_brain:
+            raise ValueError("AI Brain is required for content generation")
+            
+        prompt = f"""
+        Generate a structured README for this project. Return a JSON object with these exact fields:
+        {{
+            "title": "Project name",
+            "tagline": "One-line description",
+            "overview": "2-3 paragraph overview",
+            "problem_statement": "Clear problem description",
+            "solution": "How this project solves it",
+            "target_audience": ["User type 1", "User type 2"],
+            "value_proposition": "Unique value offered",
+            "features": [
+                {{"name": "Feature 1", "description": "What it does", "benefit": "Why it matters"}},
+                {{"name": "Feature 2", "description": "What it does", "benefit": "Why it matters"}}
+            ],
+            "tech_stack": {{
+                "backend": ["Laravel", "PHP 8.2"],
+                "frontend": ["React", "TypeScript"],
+                "database": ["PostgreSQL"],
+                "cache": ["Redis"],
+                "other": ["Docker", "etc"]
+            }},
+            "prerequisites": ["Node.js 18+", "PHP 8.2+", "etc"],
+            "installation_steps": [
+                "Step 1 with command",
+                "Step 2 with command"
+            ],
+            "configuration": {{
+                "environment_variables": [
+                    {{"name": "VAR_NAME", "description": "What it's for", "example": "value"}}
+                ],
+                "important_settings": []
+            }},
+            "usage_examples": [
+                {{"title": "Example 1", "code": "code here", "description": "what it does"}}
+            ],
+            "api_endpoints": [
+                {{"method": "GET", "path": "/api/example", "description": "What it does"}}
+            ],
+            "testing": {{
+                "unit_tests": "npm test",
+                "integration_tests": "npm run test:integration",
+                "coverage": "npm run test:coverage"
+            }},
+            "deployment": {{
+                "environments": ["development", "staging", "production"],
+                "steps": ["Build", "Test", "Deploy"],
+                "considerations": ["Database migrations", "Environment variables"]
+            }},
+            "contributing": {{
+                "guidelines": "How to contribute",
+                "code_style": "Coding standards",
+                "pull_request_process": "PR process"
+            }},
+            "license": "MIT",
+            "contact": {{
+                "maintainer": "CodeWebMobile AI",
+                "email": "ai@codewebmobile.com"
+            }}
+        }}
+        
+        Project Details:
+        {json.dumps(details, indent=2)}
+        
+        IMPORTANT: Return ONLY valid JSON, no markdown, no explanations.
+        """
+        
+        response = await self.ai_brain.generate_enhanced_response(prompt)
+        content = response.get('content', '')
+        
+        try:
+            # Extract JSON from response - AI might include markdown or extra text
+            import re
+            # First try to find JSON in code blocks
+            code_block_match = re.search(r'```(?:json)?\s*(\{[\s\S]*?\})\s*```', content)
+            if code_block_match:
+                json_str = code_block_match.group(1)
+            else:
+                # Fall back to finding raw JSON
+                json_match = re.search(r'\{[\s\S]*\}', content)
+                if json_match:
+                    json_str = json_match.group()
+                else:
+                    raise ValueError("No JSON found in AI response")
+            
+            structured_readme = json.loads(json_str)
+            return structured_readme
+        except (json.JSONDecodeError, ValueError) as e:
+            self.logger.error(f"Failed to parse structured README: {e}")
+            self.logger.error(f"AI response content: {content[:500]}...")
+            raise ValueError(f"AI failed to generate valid JSON for README structure: {e}")
+    
+    async def _generate_structured_architecture(self, details: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate structured architecture content using parallel chunked generation.
+        
+        Args:
+            details: Project details
+            
+        Returns:
+            Structured architecture data
+        """
+        if not self.ai_brain:
+            raise ValueError("AI Brain is required for content generation")
+            
+        # Extract core entities from the project details
+        core_entities = self._extract_core_entities(details)
+        
+        self.logger.info("🔧 Generating architecture in parallel chunks...")
+        
+        # Define chunks to generate in parallel
+        chunks = {
+            'core': self._generate_architecture_core(details, core_entities),
+            'technical': self._generate_architecture_technical(details),
+            'deployment': self._generate_architecture_deployment(details),
+            'design': self._generate_architecture_design(details)
+        }
+        
+        # Generate all chunks in parallel
+        results = await asyncio.gather(*chunks.values(), return_exceptions=True)
+        chunk_results = dict(zip(chunks.keys(), results))
+        
+        # Check for errors
+        for chunk_name, result in chunk_results.items():
+            if isinstance(result, Exception):
+                self.logger.error(f"Failed to generate {chunk_name} chunk: {result}")
+                raise ValueError(f"Architecture generation failed for {chunk_name}: {result}")
+        
+        # Merge all chunks into final architecture
+        structured_architecture = {
+            'overview': chunk_results['core'].get('overview', {}),
+            'core_entities': chunk_results['core'].get('core_entities', []),
+            'system_components': chunk_results['core'].get('system_components', []),
+            'data_architecture': chunk_results['technical'].get('data_architecture', {}),
+            'api_design': chunk_results['technical'].get('api_design', {}),
+            'security_architecture': chunk_results['technical'].get('security_architecture', {}),
+            'scalability_plan': chunk_results['deployment'].get('scalability_plan', {}),
+            'deployment_architecture': chunk_results['deployment'].get('deployment_architecture', {}),
+            'monitoring_and_logging': chunk_results['deployment'].get('monitoring_and_logging', {}),
+            'design_system': chunk_results['design'].get('design_system', {}),
+            'performance_targets': chunk_results['deployment'].get('performance_targets', {})
+        }
+        
+        # Ensure core_entities are included
+        if not structured_architecture.get('core_entities') and core_entities:
+            structured_architecture['core_entities'] = [
+                {'name': entity, 'description': f'{entity} entity in the system', 'relationships': []}
+                for entity in core_entities
+            ]
+            
+        return structured_architecture
+    
+    async def _generate_architecture_core(self, details: Dict[str, Any], core_entities: List[str]) -> Dict[str, Any]:
+        """Generate core architecture components."""
+        prompt = f"""
+        Generate core architecture components for project: {details.get('name')}
+        Description: {details.get('description')}
+        Core Entities: {json.dumps(core_entities)}
+        
+        Return JSON with ONLY these fields:
+        {{
+            "overview": {{
+                "description": "Clear system architecture overview for {details.get('name')}",
+                "architecture_style": "monolithic/microservices",
+                "key_principles": ["Scalability", "Security", "Maintainability"]
+            }},
+            "core_entities": [
+                {{"name": "Entity1", "description": "What it represents", "relationships": ["Entity2"]}},
+                {{"name": "Entity2", "description": "What it represents", "relationships": ["Entity1"]}}
+            ],
+            "system_components": [
+                {{
+                    "name": "Laravel API",
+                    "type": "backend",
+                    "description": "RESTful API server",
+                    "technologies": ["Laravel", "PHP 8.2", "MySQL"],
+                    "responsibilities": ["Authentication", "Business logic", "Data management"]
+                }},
+                {{
+                    "name": "React Frontend",
+                    "type": "frontend",
+                    "description": "User interface",
+                    "technologies": ["React", "TypeScript", "Tailwind CSS"],
+                    "responsibilities": ["UI rendering", "User interactions", "API integration"]
+                }}
+            ]
+        }}
+        
+        Return ONLY valid JSON.
+        """
+        
+        response = await self.ai_brain.generate_enhanced_response(prompt, model='gemini')
+        return self._extract_json_from_response(response.get('content', ''))
+    
+    async def _generate_architecture_technical(self, details: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate technical architecture components."""
+        prompt = f"""
+        Generate technical architecture for project: {details.get('name')}
+        
+        Return JSON with ONLY these fields:
+        {{
+            "data_architecture": {{
+                "primary_database": {{
+                    "type": "MySQL",
+                    "purpose": "Main application data storage",
+                    "schemas": ["public"]
+                }},
+                "cache_layer": {{
+                    "type": "Redis",
+                    "purpose": "Session storage and caching",
+                    "ttl_strategy": "Based on data type"
+                }},
+                "data_flow": ["Client -> API -> Cache -> Database"]
+            }},
+            "api_design": {{
+                "style": "RESTful",
+                "versioning": "/api/v1",
+                "authentication": "Laravel Sanctum",
+                "rate_limiting": "100 requests per minute",
+                "endpoints_structure": {{
+                    "pattern": "/api/v1/{{resource}}/{{id}}",
+                    "methods": ["GET", "POST", "PUT", "DELETE"]
+                }}
+            }},
+            "security_architecture": {{
+                "authentication": {{
+                    "method": "JWT via Sanctum",
+                    "token_lifetime": "24 hours",
+                    "refresh_strategy": "Refresh tokens"
+                }},
+                "authorization": {{
+                    "model": "RBAC",
+                    "roles": ["admin", "user"],
+                    "permissions": ["create", "read", "update", "delete"]
+                }},
+                "data_protection": ["HTTPS", "Input validation", "CORS", "CSRF protection"]
+            }}
+        }}
+        
+        Return ONLY valid JSON.
+        """
+        
+        response = await self.ai_brain.generate_enhanced_response(prompt, model='openai')
+        return self._extract_json_from_response(response.get('content', ''))
+    
+    async def _generate_architecture_deployment(self, details: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate deployment and operations architecture."""
+        prompt = f"""
+        Generate deployment architecture for project: {details.get('name')}
+        
+        Return JSON with ONLY these fields:
+        {{
+            "scalability_plan": {{
+                "horizontal_scaling": {{
+                    "load_balancer": "Nginx",
+                    "auto_scaling": "Based on CPU usage"
+                }},
+                "vertical_scaling": {{
+                    "initial_size": "2GB RAM",
+                    "max_size": "16GB RAM"
+                }},
+                "caching_strategy": ["Database query caching", "API response caching", "CDN"]
+            }},
+            "deployment_architecture": {{
+                "environments": [
+                    {{"name": "development", "url": "dev.example.com", "purpose": "Development"}},
+                    {{"name": "staging", "url": "staging.example.com", "purpose": "Testing"}},
+                    {{"name": "production", "url": "app.example.com", "purpose": "Live"}}
+                ],
+                "ci_cd_pipeline": ["Code commit", "Tests", "Build", "Deploy"],
+                "infrastructure_as_code": "Docker Compose"
+            }},
+            "monitoring_and_logging": {{
+                "monitoring": {{
+                    "apm": "Application monitoring",
+                    "metrics": ["response time", "error rate"],
+                    "alerts": ["High error rate", "Slow response"]
+                }},
+                "logging": {{
+                    "centralized_logging": "Log aggregation",
+                    "log_levels": ["ERROR", "WARN", "INFO"],
+                    "retention": "30 days"
+                }}
+            }},
+            "performance_targets": {{
+                "page_load": "< 3 seconds",
+                "api_response": "< 200ms",
+                "uptime": "99.9%",
+                "concurrent_users": "10,000"
+            }}
+        }}
+        
+        Return ONLY valid JSON.
+        """
+        
+        response = await self.ai_brain.generate_enhanced_response(prompt, model='deepseek')
+        return self._extract_json_from_response(response.get('content', ''))
+    
+    async def _generate_architecture_design(self, details: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate design system architecture."""
+        prompt = f"""
+        Generate design system for project: {details.get('name')}
+        
+        Return JSON with ONLY these fields:
+        {{
+            "design_system": {{
+                "typography": {{
+                    "font_family": "Inter",
+                    "font_sizes": {{"h1": "32px", "h2": "24px", "body": "16px"}},
+                    "line_heights": {{"heading": "1.2", "body": "1.5"}}
+                }},
+                "color_palette": {{
+                    "primary": {{"hex": "#3B82F6", "name": "Blue", "usage": "Primary actions"}},
+                    "secondary": {{"hex": "#8B5CF6", "name": "Purple", "usage": "Secondary"}},
+                    "success": {{"hex": "#10B981", "name": "Green", "usage": "Success"}},
+                    "danger": {{"hex": "#EF4444", "name": "Red", "usage": "Errors"}},
+                    "neutral": {{"hex": "#6B7280", "name": "Gray", "usage": "Text"}}
+                }},
+                "spacing": {{
+                    "unit": "8px",
+                    "scale": ["0", "1", "2", "4", "8", "16", "32"]
+                }},
+                "components": {{
+                    "buttons": ["primary", "secondary", "outline"],
+                    "forms": ["input", "select", "checkbox"],
+                    "layout": ["container", "grid", "flex"]
+                }}
+            }}
+        }}
+        
+        Return ONLY valid JSON.
+        """
+        
+        response = await self.ai_brain.generate_enhanced_response(prompt, model='anthropic')
+        return self._extract_json_from_response(response.get('content', ''))
+    
+    def _extract_json_from_response(self, content: str) -> Dict[str, Any]:
+        """Extract and parse JSON from AI response."""
+        try:
+            import re
+            # First try to find JSON in code blocks
+            code_block_match = re.search(r'```(?:json)?\s*(\{[\s\S]*?\})\s*```', content)
+            if code_block_match:
+                json_str = code_block_match.group(1)
+            else:
+                # Fall back to finding raw JSON
+                json_match = re.search(r'\{[\s\S]*\}', content)
+                if json_match:
+                    json_str = json_match.group()
+                else:
+                    raise ValueError("No JSON found in response")
+                    
+            return json.loads(json_str)
+        except (json.JSONDecodeError, ValueError) as e:
+            self.logger.error(f"Failed to parse JSON: {e}")
+            self.logger.error(f"Response content: {content[:500]}...")
+            raise
+    
+    async def _generate_structured_monetization(self, details: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate structured monetization strategy content using parallel chunked generation.
+        
+        Args:
+            details: Project details
+            
+        Returns:
+            Structured monetization data
+        """
+        if not self.ai_brain:
+            raise ValueError("AI Brain is required for content generation")
+        
+        self.logger.info("🔄 Generating monetization strategy using parallel chunked generation...")
+        
+        # Generate chunks in parallel
+        chunks = {
+            'executive_market': self._generate_monetization_executive_market(details),
+            'revenue_pricing': self._generate_monetization_revenue_pricing(details),
+            'customer_growth': self._generate_monetization_customer_growth(details),
+            'financial_risks': self._generate_monetization_financial_risks(details)
+        }
+        
+        results = await asyncio.gather(*chunks.values(), return_exceptions=True)
+        
+        # Process results
+        merged_data = {}
+        for i, (key, result) in enumerate(zip(chunks.keys(), results)):
+            if isinstance(result, Exception):
+                self.logger.error(f"Failed to generate {key} chunk: {result}")
+                raise ValueError(f"Failed to generate monetization {key} chunk: {result}")
+            else:
+                # Merge the chunks
+                if key == 'executive_market':
+                    merged_data['executive_summary'] = result.get('executive_summary', {})
+                    merged_data['market_analysis'] = result.get('market_analysis', {})
+                elif key == 'revenue_pricing':
+                    merged_data['revenue_models'] = result.get('revenue_models', [])
+                    merged_data['pricing_strategy'] = result.get('pricing_strategy', {})
+                elif key == 'customer_growth':
+                    merged_data['customer_acquisition'] = result.get('customer_acquisition', {})
+                    merged_data['growth_strategy'] = result.get('growth_strategy', {})
+                elif key == 'financial_risks':
+                    merged_data['financial_projections'] = result.get('financial_projections', {})
+                    merged_data['risk_analysis'] = result.get('risk_analysis', {})
+        
+        return merged_data
+    
+    async def _generate_monetization_executive_market(self, details: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate executive summary and market analysis chunk."""
+        prompt = f"""
+        Generate executive summary and market analysis for project: {details.get('name')}
+        Description: {details.get('description')}
+        Problem: {details.get('problem_statement')}
+        
+        Return JSON with ONLY these fields:
+        {{
+            "executive_summary": {{
+                "business_model": "SaaS/Marketplace/Platform/etc",
+                "revenue_streams": ["Primary stream description", "Secondary stream description"],
+                "target_market_size": "$X billion market opportunity",
+                "projected_revenue_year_1": "$100K-500K",
+                "projected_revenue_year_3": "$1M-5M",
+                "value_proposition": "Clear value statement"
+            }},
+            "market_analysis": {{
+                "market_size": {{
+                    "tam": "$X billion - Total Addressable Market description",
+                    "sam": "$X million - Serviceable Addressable Market description", 
+                    "som": "$X million - Serviceable Obtainable Market description",
+                    "growth_rate": "X% annual growth"
+                }},
+                "target_segments": [
+                    {{
+                        "name": "Primary Segment",
+                        "size": "X thousand businesses/users",
+                        "characteristics": ["Specific trait 1", "Specific trait 2"],
+                        "pain_points": ["Current pain 1", "Current pain 2"],
+                        "willingness_to_pay": "$X-Y per month"
+                    }}
+                ],
+                "competitors": [
+                    {{
+                        "name": "Major Competitor",
+                        "market_share": "X%",
+                        "strengths": ["Their strength 1", "Their strength 2"],
+                        "weaknesses": ["Their weakness 1", "Their weakness 2"],
+                        "pricing": "$X-Y per month",
+                        "our_advantage": "How we differentiate"
+                    }}
+                ],
+                "market_trends": [
+                    {{"trend": "Growing trend description", "impact": "Positive impact on our business"}}
+                ]
+            }}
+        }}
+        
+        Return ONLY valid JSON.
+        """
+        
+        response = await self.ai_brain.generate_enhanced_response(prompt, model='gemini')
+        return self._extract_json_from_response(response.get('content', ''))
+    
+    async def _generate_monetization_revenue_pricing(self, details: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate revenue models and pricing strategy chunk."""
+        prompt = f"""
+        Generate revenue models and pricing strategy for project: {details.get('name')}
+        
+        Return JSON with ONLY these fields:
+        {{
+            "revenue_models": [
+                {{
+                    "model_type": "Subscription",
+                    "description": "Monthly/annual recurring revenue",
+                    "pricing_tiers": [
+                        {{
+                            "name": "Starter",
+                            "price_monthly": 49,
+                            "price_annual": 490,
+                            "features": ["Core feature 1", "Core feature 2", "Basic support"],
+                            "limitations": ["10 users", "100GB storage"],
+                            "target_users": "Individual users and small teams",
+                            "expected_conversion": "5%"
+                        }},
+                        {{
+                            "name": "Professional", 
+                            "price_monthly": 149,
+                            "price_annual": 1490,
+                            "features": ["All Starter features", "Advanced feature 1", "Priority support"],
+                            "limitations": ["50 users", "1TB storage"],
+                            "target_users": "Growing businesses",
+                            "expected_conversion": "3%"
+                        }},
+                        {{
+                            "name": "Enterprise",
+                            "price_monthly": "Custom",
+                            "price_annual": "Custom", 
+                            "features": ["All features", "Custom integrations", "Dedicated support", "SLA"],
+                            "limitations": ["Unlimited"],
+                            "target_users": "Large organizations",
+                            "expected_conversion": "1%"
+                        }}
+                    ]
+                }},
+                {{
+                    "model_type": "Usage-based",
+                    "description": "Pay per use or transaction",
+                    "fee_structure": {{
+                        "base_fee": "$0",
+                        "usage_fee": "$0.10 per transaction",
+                        "volume_discounts": ["1000+: $0.08", "10000+: $0.06"]
+                    }}
+                }}
+            ],
+            "pricing_strategy": {{
+                "approach": "Value-based pricing",
+                "competitive_positioning": "Premium quality at competitive price",
+                "psychological_pricing": ["$49 instead of $50", "Annual discount incentive"],
+                "price_testing": "A/B test pricing tiers",
+                "promotional_strategy": ["14-day free trial", "20% off annual plans"]
+            }}
+        }}
+        
+        Return ONLY valid JSON.
+        """
+        
+        response = await self.ai_brain.generate_enhanced_response(prompt, model='openai')
+        return self._extract_json_from_response(response.get('content', ''))
+    
+    async def _generate_monetization_customer_growth(self, details: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate customer acquisition and growth strategy chunk."""  
+        prompt = f"""
+        Generate customer acquisition and growth strategy for project: {details.get('name')}
+        
+        Return JSON with ONLY these fields:
+        {{
+            "customer_acquisition": {{
+                "channels": [
+                    {{
+                        "name": "Content Marketing",
+                        "cost_per_acquisition": 50,
+                        "expected_volume": "100 customers/month",
+                        "strategy": "SEO-optimized blog posts and tutorials",
+                        "conversion_rate": "2%"
+                    }},
+                    {{
+                        "name": "Paid Advertising",
+                        "cost_per_acquisition": 100,
+                        "expected_volume": "200 customers/month",
+                        "strategy": "Google Ads and Facebook campaigns",
+                        "conversion_rate": "1.5%"
+                    }},
+                    {{
+                        "name": "Partner Referrals",
+                        "cost_per_acquisition": 30,
+                        "expected_volume": "50 customers/month",
+                        "strategy": "Strategic partnerships and affiliate program",
+                        "conversion_rate": "5%"
+                    }}
+                ],
+                "retention_strategy": {{
+                    "onboarding": ["Interactive tutorial", "Personal onboarding call", "Email drip campaign"],
+                    "engagement": ["Regular feature updates", "Customer success check-ins", "Community building"],
+                    "churn_prevention": ["Usage monitoring", "Proactive support", "Win-back campaigns"],
+                    "expected_churn_rate": "5% monthly"
+                }},
+                "referral_program": {{
+                    "incentive": "1 month free for referrer and referee",
+                    "expected_referral_rate": "20%",
+                    "viral_coefficient": "0.3"
+                }}
+            }},
+            "growth_strategy": {{
+                "phases": [
+                    {{
+                        "name": "Launch (Months 1-6)",
+                        "focus": "Product-market fit",
+                        "targets": {{
+                            "users": 1000,
+                            "mrr": "$50,000",
+                            "growth_rate": "20% monthly"
+                        }},
+                        "key_initiatives": ["Beta testing", "Early adopter program", "Product iteration"]
+                    }},
+                    {{
+                        "name": "Growth (Months 7-12)",
+                        "focus": "Scale acquisition",
+                        "targets": {{
+                            "users": 5000,
+                            "mrr": "$250,000",
+                            "growth_rate": "15% monthly"
+                        }},
+                        "key_initiatives": ["Marketing automation", "Sales team", "Feature expansion"]
+                    }},
+                    {{
+                        "name": "Scale (Year 2+)",
+                        "focus": "Market expansion",
+                        "targets": {{
+                            "users": 20000,
+                            "mrr": "$1,000,000",
+                            "growth_rate": "10% monthly"
+                        }},
+                        "key_initiatives": ["International expansion", "Enterprise sales", "Platform ecosystem"]
+                    }}
+                ],
+                "expansion_opportunities": ["Add-on products", "API marketplace", "White-label solution"]
+            }}
+        }}
+        
+        Return ONLY valid JSON.
+        """
+        
+        response = await self.ai_brain.generate_enhanced_response(prompt, model='deepseek')
+        return self._extract_json_from_response(response.get('content', ''))
+    
+    async def _generate_monetization_financial_risks(self, details: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate financial projections and risk analysis chunk."""
+        prompt = f"""
+        Generate financial projections and risk analysis for project: {details.get('name')}
+        
+        Return JSON with ONLY these fields:
+        {{
+            "financial_projections": {{
+                "year_1": {{
+                    "revenue": {{
+                        "subscription": "$200,000",
+                        "services": "$50,000",
+                        "total": "$250,000"
+                    }},
+                    "costs": {{
+                        "development": "$150,000",
+                        "marketing": "$50,000",
+                        "operations": "$30,000",
+                        "total": "$230,000"
+                    }},
+                    "profit": "$20,000",
+                    "profit_margin": "8%"
+                }},
+                "year_2": {{
+                    "revenue": {{
+                        "subscription": "$800,000",
+                        "services": "$200,000",
+                        "total": "$1,000,000"
+                    }},
+                    "costs": {{
+                        "development": "$300,000",
+                        "marketing": "$200,000",
+                        "operations": "$100,000",
+                        "total": "$600,000"
+                    }},
+                    "profit": "$400,000",
+                    "profit_margin": "40%"
+                }},
+                "year_3": {{
+                    "revenue": {{
+                        "subscription": "$2,400,000",
+                        "services": "$600,000",
+                        "total": "$3,000,000"
+                    }},
+                    "costs": {{
+                        "development": "$600,000",
+                        "marketing": "$500,000",
+                        "operations": "$400,000",
+                        "total": "$1,500,000"
+                    }},
+                    "profit": "$1,500,000",
+                    "profit_margin": "50%"
+                }},
+                "break_even": "Month 10",
+                "runway": "18 months with $500K funding"
+            }},
+            "risk_analysis": {{
+                "market_risks": [
+                    {{
+                        "risk": "New competitor entry",
+                        "probability": "High",
+                        "impact": "Medium",
+                        "mitigation": "Build strong brand loyalty and network effects"
+                    }},
+                    {{
+                        "risk": "Market downturn",
+                        "probability": "Medium",
+                        "impact": "High",
+                        "mitigation": "Diversify revenue streams and maintain lean operations"
+                    }}
+                ],
+                "operational_risks": [
+                    {{
+                        "risk": "Technical scalability issues",
+                        "probability": "Medium",
+                        "impact": "High",
+                        "mitigation": "Invest in robust infrastructure early"
+                    }},
+                    {{
+                        "risk": "Key employee turnover",
+                        "probability": "Medium",
+                        "impact": "Medium",
+                        "mitigation": "Competitive compensation and equity packages"
+                    }}
+                ],
+                "financial_risks": [
+                    {{
+                        "risk": "Cash flow gaps",
+                        "probability": "Medium",
+                        "impact": "High",
+                        "mitigation": "Maintain 6-month cash buffer"
+                    }},
+                    {{
+                        "risk": "Customer concentration",
+                        "probability": "Low",
+                        "impact": "High",
+                        "mitigation": "No single customer > 10% of revenue"
+                    }}
+                ]
+            }}
+        }}
+        
+        Return ONLY valid JSON.
+        """
+        
+        response = await self.ai_brain.generate_enhanced_response(prompt, model='anthropic')
+        return self._extract_json_from_response(response.get('content', ''))
+    
+    async def _save_project_metadata(self, repo, details: Dict[str, Any], 
+                                   structured_docs: Dict[str, Any], results: Dict[str, Any]):
+        """Save complete project metadata including all structured documentation.
+        
+        Args:
+            repo: Repository object
+            details: Project details
+            structured_docs: All structured documentation
+            results: Results dictionary
+        """
+        try:
+            self.logger.info("💾 Saving complete project metadata...")
+            
+            # Get current repository state
+            repo_path = Path(repo.path) if hasattr(repo, 'path') else None
+            
+            # Count issues and tasks
+            issue_count = 0
+            task_states = {
+                'pending': 0,
+                'in_progress': 0,
+                'completed': 0,
+                'total': 0
+            }
+            
+            if repo_path:
+                # Count issues
+                issues_dir = repo_path / "issues"
+                if issues_dir.exists():
+                    issue_count = len(list(issues_dir.glob("issue-*.json")))
+                
+                # TODO: Add task state tracking when task system is integrated
+            
+            # Build complete metadata
+            metadata = {
+                "project": {
+                    "name": details.get('name'),
+                    "description": details.get('description'),
+                    "created_at": datetime.now(timezone.utc).isoformat(),
+                    "updated_at": datetime.now(timezone.utc).isoformat(),
+                    "version": "1.0.0"
+                },
+                "repository": {
+                    "full_name": repo.full_name if hasattr(repo, 'full_name') else f"CodeWebMobile-AI/{details.get('name')}",
+                    "path": str(repo_path) if repo_path else None,
+                    "default_branch": "main",
+                    "template_used": "react-starter-kit"
+                },
+                "documentation": {
+                    "readme": structured_docs.get('readme', {}),
+                    "architecture": structured_docs.get('architecture', {}),
+                    "monetization": structured_docs.get('monetization', {}),
+                    "generated_at": structured_docs.get('generated_at')
+                },
+                "project_details": {
+                    "problem_statement": details.get('problem_statement'),
+                    "target_audience": details.get('target_audience'),
+                    "initial_features": details.get('initial_features', []),
+                    "core_entities": self._extract_core_entities(details),
+                    "tech_stack": details.get('tech_stack'),
+                    "project_type": details.get('metadata', {}).get('project_type')
+                },
+                "statistics": {
+                    "issues": {
+                        "total": issue_count,
+                        "open": issue_count,  # All new issues are open
+                        "closed": 0
+                    },
+                    "tasks": task_states,
+                    "documentation_files": {
+                        "readme": bool(structured_docs.get('readme')),
+                        "architecture": bool(structured_docs.get('architecture')),
+                        "monetization": bool(structured_docs.get('monetization'))
+                    }
+                },
+                "ai_generation": {
+                    "models_used": ["gemini-2.0-flash"],
+                    "generation_timestamp": datetime.now(timezone.utc).isoformat(),
+                    "prompts_count": 3  # README, Architecture, Monetization
+                }
+            }
+            
+            # Save to metadata.json
+            if self.storage_mode == StorageMode.LOCAL and repo_path:
+                metadata_path = repo_path / "metadata.json"
+                with open(metadata_path, 'w') as f:
+                    json.dump(metadata, f, indent=2)
+                self.logger.info(f"✅ Saved complete metadata to {metadata_path}")
+            else:
+                # For GitHub mode, update the file
+                try:
+                    # Get existing metadata file
+                    existing = repo.get_contents("metadata.json")
+                    repo.update_file(
+                        "metadata.json",
+                        "Update project metadata with complete documentation",
+                        json.dumps(metadata, indent=2),
+                        existing.sha
+                    )
+                except:
+                    # Create if doesn't exist
+                    repo.create_file(
+                        "metadata.json",
+                        "Add complete project metadata",
+                        json.dumps(metadata, indent=2)
+                    )
+                
+            results['metadata_saved'] = True
+            
+        except Exception as e:
+            self.logger.error(f"❌ Failed to save project metadata: {e}")
+            raise  # Re-raise the exception to stop execution
+    
+    async def _create_markdown_files_from_structured(self, repo, structured_docs: Dict[str, Any], 
+                                                   results: Dict[str, Any]):
+        """Transform structured documentation to markdown files.
+        
+        Args:
+            repo: Repository object
+            structured_docs: Structured documentation data
+            results: Results dictionary
+        """
+        try:
+            # 1. Create README.md from structured data
+            if structured_docs.get('readme'):
+                self.logger.info("📝 Creating README.md from structured data")
+                readme_content = self._transform_structured_readme_to_markdown(structured_docs['readme'])
+                
+                if self.storage_mode == StorageMode.LOCAL:
+                    repo.update_file(
+                        "README.md",
+                        "Update README with comprehensive documentation",
+                        readme_content
+                    )
+                else:
+                    try:
+                        existing = repo.get_contents("README.md")
+                        repo.update_file(
+                            "README.md",
+                            "Update README with comprehensive documentation",
+                            readme_content,
+                            existing.sha
+                        )
+                    except:
+                        repo.create_file(
+                            "README.md",
+                            "Add comprehensive README",
+                            readme_content
+                        )
+                
+                results['readme_updated'] = True
+                self.logger.info("✅ README.md created successfully")
+            
+            # 2. Create ARCHITECTURE.md from structured data
+            if structured_docs.get('architecture'):
+                self.logger.info("🏗️ Creating ARCHITECTURE.md from structured data")
+                architecture_content = self._transform_structured_architecture_to_markdown(structured_docs['architecture'])
+                
+                if self.storage_mode == StorageMode.LOCAL:
+                    repo.create_file(
+                        "ARCHITECTURE.md",
+                        "Add comprehensive architecture documentation",
+                        architecture_content
+                    )
+                else:
+                    repo.create_file(
+                        "ARCHITECTURE.md",
+                        "Add comprehensive architecture documentation",
+                        architecture_content
+                    )
+                
+                results['architecture_saved'] = True
+                self.logger.info("✅ ARCHITECTURE.md created successfully")
+            
+            # 3. Create MONETIZATION_STRATEGY.md from structured data
+            if structured_docs.get('monetization'):
+                self.logger.info("💰 Creating MONETIZATION_STRATEGY.md from structured data")
+                monetization_content = self._transform_structured_monetization_to_markdown(structured_docs['monetization'])
+                
+                if self.storage_mode == StorageMode.LOCAL:
+                    repo.create_file(
+                        "MONETIZATION_STRATEGY.md",
+                        "Add comprehensive monetization strategy",
+                        monetization_content
+                    )
+                else:
+                    repo.create_file(
+                        "MONETIZATION_STRATEGY.md",
+                        "Add comprehensive monetization strategy",
+                        monetization_content
+                    )
+                
+                results['monetization_saved'] = True
+                self.logger.info("✅ MONETIZATION_STRATEGY.md created successfully")
+            
+            # Log summary
+            self.logger.info(f"""
+📚 Documentation Creation Summary:
+- README.md: {'✅ Created' if results.get('readme_updated') else '❌ Failed'}
+- ARCHITECTURE.md: {'✅ Created' if results.get('architecture_saved') else '❌ Failed'}
+- MONETIZATION_STRATEGY.md: {'✅ Created' if results.get('monetization_saved') else '❌ Failed'}
+- metadata.json: {'✅ Updated' if results.get('metadata_saved') else '❌ Failed'}
+            """)
+            
+        except Exception as e:
+            self.logger.error(f"❌ Failed to create markdown files: {e}")
+            import traceback
+            self.logger.error(traceback.format_exc())
+    
+    def _transform_structured_readme_to_markdown(self, data: Dict[str, Any]) -> str:
+        """Transform structured README data to markdown format.
+        
+        Args:
+            data: Structured README data
+            
+        Returns:
+            Markdown formatted README
+        """
+        md = f"# {data.get('title', 'Project')}\n\n"
+        
+        if data.get('tagline'):
+            md += f"> {data['tagline']}\n\n"
+        
+        if data.get('overview'):
+            md += f"## Overview\n\n{data['overview']}\n\n"
+        
+        if data.get('problem_statement'):
+            md += f"## Problem Statement\n\n{data['problem_statement']}\n\n"
+        
+        if data.get('solution'):
+            md += f"## Solution\n\n{data['solution']}\n\n"
+        
+        if data.get('target_audience'):
+            md += "## Target Audience\n\n"
+            for audience in data['target_audience']:
+                md += f"- {audience}\n"
+            md += "\n"
+        
+        if data.get('value_proposition'):
+            md += f"## Value Proposition\n\n{data['value_proposition']}\n\n"
+        
+        if data.get('features'):
+            md += "## Features\n\n"
+            for feature in data['features']:
+                if isinstance(feature, dict):
+                    md += f"### {feature.get('name', 'Feature')}\n\n"
+                    md += f"{feature.get('description', '')}\n\n"
+                    if feature.get('benefit'):
+                        md += f"**Benefit**: {feature['benefit']}\n\n"
+                else:
+                    md += f"- {feature}\n"
+            md += "\n"
+        
+        if data.get('tech_stack'):
+            md += "## Tech Stack\n\n"
+            tech = data['tech_stack']
+            if isinstance(tech, dict):
+                for category, items in tech.items():
+                    md += f"### {category.title()}\n"
+                    for item in items:
+                        md += f"- {item}\n"
+                    md += "\n"
+            else:
+                md += f"{tech}\n\n"
+        
+        if data.get('prerequisites'):
+            md += "## Prerequisites\n\n"
+            for prereq in data['prerequisites']:
+                md += f"- {prereq}\n"
+            md += "\n"
+        
+        if data.get('installation_steps'):
+            md += "## Installation\n\n"
+            for i, step in enumerate(data['installation_steps'], 1):
+                md += f"{i}. {step}\n"
+            md += "\n"
+        
+        if data.get('configuration'):
+            md += "## Configuration\n\n"
+            config = data['configuration']
+            
+            if config.get('environment_variables'):
+                md += "### Environment Variables\n\n"
+                md += "| Variable | Description | Example |\n"
+                md += "|----------|-------------|----------|\n"
+                for var in config['environment_variables']:
+                    if isinstance(var, dict):
+                        md += f"| `{var.get('name', '')}` | {var.get('description', '')} | `{var.get('example', '')}` |\n"
+                md += "\n"
+        
+        if data.get('api_endpoints'):
+            md += "## API Endpoints\n\n"
+            for endpoint in data['api_endpoints']:
+                if isinstance(endpoint, dict):
+                    md += f"- **{endpoint.get('method', 'GET')}** `{endpoint.get('path', '/api')}` - {endpoint.get('description', '')}\n"
+            md += "\n"
+        
+        if data.get('testing'):
+            md += "## Testing\n\n"
+            test = data['testing']
+            if isinstance(test, dict):
+                for test_type, command in test.items():
+                    md += f"### {test_type.replace('_', ' ').title()}\n\n"
+                    md += f"```bash\n{command}\n```\n\n"
+        
+        if data.get('deployment'):
+            md += "## Deployment\n\n"
+            deploy = data['deployment']
+            if isinstance(deploy, dict):
+                if deploy.get('environments'):
+                    md += "### Environments\n\n"
+                    for env in deploy['environments']:
+                        md += f"- {env}\n"
+                    md += "\n"
+                
+                if deploy.get('steps'):
+                    md += "### Deployment Steps\n\n"
+                    for i, step in enumerate(deploy['steps'], 1):
+                        md += f"{i}. {step}\n"
+                    md += "\n"
+        
+        if data.get('contributing'):
+            md += "## Contributing\n\n"
+            contrib = data['contributing']
+            if isinstance(contrib, dict):
+                md += f"{contrib.get('guidelines', '')}\n\n"
+                if contrib.get('code_style'):
+                    md += f"### Code Style\n\n{contrib['code_style']}\n\n"
+                if contrib.get('pull_request_process'):
+                    md += f"### Pull Request Process\n\n{contrib['pull_request_process']}\n\n"
+        
+        if data.get('license'):
+            md += f"## License\n\n{data['license']}\n\n"
+        
+        if data.get('contact'):
+            md += "## Contact\n\n"
+            contact = data['contact']
+            if isinstance(contact, dict):
+                md += f"- **Maintainer**: {contact.get('maintainer', '')}\n"
+                md += f"- **Email**: {contact.get('email', '')}\n"
+        
+        return md
+    
+    def _transform_structured_architecture_to_markdown(self, data: Dict[str, Any]) -> str:
+        """Transform structured architecture data to markdown format.
+        
+        Args:
+            data: Structured architecture data
+            
+        Returns:
+            Markdown formatted architecture document
+        """
+        md = "# System Architecture\n\n"
+        
+        # Overview
+        if data.get('overview'):
+            overview = data['overview']
+            md += "## Overview\n\n"
+            if isinstance(overview, dict):
+                md += f"{overview.get('description', '')}\n\n"
+                if overview.get('architecture_style'):
+                    md += f"**Architecture Style**: {overview['architecture_style']}\n\n"
+                if overview.get('key_principles'):
+                    md += "**Key Principles**:\n"
+                    for principle in overview['key_principles']:
+                        md += f"- {principle}\n"
+                    md += "\n"
+        
+        # Core Entities
+        if data.get('core_entities'):
+            md += "## Core Entities\n\n"
+            for entity in data['core_entities']:
+                if isinstance(entity, dict):
+                    md += f"### {entity.get('name', 'Entity')}\n\n"
+                    md += f"{entity.get('description', '')}\n\n"
+                    if entity.get('relationships'):
+                        md += f"**Relationships**: {', '.join(entity['relationships'])}\n\n"
+                else:
+                    md += f"- {entity}\n"
+            md += "\n"
+        
+        # System Components
+        if data.get('system_components'):
+            md += "## System Components\n\n"
+            for component in data['system_components']:
+                if isinstance(component, dict):
+                    md += f"### {component.get('name', 'Component')}\n\n"
+                    md += f"**Type**: {component.get('type', '')}\n\n"
+                    md += f"{component.get('description', '')}\n\n"
+                    if component.get('technologies'):
+                        md += f"**Technologies**: {', '.join(component['technologies'])}\n\n"
+                    if component.get('responsibilities'):
+                        md += "**Responsibilities**:\n"
+                        for resp in component['responsibilities']:
+                            md += f"- {resp}\n"
+                        md += "\n"
+        
+        # Data Architecture
+        if data.get('data_architecture'):
+            md += "## Data Architecture\n\n"
+            arch = data['data_architecture']
+            
+            if arch.get('primary_database'):
+                db = arch['primary_database']
+                md += f"### Primary Database\n\n"
+                md += f"- **Type**: {db.get('type', '')}\n"
+                md += f"- **Purpose**: {db.get('purpose', '')}\n"
+                if db.get('schemas'):
+                    md += f"- **Schemas**: {', '.join(db['schemas'])}\n"
+                md += "\n"
+            
+            if arch.get('cache_layer'):
+                cache = arch['cache_layer']
+                md += f"### Cache Layer\n\n"
+                md += f"- **Type**: {cache.get('type', '')}\n"
+                md += f"- **Purpose**: {cache.get('purpose', '')}\n"
+                md += f"- **TTL Strategy**: {cache.get('ttl_strategy', '')}\n\n"
+            
+            if arch.get('data_flow'):
+                md += "### Data Flow\n\n"
+                for flow in arch['data_flow']:
+                    md += f"- {flow}\n"
+                md += "\n"
+        
+        # API Design
+        if data.get('api_design'):
+            md += "## API Design\n\n"
+            api = data['api_design']
+            md += f"- **Style**: {api.get('style', '')}\n"
+            md += f"- **Versioning**: {api.get('versioning', '')}\n"
+            md += f"- **Authentication**: {api.get('authentication', '')}\n"
+            md += f"- **Rate Limiting**: {api.get('rate_limiting', '')}\n\n"
+        
+        # Security Architecture
+        if data.get('security_architecture'):
+            md += "## Security Architecture\n\n"
+            security = data['security_architecture']
+            
+            if security.get('authentication'):
+                auth = security['authentication']
+                md += "### Authentication\n\n"
+                md += f"- **Method**: {auth.get('method', '')}\n"
+                md += f"- **Token Lifetime**: {auth.get('token_lifetime', '')}\n"
+                md += f"- **Refresh Strategy**: {auth.get('refresh_strategy', '')}\n\n"
+            
+            if security.get('data_protection'):
+                md += "### Data Protection\n\n"
+                for protection in security['data_protection']:
+                    md += f"- {protection}\n"
+                md += "\n"
+        
+        # Design System
+        if data.get('design_system'):
+            md += "## Design System\n\n"
+            design = data['design_system']
+            
+            if design.get('typography'):
+                md += "### Typography\n\n"
+                typo = design['typography']
+                md += f"- **Font Family**: {typo.get('font_family', '')}\n"
+                if typo.get('font_sizes'):
+                    md += "- **Font Sizes**:\n"
+                    for size, value in typo['font_sizes'].items():
+                        md += f"  - {size}: {value}\n"
+                md += "\n"
+            
+            if design.get('color_palette'):
+                md += "### Color Palette\n\n"
+                colors = design['color_palette']
+                for color_name, color_data in colors.items():
+                    if isinstance(color_data, dict):
+                        md += f"- **{color_data.get('name', color_name)}**: `{color_data.get('hex', '')}` - {color_data.get('usage', '')}\n"
+                md += "\n"
+        
+        # Performance Targets
+        if data.get('performance_targets'):
+            md += "## Performance Targets\n\n"
+            perf = data['performance_targets']
+            for metric, target in perf.items():
+                md += f"- **{metric.replace('_', ' ').title()}**: {target}\n"
+            md += "\n"
+        
+        # Metadata
+        md += f"""
+## Metadata
+
+- **Generated**: {datetime.now(timezone.utc).isoformat()}
+- **Architecture Version**: 1.0.0
+
+---
+*This architecture document is maintained by the CodeWebMobile AI system.*
+"""
+        
+        return md
+    
+    def _transform_structured_monetization_to_markdown(self, data: Dict[str, Any]) -> str:
+        """Transform structured monetization data to markdown format.
+        
+        Args:
+            data: Structured monetization data
+            
+        Returns:
+            Markdown formatted monetization strategy
+        """
+        md = "# Monetization Strategy\n\n"
+        
+        # Executive Summary
+        if data.get('executive_summary'):
+            summary = data['executive_summary']
+            md += "## Executive Summary\n\n"
+            if isinstance(summary, dict):
+                md += f"**Business Model**: {summary.get('business_model', '')}\n\n"
+                
+                if summary.get('revenue_streams'):
+                    md += "**Revenue Streams**:\n"
+                    for stream in summary['revenue_streams']:
+                        md += f"- {stream}\n"
+                    md += "\n"
+                
+                if summary.get('target_market_size'):
+                    md += f"**Target Market Size**: {summary['target_market_size']}\n\n"
+                
+                if summary.get('projected_revenue_year_1'):
+                    md += f"**Year 1 Revenue Projection**: {summary['projected_revenue_year_1']}\n"
+                if summary.get('projected_revenue_year_3'):
+                    md += f"**Year 3 Revenue Projection**: {summary['projected_revenue_year_3']}\n\n"
+        
+        # Market Analysis
+        if data.get('market_analysis'):
+            md += "## Market Analysis\n\n"
+            market = data['market_analysis']
+            
+            # Market Size
+            if market.get('market_size'):
+                size = market['market_size']
+                md += "### Market Size\n\n"
+                if size.get('tam'):
+                    md += f"- **Total Addressable Market (TAM)**: {size['tam']}\n"
+                if size.get('sam'):
+                    md += f"- **Serviceable Addressable Market (SAM)**: {size['sam']}\n"
+                if size.get('som'):
+                    md += f"- **Serviceable Obtainable Market (SOM)**: {size['som']}\n"
+                if size.get('growth_rate'):
+                    md += f"- **Annual Growth Rate**: {size['growth_rate']}\n"
+                md += "\n"
+            
+            # Target Segments
+            if market.get('target_segments'):
+                md += "### Target Market Segments\n\n"
+                for segment in market['target_segments']:
+                    if isinstance(segment, dict):
+                        md += f"#### {segment.get('name', 'Segment')}\n\n"
+                        md += f"- **Market Size**: {segment.get('size', '')}\n"
+                        if segment.get('characteristics'):
+                            md += f"- **Characteristics**: {', '.join(segment['characteristics'])}\n"
+                        if segment.get('pain_points'):
+                            md += f"- **Pain Points**: {', '.join(segment['pain_points'])}\n"
+                        md += f"- **Willingness to Pay**: {segment.get('willingness_to_pay', '')}\n\n"
+            
+            # Competitors
+            if market.get('competitors'):
+                md += "### Competitive Landscape\n\n"
+                for comp in market['competitors']:
+                    if isinstance(comp, dict):
+                        md += f"#### {comp.get('name', 'Competitor')}\n\n"
+                        md += f"- **Market Share**: {comp.get('market_share', '')}\n"
+                        md += f"- **Pricing**: {comp.get('pricing', '')}\n"
+                        if comp.get('strengths'):
+                            md += f"- **Strengths**: {', '.join(comp['strengths'])}\n"
+                        if comp.get('weaknesses'):
+                            md += f"- **Weaknesses**: {', '.join(comp['weaknesses'])}\n"
+                        if comp.get('our_advantage'):
+                            md += f"- **Our Advantage**: {comp['our_advantage']}\n"
+                        md += "\n"
+        
+        # Revenue Models
+        if data.get('revenue_models'):
+            md += "## Revenue Models\n\n"
+            for model in data['revenue_models']:
+                if isinstance(model, dict):
+                    md += f"### {model.get('model_type', 'Revenue Model')}\n\n"
+                    md += f"{model.get('description', '')}\n\n"
+                    
+                    if model.get('pricing_tiers'):
+                        md += "#### Pricing Tiers\n\n"
+                        md += "| Tier | Monthly | Annual | Target Users | Key Features |\n"
+                        md += "|------|---------|---------|--------------|---------------|\n"
+                        for tier in model['pricing_tiers']:
+                            if isinstance(tier, dict):
+                                features = ', '.join(tier.get('features', [])[:3])
+                                if len(tier.get('features', [])) > 3:
+                                    features += '...'
+                                md += f"| {tier.get('name', '')} | ${tier.get('price_monthly', '')} | ${tier.get('price_annual', '')} | {tier.get('target_users', '')} | {features} |\n"
+                        md += "\n"
+        
+        # Customer Acquisition
+        if data.get('customer_acquisition'):
+            md += "## Customer Acquisition Strategy\n\n"
+            acq = data['customer_acquisition']
+            
+            if acq.get('channels'):
+                md += "### Acquisition Channels\n\n"
+                for channel in acq['channels']:
+                    if isinstance(channel, dict):
+                        md += f"#### {channel.get('name', 'Channel')}\n\n"
+                        md += f"- **Strategy**: {channel.get('strategy', '')}\n"
+                        md += f"- **Cost per Acquisition**: ${channel.get('cost_per_acquisition', '')}\n"
+                        md += f"- **Expected Volume**: {channel.get('expected_volume', '')}\n\n"
+            
+            if acq.get('conversion_funnel'):
+                funnel = acq['conversion_funnel']
+                md += "### Conversion Funnel\n\n"
+                for stage, rate in funnel.items():
+                    md += f"- **{stage.replace('_', ' ').title()}**: {rate}\n"
+                md += "\n"
+        
+        # Financial Projections
+        if data.get('financial_projections'):
+            md += "## Financial Projections\n\n"
+            proj = data['financial_projections']
+            
+            md += "| Year | Revenue | Costs | Profit | Customers | MRR |\n"
+            md += "|------|---------|--------|---------|-----------|------|\n"
+            
+            for year in ['year_1', 'year_2', 'year_3']:
+                if year in proj:
+                    y = proj[year]
+                    year_num = year.split('_')[1]
+                    md += f"| Year {year_num} | ${y.get('revenue', 0):,} | ${y.get('costs', 0):,} | ${y.get('profit', 0):,} | {y.get('customers', 0):,} | ${y.get('mrr_end', 0):,} |\n"
+            md += "\n"
+            
+            if proj.get('key_metrics'):
+                metrics = proj['key_metrics']
+                md += "### Key Metrics\n\n"
+                for metric, value in metrics.items():
+                    md += f"- **{metric.upper()}**: {value}\n"
+                md += "\n"
+        
+        # Growth Strategy
+        if data.get('growth_strategy'):
+            md += "## Growth Strategy\n\n"
+            growth = data['growth_strategy']
+            
+            if growth.get('phases'):
+                md += "### Growth Phases\n\n"
+                for phase in growth['phases']:
+                    if isinstance(phase, dict):
+                        md += f"#### {phase.get('phase', 'Phase')}\n\n"
+                        md += f"**Timeline**: {phase.get('timeline', '')}\n\n"
+                        if phase.get('goals'):
+                            md += "**Goals**:\n"
+                            for goal in phase['goals']:
+                                md += f"- {goal}\n"
+                            md += "\n"
+                        if phase.get('strategies'):
+                            md += "**Strategies**:\n"
+                            for strategy in phase['strategies']:
+                                md += f"- {strategy}\n"
+                            md += "\n"
+        
+        # Metadata
+        md += f"""
+## Metadata
+
+- **Generated**: {datetime.now(timezone.utc).isoformat()}
+- **Strategy Version**: 1.0.0
+- **Review Cycle**: Quarterly
+
+---
+*This monetization strategy should be reviewed and updated quarterly based on market feedback and performance metrics.*
+"""
+        
+        return md

@@ -26,6 +26,9 @@ class RepositoryExclusion:
     # Dynamic exclusion list that includes base exclusions + deleted repos
     EXCLUDED_REPOS: Set[str] = _BASE_EXCLUDED_REPOS.copy()
     
+    # Flag to track if initialization has already been done
+    _initialized = False
+    
     @classmethod
     def _load_deleted_repos(cls) -> None:
         """Load deleted repositories from persistent storage."""
@@ -262,6 +265,8 @@ def get_exclusion_reason(repo_identifier: str) -> str:
     return RepositoryExclusion.get_exclusion_reason(repo_identifier)
 
 
-# Initialize and validate configuration on import
-RepositoryExclusion._load_deleted_repos()  # Load deleted repos first
-RepositoryExclusion.validate_exclusion_config()
+# Initialize and validate configuration on import (only once)
+if not RepositoryExclusion._initialized:
+    RepositoryExclusion._load_deleted_repos()  # Load deleted repos first
+    RepositoryExclusion.validate_exclusion_config()
+    RepositoryExclusion._initialized = True

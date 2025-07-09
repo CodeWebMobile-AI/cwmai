@@ -1,0 +1,29 @@
+{
+  "ai_analysis": {
+    "analyzed_at": "2025-07-01T22:10:31.270049+00:00",
+    "model_used": "unknown",
+    "summary": "Error generating response: None"
+  },
+  "charter_goals": [
+    "innovation",
+    "community_engagement"
+  ],
+  "environment": "production",
+  "file_path": "production_context.json",
+  "research_capabilities": [
+    "conduct_targeted_research",
+    "extract_actionable_insights",
+    "evaluate_research_quality",
+    "generate_performance_research_query"
+  ],
+  "research_domains": [
+    "task_generation",
+    "claude_interaction",
+    "multi_agent_coordination",
+    "outcome_learning",
+    "portfolio_management"
+  ],
+  "research_note": "Production context enhanced with Research Intelligence System",
+  "saved_at": "2025-07-01T22:10:31.270058+00:00",
+  "timestamp": "2025-07-01T22:10:31.269615+00:00"
+}

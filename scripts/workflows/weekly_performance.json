@@ -1,0 +1,37 @@
+{
+  "name": "weekly_performance",
+  "description": "Weekly performance analysis and optimization workflow",
+  "schedule": "weekly",
+  "steps": [
+    {
+      "name": "initialize",
+      "tool": "get_system_status",
+      "params": {}
+    },
+    {
+      "name": "analyze",
+      "tool": "repository_health_check",
+      "params": {
+        "depth": "full"
+      }
+    },
+    {
+      "name": "process_results",
+      "tool": "handle_complex_query",
+      "params": {
+        "query": "Process results for Weekly performance analysis and optimization workflow"
+      }
+    },
+    {
+      "name": "create_report",
+      "tool": "generate_weekly_report",
+      "params": {
+        "type": "report"
+      }
+    }
+  ],
+  "error_handling": {
+    "on_failure": "notify_and_retry",
+    "max_retries": 3
+  }
+}

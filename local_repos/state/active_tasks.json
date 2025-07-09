@@ -1,0 +1,87 @@
+{
+  "work_1751394544_ca146f68": {
+    "id": "work_1751394544_ca146f68",
+    "task_type": "NEW_PROJECT",
+    "title": "SkillScribe",
+    "description": "Many individuals struggle to find structured, personalized learning paths for specific career goals, leading to inefficient learning and frustration. SkillScribe uses AI to analyze a user's desired career, current skillset, and learning preferences to generate a custom curriculum with curated resources, practice projects, and personalized feedback, improving learning efficiency and job readiness.",
+    "repository": null,
+    "priority": 2,
+    "stage": "executing",
+    "registered_at": "2025-07-01T18:29:04.756511+00:00",
+    "metadata": {
+      "project_type": "Personalized Learning Tool",
+      "starter_kit": "laravel/react-starter-kit",
+      "detailed_description": "Many individuals struggle to find structured, personalized learning paths for specific career goals, leading to inefficient learning and frustration. SkillScribe uses AI to analyze a user's desired career, current skillset, and learning preferences to generate a custom curriculum with curated resources, practice projects, and personalized feedback, improving learning efficiency and job readiness.",
+      "worker_id": "worker_00"
+    },
+    "last_updated": "2025-07-01T18:29:04.757227+00:00"
+  },
+  "work_1751394544_6b8dbbe3": {
+    "id": "work_1751394544_6b8dbbe3",
+    "task_type": "NEW_PROJECT",
+    "title": "StockPilot",
+    "description": "Small to medium-sized retailers often struggle with inefficient inventory management, leading to stockouts, overstocking, and lost revenue. StockPilot integrates with existing POS systems and utilizes machine learning to forecast demand, optimize reorder points, and automate purchase order generation, minimizing inventory costs and maximizing sales.",
+    "repository": null,
+    "priority": 2,
+    "stage": "executing",
+    "registered_at": "2025-07-01T18:29:04.757569+00:00",
+    "metadata": {
+      "project_type": "Inventory Management and Replenishment Optimization",
+      "starter_kit": "laravel/react-starter-kit",
+      "detailed_description": "Small to medium-sized retailers often struggle with inefficient inventory management, leading to stockouts, overstocking, and lost revenue. StockPilot integrates with existing POS systems and utilizes machine learning to forecast demand, optimize reorder points, and automate purchase order generation, minimizing inventory costs and maximizing sales.",
+      "worker_id": "worker_01"
+    },
+    "last_updated": "2025-07-01T18:29:04.757854+00:00"
+  },
+  "work_1751394544_b0a9fc7b": {
+    "id": "work_1751394544_b0a9fc7b",
+    "task_type": "NEW_PROJECT",
+    "title": "EcoWrap",
+    "description": "Businesses are increasingly seeking sustainable packaging solutions, but often lack a centralized platform to discover and compare eco-friendly options from verified suppliers. EcoWrap is a curated marketplace connecting businesses with suppliers of sustainable packaging materials, offering transparent pricing, certification verification, and carbon footprint analysis, enabling businesses to reduce their environmental impact and meet sustainability goals.",
+    "repository": null,
+    "priority": 2,
+    "stage": "executing",
+    "registered_at": "2025-07-01T18:29:04.758174+00:00",
+    "metadata": {
+      "project_type": "Sustainable Packaging Marketplace",
+      "starter_kit": "laravel/react-starter-kit",
+      "detailed_description": "Businesses are increasingly seeking sustainable packaging solutions, but often lack a centralized platform to discover and compare eco-friendly options from verified suppliers. EcoWrap is a curated marketplace connecting businesses with suppliers of sustainable packaging materials, offering transparent pricing, certification verification, and carbon footprint analysis, enabling businesses to reduce their environmental impact and meet sustainability goals.",
+      "worker_id": "worker_02"
+    },
+    "last_updated": "2025-07-01T18:29:04.758469+00:00"
+  },
+  "work_1751394544_56246625": {
+    "id": "work_1751394544_56246625",
+    "task_type": "NEW_PROJECT",
+    "title": "FlowState",
+    "description": "Remote teams often struggle with maintaining focus and staying aligned on complex projects, leading to decreased productivity and communication breakdowns. FlowState integrates with popular project management tools and provides a visual workspace with built-in mindfulness exercises, focus timers, and real-time progress tracking, helping teams enter 'flow state' and collaborate more effectively.",
+    "repository": null,
+    "priority": 2,
+    "stage": "executing",
+    "registered_at": "2025-07-01T18:29:04.758782+00:00",
+    "metadata": {
+      "project_type": "Remote Team Collaboration Tool",
+      "starter_kit": "laravel/react-starter-kit",
+      "detailed_description": "Remote teams often struggle with maintaining focus and staying aligned on complex projects, leading to decreased productivity and communication breakdowns. FlowState integrates with popular project management tools and provides a visual workspace with built-in mindfulness exercises, focus timers, and real-time progress tracking, helping teams enter 'flow state' and collaborate more effectively.",
+      "worker_id": "worker_03"
+    },
+    "last_updated": "2025-07-01T18:29:04.759100+00:00"
+  },
+  "work_1751407831_571d099b": {
+    "id": "work_1751407831_571d099b",
+    "task_type": "NEW_PROJECT",
+    "title": "Market Research Project",
+    "description": "A project based on current market research and real needs",
+    "repository": null,
+    "priority": 2,
+    "stage": "executing",
+    "registered_at": "2025-07-01T22:10:31.380561+00:00",
+    "metadata": {
+      "project_type": "solution",
+      "starter_kit": "laravel/react-starter-kit",
+      "detailed_description": "A project based on current market research and real needs",
+      "worker_id": "worker_00"
+    },
+    "last_updated": "2025-07-01T22:10:31.382207+00:00"
+  }
+}

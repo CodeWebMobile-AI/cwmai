@@ -16,9 +16,9 @@ from typing import Dict, Any, List
 import json
 import logging
 
-from scripts.state_manager import StateManager  # Replace with actual path
-from scripts.tool_executor import ToolExecutor  # Replace with actual path
-from scripts.workflow_manager import WorkflowManager  # Replace with actual path
+from scripts.state_manager import StateManager
+from scripts.tool_calling_system import ToolCallingSystem
+from scripts.workflow_manager import WorkflowManager
 
 
 """
@@ -84,7 +84,7 @@ async def orchestrate_workflows(**kwargs: Dict[str, Any]) -> Dict[str, Any]:
     try:
         state_manager = StateManager()
         workflow_manager = WorkflowManager(state_manager)  # Initialize with state_manager
-        tool_executor = ToolExecutor() # Initialize tool executor
+        tool_system = ToolCallingSystem() # Initialize tool calling system
 
         state = state_manager.load_state()  # Load state when needed
 
@@ -109,7 +109,7 @@ async def orchestrate_workflows(**kwargs: Dict[str, Any]) -> Dict[str, Any]:
             except (TypeError, json.JSONDecodeError) as e:
                 raise ValueError(f"Invalid input data: {e}")
 
-            result = await workflow_manager.execute_workflow(workflow_name, input_data, tool_executor)
+            result = await workflow_manager.execute_workflow(workflow_name, input_data, tool_system)
             return result
 
         elif action == "define_workflow":

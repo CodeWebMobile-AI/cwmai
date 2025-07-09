@@ -1,0 +1,23 @@
+{
+  "simulation": {
+    "runtime_minutes": 15,
+    "timestamp": "2025-06-22T17:54:44.867033"
+  },
+  "expected_metrics": {
+    "generations": 90,
+    "research_cycles": 30,
+    "improvements": 30,
+    "breakthroughs": 18,
+    "research_insights": 90
+  },
+  "benefits": [
+    "Research and evolution work together synergistically",
+    "No resource competition between continuous ops and research",
+    "Purposeful research directed at improvement generation",
+    "Consolidated logging and debugging"
+  ],
+  "architecture_change": {
+    "before": "Research in continuous orchestrators (broken)",
+    "after": "Research in knowledge-driven evolution (working)"
+  }
+}

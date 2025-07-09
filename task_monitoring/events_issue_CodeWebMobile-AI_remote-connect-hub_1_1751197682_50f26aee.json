@@ -1,0 +1,11 @@
+[
+  {
+    "task_id": "issue_CodeWebMobile-AI/remote-connect-hub_1_1751197682_50f26aee",
+    "event": "started",
+    "timestamp": "2025-06-29T11:48:12.781833+00:00",
+    "metadata": {
+      "executor": "LocalIssueCreator",
+      "claude_enabled": true
+    }
+  }
+]

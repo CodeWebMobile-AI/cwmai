@@ -450,6 +450,57 @@ class ToolCallingSystem:
             for name, tool in self.tools.items()
         }
     
+    def get_tool_categories(self) -> List[str]:
+        """Get all unique tool categories."""
+        categories = set()
+        for tool in self.tools.values():
+            # Extract category from tool name or description
+            if '_' in tool.name:
+                category = tool.name.split('_')[0]
+                categories.add(category)
+            else:
+                # Default categories based on keywords
+                desc_lower = tool.description.lower()
+                if 'repository' in desc_lower or 'code' in desc_lower:
+                    categories.add('repository')
+                elif 'system' in desc_lower or 'state' in desc_lower:
+                    categories.add('system')
+                elif 'task' in desc_lower or 'work' in desc_lower:
+                    categories.add('task')
+                elif 'ai' in desc_lower or 'analysis' in desc_lower:
+                    categories.add('analysis')
+                else:
+                    categories.add('utility')
+        return sorted(list(categories))
+    
+    def get_tools_summary_by_category(self) -> Dict[str, Dict[str, List[str]]]:
+        """Get tools organized by category."""
+        tools_by_category = {}
+        
+        for tool in self.tools.values():
+            # Determine category
+            if '_' in tool.name:
+                category = tool.name.split('_')[0]
+            else:
+                # Default categories based on keywords
+                desc_lower = tool.description.lower()
+                if 'repository' in desc_lower or 'code' in desc_lower:
+                    category = 'repository'
+                elif 'system' in desc_lower or 'state' in desc_lower:
+                    category = 'system'
+                elif 'task' in desc_lower or 'work' in desc_lower:
+                    category = 'task'
+                elif 'ai' in desc_lower or 'analysis' in desc_lower:
+                    category = 'analysis'
+                else:
+                    category = 'utility'
+            
+            if category not in tools_by_category:
+                tools_by_category[category] = {'tools': []}
+            tools_by_category[category]['tools'].append(tool.name)
+            
+        return tools_by_category
+    
     def get_tool(self, tool_name: str):
         """Get a specific tool by name."""
         if tool_name in self.tools:

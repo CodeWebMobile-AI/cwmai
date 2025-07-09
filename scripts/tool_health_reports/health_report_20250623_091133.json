@@ -1,0 +1,23 @@
+{
+  "timestamp": "2025-06-23T09:11:33.221953+00:00",
+  "total_tools": 2,
+  "healthy_tools": 1,
+  "issues_found": [
+    {
+      "tool": "list_files",
+      "type": "method_existence",
+      "description": "Found 1 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        57
+      ],
+      "status": "fixed"
+    }
+  ],
+  "auto_fixed": 1,
+  "recommendations": [
+    "Update tool documentation to reflect current API methods"
+  ]
+}

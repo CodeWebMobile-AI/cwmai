@@ -1,0 +1,89 @@
+{
+  "timestamp": "2025-06-24T16:31:05.401518",
+  "approach": "simple_problem_first",
+  "total_problems": 10,
+  "life_focused": 9,
+  "tech_focused": 0,
+  "problems": [
+    {
+      "problem": "Finding reliable and affordable childcare/eldercare.",
+      "who": "Working parents, families with elderly relatives",
+      "impact": "Significant financial strain, lost work hours, constant stress and anxiety.",
+      "opportunity": "App with robust background checks, real-time availability, secure payments, and integrated communication.",
+      "revenue": "$100M-$500M MRR",
+      "validation": 0.9
+    },
+    {
+      "problem": "Finding trustworthy local service providers (plumbers, electricians, etc.).",
+      "who": "Homeowners, renters",
+      "impact": "Risk of hiring unqualified providers, overpaying for services, difficulty comparing quotes.",
+      "opportunity": "App with verified providers, transparent pricing, user reviews, background checks, and secure payments.",
+      "revenue": "$800M-$4B MRR",
+      "validation": 0.8
+    },
+    {
+      "problem": "Managing household bills and finances across multiple accounts.",
+      "who": "Families, individuals living on a budget",
+      "impact": "Missed payments, late fees, difficulty budgeting and saving.",
+      "opportunity": "App that automatically tracks bills and income, provides budgeting suggestions, payment alerts, and personalized financial advice.",
+      "revenue": "$500M-$2.5B MRR",
+      "validation": 0.7
+    },
+    {
+      "problem": "Remembering and managing medication schedules for oneself or loved ones.",
+      "who": "Elderly individuals, individuals with chronic illnesses, caregivers",
+      "impact": "Missed doses, potential health complications, stress and anxiety for caregivers.",
+      "opportunity": "App with personalized schedules, automated reminders, refill alerts, integration with pharmacies and healthcare providers.",
+      "revenue": "$500M-$2.5B MRR",
+      "validation": 0.7
+    },
+    {
+      "problem": "Returning unwanted online purchases.",
+      "who": "Online shoppers",
+      "impact": "Wasted time and effort, potential restocking fees.",
+      "opportunity": "App that streamlines returns with free at-home pickup, pre-paid labels, automated tracking and refunds.",
+      "revenue": "$1.5B-$7.5B MRR (Potentially through retailer partnerships rather than direct consumer subscriptions)",
+      "validation": 0.6
+    },
+    {
+      "problem": "Meal planning and grocery shopping efficiently.",
+      "who": "Busy families, individuals",
+      "impact": "Wasted food, impulse purchases, unhealthy eating habits, wasted time.",
+      "opportunity": "App integrating recipe planning, grocery lists, dietary tracking, and online grocery ordering.",
+      "revenue": "$300M-$1.5B MRR",
+      "validation": 0.6
+    },
+    {
+      "problem": "Scheduling and coordinating appointments for multiple family members.",
+      "who": "Families with children",
+      "impact": "Missed appointments, double-bookings, scheduling conflicts, wasted time.",
+      "opportunity": "Family-centric scheduling app with shared calendars, automated reminders, appointment booking, and service provider integration.",
+      "revenue": "$200M-$1B MRR",
+      "validation": 0.5
+    },
+    {
+      "problem": "Keeping track of important documents and information.",
+      "who": "Homeowners, renters, families",
+      "impact": "Lost documents, difficulty finding information, wasted time searching.",
+      "opportunity": "App to securely store and organize documents, with OCR, automated reminders, and secure sharing.",
+      "revenue": "$800M-$4B MRR",
+      "validation": 0.5
+    },
+    {
+      "problem": "Organizing and managing digital photos and videos.",
+      "who": "Families, individuals",
+      "impact": "Lost memories, difficulty sharing, cluttered devices.",
+      "opportunity": "App with smart tagging, secure sharing, unlimited storage, and personalized albums.",
+      "revenue": "$1B-$5B MRR",
+      "validation": 0.4
+    },
+    {
+      "problem": "Understanding and comparing complex service contracts.",
+      "who": "Consumers",
+      "impact": "Overpaying for services, unfavorable contract terms, difficulty understanding jargon.",
+      "opportunity": "App that analyzes and compares contracts, highlights key terms, provides personalized recommendations.",
+      "revenue": "$2B-$10B MRR (Potentially challenging to monetize directly; B2B partnerships might be more viable)",
+      "validation": 0.3
+    }
+  ]
+}

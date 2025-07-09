@@ -1,0 +1,9 @@
+{
+  "name": "cwmai_evolutionary_dependency_management_v3",
+  "type": "workflow",
+  "description": "Automates dependency updates, integrating vulnerability scanning and a custom-weighted moving average indicator (CWMAI) for evolutionary stability.  The CWMAI tracks historical success rates of dependency updates, influencing update scheduling to minimize disruption and maximize security. It also incorporates AI-driven root cause analysis to prevent cascading failures.",
+  "fitness": 0.7564551596463359,
+  "created_at": "2025-06-23T16:08:00.048529+00:00",
+  "generation": 0,
+  "file_path": "scripts/improvements/cwmai_evolutionary_dependency_management_v3.py"
+}

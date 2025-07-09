@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.cwmai.redis-cleanup</string>
+    
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/bin/python3</string>
+        <string>/Users/fortressarigo/PhpstormProjects/cwmai/cleanup_redis_now.py</string>
+    </array>
+    
+    <key>WorkingDirectory</key>
+    <string>/Users/fortressarigo/PhpstormProjects/cwmai</string>
+    
+    <key>StartInterval</key>
+    <integer>1800</integer> <!-- Run every 30 minutes (1800 seconds) -->
+    
+    <key>StandardOutPath</key>
+    <string>/tmp/cwmai-redis-cleanup.log</string>
+    
+    <key>StandardErrorPath</key>
+    <string>/tmp/cwmai-redis-cleanup-error.log</string>
+    
+    <key>RunAtLoad</key>
+    <true/>
+</dict>
+</plist>

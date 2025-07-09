@@ -1,0 +1,12 @@
+{
+  "metrics": {
+    "cycles_completed": 0,
+    "improvements_applied": 0,
+    "evolutions_applied": 0,
+    "insights_actioned": 0,
+    "research_integrated": 0
+  },
+  "last_coordination": null,
+  "applied_improvements": 0,
+  "health_trend": "stable"
+}

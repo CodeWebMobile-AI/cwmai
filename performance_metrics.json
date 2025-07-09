@@ -1,0 +1,19 @@
+{
+  "tool_execution_times": {
+    "check_for_architecture_file": [
+      0.001,
+      0.001,
+      0.001
+    ],
+    "trigger_async_error": [
+      0.001,
+      0.001,
+      0.001
+    ]
+  },
+  "error_rates": {
+    "tool_calling_system": {
+      "CoroutineNotAwaited": 5
+    }
+  }
+}

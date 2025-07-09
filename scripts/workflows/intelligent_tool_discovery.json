@@ -1,0 +1,122 @@
+{
+  "name": "intelligent_tool_discovery",
+  "description": "Workflow that demonstrates intelligent tool discovery and creation",
+  "version": "1.0.0",
+  "author": "CWMAI System",
+  "triggers": ["user_request_unknown_capability"],
+  "steps": [
+    {
+      "id": "search_related_code",
+      "name": "Search for Related Code",
+      "type": "tool",
+      "tool": "grep_files",
+      "parameters": {
+        "pattern": "${search_keyword}",
+        "file_pattern": "*.py",
+        "max_results": 20
+      },
+      "outputs": ["search_results"]
+    },
+    {
+      "id": "analyze_results",
+      "name": "Analyze Search Results",
+      "type": "condition",
+      "condition": "${search_results.success} && ${search_results.matches_found} > 0",
+      "true_branch": "read_relevant_files",
+      "false_branch": "expand_search"
+    },
+    {
+      "id": "expand_search",
+      "name": "Expand Search Scope",
+      "type": "tool",
+      "tool": "grep_files",
+      "parameters": {
+        "pattern": "${alternative_keyword}",
+        "file_pattern": "*",
+        "directory": "scripts/",
+        "max_results": 50
+      },
+      "outputs": ["expanded_results"],
+      "next": "check_expanded_results"
+    },
+    {
+      "id": "check_expanded_results",
+      "name": "Check Expanded Results",
+      "type": "condition",
+      "condition": "${expanded_results.success} && ${expanded_results.matches_found} > 0",
+      "true_branch": "read_relevant_files",
+      "false_branch": "create_basic_tool"
+    },
+    {
+      "id": "read_relevant_files",
+      "name": "Read Most Relevant Files",
+      "type": "parallel",
+      "tools": [
+        {
+          "tool": "read_file",
+          "parameters": {
+            "file_path": "${search_results.results[0].file}"
+          }
+        },
+        {
+          "tool": "read_file",
+          "parameters": {
+            "file_path": "${search_results.results[1].file}"
+          }
+        }
+      ],
+      "outputs": ["file_contents"],
+      "next": "create_intelligent_tool"
+    },
+    {
+      "id": "create_intelligent_tool",
+      "name": "Create Tool from Search Results",
+      "type": "tool",
+      "tool": "create_tool_from_search",
+      "parameters": {
+        "tool_name": "${requested_tool_name}",
+        "description": "${tool_description}",
+        "search_keywords": "${extracted_keywords}",
+        "auto_execute": false
+      },
+      "outputs": ["created_tool"],
+      "next": "test_new_tool"
+    },
+    {
+      "id": "create_basic_tool",
+      "name": "Create Basic Tool",
+      "type": "tool",
+      "tool": "smart_tool_generator",
+      "parameters": {
+        "tool_name": "${requested_tool_name}",
+        "description": "${tool_description}",
+        "parameters": {}
+      },
+      "outputs": ["basic_tool"]
+    },
+    {
+      "id": "test_new_tool",
+      "name": "Test the New Tool",
+      "type": "tool",
+      "tool": "${created_tool.tool_name}",
+      "parameters": "${test_parameters}",
+      "outputs": ["test_result"]
+    }
+  ],
+  "error_handling": {
+    "retry_on_failure": true,
+    "max_retries": 2,
+    "fallback_action": "create_basic_tool"
+  },
+  "metadata": {
+    "tags": ["tool_discovery", "intelligent", "automation"],
+    "category": "system_enhancement",
+    "example_usage": {
+      "search_keyword": "architecture",
+      "alternative_keyword": "ARCHITECTURE.md",
+      "requested_tool_name": "check_architecture_quality",
+      "tool_description": "Check if repositories have detailed ARCHITECTURE.md files",
+      "test_parameters": {}
+    }
+  }
+}

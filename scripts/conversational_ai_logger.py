@@ -44,6 +44,9 @@ class ConversationalAIFilter(logging.Filter):
         'scripts.hierarchical_task_manager',
         'scripts.intelligent_task_generator',
         'scripts.enhanced_work_generator',
+        'scripts.repository_exclusion',
+        'scripts.conversational_ai_logger',
+        'repository_exclusion',
         'urllib3.connectionpool',
         'asyncio',
         'redis',
@@ -83,6 +86,12 @@ class ConversationalAIFilter(logging.Filter):
         'Repository object created:',
         'CANCELLED:',
         'Future cancelled',
+        'Loaded 10 deleted repositories into exclusion list',
+        'Warning: Duplicate exclusion entry',
+        'Repository exclusion configuration valid',
+        'deleted repositories into exclusion list',
+        'repositories excluded',
+        'Conversational AI logging initialized',
     }
     
     def __init__(self, is_console: bool = False):

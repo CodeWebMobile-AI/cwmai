@@ -1,0 +1,11 @@
+[
+  {
+    "task_id": "issue_CodeWebMobile-AI/adapti_5_1751552907_b33e5f3c",
+    "event": "started",
+    "timestamp": "2025-07-03T14:28:28.768774+00:00",
+    "metadata": {
+      "executor": "LocalIssueCreator",
+      "claude_enabled": true
+    }
+  }
+]

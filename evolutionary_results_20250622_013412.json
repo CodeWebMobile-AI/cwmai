@@ -1,0 +1,240 @@
+{
+  "summary": {
+    "runtime": "0:09:38.769394",
+    "generations_completed": 14,
+    "improvements_created": 0,
+    "errors_encountered": 0,
+    "final_population_size": 10,
+    "fitness_history": [
+      {
+        "generation": 1,
+        "average_fitness": 0.5568181818181819,
+        "best_fitness": 0.6425000000000001,
+        "population_size": 11
+      },
+      {
+        "generation": 2,
+        "average_fitness": 0.6567500000000001,
+        "best_fitness": 0.7375,
+        "population_size": 10
+      },
+      {
+        "generation": 3,
+        "average_fitness": 0.678,
+        "best_fitness": 0.7375,
+        "population_size": 10
+      },
+      {
+        "generation": 4,
+        "average_fitness": 0.7005,
+        "best_fitness": 0.7425,
+        "population_size": 10
+      },
+      {
+        "generation": 5,
+        "average_fitness": 0.6839999999999999,
+        "best_fitness": 0.7425,
+        "population_size": 10
+      },
+      {
+        "generation": 6,
+        "average_fitness": 0.70175,
+        "best_fitness": 0.7950000000000002,
+        "population_size": 10
+      },
+      {
+        "generation": 7,
+        "average_fitness": 0.70775,
+        "best_fitness": 0.7950000000000002,
+        "population_size": 10
+      },
+      {
+        "generation": 8,
+        "average_fitness": 0.7225,
+        "best_fitness": 0.7950000000000002,
+        "population_size": 10
+      },
+      {
+        "generation": 9,
+        "average_fitness": 0.7125000000000001,
+        "best_fitness": 0.7950000000000002,
+        "population_size": 10
+      },
+      {
+        "generation": 10,
+        "average_fitness": 0.7202500000000001,
+        "best_fitness": 0.7950000000000002,
+        "population_size": 10
+      },
+      {
+        "generation": 11,
+        "average_fitness": 0.7137500000000001,
+        "best_fitness": 0.7950000000000002,
+        "population_size": 10
+      },
+      {
+        "generation": 12,
+        "average_fitness": 0.7302500000000001,
+        "best_fitness": 0.7950000000000002,
+        "population_size": 10
+      },
+      {
+        "generation": 13,
+        "average_fitness": 0.7262500000000001,
+        "best_fitness": 0.7950000000000002,
+        "population_size": 10
+      },
+      {
+        "generation": 14,
+        "average_fitness": 0.7275,
+        "best_fitness": 0.7950000000000002,
+        "population_size": 10
+      },
+      {
+        "generation": 15,
+        "average_fitness": 0.7330000000000001,
+        "best_fitness": 0.7950000000000002,
+        "population_size": 10
+      }
+    ],
+    "verification_pass_rate": 0.0
+  },
+  "improvements_created": [],
+  "errors": [],
+  "verification_results": [
+    {
+      "improvement_id": "969533f1",
+      "improvement_name": "Enhanced Response Cache Optimizer",
+      "verification_levels": {
+        "syntax": {
+          "passed": false,
+          "errors": [
+            "Syntax error at line 17: expected an indented block"
+          ]
+        }
+      },
+      "overall_score": 0.0,
+      "is_deployable": false,
+      "issues": [
+        "Syntax error at line 17: expected an indented block"
+      ],
+      "metrics": {}
+    },
+    {
+      "improvement_id": "unknown",
+      "improvement_name": "Adaptive Response Cache with AI Prediction (ARC-AI)",
+      "verification_levels": {
+        "syntax": {
+          "passed": false,
+          "errors": [
+            "Syntax error at line 17: expected an indented block"
+          ]
+        }
+      },
+      "overall_score": 0.0,
+      "is_deployable": false,
+      "issues": [
+        "Syntax error at line 17: expected an indented block"
+      ],
+      "metrics": {}
+    },
+    {
+      "improvement_id": "unknown",
+      "improvement_name": "Adaptive Response Cache with AI Prediction (ARC-AI)",
+      "verification_levels": {
+        "syntax": {
+          "passed": false,
+          "errors": [
+            "Syntax error at line 17: expected an indented block"
+          ]
+        }
+      },
+      "overall_score": 0.0,
+      "is_deployable": false,
+      "issues": [
+        "Syntax error at line 17: expected an indented block"
+      ],
+      "metrics": {}
+    },
+    {
+      "improvement_id": "unknown",
+      "improvement_name": "Adaptive Response Cache with AI Prediction (ARC-AI)",
+      "verification_levels": {
+        "syntax": {
+          "passed": false,
+          "errors": [
+            "Syntax error at line 17: expected an indented block"
+          ]
+        }
+      },
+      "overall_score": 0.0,
+      "is_deployable": false,
+      "issues": [
+        "Syntax error at line 17: expected an indented block"
+      ],
+      "metrics": {}
+    }
+  ],
+  "final_population": [
+    {
+      "name": "Adaptive Response Cache with AI Prediction (ARC-AI)",
+      "type": "Enhanced Response Cache Optimizer",
+      "fitness": 0.7950000000000002,
+      "generation": 5
+    },
+    {
+      "name": "Adaptive Response Cache with AI Prediction (ARC-AI)_v3",
+      "type": "Enhanced Response Cache Optimizer",
+      "fitness": 0.7950000000000002,
+      "generation": 5
+    },
+    {
+      "name": "Adaptive Response Cache with AI Prediction (ARC-AI)_v3",
+      "type": "Enhanced Response Cache Optimizer",
+      "fitness": 0.7950000000000002,
+      "generation": 5
+    },
+    {
+      "name": "Adaptive Response Cache with AI Prediction (ARC-AI)_v3",
+      "type": "Enhanced Response Cache Optimizer",
+      "fitness": 0.7950000000000002,
+      "generation": 5
+    },
+    {
+      "name": "Adaptive Response Cache with AI Prediction (ARC-AI)_v3_v7",
+      "type": "Enhanced Response Cache Optimizer",
+      "fitness": 0.7950000000000002,
+      "generation": 5
+    },
+    {
+      "name": "response_cache_optimizer",
+      "type": "tool",
+      "fitness": 0.6975,
+      "generation": 14
+    },
+    {
+      "name": "Adaptive Response Cache with AI Prediction (ARC-AI)_v3.1",
+      "type": "Cache Management System",
+      "fitness": 0.6675,
+      "generation": 14
+    },
+    {
+      "name": "Adaptive Response Cache with AI Prediction (ARC-AI)_v3",
+      "type": "Caching System",
+      "fitness": 0.6675,
+      "generation": 14
+    },
+    {
+      "name": "response_cache_optimizer",
+      "type": "workflow",
+      "fitness": 0.6675,
+      "generation": 14
+    },
+    {
+      "name": "Adaptive Response Cache with AI Prediction (ARC-AI)_v3",
+      "type": "Caching System",
+      "fitness": 0.655,
+      "generation": 14
+    }
+  ]
+}

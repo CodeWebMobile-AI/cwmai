@@ -1,0 +1,37 @@
+{
+  "name": "bug_triage",
+  "description": "Intelligent bug triage and assignment workflow",
+  "schedule": "weekly",
+  "steps": [
+    {
+      "name": "initialize",
+      "tool": "get_system_status",
+      "params": {}
+    },
+    {
+      "name": "analyze",
+      "tool": "repository_health_check",
+      "params": {
+        "depth": "full"
+      }
+    },
+    {
+      "name": "process_results",
+      "tool": "handle_complex_query",
+      "params": {
+        "query": "Process results for Intelligent bug triage and assignment workflow"
+      }
+    },
+    {
+      "name": "create_report",
+      "tool": "create_issue",
+      "params": {
+        "type": "report"
+      }
+    }
+  ],
+  "error_handling": {
+    "on_failure": "notify_and_retry",
+    "max_retries": 3
+  }
+}

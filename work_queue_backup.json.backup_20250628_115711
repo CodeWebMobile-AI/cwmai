@@ -1,0 +1,1304 @@
+{
+  "items": [
+    {
+      "id": "work_1751108189_f0e1e35e",
+      "task_type": "IMPROVEMENT",
+      "title": "Create comprehensive README with installation and usage instructions",
+      "description": "Type: documentation\n\nMissing README.md documentation\n\nSuggested Action: Create comprehensive README with installation and usage instructions",
+      "repository": "CodeWebMobile-AI/micronutrient-optimizer",
+      "priority": 2,
+      "metadata": {
+        "need_type": "documentation",
+        "generated_by": "dynamic_work_generator"
+      },
+      "created_at": "2025-06-28T10:56:29.875568+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "work_1751108189_9c65324e",
+      "task_type": "IMPROVEMENT",
+      "title": "Add GitHub Actions for CI/CD",
+      "description": "Type: automation\nImpact: high\nEffort: low",
+      "repository": "CodeWebMobile-AI/micronutrient-optimizer",
+      "priority": 2,
+      "metadata": {
+        "opportunity_type": "automation",
+        "impact": "high",
+        "effort": "low",
+        "generated_by": "dynamic_work_generator"
+      },
+      "created_at": "2025-06-28T10:56:29.875656+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_scholarsynapse_11",
+      "task_type": "ISSUE",
+      "title": "Testing Strategy: Setup Unit and API Testing Framework",
+      "description": "## Testing Strategy: Setup Unit and API Testing Framework\n\n**Description:**\nSetup the unit and API testing framework for the scholarsynapse project.  This issue should also produce example tests.\n\n**Checklist:**\n- [ ] Choose testing frameworks (e.g., Pest and Vitest).\n- [ ] Configure testing environments for backend and frontend.\n- [ ] Implement initial unit tests for core backend functions.\n- [ ] Implement initial API tests for key endpoints.\n- [ ] Set up code coverage reporting.\n- [ ] Configure CI/CD pipeline to run tests automatically.\n\n**Technical Requirements:**\n- Pest/Vitest\n- Code coverage tools\n\n**Labels:** `testing`, `backend`, `frontend`, `infrastructure`",
+      "repository": "scholarsynapse",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 11,
+        "labels": [
+          "testing",
+          "backend",
+          "frontend",
+          "infrastructure"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:05:57.108083+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_brandify-ai_11",
+      "task_type": "ISSUE",
+      "title": "Implement User Profile Management",
+      "description": "## Implement User Profile Management\n\n**Description:** Develop API endpoints and frontend components for managing user profiles.\n\n**Tasks:**\n- [ ] Implement API endpoints for getting, updating, and deleting user profile information (`/api/users/profile`).\n- [ ] Implement API endpoint for updating user password (`/api/users/profile/password`).\n- [ ] Implement API endpoints for managing user avatar (`/api/users/profile/avatar`).\n- [ ] Develop frontend components for displaying and editing user profile information.\n\n**Technical Requirements:**\n- Ensure proper validation and sanitization of user input.\n\n**Labels:** `backend`, `frontend`, `api`, `profile`",
+      "repository": "brandify-ai",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 11,
+        "labels": [
+          "backend",
+          "frontend",
+          "api",
+          "profile"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:05:57.108841+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_invoice-zen_8",
+      "task_type": "ISSUE",
+      "title": "Implement Unit Tests for Backend Services",
+      "description": "## Testing: Unit Tests for Backend Services\n\n**Description:**\nImplement unit tests for backend services to ensure code quality and reliability.\n\n**Checklist:**\n- [ ] Write unit tests for `PaymentPrediction` model and `PredictionService`\n- [ ] Write unit tests for `ReminderService`\n- [ ] Write unit tests for `CommunicationService`\n- [ ] Write unit tests for `InvoiceService`\n- [ ] Write unit tests for `PaymentService`\n\n**Technical Requirements:**\n- Testing Framework: Pest\n- Coverage target: 80%\n\n**Labels:**\n`testing`, `backend`, `unit-test`",
+      "repository": "invoice-zen",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 8,
+        "labels": [
+          "testing",
+          "backend",
+          "unit-test"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:05:57.110603+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_mindful-ai-platform_5",
+      "task_type": "ISSUE",
+      "title": "Implement Matching Algorithm for Therapists",
+      "description": "## Issue: Implement Matching Algorithm for Therapists\n\n**Description:**\nImplement the matching algorithm to connect users with suitable therapists.\n\n**Checklist:**\n- [ ] Create `Therapist` model (Therapist.php).\n- [ ] Create `MatchingController` (MatchingController.php).\n- [ ] Implement the matching algorithm based on user needs and therapist qualifications.\n- [ ] Create the TherapistList.tsx component.\n- [ ] Create the useTherapists.ts hook.\n- [ ] Implement API endpoints:\n  - [ ] GET /api/therapists\n  - [ ] GET /api/therapists/recommendations\n- [ ] Implement real-time event `therapist.recommended`.\n- [ ] Write unit tests for the matching algorithm.\n- [ ] Write API tests for therapist recommendations.\n\n**Technical Requirements:**\nThe matching algorithm must be accurate and efficient.\n\n**Labels:**",
+      "repository": "mindful-ai-platform",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 5,
+        "labels": [
+          "feature",
+          "frontend",
+          "backend",
+          "api",
+          "algorithm",
+          "testing"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:05:57.112320+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_mindful-ai-platform_2",
+      "task_type": "ISSUE",
+      "title": "Database Setup and Initial Schema",
+      "description": "## Issue: Database Setup and Initial Schema\n\n**Description:**\nThis issue focuses on setting up the database and creating the initial schema for the `mindful-ai-platform` project.  The database will be MySQL as indicated in the documentation.\n\n**Checklist:**\n- [ ] Set up MySQL database instance.\n- [ ] Define database connection settings in `.env` file.\n- [ ] Create `users` table (profile, assessment results, subscription).\n- [ ] Create `therapists` table (profile, specialization, availability).\n- [ ] Create `sessions` table (user_id, therapist_id, date/time, notes).\n- [ ] Create `forum_posts` table (user_id, content, timestamp).\n- [ ] Create `subscriptions` table (user_id, plan_id, start/end date).\n- [ ] Create `assessments` table (id INT, user_id INT, score INT, results TEXT).\n- [ ] Create `therapist_specializations` table (therapist_id INT, specialization VARCHAR(255)).\n- [ ] Implement database migrations.\n- [ ] Implement RBAC tables for admin roles.\n\n**Technical Requirements:**\n- Database schema must align with the schema described in the project documentation.\n- Ensure proper indexing for performance.\n\n**Labels:**",
+      "repository": "mindful-ai-platform",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 2,
+        "labels": [
+          "setup",
+          "infrastructure",
+          "database",
+          "backend"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:05:57.112327+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_returnwise-portal_11",
+      "task_type": "ISSUE",
+      "title": "API Testing - Integration Tests for Endpoints",
+      "description": "## Issue: API Testing - Integration Tests for Endpoints\n\n**Description:**\nWrite API integration tests for all API endpoints.\n\n**Checklist:**\n- [ ] Write API tests for `/api/riskAssessment/calculate`.\n- [ ] Write API tests for `/api/login`.\n- [ ] Write API tests for `/api/register`.\n- [ ] Write API tests for `/api/returnOptions`.\n- [ ] Write API tests for `/api/returns/{returnId}/label`.\n\n**Technical Requirements:**\n- Test with different scenarios and edge cases.\n\n**Labels:** `testing`, `api`",
+      "repository": "returnwise-portal",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 11,
+        "labels": [
+          "testing",
+          "api"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:05:57.113142+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_brandify-ai_3",
+      "task_type": "ISSUE",
+      "title": "Implement AI-Powered Brand Guideline Generation Feature",
+      "description": "## Implement AI-Powered Brand Guideline Generation\n\n**Description:** Implement the AI-powered brand guideline generation feature, allowing users to upload assets and automatically generate brand guidelines.\n\n**Tasks:**\n- [ ] Implement backend logic using `AIExtractionService.php` to extract brand elements from uploaded assets (logos, fonts, colors).\n- [ ] Develop the `BrandGuidelinesController.php` to handle API requests for generating, retrieving, and updating brand guidelines.\n- [ ] Create database tables for storing brand guidelines as defined in the documentation.\n- [ ] Develop the `AssetUpload.tsx` and `BrandGuidelineDisplay.tsx` frontend components for asset upload and guideline display.\n- [ ] Implement the `useBrandGuidelines.ts` hook to manage brand guideline data.\n- [ ] Write unit tests for the `AIExtractionService`.\n- [ ] Implement API tests for `/api/brand_guidelines/generate` and integration tests for asset upload and guideline generation.\n\n**Technical Requirements:**\n- OpenAI API integration for AI features.\n- Cloudinary or AWS S3 for asset storage.\n\n**Labels:** `feature`, `backend`, `frontend`, `ai`, `api`, `database`, `testing`",
+      "repository": "brandify-ai",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 3,
+        "labels": [
+          "feature",
+          "backend",
+          "frontend",
+          "ai",
+          "api",
+          "database",
+          "testing"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:11:46.364130+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_brandify-ai_2",
+      "task_type": "ISSUE",
+      "title": "Configure Database Environment and Schemas",
+      "description": "## Database Setup\n\n**Description:** Configure the database environment, including setting up the database server, defining schemas, and configuring database connections.\n\n**Tasks:**\n- [ ] Set up a MySQL database server.\n- [ ] Define the database schema as per the project documentation: `Brands`, `BrandAssets`, `ContentTemplates`, `ContentCreations`, `brand_guidelines`, `repurposed_content`, `compliance_checks`, `teams`, `team_users`, `social_accounts`, `social_posts`\n- [ ] Configure database connections in the backend application.\n- [ ] Implement database migrations for schema management.\n\n**Technical Requirements:**\n- MySQL database is required.\n- The database schemas should match the provided schemas in the project documentation.\n\n**Labels:** `setup`, `infrastructure`, `backend`, `database`",
+      "repository": "brandify-ai",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 2,
+        "labels": [
+          "setup",
+          "infrastructure",
+          "backend",
+          "database"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:11:46.364132+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_chronoai-time-tracker_11",
+      "task_type": "ISSUE",
+      "title": "Implement Basic User Interface",
+      "description": "## Issue: Implement Basic User Interface\n\n**Description:**\nImplement basic UI components for user authentication and task management.\n\n**Checklist:**\n- [ ] Implement Login and Registration forms.\n- [ ] Implement Task List view.\n- [ ] Implement Task creation/edition forms.\n- [ ] Implement basic dashboard layout.\n\n**Technical Requirements:**\n- Use `Inter` font and specified color palette.\n- Follow responsive design principles.\n\n**Labels:** `frontend`, `ui`, `authentication`, `tasks`",
+      "repository": "chronoai-time-tracker",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 11,
+        "labels": [
+          "frontend",
+          "ui",
+          "authentication",
+          "tasks"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:11:46.364962+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_chronoai-time-tracker_8",
+      "task_type": "ISSUE",
+      "title": "Implement Authentication API Endpoints",
+      "description": "## Issue: Implement Authentication API Endpoints\n\n**Description:**\nImplement the authentication API endpoints for user registration, login, logout, password reset, and email verification.\n\n**Checklist:**\n- [ ] Implement `POST /api/auth/register` endpoint.\n- [ ] Implement `POST /api/auth/login` endpoint.\n- [ ] Implement `POST /api/auth/logout` endpoint.\n- [ ] Implement `POST /api/auth/refresh` endpoint.\n- [ ] Implement `POST /api/auth/reset-password-request` endpoint.\n- [ ] Implement `POST /api/auth/reset-password` endpoint.\n- [ ] Implement `GET /api/auth/verify-email` endpoint.\n\n**Technical Requirements:**\n- JWT Authentication.\n- Password hashing.\n- Email verification service.\n\n**Labels:** `backend`, `api`, `authentication`, `security`",
+      "repository": "chronoai-time-tracker",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 8,
+        "labels": [
+          "backend",
+          "api",
+          "authentication",
+          "security"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:11:46.364967+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_lingua-ai_1",
+      "task_type": "ISSUE",
+      "title": "Initial Project Setup - Laravel",
+      "description": "## Issue: Initial Project Setup - Laravel\n\n**Description:**\nThis issue covers the initial setup of the Laravel project, including installing dependencies, configuring the environment, and setting up the basic file structure.\n\n**Checklist:**\n- [ ] Install Laravel using Composer.\n- [ ] Configure `.env` file with database credentials, app URL, and other environment variables.\n- [ ] Set up basic file structure (models, controllers, views, routes).\n- [ ] Initialize Git repository and commit initial project files.\n- [ ] Configure application key.\n\n**Technical Requirements:**\n- PHP >= 8.1\n- Composer\n- MySQL\n\n**Labels:** `setup`, `backend`, `infrastructure`",
+      "repository": "lingua-ai",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 1,
+        "labels": [
+          "setup",
+          "backend",
+          "infrastructure"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:11:46.366857+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_mindful-ai-platform_4",
+      "task_type": "ISSUE",
+      "title": "Implement Secure User Profiles with Privacy Controls",
+      "description": "## Issue: Implement Secure User Profiles with Privacy Controls\n\n**Description:**\nImplement the secure user profiles feature with privacy controls.\n\n**Checklist:**\n- [ ] Modify `User` model (User.php) to include privacy settings.\n- [ ] Create `UserController` (UserController.php).\n- [ ] Implement data encryption.\n- [ ] Create the Profile.tsx component.\n- [ ] Create the useProfile.ts hook.\n- [ ] Implement API endpoints:\n  - [ ] GET /api/profile\n  - [ ] PUT /api/profile\n- [ ] Implement real-time event `profile.updated`.\n- [ ] Write unit tests for user authentication.\n- [ ] Write API tests for profile update.\n\n**Technical Requirements:**\n- Privacy settings should be configurable and secure.\n\n**Labels:**",
+      "repository": "mindful-ai-platform",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 4,
+        "labels": [
+          "feature",
+          "frontend",
+          "backend",
+          "api",
+          "security",
+          "testing"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:11:46.367668+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_brandify-ai_7",
+      "task_type": "ISSUE",
+      "title": "Implement Social Media Platform Integration Feature",
+      "description": "## Implement Social Media Platform Integration\n\n**Description:** Integrate the system with social media platforms for direct content posting and performance tracking.\n\n**Tasks:**\n- [ ] Implement API integrations with social media platforms (Facebook, Twitter, Instagram, LinkedIn).\n- [ ] Develop the `SocialMediaController.php` and `SocialMediaService.php` for social media interactions.\n- [ ] Create database tables for storing social media account information and posts.\n- [ ] Develop the `SocialAccountConnect.tsx` and `SocialPostScheduler.tsx` frontend components.\n- [ ] Implement the `useSocialMedia.ts` hook to manage social media data.\n- [ ] Write unit tests for the `SocialMediaService`.\n- [ ] Implement API tests for `/api/social_accounts/connect` and integration tests for account connection and post scheduling.\n\n**Technical Requirements:**\n- Securely store access tokens.\n\n**Labels:** `feature`, `backend`, `frontend`, `api`, `database`, `testing`, `social`",
+      "repository": "brandify-ai",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 7,
+        "labels": [
+          "feature",
+          "backend",
+          "frontend",
+          "api",
+          "database",
+          "testing",
+          "social"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:16:22.424379+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_chronoai-time-tracker_5",
+      "task_type": "ISSUE",
+      "title": "Implement Detailed Reporting and Analytics Dashboard",
+      "description": "## Issue: Implement Detailed Reporting and Analytics Dashboard\n\n**Description:**\nImplement a detailed reporting and analytics dashboard for time spent on tasks.\n\n**Checklist:**\n- [ ] Create `Report.php` controller.\n- [ ] Implement `ReportService.php` service.\n- [ ] Implement `GET /api/reports/summary` endpoint.\n- [ ] Implement `GET /api/reports/detailed` endpoint.\n- [ ] Create `AnalyticsDashboard.tsx` component.\n- [ ] Create `ReportFilters.tsx` component.\n\n**Technical Requirements:**\n- Data aggregation and filtering logic.\n- Charting libraries for visualizations.\n\n**Labels:** `feature`, `backend`, `frontend`, `reporting`, `api`",
+      "repository": "chronoai-time-tracker",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 5,
+        "labels": [
+          "feature",
+          "backend",
+          "frontend",
+          "reporting",
+          "api"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:16:22.425264+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_invoice-zen_10",
+      "task_type": "ISSUE",
+      "title": "Develop InvoiceDetails Component",
+      "description": "## Frontend: UI Component Development - Invoice Details\n\n**Description:**\nDevelop the `InvoiceDetails.tsx` component to display invoice information and integrate with backend services.\n\n**Checklist:**\n- [ ] Implement UI layout for displaying invoice details\n- [ ] Integrate with `usePrediction.ts` hook to display payment prediction\n- [ ] Add communication icons for initiating conversations\n- [ ] Embed Stripe payment form\n\n**Technical Requirements:**\n- Frontend: React (TypeScript), Tailwind CSS\n- Design System: Adhere to the design system and color palette described in the project documentation.\n\n**Labels:**\n`frontend`, `ui`, `component`",
+      "repository": "invoice-zen",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 10,
+        "labels": [
+          "frontend",
+          "ui",
+          "component"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:16:22.426123+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_invoice-zen_6",
+      "task_type": "ISSUE",
+      "title": "Implement Invoice Management Dashboard",
+      "description": "## Feature Implementation: Invoice Management Dashboard\n\n**Description:**\nImplement the invoice management dashboard for tracking payment statuses.\n\n**Checklist:**\n- [ ] Implement `DashboardController.php` controller\n- [ ] Implement `InvoiceService.php` service\n- [ ] Implement `Dashboard.tsx` component\n- [ ] Implement `InvoiceList.tsx` component\n- [ ] Create API endpoint `GET /api/dashboard_data`\n- [ ] Implement real-time events `invoice.paid` and `invoice.overdue`\n\n**Technical Requirements:**\n- Backend: PHP/Laravel\n- Frontend: React (TypeScript)\n\n**Labels:**\n`feature`, `backend`, `frontend`, `api`, `dashboard`",
+      "repository": "invoice-zen",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 6,
+        "labels": [
+          "feature",
+          "backend",
+          "frontend",
+          "api",
+          "dashboard"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:16:22.426128+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_returnwise-portal_7",
+      "task_type": "ISSUE",
+      "title": "Implement Automated Return Shipping Label Generation",
+      "description": "## Issue: Automated Return Shipping Label Generation Implementation\n\n**Description:**\nImplement automated return shipping label generation.\n\n**Checklist:**\n- [ ] Update `Return` model with `shipping_label_url`.\n- [ ] Create `ShippingService` to generate shipping labels.\n- [ ] Implement `ReturnController` to handle label generation requests.\n- [ ] Implement `POST /api/returns/{returnId}/label` endpoint.\n\n**Technical Requirements:**\n- Integrate with shipping providers API.\n\n**Labels:** `feature`, `backend`, `api`",
+      "repository": "returnwise-portal",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 7,
+        "labels": [
+          "feature",
+          "backend",
+          "api"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:16:22.428682+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_returnwise-portal_4",
+      "task_type": "ISSUE",
+      "title": "Implement AI-Powered Return Risk Assessment",
+      "description": "## Issue: AI-Powered Return Risk Assessment Implementation\n\n**Description:**\nImplement the AI-powered return risk assessment feature based on order placement data.\n\n**Checklist:**\n- [ ] Create `ReturnRiskAssessment` model.\n- [ ] Create `RiskAssessmentService` to calculate risk score.\n- [ ] Implement `POST /api/riskAssessment/calculate` endpoint.\n- [ ] Create `return_risk_assessments` table (id, order_id, risk_score, rationale).\n- [ ] Add `risk_assessment_id` column to `orders` table.\n\n**Technical Requirements:**\n- Integrate with the AI return prediction API (env variables: `AI_RETURN_PREDICTION_API_KEY`, `RETURN_PREDICTION_ENDPOINT`).\n\n**Labels:** `feature`, `backend`, `api`, `ai`",
+      "repository": "returnwise-portal",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 4,
+        "labels": [
+          "feature",
+          "backend",
+          "api",
+          "ai"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:16:22.428688+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_chronoai-time-tracker_6",
+      "task_type": "ISSUE",
+      "title": "Implement Privacy-Focused Data Handling",
+      "description": "## Issue: Implement Privacy-Focused Data Handling\n\n**Description:**\nImplement privacy-focused data handling with customizable data retention policies.\n\n**Checklist:**\n- [ ] Create `UserPrivacySettings.php` model.\n- [ ] Create `Privacy.php` controller.\n- [ ] Implement `PrivacyService.php` service.\n- [ ] Implement `GET /api/privacy/settings` endpoint.\n- [ ] Implement `PUT /api/privacy/settings` endpoint.\n- [ ] Implement `privacy.settings.updated` real-time event.\n- [ ] Create `PrivacySettings.tsx` component.\n- [ ] Create `DataRetentionPolicy.tsx` component.\n- [ ] Create `user_privacy_settings` table.\n\n**Technical Requirements:**\n- Data encryption techniques.\n- Customizable data retention policies.\n- Consent management features.\n\n**Labels:** `feature`, `backend`, `frontend`, `privacy`, `api`, `database`, `realtime`",
+      "repository": "chronoai-time-tracker",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 6,
+        "labels": [
+          "feature",
+          "backend",
+          "frontend",
+          "privacy",
+          "api",
+          "database",
+          "realtime"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:22:04.779818+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_invoice-zen_11",
+      "task_type": "ISSUE",
+      "title": "Document Stripe Integration",
+      "description": "## Documentation: Stripe Integration\n\n**Description:**\nDocument the Stripe integration process, including setup, configuration, and troubleshooting.\n\n**Checklist:**\n- [ ] Describe the purpose of Stripe integration\n- [ ] Provide instructions on setting up Stripe API keys\n- [ ] Explain how to handle payment events\n- [ ] Provide code examples\n\n**Technical Requirements:**\n- Clear, concise language\n- Accurate and up-to-date information\n\n**Labels:**\n`documentation`, `stripe`, `payment`",
+      "repository": "invoice-zen",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 11,
+        "labels": [
+          "documentation",
+          "stripe",
+          "payment"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:22:04.780643+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_invoice-zen_1",
+      "task_type": "ISSUE",
+      "title": "Initial Project Setup and Configuration",
+      "description": "## Initial Project Setup\n\n**Description:**\nThis issue covers the initial setup of the invoice-zen project, including repository setup, basic folder structure, and initial configurations.\n\n**Checklist:**\n- [ ] Create GitHub repository\n- [ ] Set up initial project folder structure (backend, frontend, database, docs)\n- [ ] Initialize backend project (e.g., Laravel project)\n- [ ] Initialize frontend project (e.g., React project)\n- [ ] Configure basic CI/CD pipeline (GitHub Actions)\n- [ ] Setup Environment variables\n\n**Technical Requirements:**\n- Backend: Laravel framework\n- Frontend: React (TypeScript)\n- Database: MySQL\n- Version Control: Git\n\n**Labels:**\n`setup`, `infrastructure`, `backend`, `frontend`",
+      "repository": "invoice-zen",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 1,
+        "labels": [
+          "setup",
+          "infrastructure",
+          "backend",
+          "frontend"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:22:04.780660+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_mindful-ai-platform_1",
+      "task_type": "ISSUE",
+      "title": "Project Setup and Initial Configuration",
+      "description": "## Issue: Project Setup and Initial Configuration\n\n**Description:**\nThis issue covers the initial setup and configuration of the `mindful-ai-platform` project, including repository setup, environment configuration, and project structure.\n\n**Checklist:**\n- [ ] Set up GitHub repository with initial project structure.\n- [ ] Configure `.gitignore` file.\n- [ ] Define and document coding standards (PSR-12).\n- [ ] Create initial project README.md with project description and setup instructions.\n- [ ] Setup CI/CD pipeline with GitHub Actions.\n- [ ] Configure environment variables (see project documentation). Example: OPENAI_API_KEY.\n- [ ] Initialize project with necessary dependencies.\n- [ ] Implement basic authentication middleware.\n\n**Technical Requirements:**\n- Establish a foundational architecture as described in the documentation. (Core Components, Database Schema Design, API Design, Frontend Structure).\n\n**Labels:**",
+      "repository": "mindful-ai-platform",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 1,
+        "labels": [
+          "setup",
+          "infrastructure",
+          "documentation"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:22:04.782189+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_returnwise-portal_8",
+      "task_type": "ISSUE",
+      "title": "Implement Real-time Return Status Tracking and Notifications",
+      "description": "## Issue: Real-time Return Status Tracking and Notifications Implementation\n\n**Description:**\nImplement real-time return status tracking and notifications.\n\n**Checklist:**\n- [ ] Update `Return` model with `status`.\n- [ ] Create `ReturnStatusService` to update return status.\n- [ ] Trigger `return.created`, `return.updated`, and `return.statusChanged` real-time events.\n\n**Technical Requirements:**\n- Use web sockets for real-time updates.\n\n**Labels:** `feature`, `backend`, `realtime`",
+      "repository": "returnwise-portal",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 8,
+        "labels": [
+          "feature",
+          "backend",
+          "realtime"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:22:04.782961+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_brand-ai_8",
+      "task_type": "ISSUE",
+      "title": "Configure Laravel Echo Server for WebSockets",
+      "description": "### Issue: Configure Laravel Echo Server for WebSockets\n\n**Description:**\nConfigure Laravel Echo Server for real-time communication using WebSockets. This will be used for events such as logo generation, post scheduling, and style guide creation.\n\n**Checklist:**\n- [ ] Install and configure Laravel Echo Server\n- [ ] Set up WebSocket connection in frontend\n- [ ] Implement event broadcasting\n- [ ] Test real-time events\n\n**Technical Requirements:**\n- Laravel Echo Server\n- Redis\n- Socket.IO\n\n**Labels:** `infrastructure`, `real-time`, `backend`, `frontend`",
+      "repository": "brand-ai",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 8,
+        "labels": [
+          "infrastructure",
+          "real-time",
+          "backend",
+          "frontend"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:27:02.974374+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_invoice-zen_4",
+      "task_type": "ISSUE",
+      "title": "Implement Automated Personalized Payment Reminders",
+      "description": "## Feature Implementation: Automated Personalized Payment Reminders\n\n**Description:**\nImplement automated personalized payment reminders to reduce late payments.\n\n**Checklist:**\n- [ ] Create `reminder_templates` table\n- [ ] Alter `clients` table to add `reminder_preference` column\n- [ ] Implement `ReminderService.php` service\n- [ ] Implement `SendReminders.php` task\n- [ ] Implement `ReminderSettings.tsx` component\n- [ ] Create API endpoint `PUT /api/reminder_settings`\n- [ ] Implement real-time event `reminder.sent`\n\n**Technical Requirements:**\n- Backend: PHP/Laravel, Twilio API Integration (SMS)\n- Frontend: React (TypeScript)\n\n**Labels:**\n`feature`, `backend`, `frontend`, `api`, `automation`",
+      "repository": "invoice-zen",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 4,
+        "labels": [
+          "feature",
+          "backend",
+          "frontend",
+          "api",
+          "automation"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:27:02.992522+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_mindful-ai-platform_11",
+      "task_type": "ISSUE",
+      "title": "Setup Centralized Logging and Monitoring",
+      "description": "## Issue: Setup Centralized Logging and Monitoring\n\n**Description:**\nSet up centralized logging and monitoring for the application.\n\n**Checklist:**\n- [ ] Choose a logging solution (e.g., ELK stack, Graylog, Sentry).\n- [ ] Configure application to send logs to the chosen logging solution.\n- [ ] Set up monitoring dashboards.\n- [ ] Implement alerts for critical errors and performance issues.\n\n**Technical Requirements:**\n- Centralized logging should be scalable and reliable.\n- Monitoring dashboards should provide real-time insights into application performance.\n\n**Labels:**",
+      "repository": "mindful-ai-platform",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 11,
+        "labels": [
+          "infrastructure",
+          "logging",
+          "monitoring",
+          "devops"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:27:02.999754+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_returnwise-portal_6",
+      "task_type": "ISSUE",
+      "title": "Implement Personalized Return Options",
+      "description": "## Issue: Personalized Return Options Implementation\n\n**Description:**\nImplement personalized return options based on risk score and retailer policies.\n\n**Checklist:**\n- [ ] Create `ReturnOption` model.\n- [ ] Create `ReturnOptionService` to determine available return options.\n- [ ] Implement `ReturnController` to handle return option requests.\n- [ ] Create `return_options` table.\n- [ ] Implement `GET /api/returnOptions` endpoint.\n\n**Technical Requirements:**\n- Logic should consider risk score, retailer policies, and product category.\n\n**Labels:** `feature`, `backend`, `api`",
+      "repository": "returnwise-portal",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 6,
+        "labels": [
+          "feature",
+          "backend",
+          "api"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:27:03.000809+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_brand-ai_12",
+      "task_type": "ISSUE",
+      "title": "Testing Strategy Implementation",
+      "description": "### Issue: Testing Strategy Implementation\n\n**Description:**\nImplement the testing strategy defined in the architecture. Use Pest and Vitest with 80% coverage. Set up continuous integration (CI) for automated testing.\n\n**Checklist:**\n- [ ] Set up Pest testing framework for backend\n- [ ] Set up Vitest testing framework for frontend\n- [ ] Write unit tests and feature tests to achieve 80% coverage\n- [ ] Configure CI pipeline (e.g., GitHub Actions) to run tests on every commit\n\n**Technical Requirements:**\n- Pest PHP\n- Vitest\n- CI/CD pipeline (GitHub Actions, CircleCI, etc.)\n\n**Labels:** `testing`, `backend`, `frontend`, `ci/cd`",
+      "repository": "brand-ai",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 12,
+        "labels": [
+          "testing",
+          "backend",
+          "frontend",
+          "ci/cd"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:31:28.939539+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_brand-ai_6",
+      "task_type": "ISSUE",
+      "title": "Implement Brand Style Guide Generator",
+      "description": "### Issue: Implement Brand Style Guide Generator\n\n**Description:**\nImplement the brand style guide generator feature. Implement algorithms to extract dominant colors from logos or images. Provide a curated list of font pairings. Generate CSS snippets for color and font styles.\n\n**Checklist:**\n- [ ] Create StyleGuideGenerator model\n- [ ] Implement API endpoint for style guide generation (POST /api/styleguide/generate)\n- [ ] Implement color extraction algorithm\n- [ ] Implement font pairing logic\n- [ ] Generate downloadable style guide (PDF, CSS)\n- [ ] Implement tests (Unit test for color extraction, API test for style guide generation)\n- [ ] Create database migration for style_guides table\n\n**Technical Requirements:**\n- Color extraction libraries\n- Font pairing data\n- PDF generation library\n- Required DB Changes: CREATE TABLE style_guides (id INT PRIMARY KEY, user_id INT, colors VARCHAR(255), font_family VARCHAR(255), created_at TIMESTAMP)\n\n**Labels:** `feature`, `backend`, `api`, `branding`, `database`",
+      "repository": "brand-ai",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 6,
+        "labels": [
+          "feature",
+          "backend",
+          "api",
+          "branding",
+          "database"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:31:28.939549+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_brandify-ai_6",
+      "task_type": "ISSUE",
+      "title": "Implement Collaborative Workspace Feature",
+      "description": "## Implement Collaborative Workspace\n\n**Description:** Develop the collaborative workspace feature, where teams can manage brand assets and content together.\n\n**Tasks:**\n- [ ] Implement user authentication and authorization.\n- [ ] Develop API endpoints for managing brand assets and content using `TeamController.php` and `UserController.php`.\n- [ ] Create database tables for storing team members, roles, and permissions.\n- [ ] Develop the `TeamManagement.tsx` and `AssetLibrary.tsx` frontend components.\n- [ ] Implement the `useTeam.ts` and `useAssets.ts` hooks to manage team and asset data.\n- [ ] Write unit tests for the `Team` model.\n- [ ] Implement API tests for `/api/teams` and integration tests for user invitation and permission management.\n\n**Technical Requirements:**\n- Role-Based Access Control (RBAC) implementation.\n\n**Labels:** `feature`, `backend`, `frontend`, `api`, `database`, `testing`",
+      "repository": "brandify-ai",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 6,
+        "labels": [
+          "feature",
+          "backend",
+          "frontend",
+          "api",
+          "database",
+          "testing"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:31:28.941187+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_chronoai-time-tracker_7",
+      "task_type": "ISSUE",
+      "title": "Setup Database Schema",
+      "description": "## Issue: Setup Database Schema\n\n**Description:**\nSet up the initial database schema as described in the project details.\n\n**Checklist:**\n- [ ] Create `Users` table (id, name, email, password).\n- [ ] Create `Tasks` table (id, user_id, name, project_id, start_time, end_time).\n- [ ] Create `Projects` table (id, user_id, name).\n- [ ] Create `Integrations` table (id, user_id, service, token).\n- [ ] Create `Gamification` table (id, user_id, points, level).\n\n**Technical Requirements:**\n- MySQL database.\n- Properly configured RBAC tables.\n\n**Labels:** `setup`, `database`, `infrastructure`",
+      "repository": "chronoai-time-tracker",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 7,
+        "labels": [
+          "setup",
+          "database",
+          "infrastructure"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:31:28.942030+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_returnwise-portal_10",
+      "task_type": "ISSUE",
+      "title": "Testing - Unit Tests for Backend Services",
+      "description": "## Issue: Testing - Unit Tests for Backend Services\n\n**Description:**\nWrite unit tests for backend services to ensure functionality and reliability.\n\n**Checklist:**\n- [ ] Write unit tests for `RiskAssessmentService`.\n- [ ] Write unit tests for `AuthService`.\n- [ ] Write unit tests for `ReturnOptionService`.\n- [ ] Write unit tests for `ShippingService`.\n- [ ] Write unit tests for `ReturnStatusService`.\n\n**Technical Requirements:**\n- Aim for 80% test coverage.\n- Use Pest or Vitest.\n\n**Labels:** `testing`, `backend`",
+      "repository": "returnwise-portal",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 10,
+        "labels": [
+          "testing",
+          "backend"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:31:28.945296+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_scholarsynapse_4",
+      "task_type": "ISSUE",
+      "title": "Implement Key Insight and Argument Extraction",
+      "description": "## Implement Automated Extraction of Key Insights and Arguments\n\n**Description:**\nImplement the automated extraction of key insights and arguments from research papers.  Create the database tables, backend components, API endpoints, and frontend components as defined in the roadmap. User Story: As a researcher, I want to quickly identify the key findings and arguments within a research paper, so that I can efficiently synthesize information from multiple sources.\n\n**Checklist:**\n- [ ] Create `paper_insights` table (id, paper_id, insight, type, created_at) in the database.\n- [ ] Implement `KeyInsight` model in the backend.\n- [ ] Implement `InsightController` in the backend.\n- [ ] Create `/api/papers/{paper_id}/insights` API endpoint.\n- [ ] Implement `InsightList.tsx` component in the frontend to display insights.\n- [ ] Implement `useInsights.ts` hook to fetch and manage insights.\n- [ ] Implement real-time event handling for `insight.created` and `insight.updated`.\n- [ ] Write unit tests for argument extraction accuracy.\n- [ ] Write API tests for insight retrieval.\n\n**Technical Requirements:**\n- Python (Flask/FastAPI), NLP libraries (transformers, SciBERT)\n- React.js\n\n**Labels:** `feature`, `backend`, `frontend`, `ai`, `database`, `api`, `testing`",
+      "repository": "scholarsynapse",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 4,
+        "labels": [
+          "feature",
+          "backend",
+          "frontend",
+          "ai",
+          "database",
+          "api",
+          "testing"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:36:33.536423+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_invoice-zen_5",
+      "task_type": "ISSUE",
+      "title": "Implement Integrated Communication Channels",
+      "description": "## Feature Implementation: Integrated Communication Channels\n\n**Description:**\nImplement integrated communication channels for direct client interaction.\n\n**Checklist:**\n- [ ] Create `messages` table\n- [ ] Implement `CommunicationService.php` service\n- [ ] Implement `Message.php` model\n- [ ] Update `InvoiceDetails.tsx` component\n- [ ] Implement `ChatWindow.tsx` component\n- [ ] Create API endpoint `POST /api/send_message`\n- [ ] Implement real-time events `message.sent` and `message.received`\n\n**Technical Requirements:**\n- Backend: PHP/Laravel, Slack & Teams API Integration\n- Frontend: React (TypeScript)\n\n**Labels:**\n`feature`, `backend`, `frontend`, `api`, `communication`",
+      "repository": "invoice-zen",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 5,
+        "labels": [
+          "feature",
+          "backend",
+          "frontend",
+          "api",
+          "communication"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:36:33.538897+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_lingua-ai_6",
+      "task_type": "ISSUE",
+      "title": "Simulated Conversation Practice with AI Tutors",
+      "description": "## Issue: Simulated Conversation Practice with AI Tutors\n\n**Description:**\nImplement the simulated conversation practice feature, including AI tutor integration and chat interface.\n\n**Checklist:**\n- [ ] Create `Tutor.php` model.\n- [ ] Create `Conversation.php` controller.\n- [ ] Implement `DialogManager.php` service.\n- [ ] Implement `NLP.php` service.\n- [ ] Implement `POST /api/conversation/start` endpoint.\n- [ ] Implement `POST /api/conversation/message` endpoint.\n- [ ] Develop `ChatInterface.tsx` component.\n- [ ] Develop `AvatarDisplay.tsx` component.\n- [ ] Develop `useConversation.ts` hook.\n- [ ] Implement `message.received` and `message.sent` real-time events.\n\n**Technical Requirements:**\n- AI tutor APIs (Python microservices).\n- WebSocket communication.\n\n**Labels:** `feature`, `backend`, `frontend`, `ai`, `real-time`",
+      "repository": "lingua-ai",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 6,
+        "labels": [
+          "feature",
+          "backend",
+          "frontend",
+          "ai",
+          "real-time"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:36:33.539721+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_returnwise-portal_12",
+      "task_type": "ISSUE",
+      "title": "Documentation - Initial README Setup",
+      "description": "## Issue: Documentation - Initial README Setup\n\n**Description:**\nCreate a comprehensive README file with project overview and setup instructions.\n\n**Checklist:**\n- [ ] Introduction: Overview of ReturnWise and its benefits.\n- [ ] Features: Detailed description of key features.\n- [ ] Setup: Instructions for local development and deployment.\n- [ ] API: Documentation for the AI return prediction API.\n- [ ] Contributing: Guidelines for contributing to the project.\n\n**Technical Requirements:**\n- Use Markdown format.\n\n**Labels:** `documentation`, `setup`",
+      "repository": "returnwise-portal",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 12,
+        "labels": [
+          "documentation",
+          "setup"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:36:33.541317+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_scholarsynapse_9",
+      "task_type": "ISSUE",
+      "title": "Implement Admin API Endpoints for User Management",
+      "description": "## Implement Admin API Endpoints for User Management\n\n**Description:**\nImplement the admin API endpoints for managing users. This allows administrators to create, read, update, delete, and approve/reject user accounts.\n\n**Checklist:**\n- [ ] Implement `GET /api/admin/users` endpoint to retrieve all users.\n- [ ] Implement `POST /api/admin/users` endpoint to create a new user.\n- [ ] Implement `GET /api/admin/users/{user_id}` endpoint to retrieve a specific user.\n- [ ] Implement `PUT /api/admin/users/{user_id}` endpoint to update a user.\n- [ ] Implement `DELETE /api/admin/users/{user_id}` endpoint to delete a user.\n- [ ] Implement `POST /api/admin/users/{user_id}/reset_password` endpoint to reset a user's password.\n- [ ] Implement `GET /api/admin/users/search?query={query}` endpoint to search for users.\n- [ ] Implement `GET /api/admin/users/pending_approval` endpoint to retrieve users pending approval.\n- [ ] Implement `POST /api/admin/users/{user_id}/approve` endpoint to approve a user.\n- [ ] Implement `POST /api/admin/users/{user_id}/reject` endpoint to reject a user.\n\n**Technical Requirements:**\n- RBAC middleware\n- Proper error handling and validation\n\n**Labels:** `backend`, `admin`, `api`, `user management`, `security`",
+      "repository": "scholarsynapse",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 9,
+        "labels": [
+          "backend",
+          "admin",
+          "api",
+          "user management",
+          "security"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:40:50.045729+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_brandify-ai_4",
+      "task_type": "ISSUE",
+      "title": "Implement Automated Content Repurposing Feature",
+      "description": "## Implement Automated Content Repurposing\n\n**Description:** Implement the automated content repurposing feature, allowing users to automatically repurpose their content for different platforms based on brand guidelines.\n\n**Tasks:**\n- [ ] Implement backend logic using `ContentRepurposingService.php` to generate social media posts and resize images.\n- [ ] Develop the `ContentController.php` to handle API requests for content repurposing.\n- [ ] Create database tables for storing repurposed content.\n- [ ] Develop the `ContentSelection.tsx` and `ContentPreview.tsx` frontend components for content selection and preview.\n- [ ] Implement the `useContentRepurposing.ts` hook to manage repurposed content data.\n- [ ] Write unit tests for the `ContentRepurposingService`.\n- [ ] Implement API tests for `/api/content/repurpose` and integration tests for content selection and repurposing.\n\n**Technical Requirements:**\n- GPT-3 or similar text generation model integration.\n\n**Labels:** `feature`, `backend`, `frontend`, `ai`, `api`, `database`, `testing`",
+      "repository": "brandify-ai",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 4,
+        "labels": [
+          "feature",
+          "backend",
+          "frontend",
+          "ai",
+          "api",
+          "database",
+          "testing"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:40:50.046515+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_chronoai-time-tracker_4",
+      "task_type": "ISSUE",
+      "title": "Implement Integration with Project Management Tools",
+      "description": "## Issue: Implement Integration with Project Management Tools (Asana, Jira, Trello)\n\n**Description:**\nImplement seamless integration with popular project management tools (Asana, Jira, Trello).\n\n**Checklist:**\n- [ ] Create `Integration.php` model.\n- [ ] Create `Integration.php` controller.\n- [ ] Implement `AsanaIntegrationService.php` service.\n- [ ] Implement `JiraIntegrationService.php` service.\n- [ ] Implement `TrelloIntegrationService.php` service.\n- [ ] Implement `POST /api/integrations/connect` endpoint.\n- [ ] Implement `GET /api/integrations/tasks` endpoint.\n- [ ] Implement `integration.connected` real-time event.\n- [ ] Implement `task.imported` real-time event.\n- [ ] Create `IntegrationSettings.tsx` component.\n- [ ] Create `TaskImportModal.tsx` component.\n- [ ] Create `integrations` table.\n- [ ] Update `tasks` table to add `integration_id` column.\n\n**Technical Requirements:**\n- OAuth libraries for third-party integrations.\n\n**Labels:** `feature`, `backend`, `frontend`, `integration`, `api`, `database`, `realtime`",
+      "repository": "chronoai-time-tracker",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 4,
+        "labels": [
+          "feature",
+          "backend",
+          "frontend",
+          "integration",
+          "api",
+          "database",
+          "realtime"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:40:50.047357+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_lingua-ai_7",
+      "task_type": "ISSUE",
+      "title": "Gamified Lessons with Points and Badges",
+      "description": "## Issue: Gamified Lessons with Points and Badges\n\n**Description:**\nImplement the gamified lessons feature with points, badges, and leaderboards to motivate users.\n\n**Checklist:**\n- [ ] Create `Lesson.php` model.\n- [ ] Create `Gamification.php` controller.\n- [ ] Implement `AwardingService.php` service.\n- [ ] Implement `POST /api/gamification/earn` endpoint.\n- [ ] Implement `GET /api/gamification/user/{userId}` endpoint.\n- [ ] Develop `BadgeDisplay.tsx` component.\n- [ ] Develop `PointsDisplay.tsx` component.\n- [ ] Develop `Leaderboard.tsx` component.\n- [ ] Implement `badge.earned` and `points.awarded` real-time events.\n\n**Technical Requirements:**\n- Database access for storing user points and badges.\n\n**Labels:** `feature`, `backend`, `frontend`, `gamification`",
+      "repository": "lingua-ai",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 7,
+        "labels": [
+          "feature",
+          "backend",
+          "frontend",
+          "gamification"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:40:50.049034+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_invoice-zen_12",
+      "task_type": "ISSUE",
+      "title": "Implement Authentication & Authorization with RBAC",
+      "description": "## Architecture: Implement Authentication & Authorization with RBAC\n\n**Description:**\nImplement Authentication and Authorization using JWT with Role-Based Access Control (RBAC).\n\n**Checklist:**\n- [ ] Implement user registration and login endpoints (`POST /api/auth/register`, `POST /api/auth/login`)\n- [ ] Implement JWT token generation and verification.\n- [ ] Define roles and permissions based on user types (e.g., admin, user).\n- [ ] Implement middleware to protect API endpoints based on roles and permissions.\n- [ ] Implement logout and refresh token endpoints (`POST /api/auth/logout`, `POST /api/auth/refresh`)\n- [ ] Implement Password Reset flow and Email Verification\n\n**Technical Requirements:**\n- Backend: PHP/Laravel, JWT\n- RBAC implementation\n\n**Labels:**\n`architecture`, `backend`, `security`, `auth`",
+      "repository": "invoice-zen",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 12,
+        "labels": [
+          "architecture",
+          "backend",
+          "security",
+          "auth"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:44:50.366216+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_lingua-ai_12",
+      "task_type": "ISSUE",
+      "title": "Testing Strategy Implementation",
+      "description": "## Issue: Testing Strategy Implementation\n\n**Description:**\nImplement the testing strategy defined in the documentation, including unit tests, API tests, and end-to-end tests using Pest and Vitest. Aim for 80% code coverage.\n\n**Checklist:**\n- [ ] Set up Pest and Vitest testing environments.\n- [ ] Write unit tests for backend services (RecommendationEngine, SpeechRecognition, GrammarChecker, DialogManager, NLP, AwardingService, DataAnalytics).\n- [ ] Write API tests for all endpoints.\n- [ ] Write end-to-end tests for key user flows (user goal setting and path display, chat interface and AI tutor interaction, progress dashboard and report display).\n- [ ] Ensure 80% code coverage.\n- [ ] Set up CI/CD pipeline to run tests automatically.\n\n**Technical Requirements:**\n- Pest, Vitest, CI/CD\n\n**Labels:** `testing`, `backend`, `frontend`, `ci/cd`",
+      "repository": "lingua-ai",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 12,
+        "labels": [
+          "testing",
+          "backend",
+          "frontend",
+          "ci/cd"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:44:50.367093+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_returnwise-portal_3",
+      "task_type": "ISSUE",
+      "title": "API Authentication and Authorization Setup",
+      "description": "## Issue: API Authentication Setup\n\n**Description:**\nImplement authentication and authorization for user and admin roles based on JWT.\n\n**Checklist:**\n- [ ] Implement `POST /api/auth/login` endpoint.\n- [ ] Implement `POST /api/auth/register` endpoint.\n- [ ] Implement `POST /api/auth/logout` endpoint.\n- [ ] Implement `POST /api/auth/refresh` endpoint.\n- [ ] Implement middleware for JWT validation.\n\n**Technical Requirements:**\n- Use JWT for token-based authentication.\n- Implement RBAC (Role-Based Access Control).\n\n**Labels:** `backend`, `api`, `authentication`",
+      "repository": "returnwise-portal",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 3,
+        "labels": [
+          "backend",
+          "api",
+          "authentication"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:44:50.368790+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_lingua-ai_11",
+      "task_type": "ISSUE",
+      "title": "Implement AI Features Using Python Microservices",
+      "description": "## Issue: Implement AI Features Using Python Microservices\n\n**Description:**\nDevelop and integrate Python microservices for AI features such as speech recognition, grammar checking, dialog management, and NLP.  This includes setting up communication between the Laravel backend and the Python microservices.\n\n**Checklist:**\n- [ ] Set up Python environment and install necessary libraries (e.g., Flask, SpeechRecognition, NLTK).\n- [ ] Implement API endpoints in the Python microservices for each AI feature.\n- [ ] Implement communication between the Laravel backend and Python microservices (e.g., using HTTP requests).\n- [ ] Implement error handling and logging.\n- [ ] Deploy Python microservices (e.g., using Docker).\n\n**Technical Requirements:**\n- Python, Flask, Docker, AI/ML libraries\n\n**Labels:** `ai`, `backend`, `microservices`, `python`",
+      "repository": "lingua-ai",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 11,
+        "labels": [
+          "ai",
+          "backend",
+          "microservices",
+          "python"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:49:16.608060+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_mindful-ai-platform_9",
+      "task_type": "ISSUE",
+      "title": "Authentication Flow and API Implementation",
+      "description": "## Issue: Authentication Flow and API Implementation\n\n**Description:**\nImplement the authentication flow and related API endpoints for user accounts.\n\n**Checklist:**\n- [ ] Implement `POST /api/user/register` (User registration).\n- [ ] Implement `POST /api/user/login` (User login).\n- [ ] Implement `POST /api/user/logout` (User logout).\n- [ ] Implement `POST /api/user/forgot-password` (Password reset request).\n- [ ] Implement `POST /api/user/reset-password` (Password reset).\n- [ ] Implement `GET /api/user/verify-email?token={token}` (Email verification).\n- [ ] Implement `POST /api/user/refresh-token` (Token refresh).\n\n**Technical Requirements:**\n- Use JWT (JSON Web Tokens) for authentication.\n- Implement secure password hashing and salting.\n- Implement email verification flow.\n\n**Labels:**",
+      "repository": "mindful-ai-platform",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 9,
+        "labels": [
+          "backend",
+          "api",
+          "authentication",
+          "security"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:49:16.608830+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_skill-bridge-ai_4",
+      "task_type": "ISSUE",
+      "title": "Implement Industry-Specific Vetting Process",
+      "description": "## Industry-Specific Vetting Process\n\n**Description:**\nImplement the industry-specific vetting process for onboarding contractors. This includes backend logic, API endpoints, and frontend components.\n\n**Checklist:**\n- [ ] Create industry-specific rulesets and data validation logic.\n- [ ] Integrate with background check services.\n- [ ] Develop backend logic for contractor onboarding.\n- [ ] Create API endpoints: `POST /api/onboard-contractor`, `GET /api/industry-rules`\n- [ ] Develop frontend UI components: `IndustrySelectionForm.tsx`, `useOnboarding.ts`\n- [ ] Implement real-time events: `contractor.onboarding.started`, `contractor.onboarding.completed`\n- [ ] Alter contractors table to add `industry_id` column\n\n**Technical Requirements:**\n- Integrate with Vetting API for background checks.\n- Ensure secure API endpoints.\n- Implement unit tests for industry rules validation and API tests for contractor onboarding.\n\n**Labels:**",
+      "repository": "skill-bridge-ai",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 4,
+        "labels": [
+          "feature",
+          "backend",
+          "frontend",
+          "api"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:53:12.330197+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_brandify-ai_8",
+      "task_type": "ISSUE",
+      "title": "Implement User Authentication and Authorization",
+      "description": "## Implement User Authentication and Authorization\n\n**Description:** Implement secure user authentication and authorization using JWT and RBAC.\n\n**Tasks:**\n- [ ] Implement authentication endpoints (`/api/auth/register`, `/api/auth/login`, `/api/auth/logout`, etc.).\n- [ ] Implement authorization middleware to protect API endpoints based on user roles and permissions.\n- [ ] Securely store user credentials (e.g., password hashing).\n- [ ] Implement JWT token generation and validation.\n- [ ] Implement RBAC logic to manage user roles and permissions.\n- [ ] Tests for all Authentication routes, making sure there are no security flaws.\n\n**Technical Requirements:**\n- JWT authentication.\n- RBAC implementation.\n\n**Labels:** `backend`, `security`, `api`, `authentication`, `authorization`",
+      "repository": "brandify-ai",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 8,
+        "labels": [
+          "backend",
+          "security",
+          "api",
+          "authentication",
+          "authorization"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:53:12.332739+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_invoice-zen_7",
+      "task_type": "ISSUE",
+      "title": "Implement Secure Payment Processing through Stripe",
+      "description": "## Feature Implementation: Secure Payment Processing through Stripe\n\n**Description:**\nIntegrate Stripe for secure payment processing.\n\n**Checklist:**\n- [ ] Create `transactions` table\n- [ ] Implement `PaymentService.php` service\n- [ ] Implement `Transaction.php` model\n- [ ] Implement `PaymentForm.tsx` component\n- [ ] Create API endpoint `POST /api/process_payment`\n- [ ] Implement real-time events `payment.succeeded` and `payment.failed`\n\n**Technical Requirements:**\n- Backend: PHP/Laravel, Stripe API Integration\n- Frontend: React (TypeScript)\n\n**Labels:**\n`feature`, `backend`, `frontend`, `api`, `stripe`, `payment`",
+      "repository": "invoice-zen",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 7,
+        "labels": [
+          "feature",
+          "backend",
+          "frontend",
+          "api",
+          "stripe",
+          "payment"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:53:12.334476+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_brand-ai_10",
+      "task_type": "ISSUE",
+      "title": "Set Up Subscription Management with Laravel Cashier",
+      "description": "### Issue: Set Up Subscription Management with Laravel Cashier\n\n**Description:**\nSet up subscription management using Laravel Cashier for handling payments and subscriptions via Stripe.\n\n**Checklist:**\n- [ ] Install and configure Laravel Cashier\n- [ ] Define subscription plans\n- [ ] Implement subscription endpoints (subscribe, unsubscribe, update)\n- [ ] Implement webhooks for handling subscription events\n\n**Technical Requirements:**\n- Laravel Cashier\n- Stripe API Key\n\n**Labels:** `infrastructure`, `backend`, `billing`, `stripe`",
+      "repository": "brand-ai",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 10,
+        "labels": [
+          "infrastructure",
+          "backend",
+          "billing",
+          "stripe"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:56:44.828602+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_brandify-ai_10",
+      "task_type": "ISSUE",
+      "title": "Implement Centralized Logging and Monitoring",
+      "description": "## Implement Centralized Logging and Monitoring\n\n**Description:** Setup centralized logging and monitoring to track application performance, errors, and security events.\n\n**Tasks:**\n- [ ] Integrate a logging library (e.g., Monolog) into the backend application.\n- [ ] Configure logging levels (e.g., debug, info, warning, error).\n- [ ] Send logs to a centralized logging service (e.g., ELK stack, Graylog).\n- [ ] Implement monitoring tools (e.g., Prometheus, Grafana) to track application metrics.\n- [ ] Set up alerts for critical errors and performance issues.\n\n**Technical Requirements:**\n- Centralized logging.\n- Real-time monitoring.\n\n**Labels:** `infrastructure`, `backend`, `observability`, `logging`",
+      "repository": "brandify-ai",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 10,
+        "labels": [
+          "infrastructure",
+          "backend",
+          "observability",
+          "logging"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:56:44.830229+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_chronoai-time-tracker_12",
+      "task_type": "ISSUE",
+      "title": "Implement Foundational Architecture Components",
+      "description": "## Issue: Implement Foundational Architecture Components\n\n**Description:**\nImplement the foundational architecture components: Authentication, Authorization, API Gateway, Logging, and Monitoring.\n\n**Checklist:**\n- [ ] Setup JWT authentication.\n- [ ] Implement RBAC roles and permissions.\n- [ ] Configure API Gateway (reverse proxy).\n- [ ] Setup Centralized Logging (e.g., ELK stack).\n- [ ] Setup system monitoring (e.g., Prometheus and Grafana).\n\n**Technical Requirements:**\n- Implement Redis and Laravel Echo Server for real-time events.\n- Implement JWT with roles and permissions.\n\n**Labels:** `infrastructure`, `backend`, `security`",
+      "repository": "chronoai-time-tracker",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 12,
+        "labels": [
+          "infrastructure",
+          "backend",
+          "security"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:56:44.831061+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_invoice-zen_2",
+      "task_type": "ISSUE",
+      "title": "Database Setup and Schema Creation",
+      "description": "## Infrastructure Setup: Database\n\n**Description:**\nThis issue focuses on setting up the database infrastructure for the project, including schema creation and initial seeding.\n\n**Checklist:**\n- [ ] Set up MySQL database instance\n- [ ] Create database schema based on documentation (`invoices`, `clients`, `users`, `payment_reminders`, `payment_predictions`, `reminder_templates`, `messages`, `transactions`)\n- [ ] Implement database migrations\n- [ ] Seed database with initial data (optional)\n\n**Technical Requirements:**\n- Database: MySQL\n- RBAC implementation\n\n**Labels:**\n`infrastructure`, `database`, `backend`",
+      "repository": "invoice-zen",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 2,
+        "labels": [
+          "infrastructure",
+          "database",
+          "backend"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:56:44.831934+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_returnwise-portal_2",
+      "task_type": "ISSUE",
+      "title": "Database Setup and Initial Schema Creation",
+      "description": "## Issue: Database Setup\n\n**Description:**\nDefine and create the initial database schema based on project specifications.\n\n**Checklist:**\n- [ ] Create the `users` table with the `retailer_id` column (nullable).\n- [ ] Create the `return_settings` table (`retailer_id`, `policy_json`).\n- [ ] Create the `return_predictions` table (`order_id`, `return_risk_score`).\n- [ ] Create the `return_requests` table (`user_id`, `order_id`, `retailer_id`, `status`).\n\n**Technical Requirements:**\n- Use MySQL database.\n- Implement database migrations for schema management.\n\n**Labels:** `setup`, `infrastructure`, `database`",
+      "repository": "returnwise-portal",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 2,
+        "labels": [
+          "setup",
+          "infrastructure",
+          "database"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T08:56:44.834632+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_chronoai-time-tracker_10",
+      "task_type": "ISSUE",
+      "title": "Setup Testing Framework",
+      "description": "## Issue: Setup Testing Framework\n\n**Description:**\nSet up the testing framework and implement initial tests to ensure code quality.\n\n**Checklist:**\n- [ ] Install Pest and Vitest.\n- [ ] Configure test environment.\n- [ ] Write unit tests for `MLTaskDetectionService`.\n- [ ] Write API tests for `/api/tasks/detect` and `/api/reports/summary`.\n- [ ] Write integration tests for task detection flow and generating detailed reports.\n- [ ] Configure test coverage reporting (80% target).\n\n**Technical Requirements:**\n- Pest and Vitest testing frameworks.\n\n**Labels:** `setup`, `testing`, `infrastructure`",
+      "repository": "chronoai-time-tracker",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 10,
+        "labels": [
+          "setup",
+          "testing",
+          "infrastructure"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T09:01:48.855796+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_mindful-ai-platform_8",
+      "task_type": "ISSUE",
+      "title": "Implement API Endpoints for Admin User Management",
+      "description": "## Issue: Implement API Endpoints for Admin User Management\n\n**Description:**\nImplement the API endpoints for admin user management based on the documentation. This includes creating, reading, updating, deleting, searching and managing user statuses.\n\n**Checklist:**\n- [ ] Implement GET /api/admin/users\n- [ ] Implement POST /api/admin/users\n- [ ] Implement GET /api/admin/users/{user_id}\n- [ ] Implement PUT /api/admin/users/{user_id}\n- [ ] Implement DELETE /api/admin/users/{user_id}\n- [ ] Implement GET /api/admin/users/search?query={query}\n- [ ] Implement PUT /api/admin/users/{user_id}/status\n- [ ] Implement GET /api/admin/users/export\n- [ ] Implement POST /api/admin/users/{user_id}/reset-password\n- [ ] Implement GET /api/admin/users/{user_id}/logs\n- [ ] Implement GET /api/admin/users/inactive\n- [ ] Implement GET /api/admin/users/active\n\n**Technical Requirements:**\n- Enforce proper authentication and authorization for all endpoints.\n- Ensure proper logging and auditing.\n\n**Labels:**",
+      "repository": "mindful-ai-platform",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 8,
+        "labels": [
+          "backend",
+          "api",
+          "admin",
+          "security"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T09:01:48.858572+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_lingua-ai_2",
+      "task_type": "ISSUE",
+      "title": "Database Setup - MySQL",
+      "description": "## Issue: Database Setup - MySQL\n\n**Description:**\nThis issue covers setting up the MySQL database schema based on the project documentation.\n\n**Checklist:**\n- [ ] Create the initial database schema based on the defined tables:\n    - [ ] learning_paths\n    - [ ] conversations\n    - [ ] messages\n    - [ ] user_badges\n    - [ ] progress_data\n- [ ] Add necessary columns to the `users` table (learning_goal, points).\n- [ ] Configure database migrations for schema management.\n- [ ] Seed the database with initial data (optional).\n\n**Technical Requirements:**\n- MySQL server\n- Database credentials configured in `.env`\n\n**Labels:** `setup`, `backend`, `infrastructure`, `database`",
+      "repository": "lingua-ai",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 2,
+        "labels": [
+          "setup",
+          "backend",
+          "infrastructure",
+          "database"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T09:06:24.001354+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_chronoai-time-tracker_2",
+      "task_type": "ISSUE",
+      "title": "Implement AI-Powered Task Detection",
+      "description": "## Issue: Implement AI-Powered Task Detection\n\n**Description:**\nImplement the AI-powered automatic task detection and categorization feature.\n\n**Checklist:**\n- [ ] Create `Task.php` model.\n- [ ] Create `TaskDetection.php` controller.\n- [ ] Implement `MLTaskDetectionService.php` service.\n- [ ] Implement `POST /api/tasks/detect` endpoint.\n- [ ] Implement `POST /api/tasks/feedback` endpoint.\n- [ ] Implement `task.detected` real-time event.\n- [ ] Implement `task.categorized` real-time event.\n- [ ] Create `TaskList.tsx` component.\n- [ ] Create `TaskDetectionModal.tsx` component.\n- [ ] Update the `tasks` table to add `ai_category` column.\n- [ ] Create `task_detection_feedback` table.\n\n**Technical Requirements:**\n- Python for AI model.\n- TensorFlow/PyTorch for AI model training.\n- Serverless functions for AI inference.\n\n**Labels:** `feature`, `backend`, `frontend`, `ai`, `api`, `database`, `realtime`",
+      "repository": "chronoai-time-tracker",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 2,
+        "labels": [
+          "feature",
+          "backend",
+          "frontend",
+          "ai",
+          "api",
+          "database",
+          "realtime"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T09:09:48.571626+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_lingua-ai_3",
+      "task_type": "ISSUE",
+      "title": "API Authentication - User Registration and Login",
+      "description": "## Issue: API Authentication - User Registration and Login\n\n**Description:**\nImplement the user authentication API endpoints, including registration, login, logout, refresh, forgot password, and reset password.\n\n**Checklist:**\n- [ ] Implement `POST /api/auth/register` endpoint.\n- [ ] Implement `POST /api/auth/login` endpoint.\n- [ ] Implement `POST /api/auth/logout` endpoint.\n- [ ] Implement `POST /api/auth/refresh` endpoint.\n- [ ] Implement `POST /api/auth/forgot_password` endpoint.\n- [ ] Implement `POST /api/auth/reset_password` endpoint.\n- [ ] Implement JWT authentication.\n\n**Technical Requirements:**\n- Laravel Passport or Sanctum\n- JWT library\n\n**Labels:** `backend`, `api`, `authentication`",
+      "repository": "lingua-ai",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 3,
+        "labels": [
+          "backend",
+          "api",
+          "authentication"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T09:12:44.758947+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_returnwise-portal_5",
+      "task_type": "ISSUE",
+      "title": "Implement Consolidated Return Portal Login",
+      "description": "## Issue: Consolidated Return Portal Login Implementation\n\n**Description:**\nImplement a consolidated return portal login for multiple retailers.\n\n**Checklist:**\n- [ ] Update `User` model with `retailer_id`.\n- [ ] Implement `AuthController` with login and register functionalities.\n- [ ] Implement `AuthService` to handle user authentication.\n- [ ] Implement `POST /api/login` and `POST /api/register` endpoints.\n- [ ] Trigger `user.login` and `user.logout` real-time events.\n\n**Technical Requirements:**\n- Support universal login functionality.\n\n**Labels:** `feature`, `backend`, `api`, `authentication`",
+      "repository": "returnwise-portal",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 5,
+        "labels": [
+          "feature",
+          "backend",
+          "api",
+          "authentication"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T09:24:09.152743+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_brand-ai_7",
+      "task_type": "ISSUE",
+      "title": "Implement Frontend for AI Logo Generation",
+      "description": "### Issue: Implement Frontend for AI Logo Generation\n\n**Description:**\nDevelop the frontend components for the AI-powered logo generation feature. Develop a form to capture business descriptions, industry, and style preferences. Display generated logos with options for customization (color, layout). Implement a download feature.\n\n**Checklist:**\n- [ ] Create LogoGeneratorForm component\n- [ ] Create LogoDisplay component\n- [ ] Implement form for business description and style preferences\n- [ ] Display generated logos with customization options\n- [ ] Implement download feature\n\n**Technical Requirements:**\n- React 18+\n- Typescript\n\n**Labels:** `feature`, `frontend`, `ai`, `ui`",
+      "repository": "brand-ai",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 7,
+        "labels": [
+          "feature",
+          "frontend",
+          "ai",
+          "ui"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T09:41:40.050357+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_mindful-ai-platform_3",
+      "task_type": "ISSUE",
+      "title": "Implement AI-Powered Mental Health Assessment Questionnaire",
+      "description": "## Issue: Implement AI-Powered Mental Health Assessment Questionnaire\n\n**Description:**\nImplement the AI-powered mental health assessment questionnaire feature. This includes both the frontend questionnaire UI and the backend scoring algorithm.\n\n**Checklist:**\n- [ ] Create `Assessment` model (Assessment.php).\n- [ ] Create `AssessmentController` (AssessmentController.php).\n- [ ] Implement scoring algorithm logic.\n- [ ] Create the Questionnaire.tsx component.\n- [ ] Create the useQuestionnaire.ts hook.\n- [ ] Implement API endpoints:\n  - [ ] POST /api/assessment\n  - [ ] GET /api/assessment/{id}\n- [ ] Implement real-time event `assessment.completed`.\n- [ ] Write unit tests for the scoring algorithm.\n- [ ] Write API tests for assessment submission.\n\n**Technical Requirements:**\n- Scoring algorithm should be accurate and aligned with mental health assessment standards.\n\n**Labels:**",
+      "repository": "mindful-ai-platform",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 3,
+        "labels": [
+          "feature",
+          "frontend",
+          "backend",
+          "api",
+          "testing"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T09:41:40.055619+00:00",
+      "attempts": 0
+    },
+    {
+      "id": "issue_brandify-ai_1",
+      "task_type": "ISSUE",
+      "title": "Initial Project Setup and Configuration",
+      "description": "## Initial Project Setup\n\n**Description:** Set up the initial project structure, including repository setup, project configuration, and basic tooling.\n\n**Tasks:**\n- [ ] Create a new GitHub repository for brandify-ai\n- [ ] Initialize the project with a basic `README.md` file containing project description and initial setup instructions.\n- [ ] Configure Git branching strategy (e.g., main, develop, feature branches)\n- [ ] Set up CI/CD pipeline (e.g., GitHub Actions) for automated builds and deployments\n- [ ] Define project coding standards and linting rules (e.g., ESLint, Prettier)\n- [ ] Initial folder structure (backend, frontend, docs, etc.)\n\n**Technical Requirements:**\n- Ensure the repository is private.\n- The `README.md` should include the project's description, initial features, target audience, and problem statement.\n\n**Labels:** `setup`, `infrastructure`, `repository`",
+      "repository": "brandify-ai",
+      "priority": 3,
+      "metadata": {
+        "issue_number": 1,
+        "labels": [
+          "setup",
+          "infrastructure",
+          "repository"
+        ],
+        "from_local_issue": true
+      },
+      "created_at": "2025-06-28T10:19:37.346577+00:00",
+      "attempts": 0
+    }
+  ],
+  "processing": [],
+  "stats": {
+    "total_enqueued": 203,
+    "total_dequeued": 139,
+    "total_completed": 139,
+    "total_failed": 0,
+    "total_retried": 0,
+    "total_duplicates_rejected": 94,
+    "queue_size": 64,
+    "processing": 0,
+    "completed_history": 139,
+    "failed_items": 0
+  },
+  "saved_at": "2025-06-28T10:57:07.290895+00:00"
+}

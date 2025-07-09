@@ -1,0 +1,17 @@
+{
+  "plugins": [
+    {
+      "name": "cache_optimizer",
+      "type": "generator",
+      "file": "cache_optimization_generator.py",
+      "description": "Generates cache optimization improvements"
+    },
+    {
+      "name": "code_quality",
+      "type": "fitness",
+      "file": "code_quality_fitness.py",
+      "description": "Evaluates code quality metrics"
+    }
+  ],
+  "version": "1.0.0"
+}

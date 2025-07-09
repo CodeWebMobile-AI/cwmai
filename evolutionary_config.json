@@ -1,0 +1,608 @@
+{
+  "version": "2.0",
+  "last_updated": "2025-06-22T15:01:59.118988",
+  "parameters": {
+    "population_size": {
+      "min": 5,
+      "max": 200,
+      "default": 20,
+      "adaptive": true,
+      "adaptation_rate": 0.1,
+      "description": "Number of improvements per generation"
+    },
+    "elite_size": {
+      "min": 1,
+      "max": 50,
+      "default": 5,
+      "adaptive": true,
+      "constraint": "must be < population_size * 0.5",
+      "description": "Best improvements preserved"
+    },
+    "mutation_rate": {
+      "min": 0.05,
+      "max": 0.95,
+      "default": 0.3,
+      "adaptive": true,
+      "adaptation_strategy": "fitness_stagnation",
+      "description": "Probability of mutation"
+    },
+    "crossover_rate": {
+      "min": 0.1,
+      "max": 0.9,
+      "default": 0.7,
+      "adaptive": true,
+      "description": "Probability of crossover vs mutation"
+    },
+    "tournament_size": {
+      "min": 2,
+      "max": 10,
+      "default": 3,
+      "adaptive": false,
+      "description": "Selection pressure"
+    }
+  },
+  "improvement_types": {
+    "core": [
+      "optimization",
+      "error_fix",
+      "feature",
+      "integration"
+    ],
+    "discovered": [
+      "system_observability",
+      "cache_optimizer",
+      "content_generator",
+      "deep_analysis",
+      "distributed_system",
+      "data_visualization",
+      "api_gateway",
+      "message_queue",
+      "search_engine",
+      "recommendation_system",
+      "auth_system",
+      "payment_processing",
+      "notification_service",
+      "analytics_engine",
+      "smart_optimization",
+      "smart_error_fix",
+      "smart_feature",
+      "smart_integration",
+      "smart_system_observability",
+      "adaptive_optimization",
+      "adaptive_error_fix",
+      "adaptive_feature",
+      "adaptive_integration",
+      "adaptive_system_observability",
+      "intelligent_optimization",
+      "intelligent_error_fix",
+      "intelligent_feature",
+      "intelligent_integration",
+      "intelligent_system_observability",
+      "automated_optimization",
+      "automated_error_fix",
+      "automated_feature",
+      "automated_integration",
+      "automated_system_observability",
+      "dynamic_optimization",
+      "dynamic_error_fix",
+      "dynamic_feature",
+      "dynamic_integration",
+      "dynamic_system_observability",
+      "hybrid_optimization",
+      "hybrid_error_fix",
+      "hybrid_feature",
+      "hybrid_integration",
+      "hybrid_system_observability",
+      "quantum_enhancer",
+      "quantum_optimizer",
+      "quantum_analyzer",
+      "quantum_generator",
+      "quantum_validator",
+      "quantum_synthesizer",
+      "blockchain_enhancer",
+      "blockchain_optimizer",
+      "blockchain_analyzer",
+      "blockchain_generator",
+      "blockchain_validator",
+      "blockchain_synthesizer",
+      "edge_enhancer",
+      "edge_optimizer",
+      "edge_analyzer",
+      "edge_generator",
+      "edge_validator",
+      "edge_synthesizer",
+      "serverless_enhancer",
+      "serverless_optimizer",
+      "serverless_analyzer",
+      "serverless_generator",
+      "serverless_validator",
+      "serverless_synthesizer",
+      "microservice_enhancer",
+      "microservice_optimizer",
+      "microservice_analyzer",
+      "microservice_generator",
+      "microservice_validator",
+      "microservice_synthesizer"
+    ],
+    "weights": {},
+    "embeddings": {
+      "system_observability": {
+        "pattern": "observability_pattern",
+        "frequency": 208,
+        "discovered_at": "2025-06-22T13:05:01.959587"
+      },
+      "cache_optimizer": {
+        "pattern": "caching_pattern",
+        "frequency": 65,
+        "discovered_at": "2025-06-22T13:05:01.959597"
+      },
+      "content_generator": {
+        "pattern": "generator_pattern",
+        "frequency": 39,
+        "discovered_at": "2025-06-22T13:05:01.959599"
+      },
+      "deep_analysis": {
+        "pattern": "analyzer_pattern",
+        "frequency": 37,
+        "discovered_at": "2025-06-22T13:05:01.959600"
+      },
+      "distributed_system": {
+        "pattern": "distributed_pattern",
+        "frequency": 8,
+        "discovered_at": "2025-06-22T13:05:01.959602"
+      },
+      "data_visualization": {
+        "reason": "missing_capability",
+        "discovered_at": "2025-06-22T13:05:01.959645"
+      },
+      "api_gateway": {
+        "reason": "missing_capability",
+        "discovered_at": "2025-06-22T13:05:01.959648"
+      },
+      "message_queue": {
+        "reason": "missing_capability",
+        "discovered_at": "2025-06-22T13:05:01.959649"
+      },
+      "search_engine": {
+        "reason": "missing_capability",
+        "discovered_at": "2025-06-22T13:05:01.959650"
+      },
+      "recommendation_system": {
+        "reason": "missing_capability",
+        "discovered_at": "2025-06-22T13:05:01.959651"
+      },
+      "auth_system": {
+        "reason": "missing_capability",
+        "discovered_at": "2025-06-22T13:05:01.959652"
+      },
+      "payment_processing": {
+        "reason": "missing_capability",
+        "discovered_at": "2025-06-22T13:05:01.959653"
+      },
+      "notification_service": {
+        "reason": "missing_capability",
+        "discovered_at": "2025-06-22T13:05:01.959654"
+      },
+      "analytics_engine": {
+        "reason": "missing_capability",
+        "discovered_at": "2025-06-22T13:05:01.959655"
+      },
+      "smart_optimization": {
+        "base_type": "optimization",
+        "modifier": "smart",
+        "discovered_at": "2025-06-22T13:05:01.959661"
+      },
+      "smart_error_fix": {
+        "base_type": "error_fix",
+        "modifier": "smart",
+        "discovered_at": "2025-06-22T13:15:57.234468"
+      },
+      "smart_feature": {
+        "base_type": "feature",
+        "modifier": "smart",
+        "discovered_at": "2025-06-22T13:15:57.234478"
+      },
+      "smart_integration": {
+        "base_type": "integration",
+        "modifier": "smart",
+        "discovered_at": "2025-06-22T13:15:57.234479"
+      },
+      "smart_system_observability": {
+        "base_type": "system_observability",
+        "modifier": "smart",
+        "discovered_at": "2025-06-22T13:15:57.234481"
+      },
+      "adaptive_optimization": {
+        "base_type": "optimization",
+        "modifier": "adaptive",
+        "discovered_at": "2025-06-22T13:15:57.234482"
+      },
+      "adaptive_error_fix": {
+        "base_type": "error_fix",
+        "modifier": "adaptive",
+        "discovered_at": "2025-06-22T13:15:57.234483"
+      },
+      "adaptive_feature": {
+        "base_type": "feature",
+        "modifier": "adaptive",
+        "discovered_at": "2025-06-22T13:15:57.234484"
+      },
+      "adaptive_integration": {
+        "base_type": "integration",
+        "modifier": "adaptive",
+        "discovered_at": "2025-06-22T13:15:57.234485"
+      },
+      "adaptive_system_observability": {
+        "base_type": "system_observability",
+        "modifier": "adaptive",
+        "discovered_at": "2025-06-22T13:15:57.234486"
+      },
+      "intelligent_optimization": {
+        "base_type": "optimization",
+        "modifier": "intelligent",
+        "discovered_at": "2025-06-22T13:15:57.234487"
+      },
+      "intelligent_error_fix": {
+        "base_type": "error_fix",
+        "modifier": "intelligent",
+        "discovered_at": "2025-06-22T13:36:38.487841"
+      },
+      "intelligent_feature": {
+        "base_type": "feature",
+        "modifier": "intelligent",
+        "discovered_at": "2025-06-22T13:36:38.487853"
+      },
+      "intelligent_integration": {
+        "base_type": "integration",
+        "modifier": "intelligent",
+        "discovered_at": "2025-06-22T13:36:38.487854"
+      },
+      "intelligent_system_observability": {
+        "base_type": "system_observability",
+        "modifier": "intelligent",
+        "discovered_at": "2025-06-22T13:36:38.487856"
+      },
+      "automated_optimization": {
+        "base_type": "optimization",
+        "modifier": "automated",
+        "discovered_at": "2025-06-22T13:36:38.487857"
+      },
+      "automated_error_fix": {
+        "base_type": "error_fix",
+        "modifier": "automated",
+        "discovered_at": "2025-06-22T13:36:38.487858"
+      },
+      "automated_feature": {
+        "base_type": "feature",
+        "modifier": "automated",
+        "discovered_at": "2025-06-22T13:36:38.487859"
+      },
+      "automated_integration": {
+        "base_type": "integration",
+        "modifier": "automated",
+        "discovered_at": "2025-06-22T13:36:38.487860"
+      },
+      "automated_system_observability": {
+        "base_type": "system_observability",
+        "modifier": "automated",
+        "discovered_at": "2025-06-22T13:36:38.487861"
+      },
+      "dynamic_optimization": {
+        "base_type": "optimization",
+        "modifier": "dynamic",
+        "discovered_at": "2025-06-22T13:36:38.487862"
+      },
+      "dynamic_error_fix": {
+        "base_type": "error_fix",
+        "modifier": "dynamic",
+        "discovered_at": "2025-06-22T13:58:58.729728"
+      },
+      "dynamic_feature": {
+        "base_type": "feature",
+        "modifier": "dynamic",
+        "discovered_at": "2025-06-22T13:58:58.729737"
+      },
+      "dynamic_integration": {
+        "base_type": "integration",
+        "modifier": "dynamic",
+        "discovered_at": "2025-06-22T13:58:58.729738"
+      },
+      "dynamic_system_observability": {
+        "base_type": "system_observability",
+        "modifier": "dynamic",
+        "discovered_at": "2025-06-22T13:58:58.729740"
+      },
+      "hybrid_optimization": {
+        "base_type": "optimization",
+        "modifier": "hybrid",
+        "discovered_at": "2025-06-22T13:58:58.729741"
+      },
+      "hybrid_error_fix": {
+        "base_type": "error_fix",
+        "modifier": "hybrid",
+        "discovered_at": "2025-06-22T13:58:58.729742"
+      },
+      "hybrid_feature": {
+        "base_type": "feature",
+        "modifier": "hybrid",
+        "discovered_at": "2025-06-22T13:58:58.729743"
+      },
+      "hybrid_integration": {
+        "base_type": "integration",
+        "modifier": "hybrid",
+        "discovered_at": "2025-06-22T13:58:58.729744"
+      },
+      "hybrid_system_observability": {
+        "base_type": "system_observability",
+        "modifier": "hybrid",
+        "discovered_at": "2025-06-22T13:58:58.729745"
+      },
+      "quantum_enhancer": {
+        "domain": "quantum",
+        "function": "enhancer",
+        "discovered_at": "2025-06-22T13:58:58.729746"
+      },
+      "quantum_optimizer": {
+        "domain": "quantum",
+        "function": "optimizer",
+        "discovered_at": "2025-06-22T13:59:44.799082"
+      },
+      "quantum_analyzer": {
+        "domain": "quantum",
+        "function": "analyzer",
+        "discovered_at": "2025-06-22T13:59:44.799088"
+      },
+      "quantum_generator": {
+        "domain": "quantum",
+        "function": "generator",
+        "discovered_at": "2025-06-22T13:59:44.799090"
+      },
+      "quantum_validator": {
+        "domain": "quantum",
+        "function": "validator",
+        "discovered_at": "2025-06-22T13:59:44.799091"
+      },
+      "quantum_synthesizer": {
+        "domain": "quantum",
+        "function": "synthesizer",
+        "discovered_at": "2025-06-22T13:59:44.799092"
+      },
+      "blockchain_enhancer": {
+        "domain": "blockchain",
+        "function": "enhancer",
+        "discovered_at": "2025-06-22T13:59:44.799093"
+      },
+      "blockchain_optimizer": {
+        "domain": "blockchain",
+        "function": "optimizer",
+        "discovered_at": "2025-06-22T13:59:44.799094"
+      },
+      "blockchain_analyzer": {
+        "domain": "blockchain",
+        "function": "analyzer",
+        "discovered_at": "2025-06-22T13:59:44.799095"
+      },
+      "blockchain_generator": {
+        "domain": "blockchain",
+        "function": "generator",
+        "discovered_at": "2025-06-22T13:59:44.799096"
+      },
+      "blockchain_validator": {
+        "domain": "blockchain",
+        "function": "validator",
+        "discovered_at": "2025-06-22T13:59:44.799097"
+      },
+      "blockchain_synthesizer": {
+        "domain": "blockchain",
+        "function": "synthesizer",
+        "discovered_at": "2025-06-22T14:00:28.517457"
+      },
+      "edge_enhancer": {
+        "domain": "edge",
+        "function": "enhancer",
+        "discovered_at": "2025-06-22T14:00:28.517464"
+      },
+      "edge_optimizer": {
+        "domain": "edge",
+        "function": "optimizer",
+        "discovered_at": "2025-06-22T14:00:28.517465"
+      },
+      "edge_analyzer": {
+        "domain": "edge",
+        "function": "analyzer",
+        "discovered_at": "2025-06-22T14:00:28.517467"
+      },
+      "edge_generator": {
+        "domain": "edge",
+        "function": "generator",
+        "discovered_at": "2025-06-22T14:00:28.517468"
+      },
+      "edge_validator": {
+        "domain": "edge",
+        "function": "validator",
+        "discovered_at": "2025-06-22T14:00:28.517469"
+      },
+      "edge_synthesizer": {
+        "domain": "edge",
+        "function": "synthesizer",
+        "discovered_at": "2025-06-22T14:00:28.517470"
+      },
+      "serverless_enhancer": {
+        "domain": "serverless",
+        "function": "enhancer",
+        "discovered_at": "2025-06-22T14:00:28.517471"
+      },
+      "serverless_optimizer": {
+        "domain": "serverless",
+        "function": "optimizer",
+        "discovered_at": "2025-06-22T14:00:28.517472"
+      },
+      "serverless_analyzer": {
+        "domain": "serverless",
+        "function": "analyzer",
+        "discovered_at": "2025-06-22T14:00:28.517473"
+      },
+      "serverless_generator": {
+        "domain": "serverless",
+        "function": "generator",
+        "discovered_at": "2025-06-22T14:38:11.543758"
+      },
+      "serverless_validator": {
+        "domain": "serverless",
+        "function": "validator",
+        "discovered_at": "2025-06-22T14:38:11.543765"
+      },
+      "serverless_synthesizer": {
+        "domain": "serverless",
+        "function": "synthesizer",
+        "discovered_at": "2025-06-22T14:38:11.543767"
+      },
+      "microservice_enhancer": {
+        "domain": "microservice",
+        "function": "enhancer",
+        "discovered_at": "2025-06-22T14:38:11.543768"
+      },
+      "microservice_optimizer": {
+        "domain": "microservice",
+        "function": "optimizer",
+        "discovered_at": "2025-06-22T14:38:11.543769"
+      },
+      "microservice_analyzer": {
+        "domain": "microservice",
+        "function": "analyzer",
+        "discovered_at": "2025-06-22T14:38:11.543770"
+      },
+      "microservice_generator": {
+        "domain": "microservice",
+        "function": "generator",
+        "discovered_at": "2025-06-22T14:38:11.543771"
+      },
+      "microservice_validator": {
+        "domain": "microservice",
+        "function": "validator",
+        "discovered_at": "2025-06-22T14:38:11.543772"
+      },
+      "microservice_synthesizer": {
+        "domain": "microservice",
+        "function": "synthesizer",
+        "discovered_at": "2025-06-22T14:38:11.543773"
+      }
+    }
+  },
+  "fitness_objectives": {
+    "performance": {
+      "weight": 0.25,
+      "adaptive": true,
+      "metrics": [
+        "response_time",
+        "throughput",
+        "resource_usage"
+      ],
+      "learning_rate": 0.05
+    },
+    "quality": {
+      "weight": 0.3,
+      "adaptive": true,
+      "metrics": [
+        "accuracy",
+        "relevance",
+        "completeness"
+      ],
+      "learning_rate": 0.05
+    },
+    "maintainability": {
+      "weight": 0.2,
+      "adaptive": true,
+      "metrics": [
+        "complexity",
+        "documentation",
+        "test_coverage"
+      ],
+      "learning_rate": 0.05
+    },
+    "innovation": {
+      "weight": 0.25,
+      "adaptive": true,
+      "metrics": [
+        "novelty",
+        "capability_expansion",
+        "user_value"
+      ],
+      "learning_rate": 0.05
+    },
+    "custom": {}
+  },
+  "profiles": {
+    "aggressive": {
+      "population_multiplier": 3.0,
+      "mutation_multiplier": 2.0,
+      "exploration_bias": 0.8
+    },
+    "conservative": {
+      "population_multiplier": 0.5,
+      "mutation_multiplier": 0.5,
+      "exploration_bias": 0.2
+    },
+    "balanced": {
+      "population_multiplier": 1.0,
+      "mutation_multiplier": 1.0,
+      "exploration_bias": 0.5
+    },
+    "adaptive": {
+      "description": "Learns optimal profile over time",
+      "enabled": true
+    }
+  },
+  "ensemble": {
+    "roles": {
+      "explorer": {
+        "temperature_range": [
+          0.7,
+          1.0
+        ],
+        "preferred_traits": [
+          "creative",
+          "diverse"
+        ],
+        "model_selection": "performance_based"
+      },
+      "refiner": {
+        "temperature_range": [
+          0.1,
+          0.5
+        ],
+        "preferred_traits": [
+          "accurate",
+          "detailed"
+        ],
+        "model_selection": "performance_based"
+      },
+      "validator": {
+        "temperature_range": [
+          0.0,
+          0.3
+        ],
+        "preferred_traits": [
+          "careful",
+          "thorough"
+        ],
+        "model_selection": "performance_based"
+      }
+    },
+    "model_performance": {},
+    "selection_strategy": "multi_armed_bandit"
+  },
+  "meta_learning": {
+    "enabled": true,
+    "history_size": 100,
+    "pattern_detection": true,
+    "transfer_learning": true
+  },
+  "plugins": {
+    "enabled": true,
+    "directories": [
+      "./evolutionary_plugins"
+    ],
+    "auto_discover": true
+  }
+}

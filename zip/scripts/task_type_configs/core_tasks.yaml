@@ -1,0 +1,538 @@
+plugin_info:
+  name: core_tasks
+  version: 2.0.0
+  description: Core task types for software development
+  author: CWMAI System
+
+task_types:
+  # Core Development (Early Development Stage)
+  - name: feature_crud_operations
+    category: development
+    complexity: moderate
+    typical_duration_hours: 6.0
+    required_skills:
+      - backend
+      - database
+      - api_design
+    applicable_stages:
+      - early_development
+      - active_development
+    applicable_architectures:
+      - laravel_react
+    prerequisites: []
+    success_criteria:
+      crud_works: true
+      tests_pass: true
+    priority_modifier: 1.1
+
+  - name: feature_api_endpoint
+    category: development
+    complexity: moderate
+    typical_duration_hours: 4.0
+    required_skills:
+      - api_design
+      - backend
+    applicable_stages:
+      - early_development
+      - active_development
+      - growth
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      endpoint_works: true
+      documented: true
+    priority_modifier: 1.0
+
+  - name: feature_ui_component
+    category: development
+    complexity: moderate
+    typical_duration_hours: 4.0
+    required_skills:
+      - react
+      - typescript
+      - ui_design
+    applicable_stages:
+      - early_development
+      - active_development
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      component_renders: true
+      responsive: true
+    priority_modifier: 1.0
+
+  - name: feature_business_logic
+    category: development
+    complexity: complex
+    typical_duration_hours: 8.0
+    required_skills:
+      - business_analysis
+      - backend
+      - algorithms
+    applicable_stages:
+      - active_development
+      - growth
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      logic_correct: true
+      tests_pass: true
+    priority_modifier: 1.1
+
+  - name: feature_data_model
+    category: development
+    complexity: moderate
+    typical_duration_hours: 3.0
+    required_skills:
+      - database
+      - modeling
+    applicable_stages:
+      - early_development
+      - active_development
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      model_created: true
+      migrations_work: true
+    priority_modifier: 1.0
+
+  # Testing Tasks
+  - name: testing_unit_tests
+    category: testing
+    complexity: simple
+    typical_duration_hours: 2.0
+    required_skills:
+      - testing
+      - unit_testing
+    applicable_stages:
+      - early_development
+      - active_development
+      - growth
+      - mature
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      coverage_increased: true
+      tests_pass: true
+    priority_modifier: 1.2
+
+  - name: testing_integration_tests
+    category: testing
+    complexity: moderate
+    typical_duration_hours: 4.0
+    required_skills:
+      - testing
+      - integration_testing
+    applicable_stages:
+      - active_development
+      - growth
+      - mature
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      integration_verified: true
+      tests_pass: true
+    priority_modifier: 1.1
+
+  - name: testing_e2e_tests
+    category: testing
+    complexity: complex
+    typical_duration_hours: 6.0
+    required_skills:
+      - testing
+      - e2e_testing
+      - automation
+    applicable_stages:
+      - active_development
+      - growth
+      - mature
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      user_flows_tested: true
+      tests_pass: true
+    priority_modifier: 1.0
+
+  - name: testing_api_tests
+    category: testing
+    complexity: moderate
+    typical_duration_hours: 3.0
+    required_skills:
+      - testing
+      - api_testing
+    applicable_stages:
+      - early_development
+      - active_development
+      - growth
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      endpoints_tested: true
+      tests_pass: true
+    priority_modifier: 1.1
+
+  - name: testing_component_tests
+    category: testing
+    complexity: simple
+    typical_duration_hours: 2.0
+    required_skills:
+      - testing
+      - react
+      - component_testing
+    applicable_stages:
+      - early_development
+      - active_development
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      components_tested: true
+      tests_pass: true
+    priority_modifier: 1.0
+
+  # Infrastructure Tasks
+  - name: infrastructure_deployment
+    category: infrastructure
+    complexity: complex
+    typical_duration_hours: 6.0
+    required_skills:
+      - devops
+      - deployment
+      - cloud
+    applicable_stages:
+      - active_development
+      - growth
+      - mature
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      deployed: true
+      accessible: true
+    priority_modifier: 1.3
+
+  - name: infrastructure_monitoring
+    category: infrastructure
+    complexity: moderate
+    typical_duration_hours: 4.0
+    required_skills:
+      - monitoring
+      - devops
+    applicable_stages:
+      - growth
+      - mature
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      monitoring_active: true
+      alerts_configured: true
+    priority_modifier: 1.1
+
+  - name: infrastructure_scaling
+    category: infrastructure
+    complexity: complex
+    typical_duration_hours: 8.0
+    required_skills:
+      - scaling
+      - architecture
+      - devops
+    applicable_stages:
+      - growth
+      - mature
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      scalable: true
+      performance_improved: true
+    priority_modifier: 1.2
+
+  - name: infrastructure_backup
+    category: infrastructure
+    complexity: moderate
+    typical_duration_hours: 3.0
+    required_skills:
+      - backup
+      - devops
+    applicable_stages:
+      - active_development
+      - growth
+      - mature
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      backups_working: true
+      restore_tested: true
+    priority_modifier: 1.4
+
+  # Optimization Tasks
+  - name: optimization_performance
+    category: optimization
+    complexity: complex
+    typical_duration_hours: 8.0
+    required_skills:
+      - performance_optimization
+      - profiling
+    applicable_stages:
+      - growth
+      - mature
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      performance_improved: true
+      metrics_tracked: true
+    priority_modifier: 1.1
+
+  - name: optimization_database
+    category: optimization
+    complexity: complex
+    typical_duration_hours: 6.0
+    required_skills:
+      - database
+      - optimization
+      - indexing
+    applicable_stages:
+      - growth
+      - mature
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      queries_optimized: true
+      indexes_added: true
+    priority_modifier: 1.2
+
+  - name: optimization_caching
+    category: optimization
+    complexity: moderate
+    typical_duration_hours: 4.0
+    required_skills:
+      - caching
+      - redis
+      - performance
+    applicable_stages:
+      - active_development
+      - growth
+      - mature
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      cache_implemented: true
+      performance_improved: true
+    priority_modifier: 1.1
+
+  - name: optimization_bundle_size
+    category: optimization
+    complexity: moderate
+    typical_duration_hours: 4.0
+    required_skills:
+      - frontend
+      - webpack
+      - optimization
+    applicable_stages:
+      - growth
+      - mature
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      bundle_reduced: true
+      load_time_improved: true
+    priority_modifier: 1.0
+
+  # Maintenance Tasks
+  - name: maintenance_dependencies
+    category: maintenance
+    complexity: simple
+    typical_duration_hours: 2.0
+    required_skills:
+      - package_management
+      - security
+    applicable_stages:
+      - active_development
+      - growth
+      - mature
+      - maintenance
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      dependencies_updated: true
+      tests_pass: true
+    priority_modifier: 1.3
+
+  - name: maintenance_security_patch
+    category: maintenance
+    complexity: moderate
+    typical_duration_hours: 3.0
+    required_skills:
+      - security
+      - patching
+    applicable_stages:
+      - growth
+      - mature
+      - maintenance
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      vulnerabilities_fixed: true
+      tests_pass: true
+    priority_modifier: 1.5
+
+  - name: maintenance_bug_fix
+    category: maintenance
+    complexity: moderate
+    typical_duration_hours: 3.0
+    required_skills:
+      - debugging
+      - problem_solving
+    applicable_stages:
+      - early_development
+      - active_development
+      - growth
+      - mature
+      - maintenance
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      bug_fixed: true
+      tests_pass: true
+    priority_modifier: 1.4
+
+  - name: maintenance_refactoring
+    category: maintenance
+    complexity: complex
+    typical_duration_hours: 6.0
+    required_skills:
+      - refactoring
+      - architecture
+      - testing
+    applicable_stages:
+      - active_development
+      - growth
+      - mature
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      code_improved: true
+      tests_pass: true
+    priority_modifier: 1.0
+
+  # Integration Tasks
+  - name: integration_api
+    category: integration
+    complexity: moderate
+    typical_duration_hours: 5.0
+    required_skills:
+      - api_integration
+      - backend
+    applicable_stages:
+      - active_development
+      - growth
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      integration_works: true
+      documented: true
+    priority_modifier: 1.1
+
+  - name: integration_third_party
+    category: integration
+    complexity: moderate
+    typical_duration_hours: 4.0
+    required_skills:
+      - integration
+      - api
+    applicable_stages:
+      - active_development
+      - growth
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      service_connected: true
+      data_flows: true
+    priority_modifier: 1.0
+
+  - name: integration_payment
+    category: integration
+    complexity: complex
+    typical_duration_hours: 8.0
+    required_skills:
+      - payment_integration
+      - security
+      - backend
+    applicable_stages:
+      - active_development
+      - growth
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      payments_work: true
+      secure: true
+    priority_modifier: 1.3
+
+  - name: integration_analytics
+    category: integration
+    complexity: simple
+    typical_duration_hours: 3.0
+    required_skills:
+      - analytics
+      - frontend
+      - tracking
+    applicable_stages:
+      - growth
+      - mature
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      tracking_works: true
+      data_collected: true
+    priority_modifier: 1.0
+
+  # Special Tasks
+  - name: new_project
+    category: development
+    complexity: complex
+    typical_duration_hours: 8.0
+    required_skills:
+      - project_setup
+      - architecture
+      - planning
+    applicable_stages:
+      - inception
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      project_created: true
+      can_run: true
+    priority_modifier: 1.5
+
+  - name: repository_health
+    category: maintenance
+    complexity: moderate
+    typical_duration_hours: 3.0
+    required_skills:
+      - analysis
+      - debugging
+    applicable_stages:
+      - early_development
+      - active_development
+      - growth
+      - mature
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      health_improved: true
+    priority_modifier: 1.2
+
+  - name: strategic_initiative
+    category: development
+    complexity: epic
+    typical_duration_hours: 40.0
+    required_skills:
+      - strategic_planning
+      - architecture
+      - leadership
+    applicable_stages:
+      - growth
+      - mature
+    applicable_architectures:
+      - laravel_react
+    success_criteria:
+      initiative_launched: true
+      value_delivered: true
+    priority_modifier: 1.5

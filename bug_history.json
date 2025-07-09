@@ -1,0 +1,182 @@
+[
+  {
+    "bug_id": "test_buggy_resource_leak_10",
+    "file_path": "/tmp/test_buggy.py",
+    "line_number": 10,
+    "bug_type": "resource_leak",
+    "severity": "high",
+    "description": "Potential resource leak detected",
+    "code_snippet": "f = open(path, 'r')  # Bug: no error handling",
+    "stack_trace": null,
+    "detection_method": "pattern_matching",
+    "confidence": 0.7,
+    "metadata": {
+      "pattern": "open\\([^)]+\\)(?!.*with)"
+    }
+  },
+  {
+    "bug_id": "test_buggy_type_error_2",
+    "file_path": "/tmp/test_buggy.py",
+    "line_number": 2,
+    "bug_type": "type_error",
+    "severity": "medium",
+    "description": "Potential type error detected",
+    "code_snippet": "def divide_numbers(a, b):",
+    "stack_trace": null,
+    "detection_method": "pattern_matching",
+    "confidence": 0.7,
+    "metadata": {
+      "pattern": "def\\s+\\w+\\([^)]*\\)\\s*:"
+    }
+  },
+  {
+    "bug_id": "test_buggy_type_error_5",
+    "file_path": "/tmp/test_buggy.py",
+    "line_number": 5,
+    "bug_type": "type_error",
+    "severity": "medium",
+    "description": "Potential type error detected",
+    "code_snippet": "def process_data(data):",
+    "stack_trace": null,
+    "detection_method": "pattern_matching",
+    "confidence": 0.7,
+    "metadata": {
+      "pattern": "def\\s+\\w+\\([^)]*\\)\\s*:"
+    }
+  },
+  {
+    "bug_id": "test_buggy_type_error_9",
+    "file_path": "/tmp/test_buggy.py",
+    "line_number": 9,
+    "bug_type": "type_error",
+    "severity": "medium",
+    "description": "Potential type error detected",
+    "code_snippet": "def open_file(path):",
+    "stack_trace": null,
+    "detection_method": "pattern_matching",
+    "confidence": 0.7,
+    "metadata": {
+      "pattern": "def\\s+\\w+\\([^)]*\\)\\s*:"
+    }
+  },
+  {
+    "bug_id": "test_buggy_resource_leak_10",
+    "file_path": "/tmp/test_buggy.py",
+    "line_number": 10,
+    "bug_type": "resource_leak",
+    "severity": "high",
+    "description": "Potential resource leak detected",
+    "code_snippet": "f = open(path, 'r')  # Bug: no error handling",
+    "stack_trace": null,
+    "detection_method": "pattern_matching",
+    "confidence": 0.7,
+    "metadata": {
+      "pattern": "open\\([^)]+\\)(?!.*with)"
+    }
+  },
+  {
+    "bug_id": "test_buggy_type_error_2",
+    "file_path": "/tmp/test_buggy.py",
+    "line_number": 2,
+    "bug_type": "type_error",
+    "severity": "medium",
+    "description": "Potential type error detected",
+    "code_snippet": "def divide_numbers(a, b):",
+    "stack_trace": null,
+    "detection_method": "pattern_matching",
+    "confidence": 0.7,
+    "metadata": {
+      "pattern": "def\\s+\\w+\\([^)]*\\)\\s*:"
+    }
+  },
+  {
+    "bug_id": "test_buggy_type_error_5",
+    "file_path": "/tmp/test_buggy.py",
+    "line_number": 5,
+    "bug_type": "type_error",
+    "severity": "medium",
+    "description": "Potential type error detected",
+    "code_snippet": "def process_data(data):",
+    "stack_trace": null,
+    "detection_method": "pattern_matching",
+    "confidence": 0.7,
+    "metadata": {
+      "pattern": "def\\s+\\w+\\([^)]*\\)\\s*:"
+    }
+  },
+  {
+    "bug_id": "test_buggy_type_error_9",
+    "file_path": "/tmp/test_buggy.py",
+    "line_number": 9,
+    "bug_type": "type_error",
+    "severity": "medium",
+    "description": "Potential type error detected",
+    "code_snippet": "def open_file(path):",
+    "stack_trace": null,
+    "detection_method": "pattern_matching",
+    "confidence": 0.7,
+    "metadata": {
+      "pattern": "def\\s+\\w+\\([^)]*\\)\\s*:"
+    }
+  },
+  {
+    "bug_id": "test_buggy_resource_leak_10",
+    "file_path": "/tmp/test_buggy.py",
+    "line_number": 10,
+    "bug_type": "resource_leak",
+    "severity": "high",
+    "description": "Potential resource leak detected",
+    "code_snippet": "f = open(path, 'r')  # Bug: no error handling",
+    "stack_trace": null,
+    "detection_method": "pattern_matching",
+    "confidence": 0.7,
+    "metadata": {
+      "pattern": "open\\([^)]+\\)(?!.*with)"
+    }
+  },
+  {
+    "bug_id": "test_buggy_type_error_2",
+    "file_path": "/tmp/test_buggy.py",
+    "line_number": 2,
+    "bug_type": "type_error",
+    "severity": "medium",
+    "description": "Potential type error detected",
+    "code_snippet": "def divide_numbers(a, b):",
+    "stack_trace": null,
+    "detection_method": "pattern_matching",
+    "confidence": 0.7,
+    "metadata": {
+      "pattern": "def\\s+\\w+\\([^)]*\\)\\s*:"
+    }
+  },
+  {
+    "bug_id": "test_buggy_type_error_5",
+    "file_path": "/tmp/test_buggy.py",
+    "line_number": 5,
+    "bug_type": "type_error",
+    "severity": "medium",
+    "description": "Potential type error detected",
+    "code_snippet": "def process_data(data):",
+    "stack_trace": null,
+    "detection_method": "pattern_matching",
+    "confidence": 0.7,
+    "metadata": {
+      "pattern": "def\\s+\\w+\\([^)]*\\)\\s*:"
+    }
+  },
+  {
+    "bug_id": "test_buggy_type_error_9",
+    "file_path": "/tmp/test_buggy.py",
+    "line_number": 9,
+    "bug_type": "type_error",
+    "severity": "medium",
+    "description": "Potential type error detected",
+    "code_snippet": "def open_file(path):",
+    "stack_trace": null,
+    "detection_method": "pattern_matching",
+    "confidence": 0.7,
+    "metadata": {
+      "pattern": "def\\s+\\w+\\([^)]*\\)\\s*:"
+    }
+  }
+]

@@ -1,0 +1,1893 @@
+{
+    "cache_entries": {
+        "a8e70ca6df03a887092c2fb51dd7f95b": {
+            "total_files": 4396,
+            "total_lines": 2109383,
+            "directory_summary": {
+                ".": {
+                    "file_count": 107,
+                    "line_count": 18427
+                },
+                "./scripts": {
+                    "file_count": 247,
+                    "line_count": 152064
+                },
+                "./scripts/redis_integration": {
+                    "file_count": 13,
+                    "line_count": 8074
+                },
+                "./scripts/custom_tools": {
+                    "file_count": 65,
+                    "line_count": 22179
+                },
+                "./scripts/specialized_agents": {
+                    "file_count": 7,
+                    "line_count": 2941
+                },
+                "./venv/lib/python3.12/site-packages": {
+                    "file_count": 7,
+                    "line_count": 7293
+                },
+                "./venv/lib/python3.12/site-packages/jwt": {
+                    "file_count": 12,
+                    "line_count": 2328
+                },
+                "./venv/lib/python3.12/site-packages/async_timeout": {
+                    "file_count": 1,
+                    "line_count": 276
+                },
+                "./venv/lib/python3.12/site-packages/packaging": {
+                    "file_count": 14,
+                    "line_count": 4815
+                },
+                "./venv/lib/python3.12/site-packages/packaging/licenses": {
+                    "file_count": 2,
+                    "line_count": 904
+                },
+                "./venv/lib/python3.12/site-packages/aiohttp": {
+                    "file_count": 46,
+                    "line_count": 20859
+                },
+                "./venv/lib/python3.12/site-packages/cycler": {
+                    "file_count": 1,
+                    "line_count": 573
+                },
+                "./venv/lib/python3.12/site-packages/networkx": {
+                    "file_count": 7,
+                    "line_count": 2610
+                },
+                "./venv/lib/python3.12/site-packages/networkx/readwrite": {
+                    "file_count": 13,
+                    "line_count": 6444
+                },
+                "./venv/lib/python3.12/site-packages/networkx/readwrite/json_graph": {
+                    "file_count": 5,
+                    "line_count": 729
+                },
+                "./venv/lib/python3.12/site-packages/networkx/drawing": {
+                    "file_count": 6,
+                    "line_count": 4392
+                },
+                "./venv/lib/python3.12/site-packages/networkx/linalg": {
+                    "file_count": 8,
+                    "line_count": 2156
+                },
+                "./venv/lib/python3.12/site-packages/networkx/classes": {
+                    "file_count": 10,
+                    "line_count": 9060
+                },
+                "./venv/lib/python3.12/site-packages/networkx/algorithms": {
+                    "file_count": 55,
+                    "line_count": 21911
+                },
+                "./venv/lib/python3.12/site-packages/networkx/algorithms/tree": {
+                    "file_count": 7,
+                    "line_count": 3640
+                },
+                "./venv/lib/python3.12/site-packages/networkx/algorithms/isomorphism": {
+                    "file_count": 9,
+                    "line_count": 4687
+                },
+                "./venv/lib/python3.12/site-packages/networkx/algorithms/link_analysis": {
+                    "file_count": 3,
+                    "line_count": 835
+                },
+                "./venv/lib/python3.12/site-packages/networkx/algorithms/operators": {
+                    "file_count": 5,
+                    "line_count": 1377
+                },
+                "./venv/lib/python3.12/site-packages/networkx/algorithms/connectivity": {
+                    "file_count": 10,
+                    "line_count": 4409
+                },
+                "./venv/lib/python3.12/site-packages/networkx/algorithms/approximation": {
+                    "file_count": 14,
+                    "line_count": 3600
+                },
+                "./venv/lib/python3.12/site-packages/networkx/algorithms/centrality": {
+                    "file_count": 22,
+                    "line_count": 5012
+                },
+                "./venv/lib/python3.12/site-packages/networkx/algorithms/bipartite": {
+                    "file_count": 13,
+                    "line_count": 3565
+                },
+                "./venv/lib/python3.12/site-packages/networkx/algorithms/components": {
+                    "file_count": 7,
+                    "line_count": 1418
+                },
+                "./venv/lib/python3.12/site-packages/networkx/algorithms/traversal": {
+                    "file_count": 6,
+                    "line_count": 1513
+                },
+                "./venv/lib/python3.12/site-packages/networkx/algorithms/minors": {
+                    "file_count": 2,
+                    "line_count": 657
+                },
+                "./venv/lib/python3.12/site-packages/networkx/algorithms/assortativity": {
+                    "file_count": 6,
+                    "line_count": 957
+                },
+                "./venv/lib/python3.12/site-packages/networkx/algorithms/community": {
+                    "file_count": 11,
+                    "line_count": 2322
+                },
+                "./venv/lib/python3.12/site-packages/networkx/algorithms/coloring": {
+                    "file_count": 3,
+                    "line_count": 1081
+                },
+                "./venv/lib/python3.12/site-packages/networkx/algorithms/flow": {
+                    "file_count": 12,
+                    "line_count": 3960
+                },
+                "./venv/lib/python3.12/site-packages/networkx/utils": {
+                    "file_count": 9,
+                    "line_count": 3808
+                },
+                "./venv/lib/python3.12/site-packages/networkx/generators": {
+                    "file_count": 30,
+                    "line_count": 12168
+                },
+                "./venv/lib/python3.12/site-packages/dotenv": {
+                    "file_count": 8,
+                    "line_count": 944
+                },
+                "./venv/lib/python3.12/site-packages/attrs": {
+                    "file_count": 6,
+                    "line_count": 84
+                },
+                "./venv/lib/python3.12/site-packages/pycparser": {
+                    "file_count": 11,
+                    "line_count": 5277
+                },
+                "./venv/lib/python3.12/site-packages/pycparser/ply": {
+                    "file_count": 6,
+                    "line_count": 5710
+                },
+                "./venv/lib/python3.12/site-packages/propcache": {
+                    "file_count": 4,
+                    "line_count": 139
+                },
+                "./venv/lib/python3.12/site-packages/pyparsing": {
+                    "file_count": 10,
+                    "line_count": 10694
+                },
+                "./venv/lib/python3.12/site-packages/pyparsing/tools": {
+                    "file_count": 1,
+                    "line_count": 116
+                },
+                "./venv/lib/python3.12/site-packages/pyparsing/diagram": {
+                    "file_count": 1,
+                    "line_count": 754
+                },
+                "./venv/lib/python3.12/site-packages/redis": {
+                    "file_count": 15,
+                    "line_count": 7073
+                },
+                "./venv/lib/python3.12/site-packages/redis/commands": {
+                    "file_count": 6,
+                    "line_count": 7619
+                },
+                "./venv/lib/python3.12/site-packages/redis/commands/timeseries": {
+                    "file_count": 4,
+                    "line_count": 1139
+                },
+                "./venv/lib/python3.12/site-packages/redis/commands/graph": {
+                    "file_count": 8,
+                    "line_count": 1620
+                },
+                "./venv/lib/python3.12/site-packages/redis/commands/search": {
+                    "file_count": 12,
+                    "line_count": 2938
+                },
+                "./venv/lib/python3.12/site-packages/redis/commands/json": {
+                    "file_count": 5,
+                    "line_count": 655
+                },
+                "./venv/lib/python3.12/site-packages/redis/commands/bf": {
+                    "file_count": 3,
+                    "line_count": 915
+                },
+                "./venv/lib/python3.12/site-packages/redis/asyncio": {
+                    "file_count": 8,
+                    "line_count": 5180
+                },
+                "./venv/lib/python3.12/site-packages/redis/_parsers": {
+                    "file_count": 9,
+                    "line_count": 2192
+                },
+                "./venv/lib/python3.12/site-packages/cryptography": {
+                    "file_count": 5,
+                    "line_count": 458
+                },
+                "./venv/lib/python3.12/site-packages/cryptography/hazmat": {
+                    "file_count": 2,
+                    "line_count": 361
+                },
+                "./venv/lib/python3.12/site-packages/cryptography/hazmat/decrepit": {
+                    "file_count": 1,
+                    "line_count": 5
+                },
+                "./venv/lib/python3.12/site-packages/cryptography/hazmat/decrepit/ciphers": {
+                    "file_count": 2,
+                    "line_count": 117
+                },
+                "./venv/lib/python3.12/site-packages/cryptography/hazmat/backends": {
+                    "file_count": 1,
+                    "line_count": 13
+                },
+                "./venv/lib/python3.12/site-packages/cryptography/hazmat/backends/openssl": {
+                    "file_count": 2,
+                    "line_count": 317
+                },
+                "./venv/lib/python3.12/site-packages/cryptography/hazmat/primitives": {
+                    "file_count": 11,
+                    "line_count": 790
+                },
+                "./venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/kdf": {
+                    "file_count": 8,
+                    "line_count": 709
+                },
+                "./venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/twofactor": {
+                    "file_count": 3,
+                    "line_count": 166
+                },
+                "./venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/serialization": {
+                    "file_count": 5,
+                    "line_count": 2285
+                },
+                "./venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/ciphers": {
+                    "file_count": 5,
+                    "line_count": 647
+                },
+                "./venv/lib/python3.12/site-packages/cryptography/hazmat/primitives/asymmetric": {
+                    "file_count": 12,
+                    "line_count": 1796
+                },
+                "./venv/lib/python3.12/site-packages/cryptography/hazmat/bindings": {
+                    "file_count": 1,
+                    "line_count": 3
+                },
+                "./venv/lib/python3.12/site-packages/cryptography/hazmat/bindings/openssl": {
+                    "file_count": 3,
+                    "line_count": 316
+                },
+                "./venv/lib/python3.12/site-packages/cryptography/x509": {
+                    "file_count": 9,
+                    "line_count": 4889
+                },
+                "./venv/lib/python3.12/site-packages/soupsieve": {
+                    "file_count": 7,
+                    "line_count": 3991
+                },
+                "./venv/lib/python3.12/site-packages/frozenlist": {
+                    "file_count": 1,
+                    "line_count": 86
+                },
+                "./venv/lib/python3.12/site-packages/nltk": {
+                    "file_count": 24,
+                    "line_count": 18795
+                },
+                "./venv/lib/python3.12/site-packages/nltk/misc": {
+                    "file_count": 6,
+                    "line_count": 555
+                },
+                "./venv/lib/python3.12/site-packages/nltk/tree": {
+                    "file_count": 8,
+                    "line_count": 2853
+                },
+                "./venv/lib/python3.12/site-packages/nltk/metrics": {
+                    "file_count": 10,
+                    "line_count": 4114
+                },
+                "./venv/lib/python3.12/site-packages/nltk/twitter": {
+                    "file_count": 6,
+                    "line_count": 1467
+                },
+                "./venv/lib/python3.12/site-packages/nltk/cluster": {
+                    "file_count": 6,
+                    "line_count": 1086
+                },
+                "./venv/lib/python3.12/site-packages/nltk/app": {
+                    "file_count": 10,
+                    "line_count": 8456
+                },
+                "./venv/lib/python3.12/site-packages/nltk/classify": {
+                    "file_count": 15,
+                    "line_count": 4399
+                },
+                "./venv/lib/python3.12/site-packages/nltk/chunk": {
+                    "file_count": 5,
+                    "line_count": 2723
+                },
+                "./venv/lib/python3.12/site-packages/nltk/chat": {
+                    "file_count": 7,
+                    "line_count": 1263
+                },
+                "./venv/lib/python3.12/site-packages/nltk/translate": {
+                    "file_count": 19,
+                    "line_count": 6165
+                },
+                "./venv/lib/python3.12/site-packages/nltk/lm": {
+                    "file_count": 8,
+                    "line_count": 1189
+                },
+                "./venv/lib/python3.12/site-packages/nltk/sem": {
+                    "file_count": 15,
+                    "line_count": 10537
+                },
+                "./venv/lib/python3.12/site-packages/nltk/corpus": {
+                    "file_count": 3,
+                    "line_count": 739
+                },
+                "./venv/lib/python3.12/site-packages/nltk/corpus/reader": {
+                    "file_count": 53,
+                    "line_count": 19221
+                },
+                "./venv/lib/python3.12/site-packages/nltk/parse": {
+                    "file_count": 20,
+                    "line_count": 10934
+                },
+                "./venv/lib/python3.12/site-packages/nltk/tbl": {
+                    "file_count": 6,
+                    "line_count": 1401
+                },
+                "./venv/lib/python3.12/site-packages/nltk/stem": {
+                    "file_count": 13,
+                    "line_count": 8754
+                },
+                "./venv/lib/python3.12/site-packages/nltk/inference": {
+                    "file_count": 8,
+                    "line_count": 4212
+                },
+                "./venv/lib/python3.12/site-packages/nltk/sentiment": {
+                    "file_count": 4,
+                    "line_count": 1788
+                },
+                "./venv/lib/python3.12/site-packages/nltk/draw": {
+                    "file_count": 6,
+                    "line_count": 5830
+                },
+                "./venv/lib/python3.12/site-packages/nltk/tag": {
+                    "file_count": 14,
+                    "line_count": 5519
+                },
+                "./venv/lib/python3.12/site-packages/nltk/tokenize": {
+                    "file_count": 19,
+                    "line_count": 5720
+                },
+                "./venv/lib/python3.12/site-packages/nltk/ccg": {
+                    "file_count": 6,
+                    "line_count": 1609
+                },
+                "./venv/lib/python3.12/site-packages/colorama": {
+                    "file_count": 6,
+                    "line_count": 882
+                },
+                "./venv/lib/python3.12/site-packages/cffi": {
+                    "file_count": 18,
+                    "line_count": 8310
+                },
+                "./venv/lib/python3.12/site-packages/tzdata": {
+                    "file_count": 1,
+                    "line_count": 6
+                },
+                "./venv/lib/python3.12/site-packages/hiredis": {
+                    "file_count": 2,
+                    "line_count": 11
+                },
+                "./venv/lib/python3.12/site-packages/fontTools": {
+                    "file_count": 9,
+                    "line_count": 7754
+                },
+                "./venv/lib/python3.12/site-packages/fontTools/encodings": {
+                    "file_count": 4,
+                    "line_count": 652
+                },
+                "./venv/lib/python3.12/site-packages/fontTools/qu2cu": {
+                    "file_count": 5,
+                    "line_count": 608
+                },
+                "./venv/lib/python3.12/site-packages/fontTools/misc": {
+                    "file_count": 35,
+                    "line_count": 9550
+                },
+                "./venv/lib/python3.12/site-packages/fontTools/misc/plistlib": {
+                    "file_count": 1,
+                    "line_count": 681
+                },
+                "./venv/lib/python3.12/site-packages/fontTools/cu2qu": {
+                    "file_count": 7,
+                    "line_count": 1230
+                },
+                "./venv/lib/python3.12/site-packages/fontTools/subset": {
+                    "file_count": 5,
+                    "line_count": 4397
+                },
+                "./venv/lib/python3.12/site-packages/fontTools/voltLib": {
+                    "file_count": 7,
+                    "line_count": 2349
+                },
+                "./venv/lib/python3.12/site-packages/fontTools/merge": {
+                    "file_count": 9,
+                    "line_count": 1692
+                },
+                "./venv/lib/python3.12/site-packages/fontTools/config": {
+                    "file_count": 1,
+                    "line_count": 90
+                },
+                "./venv/lib/python3.12/site-packages/fontTools/svgLib": {
+                    "file_count": 1,
+                    "line_count": 3
+                },
+                "./venv/lib/python3.12/site-packages/fontTools/svgLib/path": {
+                    "file_count": 4,
+                    "line_count": 724
+                },
+                "./venv/lib/python3.12/site-packages/fontTools/varLib": {
+                    "file_count": 24,
+                    "line_count": 12633
+                },
+                "./venv/lib/python3.12/site-packages/fontTools/varLib/instancer": {
+                    "file_count": 5,
+                    "line_count": 2838
+                },
+                "./venv/lib/python3.12/site-packages/fontTools/mtiLib": {
+                    "file_count": 2,
+                    "line_count": 1405
+                },
+                "./venv/lib/python3.12/site-packages/fontTools/pens": {
+                    "file_count": 29,
+                    "line_count": 5706
+                },
+                "./venv/lib/python3.12/site-packages/fontTools/otlLib": {
+                    "file_count": 4,
+                    "line_count": 3543
+                },
+                "./venv/lib/python3.12/site-packages/fontTools/otlLib/optimize": {
+                    "file_count": 3,
+                    "line_count": 498
+                },
+                "./venv/lib/python3.12/site-packages/fontTools/ufoLib": {
+                    "file_count": 11,
+                    "line_count": 6725
+                },
+                "./venv/lib/python3.12/site-packages/fontTools/unicodedata": {
+                    "file_count": 6,
+                    "line_count": 6042
+                },
+                "./venv/lib/python3.12/site-packages/fontTools/designspaceLib": {
+                    "file_count": 5,
+                    "line_count": 4226
+                },
+                "./venv/lib/python3.12/site-packages/fontTools/feaLib": {
+                    "file_count": 10,
+                    "line_count": 6845
+                },
+                "./venv/lib/python3.12/site-packages/fontTools/ttLib": {
+                    "file_count": 13,
+                    "line_count": 5766
+                },
+                "./venv/lib/python3.12/site-packages/fontTools/ttLib/tables": {
+                    "file_count": 99,
+                    "line_count": 30368
+                },
+                "./venv/lib/python3.12/site-packages/fontTools/cffLib": {
+                    "file_count": 6,
+                    "line_count": 5829
+                },
+                "./venv/lib/python3.12/site-packages/fontTools/t1Lib": {
+                    "file_count": 1,
+                    "line_count": 648
+                },
+                "./venv/lib/python3.12/site-packages/fontTools/colorLib": {
+                    "file_count": 5,
+                    "line_count": 1113
+                },
+                "./venv/lib/python3.12/site-packages/idna": {
+                    "file_count": 8,
+                    "line_count": 13601
+                },
+                "./venv/lib/python3.12/site-packages/wheel": {
+                    "file_count": 9,
+                    "line_count": 1600
+                },
+                "./venv/lib/python3.12/site-packages/wheel/cli": {
+                    "file_count": 5,
+                    "line_count": 741
+                },
+                "./venv/lib/python3.12/site-packages/wheel/vendored/packaging": {
+                    "file_count": 12,
+                    "line_count": 3718
+                },
+                "./venv/lib/python3.12/site-packages/bs4": {
+                    "file_count": 6,
+                    "line_count": 5068
+                },
+                "./venv/lib/python3.12/site-packages/bs4/builder": {
+                    "file_count": 4,
+                    "line_count": 1892
+                },
+                "./venv/lib/python3.12/site-packages/click": {
+                    "file_count": 16,
+                    "line_count": 10703
+                },
+                "./venv/lib/python3.12/site-packages/websockets": {
+                    "file_count": 19,
+                    "line_count": 4629
+                },
+                "./venv/lib/python3.12/site-packages/websockets/legacy": {
+                    "file_count": 9,
+                    "line_count": 4538
+                },
+                "./venv/lib/python3.12/site-packages/websockets/extensions": {
+                    "file_count": 3,
+                    "line_count": 797
+                },
+                "./venv/lib/python3.12/site-packages/websockets/sync": {
+                    "file_count": 5,
+                    "line_count": 1958
+                },
+                "./venv/lib/python3.12/site-packages/mpl_toolkits/axes_grid1": {
+                    "file_count": 9,
+                    "line_count": 3067
+                },
+                "./venv/lib/python3.12/site-packages/mpl_toolkits/mplot3d": {
+                    "file_count": 5,
+                    "line_count": 5715
+                },
+                "./venv/lib/python3.12/site-packages/mpl_toolkits/axisartist": {
+                    "file_count": 12,
+                    "line_count": 3265
+                },
+                "./venv/lib/python3.12/site-packages/pytz": {
+                    "file_count": 6,
+                    "line_count": 2640
+                },
+                "./venv/lib/python3.12/site-packages/regex": {
+                    "file_count": 4,
+                    "line_count": 9732
+                },
+                "./venv/lib/python3.12/site-packages/wrapt": {
+                    "file_count": 8,
+                    "line_count": 1978
+                },
+                "./venv/lib/python3.12/site-packages/numpy": {
+                    "file_count": 11,
+                    "line_count": 2317
+                },
+                "./venv/lib/python3.12/site-packages/numpy/_utils": {
+                    "file_count": 4,
+                    "line_count": 725
+                },
+                "./venv/lib/python3.12/site-packages/numpy/compat": {
+                    "file_count": 3,
+                    "line_count": 174
+                },
+                "./venv/lib/python3.12/site-packages/numpy/core": {
+                    "file_count": 29,
+                    "line_count": 29585
+                },
+                "./venv/lib/python3.12/site-packages/numpy/linalg": {
+                    "file_count": 2,
+                    "line_count": 2916
+                },
+                "./venv/lib/python3.12/site-packages/numpy/ma": {
+                    "file_count": 7,
+                    "line_count": 12277
+                },
+                "./venv/lib/python3.12/site-packages/numpy/_core": {
+                    "file_count": 7,
+                    "line_count": 40
+                },
+                "./venv/lib/python3.12/site-packages/numpy/_typing": {
+                    "file_count": 11,
+                    "line_count": 1073
+                },
+                "./venv/lib/python3.12/site-packages/numpy/_pyinstaller": {
+                    "file_count": 3,
+                    "line_count": 104
+                },
+                "./venv/lib/python3.12/site-packages/numpy/array_api": {
+                    "file_count": 17,
+                    "line_count": 4076
+                },
+                "./venv/lib/python3.12/site-packages/numpy/typing": {
+                    "file_count": 3,
+                    "line_count": 382
+                },
+                "./venv/lib/python3.12/site-packages/numpy/f2py": {
+                    "file_count": 19,
+                    "line_count": 13168
+                },
+                "./venv/lib/python3.12/site-packages/numpy/f2py/_backends": {
+                    "file_count": 4,
+                    "line_count": 335
+                },
+                "./venv/lib/python3.12/site-packages/numpy/lib": {
+                    "file_count": 25,
+                    "line_count": 26577
+                },
+                "./venv/lib/python3.12/site-packages/numpy/fft": {
+                    "file_count": 3,
+                    "line_count": 1857
+                },
+                "./venv/lib/python3.12/site-packages/numpy/doc": {
+                    "file_count": 3,
+                    "line_count": 575
+                },
+                "./venv/lib/python3.12/site-packages/numpy/random": {
+                    "file_count": 2,
+                    "line_count": 295
+                },
+                "./venv/lib/python3.12/site-packages/numpy/random/_examples/cffi": {
+                    "file_count": 2,
+                    "line_count": 94
+                },
+                "./venv/lib/python3.12/site-packages/numpy/random/_examples/numba": {
+                    "file_count": 2,
+                    "line_count": 151
+                },
+                "./venv/lib/python3.12/site-packages/numpy/matrixlib": {
+                    "file_count": 3,
+                    "line_count": 1136
+                },
+                "./venv/lib/python3.12/site-packages/numpy/polynomial": {
+                    "file_count": 10,
+                    "line_count": 12527
+                },
+                "./venv/lib/python3.12/site-packages/charset_normalizer": {
+                    "file_count": 10,
+                    "line_count": 4613
+                },
+                "./venv/lib/python3.12/site-packages/charset_normalizer/cli": {
+                    "file_count": 2,
+                    "line_count": 389
+                },
+                "./venv/lib/python3.12/site-packages/PIL": {
+                    "file_count": 96,
+                    "line_count": 34125
+                },
+                "./venv/lib/python3.12/site-packages/requests": {
+                    "file_count": 18,
+                    "line_count": 5641
+                },
+                "./venv/lib/python3.12/site-packages/multidict": {
+                    "file_count": 4,
+                    "line_count": 1090
+                },
+                "./venv/lib/python3.12/site-packages/pip": {
+                    "file_count": 3,
+                    "line_count": 87
+                },
+                "./venv/lib/python3.12/site-packages/pip/_internal": {
+                    "file_count": 9,
+                    "line_count": 2658
+                },
+                "./venv/lib/python3.12/site-packages/pip/_internal/network": {
+                    "file_count": 8,
+                    "line_count": 1890
+                },
+                "./venv/lib/python3.12/site-packages/pip/_internal/utils": {
+                    "file_count": 25,
+                    "line_count": 3824
+                },
+                "./venv/lib/python3.12/site-packages/pip/_internal/models": {
+                    "file_count": 13,
+                    "line_count": 1668
+                },
+                "./venv/lib/python3.12/site-packages/pip/_internal/cli": {
+                    "file_count": 13,
+                    "line_count": 2906
+                },
+                "./venv/lib/python3.12/site-packages/pip/_internal/operations": {
+                    "file_count": 3,
+                    "line_count": 1173
+                },
+                "./venv/lib/python3.12/site-packages/pip/_internal/operations/install": {
+                    "file_count": 3,
+                    "line_count": 785
+                },
+                "./venv/lib/python3.12/site-packages/pip/_internal/operations/build": {
+                    "file_count": 7,
+                    "line_count": 491
+                },
+                "./venv/lib/python3.12/site-packages/pip/_internal/req": {
+                    "file_count": 7,
+                    "line_count": 3017
+                },
+                "./venv/lib/python3.12/site-packages/pip/_internal/resolution": {
+                    "file_count": 1,
+                    "line_count": 20
+                },
+                "./venv/lib/python3.12/site-packages/pip/_internal/resolution/legacy": {
+                    "file_count": 1,
+                    "line_count": 597
+                },
+                "./venv/lib/python3.12/site-packages/pip/_internal/resolution/resolvelib": {
+                    "file_count": 8,
+                    "line_count": 2634
+                },
+                "./venv/lib/python3.12/site-packages/pip/_internal/vcs": {
+                    "file_count": 6,
+                    "line_count": 1838
+                },
+                "./venv/lib/python3.12/site-packages/pip/_internal/locations": {
+                    "file_count": 4,
+                    "line_count": 906
+                },
+                "./venv/lib/python3.12/site-packages/pip/_internal/index": {
+                    "file_count": 4,
+                    "line_count": 1829
+                },
+                "./venv/lib/python3.12/site-packages/pip/_internal/commands": {
+                    "file_count": 19,
+                    "line_count": 3703
+                },
+                "./venv/lib/python3.12/site-packages/pip/_internal/metadata": {
+                    "file_count": 4,
+                    "line_count": 1239
+                },
+                "./venv/lib/python3.12/site-packages/pip/_internal/metadata/importlib": {
+                    "file_count": 4,
+                    "line_count": 459
+                },
+                "./venv/lib/python3.12/site-packages/pip/_internal/distributions": {
+                    "file_count": 5,
+                    "line_count": 303
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor": {
+                    "file_count": 2,
+                    "line_count": 4701
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/packaging": {
+                    "file_count": 14,
+                    "line_count": 4815
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/packaging/licenses": {
+                    "file_count": 2,
+                    "line_count": 904
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/truststore": {
+                    "file_count": 6,
+                    "line_count": 1604
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/msgpack": {
+                    "file_count": 4,
+                    "line_count": 1202
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/dependency_groups": {
+                    "file_count": 6,
+                    "line_count": 417
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/pygments": {
+                    "file_count": 15,
+                    "line_count": 2782
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/pygments/filters": {
+                    "file_count": 1,
+                    "line_count": 940
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/pygments/lexers": {
+                    "file_count": 3,
+                    "line_count": 2165
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/pygments/formatters": {
+                    "file_count": 2,
+                    "line_count": 180
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/pygments/styles": {
+                    "file_count": 2,
+                    "line_count": 115
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/distlib": {
+                    "file_count": 13,
+                    "line_count": 10518
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/distro": {
+                    "file_count": 3,
+                    "line_count": 1460
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/cachecontrol": {
+                    "file_count": 9,
+                    "line_count": 1318
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/cachecontrol/caches": {
+                    "file_count": 3,
+                    "line_count": 201
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/idna": {
+                    "file_count": 8,
+                    "line_count": 13601
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/requests": {
+                    "file_count": 18,
+                    "line_count": 5615
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/tomli": {
+                    "file_count": 4,
+                    "line_count": 900
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/certifi": {
+                    "file_count": 3,
+                    "line_count": 130
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks": {
+                    "file_count": 2,
+                    "line_count": 441
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/pyproject_hooks/_in_process": {
+                    "file_count": 2,
+                    "line_count": 410
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/rich": {
+                    "file_count": 77,
+                    "line_count": 25926
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/tomli_w": {
+                    "file_count": 2,
+                    "line_count": 233
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/urllib3": {
+                    "file_count": 11,
+                    "line_count": 4476
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/urllib3/util": {
+                    "file_count": 13,
+                    "line_count": 2885
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/urllib3/contrib": {
+                    "file_count": 6,
+                    "line_count": 2134
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/urllib3/contrib/_securetransport": {
+                    "file_count": 2,
+                    "line_count": 916
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/urllib3/packages": {
+                    "file_count": 1,
+                    "line_count": 1076
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/urllib3/packages/backports": {
+                    "file_count": 2,
+                    "line_count": 206
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/pkg_resources": {
+                    "file_count": 1,
+                    "line_count": 3676
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/resolvelib": {
+                    "file_count": 4,
+                    "line_count": 487
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/resolvelib/resolvers": {
+                    "file_count": 5,
+                    "line_count": 720
+                },
+                "./venv/lib/python3.12/site-packages/pip/_vendor/platformdirs": {
+                    "file_count": 8,
+                    "line_count": 1943
+                },
+                "./venv/lib/python3.12/site-packages/sklearn": {
+                    "file_count": 18,
+                    "line_count": 14925
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/tree": {
+                    "file_count": 4,
+                    "line_count": 3376
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/metrics": {
+                    "file_count": 7,
+                    "line_count": 11928
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/metrics/cluster": {
+                    "file_count": 4,
+                    "line_count": 1946
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/metrics/_plot": {
+                    "file_count": 6,
+                    "line_count": 2636
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/metrics/_pairwise_distances_reduction": {
+                    "file_count": 2,
+                    "line_count": 879
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/ensemble": {
+                    "file_count": 9,
+                    "line_count": 10786
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/ensemble/_hist_gradient_boosting": {
+                    "file_count": 6,
+                    "line_count": 3828
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/experimental": {
+                    "file_count": 4,
+                    "line_count": 91
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/cluster": {
+                    "file_count": 12,
+                    "line_count": 9354
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/cluster/_hdbscan": {
+                    "file_count": 2,
+                    "line_count": 1002
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/feature_extraction": {
+                    "file_count": 6,
+                    "line_count": 3836
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/__check_build": {
+                    "file_count": 1,
+                    "line_count": 54
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/_loss": {
+                    "file_count": 3,
+                    "line_count": 1496
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/semi_supervised": {
+                    "file_count": 3,
+                    "line_count": 1268
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/gaussian_process": {
+                    "file_count": 4,
+                    "line_count": 4066
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/compose": {
+                    "file_count": 3,
+                    "line_count": 2019
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/datasets": {
+                    "file_count": 14,
+                    "line_count": 9484
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/datasets/images": {
+                    "file_count": 1,
+                    "line_count": 2
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/datasets/descr": {
+                    "file_count": 1,
+                    "line_count": 2
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/datasets/data": {
+                    "file_count": 1,
+                    "line_count": 2
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/externals": {
+                    "file_count": 4,
+                    "line_count": 1123
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/externals/array_api_compat": {
+                    "file_count": 2,
+                    "line_count": 68
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/externals/array_api_compat/dask/array": {
+                    "file_count": 5,
+                    "line_count": 814
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/externals/array_api_compat/cupy": {
+                    "file_count": 6,
+                    "line_count": 638
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/externals/array_api_compat/torch": {
+                    "file_count": 5,
+                    "line_count": 1418
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/externals/array_api_compat/numpy": {
+                    "file_count": 6,
+                    "line_count": 707
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/externals/array_api_compat/common": {
+                    "file_count": 6,
+                    "line_count": 1904
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/externals/_scipy/sparse/csgraph": {
+                    "file_count": 2,
+                    "line_count": 558
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/externals/array_api_extra": {
+                    "file_count": 3,
+                    "line_count": 534
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/externals/array_api_extra/_lib": {
+                    "file_count": 6,
+                    "line_count": 1997
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/externals/array_api_extra/_lib/_utils": {
+                    "file_count": 4,
+                    "line_count": 353
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/externals/_packaging": {
+                    "file_count": 2,
+                    "line_count": 625
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/linear_model": {
+                    "file_count": 17,
+                    "line_count": 20316
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/linear_model/_glm": {
+                    "file_count": 3,
+                    "line_count": 1543
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/impute": {
+                    "file_count": 4,
+                    "line_count": 2608
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/utils": {
+                    "file_count": 39,
+                    "line_count": 22762
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/utils/_repr_html": {
+                    "file_count": 4,
+                    "line_count": 734
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/covariance": {
+                    "file_count": 6,
+                    "line_count": 3516
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/neural_network": {
+                    "file_count": 5,
+                    "line_count": 2824
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/feature_selection": {
+                    "file_count": 8,
+                    "line_count": 4105
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/inspection": {
+                    "file_count": 4,
+                    "line_count": 1172
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/inspection/_plot": {
+                    "file_count": 3,
+                    "line_count": 2055
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/svm": {
+                    "file_count": 4,
+                    "line_count": 3170
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/manifold": {
+                    "file_count": 6,
+                    "line_count": 4017
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/mixture": {
+                    "file_count": 4,
+                    "line_count": 2405
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/preprocessing": {
+                    "file_count": 8,
+                    "line_count": 9111
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/frozen": {
+                    "file_count": 2,
+                    "line_count": 172
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/model_selection": {
+                    "file_count": 7,
+                    "line_count": 10545
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/_build_utils": {
+                    "file_count": 2,
+                    "line_count": 76
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/decomposition": {
+                    "file_count": 12,
+                    "line_count": 9944
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/cross_decomposition": {
+                    "file_count": 2,
+                    "line_count": 1105
+                },
+                "./venv/lib/python3.12/site-packages/sklearn/neighbors": {
+                    "file_count": 10,
+                    "line_count": 5527
+                },
+                "./venv/lib/python3.12/site-packages/smmap": {
+                    "file_count": 4,
+                    "line_count": 964
+                },
+                "./venv/lib/python3.12/site-packages/contourpy": {
+                    "file_count": 9,
+                    "line_count": 1743
+                },
+                "./venv/lib/python3.12/site-packages/contourpy/util": {
+                    "file_count": 8,
+                    "line_count": 1334
+                },
+                "./venv/lib/python3.12/site-packages/joblib": {
+                    "file_count": 22,
+                    "line_count": 9561
+                },
+                "./venv/lib/python3.12/site-packages/joblib/externals/cloudpickle": {
+                    "file_count": 3,
+                    "line_count": 1577
+                },
+                "./venv/lib/python3.12/site-packages/joblib/externals/loky": {
+                    "file_count": 6,
+                    "line_count": 1893
+                },
+                "./venv/lib/python3.12/site-packages/joblib/externals/loky/backend": {
+                    "file_count": 14,
+                    "line_count": 2672
+                },
+                "./venv/lib/python3.12/site-packages/certifi": {
+                    "file_count": 3,
+                    "line_count": 99
+                },
+                "./venv/lib/python3.12/site-packages/github": {
+                    "file_count": 131,
+                    "line_count": 31787
+                },
+                "./venv/lib/python3.12/site-packages/attr": {
+                    "file_count": 13,
+                    "line_count": 5807
+                },
+                "./venv/lib/python3.12/site-packages/tqdm": {
+                    "file_count": 23,
+                    "line_count": 3635
+                },
+                "./venv/lib/python3.12/site-packages/tqdm/contrib": {
+                    "file_count": 9,
+                    "line_count": 851
+                },
+                "./venv/lib/python3.12/site-packages/kiwisolver": {
+                    "file_count": 2,
+                    "line_count": 93
+                },
+                "./venv/lib/python3.12/site-packages/aioredis": {
+                    "file_count": 9,
+                    "line_count": 7342
+                },
+                "./venv/lib/python3.12/site-packages/nacl": {
+                    "file_count": 9,
+                    "line_count": 1623
+                },
+                "./venv/lib/python3.12/site-packages/nacl/bindings": {
+                    "file_count": 16,
+                    "line_count": 4206
+                },
+                "./venv/lib/python3.12/site-packages/nacl/pwhash": {
+                    "file_count": 5,
+                    "line_count": 602
+                },
+                "./venv/lib/python3.12/site-packages/pluggy": {
+                    "file_count": 8,
+                    "line_count": 1663
+                },
+                "./venv/lib/python3.12/site-packages/matplotlib": {
+                    "file_count": 72,
+                    "line_count": 87437
+                },
+                "./venv/lib/python3.12/site-packages/matplotlib/tri": {
+                    "file_count": 17,
+                    "line_count": 3089
+                },
+                "./venv/lib/python3.12/site-packages/matplotlib/axes": {
+                    "file_count": 4,
+                    "line_count": 13399
+                },
+                "./venv/lib/python3.12/site-packages/matplotlib/sphinxext": {
+                    "file_count": 3,
+                    "line_count": 1460
+                },
+                "./venv/lib/python3.12/site-packages/matplotlib/backends": {
+                    "file_count": 34,
+                    "line_count": 15037
+                },
+                "./venv/lib/python3.12/site-packages/matplotlib/backends/qt_editor": {
+                    "file_count": 2,
+                    "line_count": 855
+                },
+                "./venv/lib/python3.12/site-packages/matplotlib/_api": {
+                    "file_count": 2,
+                    "line_count": 891
+                },
+                "./venv/lib/python3.12/site-packages/matplotlib/style": {
+                    "file_count": 2,
+                    "line_count": 249
+                },
+                "./venv/lib/python3.12/site-packages/matplotlib/projections": {
+                    "file_count": 3,
+                    "line_count": 2172
+                },
+                "./venv/lib/python3.12/site-packages/urllib3": {
+                    "file_count": 12,
+                    "line_count": 6056
+                },
+                "./venv/lib/python3.12/site-packages/urllib3/util": {
+                    "file_count": 13,
+                    "line_count": 2978
+                },
+                "./venv/lib/python3.12/site-packages/urllib3/contrib": {
+                    "file_count": 2,
+                    "line_count": 792
+                },
+                "./venv/lib/python3.12/site-packages/urllib3/contrib/emscripten": {
+                    "file_count": 5,
+                    "line_count": 1278
+                },
+                "./venv/lib/python3.12/site-packages/urllib3/http2": {
+                    "file_count": 3,
+                    "line_count": 496
+                },
+                "./venv/lib/python3.12/site-packages/setuptools": {
+                    "file_count": 33,
+                    "line_count": 7391
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/compat": {
+                    "file_count": 4,
+                    "line_count": 69
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_vendor": {
+                    "file_count": 1,
+                    "line_count": 3641
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_vendor/packaging": {
+                    "file_count": 14,
+                    "line_count": 4749
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_vendor/packaging/licenses": {
+                    "file_count": 2,
+                    "line_count": 904
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_vendor/inflect": {
+                    "file_count": 1,
+                    "line_count": 3986
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_vendor/inflect/compat": {
+                    "file_count": 1,
+                    "line_count": 7
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_vendor/jaraco": {
+                    "file_count": 1,
+                    "line_count": 361
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_vendor/jaraco/functools": {
+                    "file_count": 1,
+                    "line_count": 633
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_vendor/jaraco/text": {
+                    "file_count": 6,
+                    "line_count": 715
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_vendor/jaraco/collections": {
+                    "file_count": 1,
+                    "line_count": 1091
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_vendor/importlib_metadata": {
+                    "file_count": 9,
+                    "line_count": 1617
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_vendor/importlib_metadata/compat": {
+                    "file_count": 2,
+                    "line_count": 58
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_vendor/wheel": {
+                    "file_count": 9,
+                    "line_count": 1600
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_vendor/wheel/cli": {
+                    "file_count": 5,
+                    "line_count": 741
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_vendor/wheel/vendored/packaging": {
+                    "file_count": 12,
+                    "line_count": 3718
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_vendor/zipp": {
+                    "file_count": 2,
+                    "line_count": 607
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_vendor/zipp/compat": {
+                    "file_count": 1,
+                    "line_count": 11
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_vendor/more_itertools": {
+                    "file_count": 3,
+                    "line_count": 5858
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_vendor/backports": {
+                    "file_count": 1,
+                    "line_count": 1
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_vendor/backports/tarfile": {
+                    "file_count": 2,
+                    "line_count": 2942
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_vendor/backports/tarfile/compat": {
+                    "file_count": 1,
+                    "line_count": 24
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_vendor/autocommand": {
+                    "file_count": 6,
+                    "line_count": 654
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_vendor/tomli": {
+                    "file_count": 4,
+                    "line_count": 819
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_vendor/typeguard": {
+                    "file_count": 13,
+                    "line_count": 3665
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_vendor/platformdirs": {
+                    "file_count": 8,
+                    "line_count": 1916
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/config": {
+                    "file_count": 5,
+                    "line_count": 2269
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/config/_validate_pyproject": {
+                    "file_count": 6,
+                    "line_count": 2317
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/command": {
+                    "file_count": 24,
+                    "line_count": 5156
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_distutils": {
+                    "file_count": 28,
+                    "line_count": 6614
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_distutils/compat": {
+                    "file_count": 3,
+                    "line_count": 86
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_distutils/command": {
+                    "file_count": 20,
+                    "line_count": 5163
+                },
+                "./venv/lib/python3.12/site-packages/setuptools/_distutils/compilers/C": {
+                    "file_count": 6,
+                    "line_count": 3024
+                },
+                "./venv/lib/python3.12/site-packages/pkg_resources": {
+                    "file_count": 1,
+                    "line_count": 3713
+                },
+                "./venv/lib/python3.12/site-packages/_distutils_hack": {
+                    "file_count": 2,
+                    "line_count": 240
+                },
+                "./venv/lib/python3.12/site-packages/iniconfig": {
+                    "file_count": 4,
+                    "line_count": 339
+                },
+                "./venv/lib/python3.12/site-packages/psutil": {
+                    "file_count": 9,
+                    "line_count": 9776
+                },
+                "./venv/lib/python3.12/site-packages/scipy": {
+                    "file_count": 5,
+                    "line_count": 884
+                },
+                "./venv/lib/python3.12/site-packages/scipy/odr": {
+                    "file_count": 6,
+                    "line_count": 1675
+                },
+                "./venv/lib/python3.12/site-packages/scipy/misc": {
+                    "file_count": 3,
+                    "line_count": 18
+                },
+                "./venv/lib/python3.12/site-packages/scipy/cluster": {
+                    "file_count": 3,
+                    "line_count": 5037
+                },
+                "./venv/lib/python3.12/site-packages/scipy/ndimage": {
+                    "file_count": 16,
+                    "line_count": 8622
+                },
+                "./venv/lib/python3.12/site-packages/scipy/linalg": {
+                    "file_count": 35,
+                    "line_count": 15121
+                },
+                "./venv/lib/python3.12/site-packages/scipy/optimize": {
+                    "file_count": 58,
+                    "line_count": 35616
+                },
+                "./venv/lib/python3.12/site-packages/scipy/optimize/_trlib": {
+                    "file_count": 1,
+                    "line_count": 12
+                },
+                "./venv/lib/python3.12/site-packages/scipy/optimize/_shgo_lib": {
+                    "file_count": 2,
+                    "line_count": 1685
+                },
+                "./venv/lib/python3.12/site-packages/scipy/optimize/_highspy": {
+                    "file_count": 1,
+                    "line_count": 338
+                },
+                "./venv/lib/python3.12/site-packages/scipy/optimize/_lsq": {
+                    "file_count": 8,
+                    "line_count": 3392
+                },
+                "./venv/lib/python3.12/site-packages/scipy/optimize/_trustregion_constr": {
+                    "file_count": 8,
+                    "line_count": 2657
+                },
+                "./venv/lib/python3.12/site-packages/scipy/optimize/cython_optimize": {
+                    "file_count": 1,
+                    "line_count": 133
+                },
+                "./venv/lib/python3.12/site-packages/scipy/integrate": {
+                    "file_count": 15,
+                    "line_count": 13881
+                },
+                "./venv/lib/python3.12/site-packages/scipy/integrate/_rules": {
+                    "file_count": 5,
+                    "line_count": 1004
+                },
+                "./venv/lib/python3.12/site-packages/scipy/integrate/_ivp": {
+                    "file_count": 9,
+                    "line_count": 3572
+                },
+                "./venv/lib/python3.12/site-packages/scipy/constants": {
+                    "file_count": 5,
+                    "line_count": 3064
+                },
+                "./venv/lib/python3.12/site-packages/scipy/datasets": {
+                    "file_count": 5,
+                    "line_count": 473
+                },
+                "./venv/lib/python3.12/site-packages/scipy/io": {
+                    "file_count": 10,
+                    "line_count": 4410
+                },
+                "./venv/lib/python3.12/site-packages/scipy/io/arff": {
+                    "file_count": 3,
+                    "line_count": 920
+                },
+                "./venv/lib/python3.12/site-packages/scipy/io/_fast_matrix_market": {
+                    "file_count": 1,
+                    "line_count": 598
+                },
+                "./venv/lib/python3.12/site-packages/scipy/io/_harwell_boeing": {
+                    "file_count": 3,
+                    "line_count": 895
+                },
+                "./venv/lib/python3.12/site-packages/scipy/io/matlab": {
+                    "file_count": 16,
+                    "line_count": 2904
+                },
+                "./venv/lib/python3.12/site-packages/scipy/_lib": {
+                    "file_count": 19,
+                    "line_count": 6076
+                },
+                "./venv/lib/python3.12/site-packages/scipy/_lib/_uarray": {
+                    "file_count": 2,
+                    "line_count": 823
+                },
+                "./venv/lib/python3.12/site-packages/scipy/_lib/array_api_compat": {
+                    "file_count": 2,
+                    "line_count": 68
+                },
+                "./venv/lib/python3.12/site-packages/scipy/_lib/array_api_compat/dask/array": {
+                    "file_count": 5,
+                    "line_count": 668
+                },
+                "./venv/lib/python3.12/site-packages/scipy/_lib/array_api_compat/cupy": {
+                    "file_count": 6,
+                    "line_count": 609
+                },
+                "./venv/lib/python3.12/site-packages/scipy/_lib/array_api_compat/torch": {
+                    "file_count": 5,
+                    "line_count": 1341
+                },
+                "./venv/lib/python3.12/site-packages/scipy/_lib/array_api_compat/numpy": {
+                    "file_count": 6,
+                    "line_count": 682
+                },
+                "./venv/lib/python3.12/site-packages/scipy/_lib/array_api_compat/common": {
+                    "file_count": 6,
+                    "line_count": 1743
+                },
+                "./venv/lib/python3.12/site-packages/scipy/_lib/array_api_extra": {
+                    "file_count": 3,
+                    "line_count": 507
+                },
+                "./venv/lib/python3.12/site-packages/scipy/_lib/cobyqa": {
+                    "file_count": 6,
+                    "line_count": 5723
+                },
+                "./venv/lib/python3.12/site-packages/scipy/_lib/cobyqa/subsolvers": {
+                    "file_count": 3,
+                    "line_count": 1604
+                },
+                "./venv/lib/python3.12/site-packages/scipy/_lib/cobyqa/utils": {
+                    "file_count": 4,
+                    "line_count": 184
+                },
+                "./venv/lib/python3.12/site-packages/scipy/special": {
+                    "file_count": 21,
+                    "line_count": 20866
+                },
+                "./venv/lib/python3.12/site-packages/scipy/special/_precompute": {
+                    "file_count": 13,
+                    "line_count": 1637
+                },
+                "./venv/lib/python3.12/site-packages/scipy/differentiate": {
+                    "file_count": 2,
+                    "line_count": 1156
+                },
+                "./venv/lib/python3.12/site-packages/scipy/fftpack": {
+                    "file_count": 9,
+                    "line_count": 1878
+                },
+                "./venv/lib/python3.12/site-packages/scipy/interpolate": {
+                    "file_count": 24,
+                    "line_count": 15245
+                },
+                "./venv/lib/python3.12/site-packages/scipy/fft": {
+                    "file_count": 10,
+                    "line_count": 3717
+                },
+                "./venv/lib/python3.12/site-packages/scipy/fft/_pocketfft": {
+                    "file_count": 4,
+                    "line_count": 590
+                },
+                "./venv/lib/python3.12/site-packages/scipy/sparse": {
+                    "file_count": 33,
+                    "line_count": 12666
+                },
+                "./venv/lib/python3.12/site-packages/scipy/sparse/linalg": {
+                    "file_count": 13,
+                    "line_count": 4847
+                },
+                "./venv/lib/python3.12/site-packages/scipy/sparse/linalg/_eigen": {
+                    "file_count": 3,
+                    "line_count": 944
+                },
+                "./venv/lib/python3.12/site-packages/scipy/sparse/linalg/_eigen/arpack": {
+                    "file_count": 2,
+                    "line_count": 1720
+                },
+                "./venv/lib/python3.12/site-packages/scipy/sparse/linalg/_eigen/lobpcg": {
+                    "file_count": 2,
+                    "line_count": 1126
+                },
+                "./venv/lib/python3.12/site-packages/scipy/sparse/linalg/_isolve": {
+                    "file_count": 9,
+                    "line_count": 3551
+                },
+                "./venv/lib/python3.12/site-packages/scipy/sparse/linalg/_dsolve": {
+                    "file_count": 3,
+                    "line_count": 1091
+                },
+                "./venv/lib/python3.12/site-packages/scipy/sparse/csgraph": {
+                    "file_count": 3,
+                    "line_count": 839
+                },
+                "./venv/lib/python3.12/site-packages/scipy/spatial": {
+                    "file_count": 10,
+                    "line_count": 5242
+                },
+                "./venv/lib/python3.12/site-packages/scipy/spatial/transform": {
+                    "file_count": 4,
+                    "line_count": 650
+                },
+                "./venv/lib/python3.12/site-packages/scipy/signal": {
+                    "file_count": 27,
+                    "line_count": 24964
+                },
+                "./venv/lib/python3.12/site-packages/scipy/signal/windows": {
+                    "file_count": 3,
+                    "line_count": 2449
+                },
+                "./venv/lib/python3.12/site-packages/scipy/stats": {
+                    "file_count": 58,
+                    "line_count": 76167
+                },
+                "./venv/lib/python3.12/site-packages/scipy/stats/_levy_stable": {
+                    "file_count": 1,
+                    "line_count": 1239
+                },
+                "./venv/lib/python3.12/site-packages/scipy/stats/_rcont": {
+                    "file_count": 1,
+                    "line_count": 4
+                },
+                "./venv/lib/python3.12/site-packages/yarl": {
+                    "file_count": 8,
+                    "line_count": 2241
+                },
+                "./venv/lib/python3.12/site-packages/gitdb": {
+                    "file_count": 9,
+                    "line_count": 3265
+                },
+                "./venv/lib/python3.12/site-packages/gitdb/utils": {
+                    "file_count": 1,
+                    "line_count": 18
+                },
+                "./venv/lib/python3.12/site-packages/gitdb/db": {
+                    "file_count": 7,
+                    "line_count": 1040
+                },
+                "./venv/lib/python3.12/site-packages/git": {
+                    "file_count": 10,
+                    "line_count": 5899
+                },
+                "./venv/lib/python3.12/site-packages/git/objects": {
+                    "file_count": 8,
+                    "line_count": 2523
+                },
+                "./venv/lib/python3.12/site-packages/git/objects/submodule": {
+                    "file_count": 4,
+                    "line_count": 1966
+                },
+                "./venv/lib/python3.12/site-packages/git/refs": {
+                    "file_count": 7,
+                    "line_count": 1775
+                },
+                "./venv/lib/python3.12/site-packages/git/index": {
+                    "file_count": 5,
+                    "line_count": 2163
+                },
+                "./venv/lib/python3.12/site-packages/git/repo": {
+                    "file_count": 3,
+                    "line_count": 1795
+                },
+                "./venv/lib/python3.12/site-packages/aiosignal": {
+                    "file_count": 1,
+                    "line_count": 36
+                },
+                "./venv/lib/python3.12/site-packages/pandas": {
+                    "file_count": 6,
+                    "line_count": 3669
+                },
+                "./venv/lib/python3.12/site-packages/pandas/compat": {
+                    "file_count": 6,
+                    "line_count": 781
+                },
+                "./venv/lib/python3.12/site-packages/pandas/compat/numpy": {
+                    "file_count": 2,
+                    "line_count": 471
+                },
+                "./venv/lib/python3.12/site-packages/pandas/core": {
+                    "file_count": 21,
+                    "line_count": 52602
+                },
+                "./venv/lib/python3.12/site-packages/pandas/core/indexers": {
+                    "file_count": 3,
+                    "line_count": 1037
+                },
+                "./venv/lib/python3.12/site-packages/pandas/core/reshape": {
+                    "file_count": 9,
+                    "line_count": 7390
+                },
+                "./venv/lib/python3.12/site-packages/pandas/core/strings": {
+                    "file_count": 4,
+                    "line_count": 4399
+                },
+                "./venv/lib/python3.12/site-packages/pandas/core/tools": {
+                    "file_count": 4,
+                    "line_count": 2023
+                },
+                "./venv/lib/python3.12/site-packages/pandas/core/methods": {
+                    "file_count": 3,
+                    "line_count": 957
+                },
+                "./venv/lib/python3.12/site-packages/pandas/core/util": {
+                    "file_count": 2,
+                    "line_count": 437
+                },
+                "./venv/lib/python3.12/site-packages/pandas/core/array_algos": {
+                    "file_count": 9,
+                    "line_count": 1540
+                },
+                "./venv/lib/python3.12/site-packages/pandas/core/interchange": {
+                    "file_count": 6,
+                    "line_count": 1915
+                },
+                "./venv/lib/python3.12/site-packages/pandas/core/dtypes": {
+                    "file_count": 10,
+                    "line_count": 8813
+                },
+                "./venv/lib/python3.12/site-packages/pandas/core/groupby": {
+                    "file_count": 9,
+                    "line_count": 11867
+                },
+                "./venv/lib/python3.12/site-packages/pandas/core/internals": {
+                    "file_count": 9,
+                    "line_count": 9111
+                },
+                "./venv/lib/python3.12/site-packages/pandas/core/computation": {
+                    "file_count": 12,
+                    "line_count": 3752
+                },
+                "./venv/lib/python3.12/site-packages/pandas/core/_numba": {
+                    "file_count": 2,
+                    "line_count": 824
+                },
+                "./venv/lib/python3.12/site-packages/pandas/core/_numba/kernels": {
+                    "file_count": 6,
+                    "line_count": 866
+                },
+                "./venv/lib/python3.12/site-packages/pandas/core/window": {
+                    "file_count": 8,
+                    "line_count": 5766
+                },
+                "./venv/lib/python3.12/site-packages/pandas/core/arrays": {
+                    "file_count": 20,
+                    "line_count": 21730
+                },
+                "./venv/lib/python3.12/site-packages/pandas/core/arrays/arrow": {
+                    "file_count": 5,
+                    "line_count": 3632
+                },
+                "./venv/lib/python3.12/site-packages/pandas/core/arrays/sparse": {
+                    "file_count": 4,
+                    "line_count": 2585
+                },
+                "./venv/lib/python3.12/site-packages/pandas/core/ops": {
+                    "file_count": 8,
+                    "line_count": 2072
+                },
+                "./venv/lib/python3.12/site-packages/pandas/core/sparse": {
+                    "file_count": 1,
+                    "line_count": 5
+                },
+                "./venv/lib/python3.12/site-packages/pandas/core/indexes": {
+                    "file_count": 13,
+                    "line_count": 19181
+                },
+                "./venv/lib/python3.12/site-packages/pandas/util": {
+                    "file_count": 8,
+                    "line_count": 1682
+                },
+                "./venv/lib/python3.12/site-packages/pandas/util/version": {
+                    "file_count": 1,
+                    "line_count": 579
+                },
+                "./venv/lib/python3.12/site-packages/pandas/io": {
+                    "file_count": 16,
+                    "line_count": 17805
+                },
+                "./venv/lib/python3.12/site-packages/pandas/io/parsers": {
+                    "file_count": 6,
+                    "line_count": 5946
+                },
+                "./venv/lib/python3.12/site-packages/pandas/io/formats": {
+                    "file_count": 14,
+                    "line_count": 13749
+                },
+                "./venv/lib/python3.12/site-packages/pandas/io/excel": {
+                    "file_count": 10,
+                    "line_count": 3936
+                },
+                "./venv/lib/python3.12/site-packages/pandas/io/json": {
+                    "file_count": 4,
+                    "line_count": 2442
+                },
+                "./venv/lib/python3.12/site-packages/pandas/io/sas": {
+                    "file_count": 5,
+                    "line_count": 1761
+                },
+                "./venv/lib/python3.12/site-packages/pandas/io/clipboard": {
+                    "file_count": 1,
+                    "line_count": 747
+                },
+                "./venv/lib/python3.12/site-packages/pandas/tseries": {
+                    "file_count": 5,
+                    "line_count": 1349
+                },
+                "./venv/lib/python3.12/site-packages/pandas/_libs": {
+                    "file_count": 1,
+                    "line_count": 27
+                },
+                "./venv/lib/python3.12/site-packages/pandas/_libs/tslibs": {
+                    "file_count": 1,
+                    "line_count": 87
+                },
+                "./venv/lib/python3.12/site-packages/pandas/plotting": {
+                    "file_count": 3,
+                    "line_count": 2732
+                },
+                "./venv/lib/python3.12/site-packages/pandas/plotting/_matplotlib": {
+                    "file_count": 10,
+                    "line_count": 6276
+                },
+                "./venv/lib/python3.12/site-packages/pandas/arrays": {
+                    "file_count": 1,
+                    "line_count": 53
+                },
+                "./venv/lib/python3.12/site-packages/pandas/api": {
+                    "file_count": 1,
+                    "line_count": 16
+                },
+                "./venv/lib/python3.12/site-packages/pandas/api/indexers": {
+                    "file_count": 1,
+                    "line_count": 17
+                },
+                "./venv/lib/python3.12/site-packages/pandas/api/types": {
+                    "file_count": 1,
+                    "line_count": 23
+                },
+                "./venv/lib/python3.12/site-packages/pandas/api/interchange": {
+                    "file_count": 1,
+                    "line_count": 8
+                },
+                "./venv/lib/python3.12/site-packages/pandas/api/extensions": {
+                    "file_count": 1,
+                    "line_count": 33
+                },
+                "./venv/lib/python3.12/site-packages/pandas/api/typing": {
+                    "file_count": 1,
+                    "line_count": 55
+                },
+                "./venv/lib/python3.12/site-packages/pandas/errors": {
+                    "file_count": 1,
+                    "line_count": 850
+                },
+                "./venv/lib/python3.12/site-packages/pandas/_config": {
+                    "file_count": 5,
+                    "line_count": 1264
+                },
+                "./venv/lib/python3.12/site-packages/dateutil": {
+                    "file_count": 8,
+                    "line_count": 2569
+                },
+                "./venv/lib/python3.12/site-packages/dateutil/zoneinfo": {
+                    "file_count": 2,
+                    "line_count": 242
+                },
+                "./venv/lib/python3.12/site-packages/dateutil/parser": {
+                    "file_count": 3,
+                    "line_count": 2090
+                },
+                "./venv/lib/python3.12/site-packages/dateutil/tz": {
+                    "file_count": 5,
+                    "line_count": 2730
+                },
+                "./venv/lib/python3.12/site-packages/deprecated": {
+                    "file_count": 3,
+                    "line_count": 597
+                }
+            },
+            "include_tests": false,
+            "min_line_length": 0,
+            "exclude_patterns": [],
+            "excluded_files": 0,
+            "skipped_files_size": 0,
+            "empty_files": 74,
+            "error_files": 0,
+            "cache_key": "a8e70ca6df03a887092c2fb51dd7f95b",
+            "execution_time": 1.6367242336273193,
+            "max_file_size": 1000000,
+            "line_ending_type": "auto",
+            "encoding": "auto",
+            "ignore_shebang": true,
+            "cache_hit": false,
+            "file_size_stats": {
+                "average": 16763.985906040267,
+                "maximum": 475380,
+                "minimum": 0,
+                "count": 4470
+            },
+            "lines_per_file_stats": {
+                "average": 479.8414467697907,
+                "maximum": 13979,
+                "minimum": 1,
+                "count": 4396
+            },
+            "file_batch_size": 50
+        }
+    }
+}

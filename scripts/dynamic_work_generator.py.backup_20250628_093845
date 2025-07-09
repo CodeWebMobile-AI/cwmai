@@ -1,0 +1,370 @@
+"""
+Dynamic Work Generator
+
+Generates work based on:
+- ARCHITECTURE.md content
+- Completed work history
+- Current repository state
+- No fixed task types
+"""
+
+import json
+import logging
+import os
+import time
+import hashlib
+from datetime import datetime, timezone
+from typing import Dict, List, Any, Optional, Set
+from dataclasses import dataclass
+from pathlib import Path
+
+from scripts.work_item_types import WorkItem, TaskPriority
+from scripts.repository_analyzer import RepositoryAnalyzer
+from scripts.ai_brain import IntelligentAIBrain
+
+
+@dataclass
+class WorkContext:
+    """Context for work generation"""
+    repository: str
+    architecture_content: Optional[str]
+    completed_work: List[Dict[str, Any]]
+    current_issues: List[Dict[str, Any]]
+    repository_analysis: Dict[str, Any]
+    
+    def get_completed_work_titles(self) -> Set[str]:
+        """Get set of completed work titles"""
+        return {work.get('title', '').lower() for work in self.completed_work}
+    
+    def get_completed_work_descriptions(self) -> List[str]:
+        """Get list of completed work descriptions"""
+        return [work.get('description', '') for work in self.completed_work if work.get('description')]
+
+
+class DynamicWorkGenerator:
+    """Generates work items dynamically based on repository state and needs."""
+    
+    def __init__(self, ai_brain=None):
+        self.ai_brain = ai_brain
+        self.logger = logging.getLogger(__name__)
+        self.repo_analyzer = RepositoryAnalyzer(ai_brain=ai_brain)
+        
+        # Add work generation cache (6 hour cache by default)
+        self._work_cache = {}
+        self._cache_duration = int(os.getenv('WORK_GEN_CACHE_HOURS', '6')) * 3600
+        
+    async def generate_work_for_repository(
+        self, 
+        repository: str,
+        max_work_items: int = 5,
+        completed_work: Optional[List[Dict[str, Any]]] = None
+    ) -> List[WorkItem]:
+        """Generate work items for a repository based on its current state with caching"""
+        
+        # Create cache key based on repository and completed work
+        cache_data = {
+            'repository': repository,
+            'completed_count': len(completed_work) if completed_work else 0,
+            'completed_titles': sorted([w.get('title', '') for w in (completed_work or [])])[:5]  # First 5 for cache key
+        }
+        cache_key = f"work_gen_{repository}_{hashlib.md5(json.dumps(cache_data, sort_keys=True).encode()).hexdigest()}"
+        
+        # Check cache
+        if cache_key in self._work_cache:
+            cached = self._work_cache[cache_key]
+            age = time.time() - cached['timestamp']
+            if age < self._cache_duration:
+                self.logger.debug(f"Using cached work generation for {repository} (age: {age/3600:.1f} hours)")
+                return cached['work_items']
+        
+        # Generate fresh work items
+        self.logger.info(f"Generating fresh work items for {repository}")
+        
+        try:
+            # 1. Analyze repository
+            self.logger.info(f"Analyzing repository {repository} for work generation")
+            repo_analysis = await self.repo_analyzer.analyze_repository(repository)
+            
+            # 2. Get architecture content
+            architecture_content = self._extract_architecture_content(repo_analysis)
+            
+            # 3. Get current issues
+            current_issues = repo_analysis.get('issues_analysis', {}).get('recent_issues', [])
+            
+            # 4. Build context
+            context = WorkContext(
+                repository=repository,
+                architecture_content=architecture_content,
+                completed_work=completed_work or [],
+                current_issues=current_issues,
+                repository_analysis=repo_analysis
+            )
+            
+            # 5. Generate work items using AI
+            if self.ai_brain:
+                work_items = await self._generate_work_with_ai(context, max_work_items)
+            else:
+                work_items = self._generate_work_without_ai(context, max_work_items)
+            
+            # Cache the results before returning
+            self._work_cache[cache_key] = {
+                'timestamp': time.time(),
+                'work_items': work_items
+            }
+            self.logger.debug(f"Cached {len(work_items)} work items for {repository}")
+            
+            return work_items
+                
+        except Exception as e:
+            self.logger.error(f"Error generating work for {repository}: {e}")
+            return []
+    
+    def clear_cache(self, repository: str = None):
+        """Clear work generation cache."""
+        if repository:
+            # Clear specific repository
+            keys_to_remove = [k for k in self._work_cache.keys() if repository in k]
+            for key in keys_to_remove:
+                del self._work_cache[key]
+            self.logger.info(f"Cleared cache for repository: {repository}")
+        else:
+            # Clear all cache
+            self._work_cache = {}
+            self.logger.info("Cleared all work generation cache")
+    
+    def get_cache_stats(self):
+        """Get cache statistics."""
+        total_entries = len(self._work_cache)
+        total_size = sum(len(v['work_items']) for v in self._work_cache.values())
+        oldest = min((time.time() - v['timestamp'] for v in self._work_cache.values()), default=0)
+        
+        return {
+            'total_entries': total_entries,
+            'total_work_items_cached': total_size,
+            'oldest_entry_hours': oldest / 3600,
+            'cache_duration_hours': self._cache_duration / 3600
+        }
+    
+    def _extract_architecture_content(self, repo_analysis: Dict[str, Any]) -> Optional[str]:
+        """Extract architecture content from repository analysis"""
+        architecture = repo_analysis.get('architecture', {})
+        if architecture.get('document_exists') and architecture.get('raw_content'):
+            return architecture['raw_content']
+        return None
+    
+    async def _generate_work_with_ai(
+        self, 
+        context: WorkContext, 
+        max_items: int
+    ) -> List[WorkItem]:
+        """Generate work items using AI based on context"""
+        
+        # Build a comprehensive prompt
+        prompt = self._build_ai_prompt(context, max_items)
+        
+        # Define schema for structured output
+        schema = {
+            "type": "object",
+            "properties": {
+                "work_items": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "title": {"type": "string"},
+                            "description": {"type": "string"},
+                            "priority": {"type": "string", "enum": ["critical", "high", "medium", "low"]},
+                            "reasoning": {"type": "string"},
+                            "estimated_hours": {"type": "number"}
+                        },
+                        "required": ["title", "description", "priority", "reasoning"]
+                    }
+                }
+            },
+            "required": ["work_items"]
+        }
+        
+        try:
+            response = await self.ai_brain.generate_enhanced_response(prompt, response_schema=schema)
+            
+            if response and response.get('structured_output'):
+                work_data = response.get('parsed_content', {})
+                return self._convert_ai_response_to_work_items(work_data, context.repository)
+            else:
+                self.logger.warning("AI response was not structured, falling back to basic generation")
+                return self._generate_work_without_ai(context, max_items)
+                
+        except Exception as e:
+            self.logger.error(f"Error generating work with AI: {e}")
+            return self._generate_work_without_ai(context, max_items)
+    
+    def _build_ai_prompt(self, context: WorkContext, max_items: int) -> str:
+        """Build prompt for AI work generation"""
+        
+        # Get completed work summary
+        completed_titles = list(context.get_completed_work_titles())
+        
+        # Get repository health and stage
+        health_score = context.repository_analysis.get('health_metrics', {}).get('health_score', 'unknown')
+        lifecycle_stage = context.repository_analysis.get('lifecycle_analysis', {}).get('current_stage', 'unknown')
+        
+        # Get specific needs
+        specific_needs = context.repository_analysis.get('specific_needs', [])
+        needs_summary = "\n".join([f"- {need['description']}" for need in specific_needs[:5]])
+        
+        # Architecture summary
+        arch_summary = "No architecture document found"
+        if context.architecture_content:
+            # Extract key sections
+            arch_lines = context.architecture_content.split('\n')[:50]  # First 50 lines
+            arch_summary = "\n".join(arch_lines)
+        
+        prompt = f"""
+        Analyze this repository and generate {max_items} specific, actionable work items.
+        
+        Repository: {context.repository}
+        Health Score: {health_score}
+        Lifecycle Stage: {lifecycle_stage}
+        
+        Architecture Overview:
+        {arch_summary}
+        
+        Specific Needs Identified:
+        {needs_summary or "No specific needs identified"}
+        
+        Recently Completed Work ({len(completed_titles)} items):
+        {chr(10).join(['- ' + title for title in completed_titles[-10:]]) if completed_titles else "No work completed yet"}
+        
+        Current Open Issues ({len(context.current_issues)} total):
+        {chr(10).join([f"- {issue['title']}" for issue in context.current_issues[:5]])}
+        
+        Based on this context, generate {max_items} work items that:
+        1. Are NOT duplicates of completed work
+        2. Address real needs based on the architecture and current state
+        3. Progress the project forward based on its lifecycle stage
+        4. Are specific and actionable (not generic like "update dependencies")
+        5. Include clear success criteria in the description
+        
+        For each work item, provide:
+        - A specific, descriptive title
+        - A detailed description with clear deliverables
+        - Priority (critical/high/medium/low) based on actual need
+        - Reasoning for why this work is needed now
+        - Estimated hours to complete
+        
+        Focus on actual development work that moves the project forward, not generic maintenance tasks.
+        """
+        
+        return prompt
+    
+    def _convert_ai_response_to_work_items(
+        self, 
+        work_data: Dict[str, Any], 
+        repository: str
+    ) -> List[WorkItem]:
+        """Convert AI response to WorkItem objects"""
+        work_items = []
+        
+        for idx, item_data in enumerate(work_data.get('work_items', [])):
+            # Map priority strings to TaskPriority enum
+            priority_map = {
+                'critical': TaskPriority.CRITICAL,
+                'high': TaskPriority.HIGH,
+                'medium': TaskPriority.MEDIUM,
+                'low': TaskPriority.LOW
+            }
+            
+            priority = priority_map.get(
+                item_data.get('priority', 'medium').lower(), 
+                TaskPriority.MEDIUM
+            )
+            
+            work_item = WorkItem(
+                id=f"dynamic_{int(datetime.now().timestamp())}_{idx}",
+                task_type="DEVELOPMENT",  # Generic type
+                title=item_data['title'],
+                description=item_data['description'],
+                priority=priority,
+                repository=repository,
+                estimated_cycles=max(1, int(item_data.get('estimated_hours', 2) / 2)),
+                metadata={
+                    'generated_by': 'dynamic_work_generator',
+                    'reasoning': item_data.get('reasoning', ''),
+                    'estimated_hours': item_data.get('estimated_hours', 2),
+                    'generation_timestamp': datetime.now(timezone.utc).isoformat()
+                }
+            )
+            
+            work_items.append(work_item)
+        
+        return work_items
+    
+    def _generate_work_without_ai(
+        self, 
+        context: WorkContext, 
+        max_items: int
+    ) -> List[WorkItem]:
+        """Generate basic work items without AI"""
+        work_items = []
+        
+        # Check repository needs
+        needs = context.repository_analysis.get('specific_needs', [])
+        
+        for idx, need in enumerate(needs[:max_items]):
+            if idx >= max_items:
+                break
+                
+            # Skip if similar work was recently completed
+            need_title = need.get('suggested_action', need.get('description', 'Improvement needed'))
+            if any(need_title.lower() in completed for completed in context.get_completed_work_titles()):
+                continue
+            
+            # Create work item from need
+            priority_map = {
+                'critical': TaskPriority.CRITICAL,
+                'high': TaskPriority.HIGH,
+                'medium': TaskPriority.MEDIUM,
+                'low': TaskPriority.LOW
+            }
+            
+            work_item = WorkItem(
+                id=f"need_{int(datetime.now().timestamp())}_{idx}",
+                task_type="IMPROVEMENT",
+                title=need.get('suggested_action', need.get('description', 'Improvement needed')),
+                description=f"Type: {need.get('type', 'general')}\n\n{need.get('description', 'No description provided')}\n\nSuggested Action: {need.get('suggested_action', 'No action specified')}",
+                priority=priority_map.get(need.get('priority', 'medium'), TaskPriority.MEDIUM),
+                repository=context.repository,
+                metadata={
+                    'need_type': need.get('type'),
+                    'generated_by': 'dynamic_work_generator'
+                }
+            )
+            
+            work_items.append(work_item)
+        
+        # If not enough from needs, check opportunities
+        if len(work_items) < max_items:
+            opportunities = context.repository_analysis.get('improvement_opportunities', [])
+            
+            for idx, opp in enumerate(opportunities):
+                if len(work_items) >= max_items:
+                    break
+                    
+                work_item = WorkItem(
+                    id=f"opp_{int(datetime.now().timestamp())}_{idx}",
+                    task_type="IMPROVEMENT",
+                    title=opp.get('description', 'Improvement opportunity'),
+                    description=f"Type: {opp.get('type', 'general')}\nImpact: {opp.get('impact', 'unknown')}\nEffort: {opp.get('effort', 'unknown')}\nDetails: {opp.get('description', 'No additional details')}",
+                    priority=TaskPriority.MEDIUM if opp.get('impact') != 'high' else TaskPriority.HIGH,
+                    repository=context.repository,
+                    metadata={
+                        'opportunity_type': opp.get('type'),
+                        'impact': opp.get('impact'),
+                        'effort': opp.get('effort'),
+                        'generated_by': 'dynamic_work_generator'
+                    }
+                )
+                
+                work_items.append(work_item)
+        
+        return work_items

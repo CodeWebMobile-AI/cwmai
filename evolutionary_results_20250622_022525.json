@@ -1,0 +1,210 @@
+{
+  "summary": {
+    "runtime": "0:10:46.405415",
+    "generations_completed": 5,
+    "improvements_created": 0,
+    "errors_encountered": 0,
+    "final_population_size": 24,
+    "fitness_history": [
+      {
+        "generation": 1,
+        "average_fitness": 0.5944407894736847,
+        "best_fitness": 0.6975,
+        "population_size": 76
+      },
+      {
+        "generation": 2,
+        "average_fitness": 0.677232142857143,
+        "best_fitness": 0.7825,
+        "population_size": 28
+      },
+      {
+        "generation": 3,
+        "average_fitness": 0.6787037037037037,
+        "best_fitness": 0.7825,
+        "population_size": 27
+      },
+      {
+        "generation": 4,
+        "average_fitness": 0.6857407407407409,
+        "best_fitness": 0.7825,
+        "population_size": 27
+      },
+      {
+        "generation": 5,
+        "average_fitness": 0.6922115384615387,
+        "best_fitness": 0.7825,
+        "population_size": 26
+      }
+    ],
+    "verification_pass_rate": 0.0
+  },
+  "improvements_created": [],
+  "errors": [],
+  "verification_results": [
+    {
+      "improvement_id": "unknown",
+      "improvement_name": "Response Cache Optimizer",
+      "verification_levels": {
+        "syntax": {
+          "passed": false,
+          "errors": [
+            "Syntax error at line 17: expected an indented block"
+          ]
+        }
+      },
+      "overall_score": 0.0,
+      "is_deployable": false,
+      "issues": [
+        "Syntax error at line 17: expected an indented block"
+      ],
+      "metrics": {}
+    }
+  ],
+  "final_population": [
+    {
+      "name": "Response Cache Optimizer",
+      "type": "Optimization Tool",
+      "fitness": 0.7825,
+      "generation": 1
+    },
+    {
+      "name": "Intelligent Response Cache Optimizer (IRCO)",
+      "type": "Enhanced Response Cache Optimizer",
+      "fitness": 0.7825,
+      "generation": 2
+    },
+    {
+      "name": "AI-Powered Optimized Response Cache Optimizer (AI-ORCO)",
+      "type": "Software Component/Middleware",
+      "fitness": 0.7825,
+      "generation": 4
+    },
+    {
+      "name": "Optimized Response Cache Optimizer",
+      "type": "Performance Optimization",
+      "fitness": 0.7625000000000001,
+      "generation": 1
+    },
+    {
+      "name": "AI-Powered Enhanced Response Cache Optimizer (AI-ERCO)",
+      "type": "Response Cache Enhancement Tool",
+      "fitness": 0.7525,
+      "generation": 3
+    },
+    {
+      "name": "AI-Powered Enhanced Response Cache Optimizer (AI-ERCO)_v3",
+      "type": "Response Cache Enhancement Tool",
+      "fitness": 0.7525,
+      "generation": 3
+    },
+    {
+      "name": "AI-Powered Enhanced Response Cache Optimizer (AI-ERCO)_v11",
+      "type": "Response Cache Enhancement Tool",
+      "fitness": 0.7525,
+      "generation": 3
+    },
+    {
+      "name": "AI-Powered Enhanced Response Cache Optimizer (AI-ERCO)_v19",
+      "type": "Response Cache Enhancement Tool",
+      "fitness": 0.7525,
+      "generation": 3
+    },
+    {
+      "name": "AI-Powered Enhanced & Optimized Response Cache Optimizer (AI-EROCO)_v3",
+      "type": "Response Cache Optimization Engine",
+      "fitness": 0.0,
+      "generation": 5
+    },
+    {
+      "name": "Optimized Response Cache Optimizer_v3",
+      "type": "Performance Optimization",
+      "fitness": 0.0,
+      "generation": 1
+    },
+    {
+      "name": "retry_logic_llm_failure",
+      "type": "error_fix",
+      "fitness": 0.0,
+      "generation": 5
+    },
+    {
+      "name": "AI-Powered Adaptive Response Cache Optimizer (AI-ARCO)",
+      "type": "Response Cache Optimizer",
+      "fitness": 0.0,
+      "generation": 5
+    },
+    {
+      "name": "AI-Powered Enhanced Response Cache Optimizer (AI-ERCO)_v19_v7",
+      "type": "Response Cache Enhancement Tool",
+      "fitness": 0.0,
+      "generation": 3
+    },
+    {
+      "name": "response_cache_optimizer",
+      "type": "optimization",
+      "fitness": 0.0,
+      "generation": 5
+    },
+    {
+      "name": "Adaptive Response Cache Optimization Engine (ARCOE)",
+      "type": "Software Component/Middleware",
+      "fitness": 0.0,
+      "generation": 5
+    },
+    {
+      "name": "Optimized Response Cache Optimizer_v11",
+      "type": "Performance Optimization",
+      "fitness": 0.0,
+      "generation": 1
+    },
+    {
+      "name": "prompt_injection_detector",
+      "type": "error_fix",
+      "fitness": 0.0,
+      "generation": 5
+    },
+    {
+      "name": "AI-Powered Optimized Response Cache Optimizer (AI-ORCO)",
+      "type": "Response Cache Optimization Tool",
+      "fitness": 0.0,
+      "generation": 5
+    },
+    {
+      "name": "AI-Powered Enhanced Response Cache Optimizer (AI-ERCO)_v19_v15",
+      "type": "Response Cache Enhancement Tool",
+      "fitness": 0.0,
+      "generation": 3
+    },
+    {
+      "name": "response_cache_optimizer",
+      "type": "workflow",
+      "fitness": 0.0,
+      "generation": 5
+    },
+    {
+      "name": "Adaptive AI-Powered Response Cache Optimizer (A-AI-ORCO)",
+      "type": "Caching Optimization Tool",
+      "fitness": 0.0,
+      "generation": 5
+    },
+    {
+      "name": "AI-Enhanced Optimized Response Cache Optimizer (AI-ORCO)",
+      "type": "Caching System Optimization Tool",
+      "fitness": 0.0,
+      "generation": 5
+    },
+    {
+      "name": "Optimized Response Cache Optimizer_v19",
+      "type": "Performance Optimization",
+      "fitness": 0.0,
+      "generation": 1
+    },
+    {
+      "name": "api_rate_limit_handler",
+      "type": "error_fix",
+      "fitness": 0.0,
+      "generation": 5
+    }
+  ]
+}

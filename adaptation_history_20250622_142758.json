@@ -1,0 +1,23 @@
+{
+  "history": [],
+  "strategy_rewards": {
+    "increase_mutation": [],
+    "increase_population": [],
+    "increase_crossover": [],
+    "increase_elite": [],
+    "decrease_all": []
+  },
+  "summary": {
+    "total_adaptations": 0,
+    "current_parameters": {},
+    "stagnation_level": 0,
+    "strategy_performance": {
+      "increase_mutation": 0.5,
+      "increase_population": 0.5,
+      "increase_crossover": 0.5,
+      "increase_elite": 0.5,
+      "decrease_all": 0.5
+    },
+    "recent_adaptations": []
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "num_executors": 3,
+  "min_executors": 3,
+  "max_executors": 15,
+  "executors": {
+    "claude_executor_000": {
+      "tasks_completed": 0,
+      "tasks_failed": 0,
+      "total_execution_time": 0,
+      "executor_id": "claude_executor_000",
+      "current_task": null,
+      "avg_execution_time": 0,
+      "idle_time": 821.282546,
+      "uptime": 821.282548
+    },
+    "claude_executor_001": {
+      "tasks_completed": 0,
+      "tasks_failed": 0,
+      "total_execution_time": 0,
+      "executor_id": "claude_executor_001",
+      "current_task": null,
+      "avg_execution_time": 0,
+      "idle_time": 821.282493,
+      "uptime": 821.282493
+    },
+    "claude_executor_002": {
+      "tasks_completed": 0,
+      "tasks_failed": 0,
+      "total_execution_time": 0,
+      "executor_id": "claude_executor_002",
+      "current_task": null,
+      "avg_execution_time": 0,
+      "idle_time": 821.282456,
+      "uptime": 821.282457
+    }
+  },
+  "scaling_metrics": {
+    "avg_queue_depth_5min": 0,
+    "avg_wait_time_5min": 0,
+    "avg_utilization_5min": 0.0,
+    "current_utilization": 0.0,
+    "recent_scaling_events": [
+      {
+        "timestamp": "2025-07-01T18:16:52.606553+00:00",
+        "type": "scale_up",
+        "from_count": 0,
+        "to_count": 3,
+        "reason": "Added 3 executors"
+      }
+    ]
+  },
+  "total_completed": 0,
+  "total_failed": 0,
+  "avg_execution_time": 0
+}

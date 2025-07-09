@@ -1,0 +1,45 @@
+{
+  "timestamp": "2025-07-01T13:54:55.830228+00:00",
+  "total_tools": 47,
+  "healthy_tools": 44,
+  "issues_found": [
+    {
+      "tool": "create_spaced_tool",
+      "type": "error_handling",
+      "description": "Main function lacks error handling",
+      "severity": "medium",
+      "auto_fixable": false,
+      "fix_action": null,
+      "line_numbers": [],
+      "status": "manual_fix_required"
+    },
+    {
+      "tool": "search_tool",
+      "type": "method_existence",
+      "description": "Found 1 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        71
+      ],
+      "status": "fixed"
+    },
+    {
+      "tool": "list_files",
+      "type": "method_existence",
+      "description": "Found 1 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        57
+      ],
+      "status": "fixed"
+    }
+  ],
+  "auto_fixed": 2,
+  "recommendations": [
+    "Update tool documentation to reflect current API methods"
+  ]
+}

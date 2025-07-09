@@ -1,0 +1,72 @@
+{
+  "timestamp": "2025-06-17T16:30:28.030465+00:00",
+  "total_tools": 60,
+  "healthy_tools": 55,
+  "issues_found": [
+    {
+      "tool": "advanced_code_analysis",
+      "type": "null_safety",
+      "description": "Found 1 potential NoneType errors",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "add_null_checks",
+      "line_numbers": [
+        127
+      ],
+      "status": "failed_to_fix"
+    },
+    {
+      "tool": "get_repository_issue_content",
+      "type": "method_existence",
+      "description": "Found 1 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        109
+      ],
+      "status": "fixed"
+    },
+    {
+      "tool": "get_project_info",
+      "type": "method_existence",
+      "description": "Found 2 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        43,
+        71
+      ],
+      "status": "fixed"
+    },
+    {
+      "tool": "get_repository_issues",
+      "type": "method_existence",
+      "description": "Found 1 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        87
+      ],
+      "status": "fixed"
+    },
+    {
+      "tool": "check_intelligence",
+      "type": "method_existence",
+      "description": "Found 1 incorrect method calls",
+      "severity": "high",
+      "auto_fixable": true,
+      "fix_action": "update_method_calls",
+      "line_numbers": [
+        48
+      ],
+      "status": "fixed"
+    }
+  ],
+  "auto_fixed": 4,
+  "recommendations": [
+    "Update tool documentation to reflect current API methods"
+  ]
+}

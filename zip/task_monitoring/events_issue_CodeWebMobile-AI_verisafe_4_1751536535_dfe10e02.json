@@ -1,0 +1,11 @@
+[
+  {
+    "task_id": "issue_CodeWebMobile-AI/verisafe_4_1751536535_dfe10e02",
+    "event": "started",
+    "timestamp": "2025-07-03T09:55:36.565536+00:00",
+    "metadata": {
+      "executor": "LocalIssueCreator",
+      "claude_enabled": true
+    }
+  }
+]

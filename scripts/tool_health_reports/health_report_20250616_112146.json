@@ -1,0 +1,19 @@
+{
+  "timestamp": "2025-06-16T11:21:46.709560+00:00",
+  "total_tools": 44,
+  "healthy_tools": 43,
+  "issues_found": [
+    {
+      "tool": "create_spaced_tool",
+      "type": "error_handling",
+      "description": "Main function lacks error handling",
+      "severity": "medium",
+      "auto_fixable": false,
+      "fix_action": null,
+      "line_numbers": [],
+      "status": "manual_fix_required"
+    }
+  ],
+  "auto_fixed": 0,
+  "recommendations": []
+}
